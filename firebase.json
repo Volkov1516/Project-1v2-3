@@ -1,6 +1,5 @@
 {
   "hosting": {
-    "site": "journalisto",
     "public": "build",
     "ignore": [
       "firebase.json",
