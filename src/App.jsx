@@ -11,8 +11,6 @@ export const App = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
-
         setIsAuth(true);
       } else {
         setIsAuth(false);
