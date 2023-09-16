@@ -8,7 +8,7 @@ import {
 } from 'firebase/auth';
 
 import css from './Auth.module.css';
-import logo from 'assets/logo-black.png';
+import logo from 'assets/logo.png';
 
 export const Auth = () => {
   const [authType, setAuthType] = useState('Sing in');
