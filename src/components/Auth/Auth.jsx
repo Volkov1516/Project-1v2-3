@@ -28,6 +28,8 @@ export const Auth = () => {
       case 'password':
         setFocussedPassword(true);
         break;
+      default:
+        return;
     }
   };
 
