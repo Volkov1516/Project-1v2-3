@@ -25,3 +25,9 @@
   outline: 1px solid black;
   color: black;
 }
+
+@media (max-width: 639px) {
+  .button {
+    padding: 12px 0px;
+  }
+}

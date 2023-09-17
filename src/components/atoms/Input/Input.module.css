@@ -57,4 +57,8 @@
   .label {
     font-size: 16px;
   }
+
+  .input {
+    padding: 12px 8px;
+  }
 }
