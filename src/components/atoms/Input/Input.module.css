@@ -4,6 +4,7 @@
 }
 
 .label {
+  margin-bottom: 4px;
   color: gray;
   font-size: 14px;
   user-select: none;
@@ -12,6 +13,36 @@
 .input {
   width: 100%;
   padding: 4px 8px;
+  border: none;
+  outline: 1px solid black;
+}
+
+.input::placeholder {
+  user-select: none;
+}
+
+.input:focus {
+  outline: 2px solid #1971c2;
+}
+
+.input:invalid[data-focussed="true"] {
+  outline: 2px solid #e03131;
+}
+
+.input:invalid[data-focussed="true"]~span {
+  display: block;
+}
+
+.input:valid {
+  background-color: white;
+}
+
+.error {
+  display: none;
+  width: 320px;
+  margin-top: 4px;
+  font-size: 14px;
+  color: #e03131;
 }
 
 @media (max-width: 639px) {

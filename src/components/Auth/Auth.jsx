@@ -17,6 +17,27 @@ export const Auth = () => {
   const [authType, setAuthType] = useState('Sing in');
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
+  const [focussedEmail, setFocussedEmail] = useState(false);
+  const [focussedPassword, setFocussedPassword] = useState(false);
+
+  const handleFocus = (e) => {
+    switch (e.target.name) {
+      case 'email':
+        setFocussedEmail(true);
+        break;
+      case 'password':
+        setFocussedPassword(true);
+        break;
+    }
+  };
+
+  const handleToggleAuth = (type) => {
+    setEmail('');
+    setPassword('');
+    setFocussedEmail(false);
+    setFocussedPassword(false);
+    setAuthType(type);
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -90,8 +111,10 @@ export const Auth = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onBlur={handleFocus}
+              dataFocussed={focussedEmail.toString()}
+              error="Invalid email address"
             />
-            <span className={css.fieldError}>Please, provide a correct email</span>
           </div>
           <div className={css.fieldContainer}>
             <Input
@@ -100,11 +123,14 @@ export const Auth = () => {
               type="password"
               label="Password"
               placeholder="Enter your password"
+              pattern="[0-9a-zA-Z]{6,}"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onBlur={handleFocus}
+              dataFocussed={focussedPassword.toString()}
+              error="Password must contain minimum 6 characters"
             />
-            <span className={css.fieldError}>Please, provide a correct password</span>
           </div>
           <button type="submit">Continue with email</button>
         </form>
@@ -112,11 +138,11 @@ export const Auth = () => {
         {authType === "Sing in"
           ? <>
             <span className={css.alternativeText}>Don't have an account?</span>
-            <button onClick={() => setAuthType("Sing up")}>Create account</button>
+            <button onClick={() => handleToggleAuth("Sing up")}>Create account</button>
           </>
           : <>
             <span className={css.alternativeText}>Already have an account?</span>
-            <button onClick={() => setAuthType("Sing in")}>Sign in</button>
+            <button onClick={() => handleToggleAuth("Sing in")}>Sign in</button>
           </>
         }
       </div>

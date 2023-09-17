@@ -11,7 +11,9 @@ export const Input = ({
   autoFocus,
   value,
   onChange,
-  onBlur
+  onBlur,
+  dataFocussed,
+  error
 }) => {
   return (
     <div className={css.container}>
@@ -28,7 +30,9 @@ export const Input = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        data-focussed={dataFocussed}
       />
+      <span className={css.error}>{error}</span>
     </div>
   );
 };
