@@ -1,0 +1,27 @@
+.button {
+  padding: 8px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  border: none;
+  user-select: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.text {
+  background-color: transparent;
+  color: #1971c2;
+}
+
+.contained {
+  color: #FFFFFF;
+  background-color: black;
+}
+
+.outlined {
+  background-color: transparent;
+  outline: 1px solid black;
+  color: black;
+}
