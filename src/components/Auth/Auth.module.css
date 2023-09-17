@@ -48,16 +48,8 @@
 .fieldContainer {
   display: flex;
   flex-direction: column;
-}
-
-.fieldLebel {
-  color: gray;
-  font-size: 14px;
-  user-select: none;
-}
-
-.fieldInput {
   margin-bottom: 8px;
+  width: 320px;
 }
 
 .fieldError {
@@ -72,10 +64,4 @@
 .alternativeText {
   margin-top: 24px;
   color: gray;
-}
-
-@media (max-width: 420px) {
-  .fieldLebel {
-    font-size: 16px;
-  }
 }

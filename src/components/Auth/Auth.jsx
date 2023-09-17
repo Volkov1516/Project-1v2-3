@@ -7,6 +7,8 @@ import {
   GoogleAuthProvider
 } from 'firebase/auth';
 
+import { Input } from 'components/atoms/Input/Input';
+
 import css from './Auth.module.css';
 import logo from 'assets/logo.png';
 import google from 'assets/google.svg'
@@ -77,46 +79,44 @@ export const Auth = () => {
       </div>
       <div className={css.content}>
         <div className={css.title}>{authType}</div>
-        <form className={css.form}>
+        <form className={css.form} onSubmit={onSubmit}>
           <div className={css.fieldContainer}>
-            <label className={css.fieldLebel} htmlFor="email">Email</label>
-            <input
-              className={css.fieldInput}
-              type="email"
+            <Input
               id="email"
               name="email"
+              type="email"
+              label="Email"
               placeholder="Enter your email"
-              required={true}
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <span className={css.fieldError}>Please, provide a correct email</span>
           </div>
           <div className={css.fieldContainer}>
-            <label className={css.fieldLebel} htmlFor="password">Password</label>
-            <input
-              className={css.fieldInput}
-              type="password"
+            <Input
               id="password"
               name="password"
+              type="password"
+              label="Password"
               placeholder="Enter your password"
-              required={true}
+              required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <span className={css.fieldError}>Please, provide a correct password</span>
           </div>
-          <button type="submit" onClick={onSubmit}>Continue with email</button>
+          <button type="submit">Continue with email</button>
         </form>
         <button onClick={handleGoogle}><img className={css.buttonImg} src={google} alt="google" />Continue with Google</button>
-        {authType === 'Sing in'
+        {authType === "Sing in"
           ? <>
             <span className={css.alternativeText}>Don't have an account?</span>
-            <button onClick={() => setAuthType('Sing up')}>Create account</button>
+            <button onClick={() => setAuthType("Sing up")}>Create account</button>
           </>
           : <>
             <span className={css.alternativeText}>Already have an account?</span>
-            <button onClick={() => setAuthType('Sing in')}>Sign in</button>
+            <button onClick={() => setAuthType("Sing in")}>Sign in</button>
           </>
         }
       </div>
