@@ -2,6 +2,7 @@ import css from './Input.module.css';
 
 export const Input = ({
   id,
+  variant,
   name,
   type,
   label,
@@ -19,7 +20,7 @@ export const Input = ({
     <div className={css.container}>
       {label && <label className={css.label} htmlFor={name}>{label}</label>}
       <input
-        className={css.input}
+        className={`${css.input} ${css[variant]}`}
         id={id}
         name={name}
         type={type}

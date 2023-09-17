@@ -12,8 +12,16 @@
 
 .input {
   width: 100%;
-  padding: 4px 8px;
+  padding: 8px;
   border: none;
+}
+
+.contained {
+  color: gray;
+  background-color: #e8eddf;
+}
+
+.outlined {
   outline: 1px solid black;
 }
 
