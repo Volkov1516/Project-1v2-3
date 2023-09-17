@@ -31,7 +31,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  row-gap: 8px;
 }
 
 .title {
@@ -48,16 +47,21 @@
 .fieldContainer {
   display: flex;
   flex-direction: column;
-  margin-bottom: 8px;
   width: 320px;
+  margin-bottom: 8px;
+}
+
+.divider {
+  margin: 16px 0;
 }
 
 .buttonImg {
   width: 16px;
   height: 16px;
+  margin-right: 8px;
 }
 
 .alternativeText {
-  margin-top: 24px;
+  margin-top: 32px;
   color: gray;
 }

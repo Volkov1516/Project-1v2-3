@@ -8,6 +8,7 @@ import {
 } from 'firebase/auth';
 
 import { Input } from 'components/atoms/Input/Input';
+import { Button } from 'components/atoms/Button/Button';
 
 import css from './Auth.module.css';
 import logo from 'assets/logo.png';
@@ -105,6 +106,7 @@ export const Auth = () => {
         <form className={css.form} onSubmit={onSubmit}>
           <div className={css.fieldContainer}>
             <Input
+              variant="contained"
               id="email"
               name="email"
               type="email"
@@ -120,6 +122,7 @@ export const Auth = () => {
           </div>
           <div className={css.fieldContainer}>
             <Input
+              variant="contained"
               id="password"
               name="password"
               type="password"
@@ -134,17 +137,18 @@ export const Auth = () => {
               error="Password must contain minimum 6 characters"
             />
           </div>
-          <button type="submit">Continue with email</button>
+          <Button type="submit" variant="contained">Continue with email</Button>
+          <hr className={css.divider} />
+          <Button variant="outlined" onClick={handleGoogle}><img className={css.buttonImg} src={google} alt="google" />Continue with Google</Button>
         </form>
-        <button onClick={handleGoogle}><img className={css.buttonImg} src={google} alt="google" />Continue with Google</button>
         {authType === "Sing in"
           ? <>
             <span className={css.alternativeText}>Don't have an account?</span>
-            <button onClick={() => handleToggleAuth("Sing up")}>Create account</button>
+            <Button variant="text" onClick={() => handleToggleAuth("Sing up")}>Create account</Button>
           </>
           : <>
             <span className={css.alternativeText}>Already have an account?</span>
-            <button onClick={() => handleToggleAuth("Sing in")}>Sign in</button>
+            <Button variant="text" onClick={() => handleToggleAuth("Sing in")}>Sign in</Button>
           </>
         }
       </div>
