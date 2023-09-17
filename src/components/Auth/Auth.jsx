@@ -9,6 +9,7 @@ import {
 
 import css from './Auth.module.css';
 import logo from 'assets/logo.png';
+import google from 'assets/google.svg'
 
 export const Auth = () => {
   const [authType, setAuthType] = useState('Sing in');
@@ -92,7 +93,7 @@ export const Auth = () => {
             <span className={css.fieldError}>Please, provide a correct email</span>
           </div>
           <div className={css.fieldContainer}>
-            <label className={css.fieldLebel} htmlFor="password">Email</label>
+            <label className={css.fieldLebel} htmlFor="password">Password</label>
             <input
               className={css.fieldInput}
               type="password"
@@ -107,14 +108,14 @@ export const Auth = () => {
           </div>
           <button type="submit" onClick={onSubmit}>Continue with email</button>
         </form>
-        <button onClick={handleGoogle}>Continue with Google</button>
+        <button onClick={handleGoogle}><img className={css.buttonImg} src={google} alt="google" />Continue with Google</button>
         {authType === 'Sing in'
           ? <>
-            <span>Don't have an account?</span>
+            <span className={css.alternativeText}>Don't have an account?</span>
             <button onClick={() => setAuthType('Sing up')}>Create account</button>
           </>
           : <>
-            <span>Already have an account?</span>
+            <span className={css.alternativeText}>Already have an account?</span>
             <button onClick={() => setAuthType('Sing in')}>Sign in</button>
           </>
         }

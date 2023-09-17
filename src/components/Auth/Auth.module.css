@@ -5,7 +5,7 @@
 }
 
 .header {
-  padding: 8px;
+  padding: 16px;
 }
 
 .logo {
@@ -22,7 +22,7 @@
 }
 
 .logoText {
-  font-size: 20px;
+  font-size: 24px;
 }
 
 .content {
@@ -35,8 +35,9 @@
 }
 
 .title {
+  margin-bottom: 24px;
   font-size: 48px;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .form {
@@ -49,10 +50,32 @@
   flex-direction: column;
 }
 
+.fieldLebel {
+  color: gray;
+  font-size: 14px;
+  user-select: none;
+}
+
 .fieldInput {
   margin-bottom: 8px;
 }
 
 .fieldError {
   display: none;
+}
+
+.buttonImg {
+  width: 16px;
+  height: 16px;
+}
+
+.alternativeText {
+  margin-top: 24px;
+  color: gray;
+}
+
+@media (max-width: 420px) {
+  .fieldLebel {
+    font-size: 16px;
+  }
 }
