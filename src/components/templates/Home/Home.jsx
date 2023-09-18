@@ -1,19 +1,11 @@
-import { auth } from 'firebase.js';
-import { signOut } from 'firebase/auth';
 import { db } from 'firebase.js';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 
-export const Home = () => {
-  const handleSignOut = () => {
-    signOut(auth).then(() => {
-      console.log('Signed out successfully');
-    }).catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
-  };
+import css from './Home.module.css';
 
+import { Header } from 'components/molecules/Header/Header';
+
+export const Home = () => {
   const handlePost = async () => {
     try {
       const docRef = await addDoc(collection(db, "users"), {
@@ -35,8 +27,8 @@ export const Home = () => {
   };
 
   return (
-    <div>
-      <button onClick={handleSignOut}>Sign out</button>
+    <div className={css.container}>
+      <Header />
       <button onClick={handlePost}>POST</button>
       <button onClick={handleGet}>GET</button>
       <h1 style={{ fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>MISS YOU</h1>

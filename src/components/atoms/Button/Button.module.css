@@ -1,5 +1,5 @@
 .button {
-  padding: 8px 0px;
+  padding: 8px 12px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,6 +28,6 @@
 
 @media (max-width: 639px) {
   .button {
-    padding: 12px 0px;
+    padding: 12px;
   }
 }
