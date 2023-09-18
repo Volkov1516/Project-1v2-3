@@ -2,6 +2,7 @@
   min-width: 100%;
   padding: 16px;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
@@ -20,4 +21,15 @@
   justify-content: flex-end;
   align-items: center;
   column-gap: 8px;
+}
+
+@media (max-width: 639px) {
+  .container {
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
+  }
+
+  .left {
+    flex-direction: row-reverse;
+  }
 }
