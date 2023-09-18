@@ -5,7 +5,9 @@ export const Button = ({
   variant,
   size,
   children,
-  onClick
+  onClick,
+  onMouseOver,
+  onMouseLeave
 }) => {
   return (
     <button
@@ -13,6 +15,8 @@ export const Button = ({
       type={type}
       variant={variant}
       onClick={onClick}
+      onMouseOver={onMouseOver}
+      onMouseLeave={onMouseLeave}
     >
       {children}
     </button>

@@ -24,7 +24,7 @@ export const Header = () => {
     <div className={css.container}>
       <div className={css.left}>
         <Button variant="contained" size="large">CREATE</Button>
-        <Button variant="text" onClick={() => setOpen(!open)}>all articles</Button>
+        <Button variant="text" onClick={() => setOpen(!open)} onMouseOver={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>all articles</Button>
         <Button variant="text">search</Button>
       </div>
       <div className={css.right}>
@@ -32,7 +32,7 @@ export const Header = () => {
         <Button variant="text" onClick={handleSignOut}>signout</Button>
       </div>
       {open && (
-        <div className={css.dropdown}>
+        <div className={css.dropdown} onMouseOver={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
           <div className={css.dropdownItem}>add category</div>
           <div className={css.dropdownItem}>all articles</div>
           <div className={css.dropdownItem} style={{color: "#1971c2"}}>#goals</div>
