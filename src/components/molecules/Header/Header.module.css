@@ -1,5 +1,6 @@
 .container {
-  min-width: 100%;
+  position: fixed;
+  width: 100%;
   padding: 16px;
   display: flex;
   flex-direction: row;
@@ -25,6 +26,8 @@
 
 @media (max-width: 639px) {
   .container {
+    position: fixed;
+    bottom: 0%;
     flex-direction: row-reverse;
     flex-wrap: wrap-reverse;
   }
