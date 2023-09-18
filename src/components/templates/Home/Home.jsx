@@ -7,22 +7,22 @@ export const Home = () => {
     <div className={css.container}>
       <Header />
       <div className={css.main}>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>MISS YOU</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", color: "white", backgroundColor: "#1971c2", width: "fit-content", paddingRight: "16px" }}>DIAMONDS AND RUST</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>ANGIE</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>ROSENROT</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>SOMENTING ON THE WAY</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>BREAKING THE LAW</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>SONNE</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>BRINGIN ON THE HEARTBREAK</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>LOVE BITES</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", color: "white", backgroundColor: "#e03131", width: "fit-content", paddingRight: "16px" }}>STAIRWAY TO HEAVEN</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>HOLD ON THE LINE</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>HYSTERIA</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>SAD BUT TRUE</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>HAIFISCH</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>LONELY NIGHTS</h1>
-        <h1 style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>SLEEPING</h1>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>MISS YOU</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", color: "white", backgroundColor: "#1971c2", width: "fit-content", paddingRight: "16px" }}>DIAMONDS AND RUST</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>ANGIE</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>ROSENROT</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>SOMENTING ON THE WAY</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>BREAKING THE LAW</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>SONNE</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>BRINGIN ON THE HEARTBREAK</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>LOVE BITES</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", color: "white", backgroundColor: "#e03131", width: "fit-content", paddingRight: "16px" }}>STAIRWAY TO HEAVEN</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>HOLD ON THE LINE</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>HYSTERIA</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>SAD BUT TRUE</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>HAIFISCH</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>LONELY NIGHTS</article>
+        <article style={{ cursor: "pointer", fontSize: "40px", fontWeight: 800, lineHeight: "1.2em", width: "fit-content", paddingRight: "16px" }}>SLEEPING</article>
       </div>
     </div>
   );
