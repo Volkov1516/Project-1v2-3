@@ -19,7 +19,7 @@ export const Header = () => {
   return (
     <div className={css.container}>
       <div className={css.left}>
-        <Button variant="contained">CREATE</Button>
+        <Button variant="contained" size="large">CREATE</Button>
         <Button variant="text">categories</Button>
         <Button variant="text">search</Button>
       </div>

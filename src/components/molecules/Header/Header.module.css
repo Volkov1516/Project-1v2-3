@@ -35,4 +35,8 @@
   .left {
     flex-direction: row-reverse;
   }
+
+  .right {
+    display: none;
+  }
 }
