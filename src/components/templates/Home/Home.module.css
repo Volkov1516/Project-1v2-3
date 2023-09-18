@@ -2,6 +2,15 @@
   padding: 78px 16px 200px;
 }
 
+article {
+  width: fit-content;
+  padding-right: 16px;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.2em;
+  cursor: pointer;
+}
+
 @media (max-width: 639px) {
   .main {
     padding: 8px 16px 200px;
