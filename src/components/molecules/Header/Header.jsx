@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
 
 import css from './Header.module.css';
 
-import { Button } from 'components/atoms/Button/Button';
+import Button  from 'components/atoms/Button/Button';
 import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
 
 export const Header = () => {

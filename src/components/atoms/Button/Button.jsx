@@ -1,6 +1,8 @@
+import { memo } from 'react';
+
 import css from './Button.module.css';
 
-export const Button = ({
+const Button = memo(function Button({
   type = "button",
   variant,
   size,
@@ -8,7 +10,7 @@ export const Button = ({
   onClick,
   onMouseOver,
   onMouseLeave
-}) => {
+}) {
   return (
     <button
       className={`${css.button} ${css[variant]} ${css[size]}`}
@@ -21,4 +23,6 @@ export const Button = ({
       {children}
     </button>
   );
-};
+});
+
+export default Button;

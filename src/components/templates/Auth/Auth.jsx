@@ -8,7 +8,7 @@ import {
 } from 'firebase/auth';
 
 import { Input } from 'components/atoms/Input/Input';
-import { Button } from 'components/atoms/Button/Button';
+import Button from 'components/atoms/Button/Button';
 
 import css from './Auth.module.css';
 import logo from 'assets/logo.png';
