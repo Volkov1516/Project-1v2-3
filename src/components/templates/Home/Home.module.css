@@ -11,6 +11,7 @@ article {
   font-weight: 800;
   line-height: 1.2em;
   cursor: pointer;
+  user-select: none;
 }
 
 @media (max-width: 639px) {
