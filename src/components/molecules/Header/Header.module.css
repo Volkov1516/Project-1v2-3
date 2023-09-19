@@ -31,7 +31,6 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  column-gap: 8px;
 }
 
 .right {
@@ -39,7 +38,6 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  column-gap: 8px;
 }
 
 @media (max-width: 639px) {

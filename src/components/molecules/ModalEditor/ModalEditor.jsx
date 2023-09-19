@@ -3,6 +3,7 @@ import { useState } from 'react';
 import css from './ModalEditror.module.css';
 
 import Button from 'components/atoms/Button/Button';
+import { Editor } from 'components/organisms/Editor/Editor';
 
 export const ModalEditor = () => {
   const [open, setOpen] = useState(false);
@@ -21,9 +22,7 @@ export const ModalEditor = () => {
             </div>
           </div>
           <div className={css.content}>
-            <div style={{widht: "100px", height: "500px", backgroundColor: "gray"}}></div>
-            <div style={{widht: "100px", height: "500px", backgroundColor: "black"}}></div>
-            <div style={{widht: "100px", height: "500px", backgroundColor: "gray"}}></div>
+            <Editor />
           </div>
         </div>
       )}

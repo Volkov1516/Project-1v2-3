@@ -1,0 +1,28 @@
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0px auto;
+}
+
+.placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 400;
+  color: gray;
+  text-overflow: ellipsis;
+  user-select: none;
+  pointer-events: none;
+}
+
+.input {
+  position: relative;
+  min-height: 100px;
+  resize: none;
+  outline: 0;
+  tab-size: 1;
+}
