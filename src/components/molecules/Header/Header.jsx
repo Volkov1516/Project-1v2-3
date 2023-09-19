@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { useState } from 'react';
 
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
@@ -24,9 +24,7 @@ export const Header = () => {
   return (
     <div className={css.container}>
       <div className={css.left}>
-        <ModalEditor openElement={<Button variant="contained" size="large">CREATE</Button>}>
-          hello
-        </ModalEditor>
+        <ModalEditor />
         <Button variant="text" onClick={() => setOpen(!open)} onMouseOver={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>all articles</Button>
         <Button variant="text">search</Button>
       </div>
@@ -40,7 +38,7 @@ export const Header = () => {
           <div className={css.dropdownItem}>all articles</div>
           <div className={css.dropdownItem} style={{ color: "#1971c2" }}>#goals</div>
           <div className={css.dropdownItem} style={{ color: "#1971c2" }}>#projects</div>
-          <div className={css.dropdownItem} style={{ width: "fit-content", backgroundColor: "#e03131", paddingRight: "12px" }}>red</div>
+          <div className={css.dropdownItem} style={{ width: "fit-content", color: "white", backgroundColor: "#e03131", paddingRight: "12px" }}>red</div>
           <div className={css.dropdownItem} style={{ width: "fit-content", color: "white", backgroundColor: "#1971c2", paddingRight: "12px" }}>blue</div>
           <div className={css.dropdownItem}>trash</div>
         </div>
