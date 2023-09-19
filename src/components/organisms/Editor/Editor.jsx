@@ -27,10 +27,14 @@ export const Editor = () => {
     console.log(content);
   };
 
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />
-      <div className={css.container}>
+      <div className={css.container} onContextMenu={handleContextMenu}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           placeholder={<div className={css.placeholder}>Start writing to never forget...</div>}
