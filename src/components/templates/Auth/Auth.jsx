@@ -15,7 +15,7 @@ import logo from 'assets/logo.png';
 import google from 'assets/google.svg'
 
 export const Auth = () => {
-  const [authType, setAuthType] = useState('Sing in');
+  const [authType, setAuthType] = useState('Log in');
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('');
   const [focussedEmail, setFocussedEmail] = useState(false);
@@ -57,7 +57,7 @@ export const Auth = () => {
           console.log(errorCode, errorMessage);
         });
     }
-    else if (authType === 'Sing in') {
+    else if (authType === 'Log in') {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
@@ -141,14 +141,14 @@ export const Auth = () => {
           <hr className={css.divider} />
           <Button variant="outlined" onClick={handleGoogle}><img className={css.buttonImg} src={google} alt="google" />Continue with Google</Button>
         </form>
-        {authType === "Sing in"
+        {authType === "Log in"
           ? <>
             <span className={css.alternativeText}>Don't have an account?</span>
             <Button variant="text" onClick={() => handleToggleAuth("Sing up")}>Create account</Button>
           </>
           : <>
             <span className={css.alternativeText}>Already have an account?</span>
-            <Button variant="text" onClick={() => handleToggleAuth("Sing in")}>Sign in</Button>
+            <Button variant="text" onClick={() => handleToggleAuth("Log in")}>Log in</Button>
           </>
         }
       </div>
