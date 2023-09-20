@@ -3,6 +3,7 @@ import { useState } from 'react';
 import css from './ModalEditror.module.css';
 
 import Button from 'components/atoms/Button/Button';
+import { Title } from './Title/Title';
 import { Editor } from 'components/organisms/Editor/Editor';
 
 export const ModalEditor = () => {
@@ -22,6 +23,7 @@ export const ModalEditor = () => {
             </div>
           </div>
           <div className={css.content}>
+            <Title />
             <Editor />
           </div>
         </div>

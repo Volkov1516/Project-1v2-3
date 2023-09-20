@@ -1,0 +1,24 @@
+.textarea {
+  margin:  0 auto;
+  padding-left: 10px;
+  width: 100%;
+  max-width: 620px;
+  display: block;
+  outline: none;
+  border: none;
+  text-transform: uppercase;
+  font-size: 40px;
+  font-weight: 800;
+  resize: none;
+  overflow: auto;
+}
+
+.textarea::placeholder {
+  color: gray;
+}
+
+@media (max-width: 639px) {
+  .textarea {
+    padding-left: 0;
+  }
+}
