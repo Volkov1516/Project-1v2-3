@@ -48,6 +48,7 @@ export const Header = () => {
           <div className={css.dropdownItem}>settings</div>
           <div className={css.dropdownItem}>dark theme</div>
           <div className={css.dropdownItem}>eye saver</div>
+          <div className={css.dropdownItem}>striped list</div>
           <div className={`${css.dropdownItem} ${css.dropdownViewItem}`}>column view</div>
           <div className={css.dropdownItem} style={{ color: "#1971c2" }} onClick={handleSignOut}>sign out</div>
         </div>
