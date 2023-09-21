@@ -5,7 +5,7 @@
   height: 30px;
 }
 
-button {
+.container > button {
   height: 30px;
   padding: 8px;
 }

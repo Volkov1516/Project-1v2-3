@@ -20,14 +20,10 @@ export const Editor = () => {
     },
   };
 
-  const handleContextMenu = (e) => {
-    e.preventDefault();
-  };
-
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <FloatingTextToolbarPlugin />
-      <div className={css.container} onContextMenu={handleContextMenu}>
+      <div className={css.container}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           placeholder={<div className={css.placeholder}>Start writing to never forget...</div>}
