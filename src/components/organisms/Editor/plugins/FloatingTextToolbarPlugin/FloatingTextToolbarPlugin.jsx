@@ -15,10 +15,33 @@ import {
 
 import css from './FloatingTextToolbarPlugin.module.css';
 
+export function getDOMRangeRect(
+  nativeSelection,
+  rootElement,
+) {
+  const domRange = nativeSelection.getRangeAt(0);
+
+  let rect;
+
+  if (nativeSelection.anchorNode === rootElement) {
+    let inner = rootElement;
+    while (inner.firstElementChild != null) {
+      inner = inner.firstElementChild;
+    }
+    rect = inner.getBoundingClientRect();
+  } else {
+    rect = domRange.getBoundingClientRect();
+  }
+
+  return rect;
+}
+
 export const FloatingTextToolbarPlugin = () => {
   const [editor] = useLexicalComposerContext();
 
   const [isText, setIsText] = useState(false);
+  const [top, setTop] = useState(0);
+  const [left, setLeft] = useState(0);
 
   useEffect(() => {
     editor.registerCommand(
@@ -27,6 +50,13 @@ export const FloatingTextToolbarPlugin = () => {
         const selection = $getSelection();
         const nativeSelection = window.getSelection();
         const rootElement = editor.getRootElement();
+
+        // Shows 0 if new line is empty
+        // console.log(nativeSelection.focusOffset);
+
+        const rangeRect = getDOMRangeRect(nativeSelection, rootElement);
+        setTop(rangeRect.top - 32);
+        setLeft(rangeRect.left);
 
         if (
           selection !== null &&
@@ -70,7 +100,7 @@ export const FloatingTextToolbarPlugin = () => {
     });
   };
 
-  return createPortal((isText && <div className={css.container}>
+  return createPortal((isText && <div className={css.container} style={{ top: top, left: left }}>
     <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>bold</button>
     <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>italic</button>
     <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>underline</button>

@@ -3,7 +3,6 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 
-import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { FloatingTextToolbarPlugin } from './plugins/FloatingTextToolbarPlugin/FloatingTextToolbarPlugin';
 
 import { MainTheme } from './themes/MainTheme';
@@ -21,20 +20,12 @@ export const Editor = () => {
     },
   };
 
-  const onEditorChange = (editorState, editor) => {
-    let content = JSON.stringify(editorState);
-
-    // console.log(editor);
-    // console.log(content);
-  };
-
   const handleContextMenu = (e) => {
     e.preventDefault();
   };
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />
       <FloatingTextToolbarPlugin />
       <div className={css.container} onContextMenu={handleContextMenu}>
         <RichTextPlugin
