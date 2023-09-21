@@ -24,8 +24,8 @@ export const Editor = () => {
   const onEditorChange = (editorState, editor) => {
     let content = JSON.stringify(editorState);
 
-    console.log(editor);
-    console.log(content);
+    // console.log(editor);
+    // console.log(content);
   };
 
   const handleContextMenu = (e) => {

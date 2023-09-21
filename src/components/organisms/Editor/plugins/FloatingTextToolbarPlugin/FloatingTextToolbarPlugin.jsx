@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useEffect, useState } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   FORMAT_TEXT_COMMAND,
@@ -6,13 +7,10 @@ import {
   SELECTION_CHANGE_COMMAND,
   $getSelection,
   $isRangeSelection,
-  $createParagraphNode,
-  $isTextNode,
-  $isLinkNode
+  BLUR_COMMAND,
 } from 'lexical';
 import {
-  $patchStyleText,
-  $setBlocksType
+  $patchStyleText
 } from '@lexical/selection';
 
 import css from './FloatingTextToolbarPlugin.module.css';
@@ -47,26 +45,20 @@ export const FloatingTextToolbarPlugin = () => {
     )
   }, [editor]);
 
-  const clearFormat = () => {
-    editor.update(() => {
-      const selection = $getSelection();
-      if ($isRangeSelection(selection)) {
-        selection.getNodes().forEach((node) => {
-          if ($isTextNode(node)) {
-            node.setFormat(0);
-            node.setStyle("");
-          } else if ($isLinkNode(node)) {
-            const children = node.getChildren();
-            for (const child of children) {
-              node.insertBefore(child);
-            }
-            node.remove();
-          }
-        });
-        $setBlocksType(selection, () => $createParagraphNode());
-      }
-    });
-  };
+  useEffect(() => {
+    editor.registerCommand(
+      BLUR_COMMAND,
+      (e) => {
+        if (e?.relatedTarget?.id === 'tool') {
+          return;
+        }
+        else {
+          setIsText(false);
+        }
+      },
+      COMMAND_PRIORITY_LOW
+    );
+  }, []);
 
   const formatTextColor = () => {
     editor.update(() => {
@@ -78,16 +70,15 @@ export const FloatingTextToolbarPlugin = () => {
     });
   };
 
-  return (isText && <div className={css.container}>
-    <button onClick={() => clearFormat()}>clear</button>
-    <button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>bold</button>
-    <button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>italic</button>
-    <button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>underline</button>
-    <button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}>strikethrough</button>
-    <button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript')}>subscript</button>
-    <button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript')}>superscript</button>
-    <button onClick={() => formatTextColor()}>color</button>
-    <button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'highlight')}>highlight</button>
-    <button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}>code</button>
-  </div>);
+  return createPortal((isText && <div className={css.container}>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>bold</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>italic</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>underline</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}>strikethrough</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript')}>subscript</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript')}>superscript</button>
+    <button id="tool" onClick={() => formatTextColor()}>color</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'highlight')}>highlight</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}>code</button>
+  </div>), document.body);
 };
