@@ -14,7 +14,7 @@ export const MainTheme = {
   },
   text: {
     bold: `${css.bold}`,
-    italic: `${css.talic}`,
+    italic: `${css.italic}`,
     underline: `${css.underline}`,
     strikethrough: `${css.strikethrough}`,
     underlineStrikethrough: `${css.underlineStrikethrough}`,
