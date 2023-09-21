@@ -4,3 +4,47 @@
   line-height: 1.5em;
   font-weight: 400;
 }
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+
+.underlineStrikethrough {
+  text-decoration: underline line-through;
+}
+
+.highlight {
+  border-radius: 4px;
+  background-color: yellow;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.code {
+  padding: 2px 4px;
+  background-color: #DEE2E6;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.subscript {
+  font-size: 0.8em;
+  vertical-align: sub !important;
+}
+
+.superscript {
+  font-size: 0.8em;
+  vertical-align: super;
+}
