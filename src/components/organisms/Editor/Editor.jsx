@@ -4,6 +4,7 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
+import { FloatingTextToolbarPlugin } from './plugins/FloatingTextToolbarPlugin/FloatingTextToolbarPlugin';
 
 import { MainTheme } from './themes/MainTheme';
 
@@ -34,6 +35,7 @@ export const Editor = () => {
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />
+      <FloatingTextToolbarPlugin />
       <div className={css.container} onContextMenu={handleContextMenu}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
