@@ -88,7 +88,7 @@ export const FloatingTextToolbarPlugin = () => {
       },
       COMMAND_PRIORITY_LOW
     );
-  }, []);
+  }, [editor]);
 
   const formatTextColor = () => {
     editor.update(() => {
