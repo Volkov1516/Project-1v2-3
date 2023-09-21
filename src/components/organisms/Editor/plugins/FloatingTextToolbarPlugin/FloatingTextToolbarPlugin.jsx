@@ -50,13 +50,23 @@ export const FloatingTextToolbarPlugin = () => {
         const selection = $getSelection();
         const nativeSelection = window.getSelection();
         const rootElement = editor.getRootElement();
-
         // Shows 0 if new line is empty
         // console.log(nativeSelection.focusOffset);
 
-        const rangeRect = getDOMRangeRect(nativeSelection, rootElement);
-        setTop(rangeRect.top - 32);
-        setLeft(rangeRect.left);
+        const viewportHeight = window.visualViewport.height;
+        const viewportWidth = window.visualViewport.width;
+        console.log(viewportHeight)
+        console.log(viewportWidth)
+
+        if (viewportWidth < 640) {
+          setTop(viewportHeight - 30);
+          setLeft(0);
+        }
+        else {
+          const rangeRect = getDOMRangeRect(nativeSelection, rootElement);
+          setTop(rangeRect.top - 32);
+          setLeft(rangeRect.left);
+        }
 
         if (
           selection !== null &&
@@ -101,14 +111,14 @@ export const FloatingTextToolbarPlugin = () => {
   };
 
   return createPortal((isText && <div className={css.container} style={{ top: top, left: left }}>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>bold</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>italic</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>underline</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}>strikethrough</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript')}>subscript</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript')}>superscript</button>
-    <button id="tool" onClick={() => formatTextColor()}>color</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'highlight')}>highlight</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}>code</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>B</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>I</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>U</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}>S</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript')}>Sub</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript')}>Sup</button>
+    <button id="tool" onClick={() => formatTextColor()}>C</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'highlight')}>H</button>
+    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}>C</button>
   </div>), document.body);
 };
