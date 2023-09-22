@@ -8,7 +8,6 @@ import { Editor } from 'components/organisms/Editor/Editor';
 
 export const ModalEditor = () => {
   const [open, setOpen] = useState(false);
-  const [scrollTop, setScrollTop] = useState(0);
 
   return (
     <>
