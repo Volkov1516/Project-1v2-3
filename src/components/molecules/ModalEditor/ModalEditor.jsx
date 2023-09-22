@@ -8,6 +8,13 @@ import { Editor } from 'components/organisms/Editor/Editor';
 
 export const ModalEditor = () => {
   const [open, setOpen] = useState(false);
+  const [scrollTop, setScrollTop] = useState(0);
+
+  const handleScroll = (e) => {
+    console.log(scrollTop);
+    setScrollTop(e.target.scrollTop);
+  };
+
   return (
     <>
       <Button variant="contained" size="large" onClick={() => setOpen(true)}>CREATE</Button>
@@ -22,9 +29,9 @@ export const ModalEditor = () => {
               <Button variant="text">settings</Button>
             </div>
           </div>
-          <div className={css.content}>
+          <div className={css.content} onScroll={handleScroll}>
             <Title />
-            <Editor />
+            <Editor scrollTop={scrollTop} />
           </div>
         </div>
       )}
