@@ -81,7 +81,7 @@ export const FloatingTextToolbarPlugin = ({ scrollTop }) => {
       },
       COMMAND_PRIORITY_LOW
     )
-  }, [editor]);
+  }, [editor, scrollTop]);
 
   useEffect(() => {
     editor.registerCommand(
