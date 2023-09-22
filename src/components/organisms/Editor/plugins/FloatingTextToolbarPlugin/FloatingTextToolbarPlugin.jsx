@@ -36,7 +36,7 @@ export function getDOMRangeRect(
   return rect;
 }
 
-export const FloatingTextToolbarPlugin = ({ scrollTop }) => {
+export const FloatingTextToolbarPlugin = () => {
   const [editor] = useLexicalComposerContext();
 
   const [isText, setIsText] = useState(false);
@@ -57,7 +57,7 @@ export const FloatingTextToolbarPlugin = ({ scrollTop }) => {
         const viewportWidth = window.visualViewport.width;
 
         if (viewportWidth < 640) {
-          setTop((viewportHeight + scrollTop) - 30);
+          setTop(viewportHeight - 30);
           setLeft(0);
         }
         else {
@@ -81,7 +81,7 @@ export const FloatingTextToolbarPlugin = ({ scrollTop }) => {
       },
       COMMAND_PRIORITY_LOW
     )
-  }, [editor, scrollTop]);
+  }, [editor]);
 
   useEffect(() => {
     editor.registerCommand(

@@ -9,7 +9,7 @@ import { MainTheme } from './themes/MainTheme';
 
 import css from './Editor.module.css';
 
-export const Editor = ({ scrollTop }) => {
+export const Editor = () => {
   const initialConfig = {
     namespace: 'Editor',
     editable: true,
@@ -22,7 +22,7 @@ export const Editor = ({ scrollTop }) => {
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <FloatingTextToolbarPlugin scrollTop={scrollTop} />
+      <FloatingTextToolbarPlugin />
       <div className={css.container}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
