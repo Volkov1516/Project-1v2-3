@@ -15,27 +15,6 @@ import {
 
 import css from './FloatingTextToolbarPlugin.module.css';
 
-export function getDOMRangeRect(
-  nativeSelection,
-  rootElement,
-) {
-  const domRange = nativeSelection.getRangeAt(0);
-
-  let rect;
-
-  if (nativeSelection.anchorNode === rootElement) {
-    let inner = rootElement;
-    while (inner.firstElementChild != null) {
-      inner = inner.firstElementChild;
-    }
-    rect = inner.getBoundingClientRect();
-  } else {
-    rect = domRange.getBoundingClientRect();
-  }
-
-  return rect;
-}
-
 export const FloatingTextToolbarPlugin = () => {
   const [editor] = useLexicalComposerContext();
 
@@ -50,21 +29,6 @@ export const FloatingTextToolbarPlugin = () => {
         const selection = $getSelection();
         const nativeSelection = window.getSelection();
         const rootElement = editor.getRootElement();
-        // Shows 0 if new line is empty
-        // console.log(nativeSelection.focusOffset);
-
-        const viewportHeight = window.visualViewport.height;
-        const viewportWidth = window.visualViewport.width;
-
-        if (viewportWidth < 640) {
-          setTop(viewportHeight - 30);
-          setLeft(0);
-        }
-        else {
-          const rangeRect = getDOMRangeRect(nativeSelection, rootElement);
-          setTop(rangeRect.top - 32);
-          setLeft(rangeRect.left);
-        }
 
         if (
           selection !== null &&
@@ -73,6 +37,22 @@ export const FloatingTextToolbarPlugin = () => {
           rootElement !== null &&
           rootElement.contains(nativeSelection.anchorNode)
         ) {
+          const viewportHeight = window.visualViewport.height;
+          const viewportWidth = window.visualViewport.width;
+
+          if (viewportWidth < 640) {
+            setTop(viewportHeight - 32);
+            setLeft(0);
+          }
+          else {
+            const domRange = nativeSelection.getRangeAt(0);
+            const rect = domRange.getBoundingClientRect();
+            console.log(rect)
+
+            setTop(rect.top - 32);
+            setLeft(rect.left);
+          }
+
           setIsText(true);
         }
         else {
