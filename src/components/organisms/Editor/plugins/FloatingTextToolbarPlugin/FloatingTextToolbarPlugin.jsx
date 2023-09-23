@@ -63,7 +63,7 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
       },
       COMMAND_PRIORITY_LOW
     )
-  }, [editor]);
+  }, [editor, modalEditorContentRef]);
 
   useEffect(() => {
     editor.registerCommand(
