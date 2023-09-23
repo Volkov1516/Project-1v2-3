@@ -15,7 +15,7 @@ import {
 
 import css from './FloatingTextToolbarPlugin.module.css';
 
-export const FloatingTextToolbarPlugin = () => {
+export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
   const [editor] = useLexicalComposerContext();
 
   const [isText, setIsText] = useState(false);
@@ -27,8 +27,8 @@ export const FloatingTextToolbarPlugin = () => {
       SELECTION_CHANGE_COMMAND,
       () => {
         const selection = $getSelection();
-        const nativeSelection = window.getSelection();
         const rootElement = editor.getRootElement();
+        const nativeSelection = window.getSelection();
 
         if (
           selection !== null &&
@@ -47,9 +47,11 @@ export const FloatingTextToolbarPlugin = () => {
           else {
             const domRange = nativeSelection.getRangeAt(0);
             const rect = domRange.getBoundingClientRect();
-            console.log(rect)
+            const textRect = modalEditorContentRef?.current?.getBoundingClientRect();
 
-            setTop(rect.top - 32);
+            const top = rect?.top - textRect?.top + modalEditorContentRef?.current?.scrollTop - 30;
+
+            setTop(top);
             setLeft(rect.left);
           }
 
@@ -88,15 +90,18 @@ export const FloatingTextToolbarPlugin = () => {
     });
   };
 
-  return createPortal((isText && <div className={css.container} style={{ top: top, left: left }}>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>B</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>I</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>U</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}>S</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript')}>Sub</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript')}>Sup</button>
-    <button id="tool" onClick={() => formatTextColor()}>C</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'highlight')}>H</button>
-    <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}>C</button>
-  </div>), document.body);
+  return (modalEditorContentRef?.current && isText && createPortal(
+    <div className={css.container} style={{ top: top, left: left }}>
+      <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>B</button>
+      <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>I</button>
+      <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>U</button>
+      <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}>S</button>
+      <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript')}>Sub</button>
+      <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript')}>Sup</button>
+      <button id="tool" onClick={() => formatTextColor()}>C</button>
+      <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'highlight')}>H</button>
+      <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}>C</button>
+    </div>,
+    modalEditorContentRef?.current
+  ));
 };

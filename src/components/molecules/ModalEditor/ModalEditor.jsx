@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import css from './ModalEditror.module.css';
 
@@ -7,6 +7,8 @@ import { Title } from './Title/Title';
 import { Editor } from 'components/organisms/Editor/Editor';
 
 export const ModalEditor = () => {
+  const modalEditorContentRef = useRef(null);
+
   const [open, setOpen] = useState(false);
 
   return (
@@ -23,9 +25,9 @@ export const ModalEditor = () => {
               <Button variant="text">settings</Button>
             </div>
           </div>
-          <div className={css.content}>
+          <div ref={modalEditorContentRef} className={css.content}>
             <Title />
-            <Editor />
+            <Editor modalEditorContentRef={modalEditorContentRef} />
           </div>
         </div>
       )}
