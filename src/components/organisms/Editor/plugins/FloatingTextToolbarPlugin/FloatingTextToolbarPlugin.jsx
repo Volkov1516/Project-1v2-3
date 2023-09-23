@@ -24,6 +24,22 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
   const [left, setLeft] = useState(0);
 
   useEffect(() => {
+    const viewportHeight = window.visualViewport.height;
+
+    window.addEventListener('resize', setTop(viewportHeight - 30));
+    if (modalEditorContentRef?.current) {
+      modalEditorContentRef?.current.addEventListener('scroll', setTop(viewportHeight - 30));
+    }
+
+    return () => {
+      window.removeEventListener('resize', setTop(viewportHeight - 30));
+      if (modalEditorContentRef?.current) {
+        modalEditorContentRef?.current.removeEventListener('scroll', setTop(viewportHeight - 30));
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     editor.registerCommand(
       SELECTION_CHANGE_COMMAND,
       () => {
