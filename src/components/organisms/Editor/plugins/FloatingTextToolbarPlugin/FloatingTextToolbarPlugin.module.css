@@ -16,3 +16,14 @@
   align-items: center;
   cursor: pointer;
 }
+
+@media (max-width: 639px) {
+  .container {
+    justify-content: flex-start;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+}
