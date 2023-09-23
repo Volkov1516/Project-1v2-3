@@ -36,8 +36,6 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
           rootElement !== null &&
           rootElement.contains(nativeSelection.anchorNode)
         ) {
-          const viewportWidth = window.visualViewport.width;
-
           const domRange = nativeSelection.getRangeAt(0);
           const rect = domRange.getBoundingClientRect();
           const textRect = modalEditorContentRef?.current?.getBoundingClientRect();
