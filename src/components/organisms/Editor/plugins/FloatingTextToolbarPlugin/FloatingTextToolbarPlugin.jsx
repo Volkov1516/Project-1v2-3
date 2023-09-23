@@ -24,22 +24,6 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
   const [left, setLeft] = useState(0);
 
   useEffect(() => {
-    const viewportHeight = window.visualViewport.height;
-
-    window.addEventListener('resize', setTop(viewportHeight - 30));
-    if (modalEditorContentRef?.current) {
-      modalEditorContentRef?.current.addEventListener('scroll', setTop(viewportHeight - 30));
-    }
-
-    return () => {
-      window.removeEventListener('resize', setTop(viewportHeight - 30));
-      if (modalEditorContentRef?.current) {
-        modalEditorContentRef?.current.removeEventListener('scroll', setTop(viewportHeight - 30));
-      }
-    };
-  }, [modalEditorContentRef]);
-
-  useEffect(() => {
     editor.registerCommand(
       SELECTION_CHANGE_COMMAND,
       () => {
@@ -54,18 +38,19 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
           rootElement !== null &&
           rootElement.contains(nativeSelection.anchorNode)
         ) {
-          const viewportHeight = window.visualViewport.height;
           const viewportWidth = window.visualViewport.width;
 
           if (viewportWidth < 640) {
-            setPosition('fixed');
+            const domRange = nativeSelection.getRangeAt(0);
+            const rect = domRange.getBoundingClientRect();
+            const textRect = modalEditorContentRef?.current?.getBoundingClientRect();
 
-            setTop(viewportHeight - 30);
+            const top = rect?.top - textRect?.top + modalEditorContentRef?.current?.scrollTop - 30;
+
+            setTop(top);
             setLeft(0);
           }
           else {
-            setPosition('absolute');
-
             const domRange = nativeSelection.getRangeAt(0);
             const rect = domRange.getBoundingClientRect();
             const textRect = modalEditorContentRef?.current?.getBoundingClientRect();
@@ -112,7 +97,7 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
   };
 
   return (modalEditorContentRef?.current && isText && createPortal(
-    <div className={css.container} style={{ position: position, top: top, left: left }}>
+    <div className={css.container} style={{ top: top, left: left }}>
       <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>B</button>
       <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>I</button>
       <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>U</button>
