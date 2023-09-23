@@ -20,10 +20,18 @@ export const Editor = ({ modalEditorContentRef }) => {
     },
   };
 
+  const handleContentMenu = (e) => {
+    const viewportWidth = window.visualViewport.width;
+
+    if (viewportWidth < 640) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <FloatingTextToolbarPlugin modalEditorContentRef={modalEditorContentRef} />
-      <div className={css.container} onContextMenu={(e) => e.preventDefault()}>
+      <div className={css.container} onContextMenu={handleContentMenu}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           placeholder={<div className={css.placeholder}>Start writing to never forget...</div>}
