@@ -1,11 +1,15 @@
 .container {
   position: absolute;
   top: 0;
-  left: 0;
-  height: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
 }
 
-.container > button {
-  height: 30px;
-  padding: 8px;
+.container>button {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  align-items: center;
+  cursor: pointer;
 }
