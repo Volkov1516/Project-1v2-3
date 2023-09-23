@@ -82,33 +82,24 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
     });
   };
 
-  const paste =  () => {
-    navigator.clipboard.read().then(async (...args) => {
+  const paste = async () => {
+    try {
       const data = new DataTransfer();
 
       const items = await navigator.clipboard.read();
       const item = items[0];
-
-      const permission = await navigator.permissions.query({
-        // @ts-ignore These types are incorrect.
-        name: 'clipboard-read',
-      });
-      if (permission.state === 'denied') {
-        alert('Not allowed to paste from clipboard.');
-        return;
-      }
 
       for (const type of item.types) {
         const dataString = await (await item.getType(type)).text();
         data.setData(type, dataString);
       }
 
-      const event = new ClipboardEvent('paste', {
-        clipboardData: data,
-      });
+      const event = new ClipboardEvent('paste', { clipboardData: data });
 
       editor.dispatchCommand(PASTE_COMMAND, event);
-    });
+    } catch (error) {
+      alert(`Please, allow clipboard access for paste.`);
+    }
   };
 
   return (modalEditorContentRef?.current && isText && createPortal(
