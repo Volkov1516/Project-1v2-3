@@ -9,8 +9,6 @@ import {
   $isRangeSelection,
   BLUR_COMMAND,
   COPY_COMMAND,
-  CUT_COMMAND,
-  PASTE_COMMAND
 } from 'lexical';
 import {
   $patchStyleText
@@ -82,31 +80,9 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
     });
   };
 
-  const paste = async () => {
-    try {
-      const data = new DataTransfer();
-
-      const items = await navigator.clipboard.read();
-      const item = items[0];
-
-      for (const type of item.types) {
-        const dataString = await (await item.getType(type)).text();
-        data.setData(type, dataString);
-      }
-
-      const event = new ClipboardEvent('paste', { clipboardData: data });
-
-      editor.dispatchCommand(PASTE_COMMAND, event);
-    } catch (error) {
-      alert(`Please, allow clipboard access for paste.`);
-    }
-  };
-
   return (modalEditorContentRef?.current && isText && createPortal(
     <div className={css.container} style={{ top: top }}>
       <button id="tool" onClick={() => editor.dispatchCommand(COPY_COMMAND, null)}>Copy</button>
-      <button id="tool" onClick={() => editor.dispatchCommand(CUT_COMMAND, null)}>Cut</button>
-      <button id="tool" onClick={paste}>Paste</button>
       <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>B</button>
       <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>I</button>
       <button id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>U</button>

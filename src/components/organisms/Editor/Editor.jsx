@@ -25,7 +25,6 @@ export const Editor = ({ modalEditorContentRef }) => {
 
     if (viewportWidth < 640) {
       e.preventDefault();
-      e.stopPropagation();
     }
   };
 
