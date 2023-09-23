@@ -41,11 +41,7 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
           const viewportWidth = window.visualViewport.width;
 
           if (viewportWidth < 640) {
-            const textRect = modalEditorContentRef?.current?.getBoundingClientRect();
-
-            const top = viewportHeight - textRect?.top + modalEditorContentRef?.current?.scrollTop - 30;
-
-            setTop(top);
+            setTop(viewportHeight - 30);
             setLeft(0);
           }
           else {

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 
 import css from './ModalEditror.module.css';
 
@@ -10,18 +10,6 @@ export const ModalEditor = () => {
   const modalEditorContentRef = useRef(null);
 
   const [open, setOpen] = useState(false);
-  const [top, setTop] = useState(0);
-
-  useEffect(() => {
-    const viewportHeight = window.visualViewport.height;
-    setTop(viewportHeight);
-  }, []);
-
-  const handleScroll = (e) => {
-    const viewportHeight = window.visualViewport.height - 100;
-
-    setTop(viewportHeight + e.target.scrollTop)
-  }
 
   return (
     <>
@@ -37,10 +25,9 @@ export const ModalEditor = () => {
               <Button variant="text">settings</Button>
             </div>
           </div>
-          <div ref={modalEditorContentRef} className={css.content} onScroll={handleScroll}>
+          <div ref={modalEditorContentRef} className={css.content}>
             <Title />
             <Editor modalEditorContentRef={modalEditorContentRef} />
-            <div style={{width: "200px", height: "40px", position: "absolute", backgroundColor: "red", top: top}}></div>
           </div>
         </div>
       )}
