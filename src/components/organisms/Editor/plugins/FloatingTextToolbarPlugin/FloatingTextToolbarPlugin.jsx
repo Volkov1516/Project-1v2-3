@@ -19,7 +19,6 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
   const [editor] = useLexicalComposerContext();
 
   const [isText, setIsText] = useState(false);
-  const [position, setPosition] = useState('absolute');
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
 
