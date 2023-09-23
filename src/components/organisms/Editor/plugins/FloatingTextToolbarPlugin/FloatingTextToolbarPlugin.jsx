@@ -37,7 +37,7 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
         modalEditorContentRef?.current.removeEventListener('scroll', setTop(viewportHeight - 30));
       }
     };
-  }, []);
+  }, [modalEditorContentRef]);
 
   useEffect(() => {
     editor.registerCommand(
