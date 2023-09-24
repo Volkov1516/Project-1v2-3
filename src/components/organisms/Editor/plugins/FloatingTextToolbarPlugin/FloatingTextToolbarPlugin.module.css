@@ -5,20 +5,33 @@
   transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  width: 100%;
   overflow-x: auto;
+  outline: 1px solid #BFC7B4;
 }
 
 .container>button {
-  min-width: 40px;
-  height: 40px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  padding: 10px 16px;
+  outline: none;
+  border: none;
   cursor: pointer;
+  font-weight: 600;
+  background-color: #BFC7B4;
+}
+
+.container>button:focus {
+  background-color: #e8eddf;
+}
+
+.container>button:hover {
+  background-color: #e8eddf;
 }
 
 @media (max-width: 639px) {
   .container {
+    width: 100%;
     justify-content: flex-start;
   }
 
