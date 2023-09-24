@@ -119,17 +119,17 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
   };
 
   const handleKeyDown = (e) => {
-    if (e.keyCode == '37') {
+    if (e.keyCode === 37) {
       console.log('left')
     }
-    else if (e.keyCode == '38') {
+    else if (e.keyCode === 38) {
       console.log('up')
     }
-    else if (e.keyCode == '39') {
+    else if (e.keyCode === 39) {
       console.log('right')
       italicRef.current?.focus();
     }
-    else if (e.keyCode == '40') {
+    else if (e.keyCode === 40) {
       e.preventDefault();
       setIsText(false);
       editor.focus();
