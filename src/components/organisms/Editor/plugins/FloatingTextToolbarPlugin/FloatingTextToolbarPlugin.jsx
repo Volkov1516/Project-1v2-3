@@ -31,6 +31,7 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
   const highlightRef = useRef(null);
   const codeRef = useRef(null);
 
+  const [selectedTool, setSelectedTool] = useState(0);
   const [isText, setIsText] = useState(false);
   const [top, setTop] = useState(0);
 
@@ -102,11 +103,71 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
           e.preventDefault();
 
           copyRef.current?.focus();
+          setSelectedTool(0);
         }
       },
       COMMAND_PRIORITY_LOW
     );
   }, [editor]);
+
+  useEffect(() => {
+    switch (selectedTool) {
+      case 0:
+        copyRef.current?.focus();
+        break;
+      case 1:
+        boldRef.current?.focus();
+        break;
+      case 2:
+        italicRef.current?.focus();
+        break;
+      case 3:
+        underlineRef.current?.focus();
+        break;
+      case 4:
+        strikethroughRef.current?.focus();
+        break;
+      case 5:
+        subscriptRef.current?.focus();
+        break;
+      case 6:
+        superscriptRef.current?.focus();
+        break;
+      case 7:
+        colorRef.current?.focus();
+        break;
+      case 8:
+        highlightRef.current?.focus();
+        break;
+      case 9:
+        codeRef.current?.focus();
+        break;
+      default:
+        return;
+    }
+  }, [selectedTool]);
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 37) {
+      if (selectedTool === 0) return;
+
+      setSelectedTool(selectedTool - 1);
+    }
+    else if (e.keyCode === 38) {
+      setSelectedTool(0);
+    }
+    else if (e.keyCode === 39) {
+      if (selectedTool === 9) return;
+
+      setSelectedTool(selectedTool + 1);
+    }
+    else if (e.keyCode === 40) {
+      e.preventDefault();
+      setIsText(false);
+      setSelectedTool(0);
+      editor.focus();
+    }
+  };
 
   const formatTextColor = () => {
     editor.update(() => {
@@ -116,24 +177,6 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
         $patchStyleText(selection, { color: '#F55050' });
       }
     });
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.keyCode === 37) {
-      console.log('left')
-    }
-    else if (e.keyCode === 38) {
-      console.log('up')
-    }
-    else if (e.keyCode === 39) {
-      console.log('right')
-      italicRef.current?.focus();
-    }
-    else if (e.keyCode === 40) {
-      e.preventDefault();
-      setIsText(false);
-      editor.focus();
-    }
   };
 
   return (modalEditorContentRef?.current && isText && createPortal(
