@@ -21,7 +21,6 @@ export const FloatingBlockToolbarPlugin = ({ modalEditorContentRef }) => {
 
   const headerRef = useRef(null);
 
-  const [blockType, setBlockType] = useState('paragraph');
   const [selectedTool, setSelectedTool] = useState(0);
   const [isBlock, setIsBlock] = useState(false);
   const [top, setTop] = useState(0);
@@ -93,7 +92,7 @@ export const FloatingBlockToolbarPlugin = ({ modalEditorContentRef }) => {
       },
       COMMAND_PRIORITY_LOW
     );
-  }, [editor]);
+  }, [editor, isBlock]);
 
   useEffect(() => {
     switch (selectedTool) {
@@ -106,15 +105,13 @@ export const FloatingBlockToolbarPlugin = ({ modalEditorContentRef }) => {
   }, [selectedTool]);
 
   const formatHeading = (headingSize) => {
-    if (blockType !== headingSize) {
-      editor.update(() => {
-        const selection = $getSelection();
+    editor.update(() => {
+      const selection = $getSelection();
 
-        if ($isRangeSelection(selection)) {
-          $setBlocksType(selection, () => $createHeadingNode(headingSize));
-        }
-      });
-    }
+      if ($isRangeSelection(selection)) {
+        $setBlocksType(selection, () => $createHeadingNode(headingSize));
+      }
+    });
   };
 
   return (modalEditorContentRef?.current && isBlock && createPortal(
