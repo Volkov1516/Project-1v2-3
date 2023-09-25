@@ -3,7 +3,10 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 
+import { HeadingNode } from '@lexical/rich-text';
+
 import { FloatingTextToolbarPlugin } from './plugins/FloatingTextToolbarPlugin/FloatingTextToolbarPlugin';
+import { FloatingBlockToolbarPlugin } from './plugins/FloatingBlockToolbarPlugin/FloatingBlockToolbarPlugin';
 
 import { MainTheme } from './themes/MainTheme';
 
@@ -15,6 +18,9 @@ export const Editor = ({ modalEditorContentRef }) => {
     editable: true,
     theme: MainTheme,
     editorState: null,
+    nodes: [
+      HeadingNode
+    ],
     onError(error) {
       throw error;
     },
@@ -31,6 +37,7 @@ export const Editor = ({ modalEditorContentRef }) => {
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <FloatingTextToolbarPlugin modalEditorContentRef={modalEditorContentRef} />
+      <FloatingBlockToolbarPlugin modalEditorContentRef={modalEditorContentRef} />
       <div className={css.container} onContextMenu={handleContentMenu}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}

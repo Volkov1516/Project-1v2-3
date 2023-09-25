@@ -57,7 +57,6 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
           const top = rect?.top - textRect?.top + modalEditorContentRef?.current?.scrollTop - 48;
 
           setTop(top);
-
           setIsText(true);
         }
         else {

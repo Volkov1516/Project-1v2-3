@@ -48,3 +48,13 @@
   font-size: 0.8em;
   vertical-align: super;
 }
+
+.h1 {
+  font-size: 32px !important;
+  font-weight: 800;
+  margin: 16px 0px 8px;
+}
+
+.h1>span {
+  font-size: 32px !important;
+}
