@@ -4,20 +4,16 @@
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  justify-content: center;
   overflow-x: auto;
   outline: 1px solid #BFC7B4;
 }
 
 .container>button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
   padding: 10px 16px;
   outline: none;
   border: none;
   cursor: pointer;
-  font-weight: 600;
   background-color: #BFC7B4;
 }
 
@@ -29,9 +25,49 @@
   background-color: #e8eddf;
 }
 
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+
+.subscript {
+  font-size: 0.8em;
+  vertical-align: sub !important;
+}
+
+.superscript {
+  font-size: 0.8em;
+  vertical-align: super;
+}
+
+.color {
+  color: red;
+}
+
+.highlight {
+  padding: 2px;
+  background-color: yellow !important;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.code {
+  background-color: gray !important;
+}
+
 @media (max-width: 639px) {
   .container {
-    width: 100%;
     justify-content: flex-start;
   }
 

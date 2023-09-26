@@ -181,15 +181,15 @@ export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
   return (modalEditorContentRef?.current && isText && createPortal(
     <div onKeyDown={handleKeyDown} className={css.container} style={{ top: top }}>
       <button ref={copyRef} id="tool" onClick={() => editor.dispatchCommand(COPY_COMMAND, null)}>copy</button>
-      <button ref={boldRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>B</button>
-      <button ref={italicRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>I</button>
-      <button ref={underlineRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>U</button>
-      <button ref={strikethroughRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}>S</button>
-      <button ref={subscriptRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript')}>S</button>
-      <button ref={superscriptRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript')}>S</button>
-      <button ref={colorRef} id="tool" onClick={() => formatTextColor()}>C</button>
-      <button ref={highlightRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'highlight')}>H</button>
-      <button ref={codeRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}>C</button>
+      <button className={css.bold} ref={boldRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>B</button>
+      <button className={css.italic} ref={italicRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>I</button>
+      <button className={css.underline} ref={underlineRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>U</button>
+      <button className={css.strikethrough} ref={strikethroughRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}>S</button>
+      <button ref={subscriptRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript')}>x<span className={css.subscript}>2</span></button>
+      <button ref={superscriptRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript')}>x<span className={css.superscript}>2</span></button>
+      <button className={css.color} ref={colorRef} id="tool" onClick={() => formatTextColor()}>C</button>
+      <button className={css.highlight} ref={highlightRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'highlight')}>H</button>
+      <button className={css.code} ref={codeRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}>C</button>
     </div>,
     modalEditorContentRef?.current
   ));
