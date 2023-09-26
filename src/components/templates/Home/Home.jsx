@@ -9,7 +9,7 @@ export const Home = () => {
       <div className={css.main}>
         <article>MISS YOU</article>
         <article style={{ color: "white", backgroundColor: "#1971c2" }}>DIAMONDS AND RUST</article>
-        <article>ANGIE</article>
+        <article style={{ color: "white", backgroundColor: "#1971c2" }}>ANGIE</article>
         <article>ROSENROT</article>
         <article>SOMENTING ON THE WAY</article>
         <article>BREAKING THE LAW</article>
