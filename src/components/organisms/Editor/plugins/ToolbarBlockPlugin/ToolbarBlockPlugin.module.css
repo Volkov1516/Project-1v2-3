@@ -1,27 +1,35 @@
 .container {
   position: absolute;
   display: flex;
-  outline: 1px solid #BFC7B4;
+  justify-content: center;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.placeholder {
+  color: gray;
 }
 
 .container>button {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 16px;
-  outline: none;
+  padding: 2px 8px;
+  outline: 1px solid gray;
   border: none;
   cursor: pointer;
-  font-weight: 600;
-  background-color: #BFC7B4;
+  background-color: transparent;
+  color: gray;
 }
 
 .container>button:focus {
-  background-color: #e8eddf;
+  background-color: gray;
+  color: white;
 }
 
 .container>button:hover {
-  background-color: #e8eddf;
+  background-color: gray;
+  color: white;
 }
 
 @media (max-width: 639px) {

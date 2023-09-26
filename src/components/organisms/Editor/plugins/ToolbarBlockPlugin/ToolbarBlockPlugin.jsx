@@ -35,9 +35,9 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
         const node = selection.getNodes();
 
         if (node[0].__type === ('paragraph' || 'root')) {
-          const top = nativeSelection.anchorNode.offsetTop + 44;
+          const top = nativeSelection.anchorNode.offsetTop + 52;
           const viewport = window.visualViewport.width;
-          let left = (viewport - 600) / 2 + 100;
+          let left = (viewport - 600) / 2;
 
           setTop(top);
           setLeft(left);
@@ -116,6 +116,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
 
   return (modalEditorContentRef?.current && isBlock && createPortal(
     <div className={css.container} style={{ top: top, left: left }}>
+      <span className={css.placeholder} onClick={() => editor.focus()}>Type or select: </span>
       <button ref={headerRef} id="tool" onClick={() => formatHeading('h1')}>header</button>
     </div>,
     modalEditorContentRef?.current
