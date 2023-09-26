@@ -41,7 +41,6 @@ export const Editor = ({ modalEditorContentRef }) => {
       <div className={css.container} onContextMenu={handleContentMenu}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
-          placeholder={<div className={css.placeholder}>Start writing to never forget...</div>}
           ErrorBoundary={LexicalErrorBoundary}
         />
       </div>
