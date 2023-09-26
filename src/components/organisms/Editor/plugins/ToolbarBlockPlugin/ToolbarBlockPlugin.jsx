@@ -14,9 +14,9 @@ import {
   $createHeadingNode,
 } from '@lexical/rich-text';
 
-import css from './FloatingBlockToolbarPlugin.module.css';
+import css from './ToolbarBlockPlugin.module.css';
 
-export const FloatingBlockToolbarPlugin = ({ modalEditorContentRef }) => {
+export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
   const [editor] = useLexicalComposerContext();
 
   const headerRef = useRef(null);

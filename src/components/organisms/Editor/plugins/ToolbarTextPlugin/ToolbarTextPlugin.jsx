@@ -15,9 +15,9 @@ import {
   $patchStyleText
 } from '@lexical/selection';
 
-import css from './FloatingTextToolbarPlugin.module.css';
+import css from './ToolbarTextPlugin.module.css';
 
-export const FloatingTextToolbarPlugin = ({ modalEditorContentRef }) => {
+export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
   const [editor] = useLexicalComposerContext();
 
   const copyRef = useRef(null);
