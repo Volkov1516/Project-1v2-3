@@ -34,6 +34,8 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
   const [selectedTool, setSelectedTool] = useState(0);
   const [isText, setIsText] = useState(false);
   const [top, setTop] = useState(0);
+  const [left, setLeft] = useState(0);
+  const [transform, setTransform] = useState('none');
 
   useEffect(() => {
     editor.registerCommand(
@@ -57,6 +59,18 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           const top = rect?.top - textRect?.top + modalEditorContentRef?.current?.scrollTop - 48;
 
           setTop(top);
+
+          const viewport = window.visualViewport.width;
+
+          if(viewport > 639) {
+            setLeft('50%');
+            setTransform('translateX(-50%)');
+          }
+          else {
+            setLeft(0);
+            setTransform('none');
+          }
+
           setIsText(true);
         }
         else {
@@ -179,7 +193,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
   };
 
   return (modalEditorContentRef?.current && isText && createPortal(
-    <div onKeyDown={handleKeyDown} className={css.container} style={{ top: top }}>
+    <div onKeyDown={handleKeyDown} className={css.container} style={{ top: top, left: left, transform: transform }}>
       <button ref={copyRef} id="tool" onClick={() => editor.dispatchCommand(COPY_COMMAND, null)}>copy</button>
       <button className={css.bold} ref={boldRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>B</button>
       <button className={css.italic} ref={italicRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>I</button>

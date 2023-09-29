@@ -39,10 +39,17 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
         if (node[0].__type === ('paragraph' || 'root')) {
           const top = nativeSelection.anchorNode.offsetTop + 52;
           const viewport = window.visualViewport.width;
-          let left = (viewport - 600) / 2;
 
+          if(viewport > 639) {
+            let left = (viewport - 600) / 2;
+
+            setLeft(left);
+          }
+          else {
+            setLeft(16);
+          }
+          
           setTop(top);
-          setLeft(left);
           setIsBlock(true);
         }
         else {
