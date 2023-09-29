@@ -73,16 +73,11 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
       KEY_ARROW_RIGHT_COMMAND,
       (e) => {
         const selection = $getSelection();
-        const rootElement = editor.getRootElement();
-        const nativeSelection = window.getSelection();
         const nativeEvent = window.event;
+        const node = selection.getNodes();
 
         if (
-          selection !== null &&
-          nativeSelection !== null &&
-          !nativeSelection.isCollapsed &&
-          rootElement !== null &&
-          rootElement.contains(nativeSelection.anchorNode) &&
+          node[0].__type === ('paragraph' || 'root') &&
           !nativeEvent.shiftKey &&
           isBlock
         ) {
@@ -101,10 +96,40 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
       case 0:
         headerRef.current?.focus();
         break;
+      case 1:
+        quoteRef.current?.focus();
+        break;
       default:
         return;
     }
   }, [selectedTool]);
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 37) {
+      if (selectedTool === 0) {
+        e.preventDefault();
+        setSelectedTool(0);
+        editor.focus();
+      };
+
+      setSelectedTool(selectedTool - 1);
+    }
+    else if (e.keyCode === 38) {
+      e.preventDefault();
+      setSelectedTool(0);
+      editor.focus();
+    }
+    else if (e.keyCode === 39) {
+      if (selectedTool === 1) return;
+
+      setSelectedTool(selectedTool + 1);
+    }
+    else if (e.keyCode === 40) {
+      e.preventDefault();
+      setSelectedTool(0);
+      editor.focus();
+    }
+  };
 
   const formatHeading = (headingSize) => {
     editor.update(() => {
@@ -127,7 +152,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
   };
 
   return (modalEditorContentRef?.current && isBlock && createPortal(
-    <div className={css.container} style={{ top: top, left: left }}>
+    <div onKeyDown={handleKeyDown} className={css.container} style={{ top: top, left: left }}>
       <span className={css.placeholder} onClick={() => editor.focus()}>Type or select: </span>
       <button ref={headerRef} id="tool" onClick={() => formatHeading('h1')}>header</button>
       <button ref={quoteRef} id="tool" onClick={() => formatQuote()}>quote</button>
