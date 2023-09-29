@@ -12,6 +12,7 @@ import {
 import { $setBlocksType } from '@lexical/selection';
 import {
   $createHeadingNode,
+  $createQuoteNode,
 } from '@lexical/rich-text';
 
 import css from './ToolbarBlockPlugin.module.css';
@@ -20,6 +21,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
   const [editor] = useLexicalComposerContext();
 
   const headerRef = useRef(null);
+  const quoteRef = useRef(null);
 
   const [selectedTool, setSelectedTool] = useState(0);
   const [isBlock, setIsBlock] = useState(false);
@@ -114,10 +116,21 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
     });
   };
 
+  const formatQuote = () => {
+    editor.update(() => {
+      const selection = $getSelection();
+
+      if ($isRangeSelection(selection)) {
+        $setBlocksType(selection, () => $createQuoteNode());
+      }
+    });
+  };
+
   return (modalEditorContentRef?.current && isBlock && createPortal(
     <div className={css.container} style={{ top: top, left: left }}>
       <span className={css.placeholder} onClick={() => editor.focus()}>Type or select: </span>
       <button ref={headerRef} id="tool" onClick={() => formatHeading('h1')}>header</button>
+      <button ref={quoteRef} id="tool" onClick={() => formatQuote()}>quote</button>
     </div>,
     modalEditorContentRef?.current
   ));

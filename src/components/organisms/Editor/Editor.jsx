@@ -3,7 +3,7 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 
-import { HeadingNode } from '@lexical/rich-text';
+import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { ToolbarBlockPlugin } from './plugins/ToolbarBlockPlugin/ToolbarBlockPlugin';
@@ -19,7 +19,8 @@ export const Editor = ({ modalEditorContentRef }) => {
     editable: true,
     theme: MainTheme,
     nodes: [
-      HeadingNode
+      HeadingNode,
+      QuoteNode
     ],
     onError(error) {
       throw error;

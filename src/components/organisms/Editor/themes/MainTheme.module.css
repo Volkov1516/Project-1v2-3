@@ -57,3 +57,11 @@
 .h1>span {
   font-size: 32px !important;
 }
+
+.quote {
+  margin: 0;
+  margin-bottom: 8px;
+  color: gray;
+  border-left: 4px solid black;
+  padding-left: 16px;
+}
