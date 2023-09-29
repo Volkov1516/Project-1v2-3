@@ -5,6 +5,7 @@ import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 
 import { HeadingNode } from '@lexical/rich-text';
 
+import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { ToolbarBlockPlugin } from './plugins/ToolbarBlockPlugin/ToolbarBlockPlugin';
 import { ToolbarTextPlugin } from './plugins/ToolbarTextPlugin/ToolbarTextPlugin';
 
@@ -17,7 +18,6 @@ export const Editor = ({ modalEditorContentRef }) => {
     namespace: 'Editor',
     editable: true,
     theme: MainTheme,
-    editorState: null,
     nodes: [
       HeadingNode
     ],
@@ -43,6 +43,7 @@ export const Editor = ({ modalEditorContentRef }) => {
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           ErrorBoundary={LexicalErrorBoundary}
         />
+        <AutoFocusPlugin />
       </div>
     </LexicalComposer>
   );
