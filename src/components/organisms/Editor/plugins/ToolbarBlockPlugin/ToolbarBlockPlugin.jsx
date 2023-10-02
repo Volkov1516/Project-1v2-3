@@ -14,6 +14,7 @@ import {
   $createHeadingNode,
   $createQuoteNode,
 } from '@lexical/rich-text';
+import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
 
 import css from './ToolbarBlockPlugin.module.css';
 
@@ -22,6 +23,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
 
   const headerRef = useRef(null);
   const quoteRef = useRef(null);
+  const dividerRef = useRef(null);
 
   const [selectedTool, setSelectedTool] = useState(0);
   const [isBlock, setIsBlock] = useState(false);
@@ -163,6 +165,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
       <span className={css.placeholder} onClick={() => editor.focus()}>Type or select: </span>
       <button ref={headerRef} id="tool" onClick={() => formatHeading('h1')}>header</button>
       <button ref={quoteRef} id="tool" onClick={() => formatQuote()}>quote</button>
+      <button ref={dividerRef} id="tool" onClick={() => editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined)}>divider</button>
     </div>,
     modalEditorContentRef?.current
   ));
