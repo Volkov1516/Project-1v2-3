@@ -65,3 +65,81 @@
   border-left: 4px solid black;
   padding-left: 16px;
 }
+
+.listItem {
+  margin: 0 32px 8px;
+  color: #212529;
+  line-height: 1.5em;
+}
+
+.listItemChecked,
+.listItemUnchecked {
+  position: relative;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  padding-left: 24px;
+  padding-right: 24px;
+  list-style-type: none;
+  outline: none;
+}
+
+.listItemChecked {
+  text-decoration: line-through;
+}
+
+.listItemUnchecked:before,
+.listItemChecked:before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  top: 2px;
+  left: 0;
+  cursor: pointer;
+  display: block;
+  background-size: cover;
+  position: absolute;
+}
+
+.listItemUnchecked[dir='rtl']:before,
+.listItemChecked[dir='rtl']:before {
+  left: auto;
+  right: 0;
+}
+
+.listItemUnchecked:before {
+  border: 1px solid #343A40;
+  border-radius: 2px;
+}
+
+.listItemChecked:before {
+  border: 1px solid #343A40;
+  border-radius: 2px;
+  background-color: #343A40;
+  background-repeat: no-repeat;
+}
+
+.listItemChecked:after {
+  content: '';
+  cursor: pointer;
+  border-color: #fff;
+  border-style: solid;
+  position: absolute;
+  display: block;
+  top: 6px;
+  width: 3px;
+  left: 7px;
+  right: 7px;
+  height: 6px;
+  transform: rotate(45deg);
+  border-width: 0 2px 2px 0;
+}
+
+.nestedListItem {
+  list-style-type: none;
+}
+
+.nestedListItem:before,
+.nestedListItem:after {
+  display: none;
+}

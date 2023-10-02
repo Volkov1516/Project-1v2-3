@@ -5,11 +5,14 @@ import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
+import { ListItemNode, ListNode } from '@lexical/list';
 
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { ToolbarBlockPlugin } from './plugins/ToolbarBlockPlugin/ToolbarBlockPlugin';
 import { ToolbarTextPlugin } from './plugins/ToolbarTextPlugin/ToolbarTextPlugin';
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
+import { ListPlugin } from '@lexical/react/LexicalListPlugin';
+import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 
 import { MainTheme } from './themes/MainTheme';
 
@@ -24,6 +27,8 @@ export const Editor = ({ modalEditorContentRef }) => {
       HeadingNode,
       QuoteNode,
       HorizontalRuleNode,
+      ListNode,
+      ListItemNode,
     ],
     onError(error) {
       throw error;
@@ -48,6 +53,8 @@ export const Editor = ({ modalEditorContentRef }) => {
           ErrorBoundary={LexicalErrorBoundary}
         />
         <AutoFocusPlugin />
+        <ListPlugin />
+        <CheckListPlugin />
         <HorizontalRulePlugin />
       </div>
     </LexicalComposer>

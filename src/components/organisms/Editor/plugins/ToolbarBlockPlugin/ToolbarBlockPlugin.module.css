@@ -8,12 +8,14 @@
 
 .placeholder {
   color: gray;
+  white-space: nowrap;
 }
 
 .container>button {
   display: flex;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
   padding: 2px 8px;
   outline: 1px solid gray;
   border: none;
@@ -34,8 +36,9 @@
 
 @media (max-width: 639px) {
   .container {
-    width: 100%;
+    width: calc(100% - 16px);
     justify-content: flex-start;
+    overflow-x: auto;
   }
 
   ::-webkit-scrollbar {
