@@ -26,7 +26,9 @@ import css from './ToolbarBlockPlugin.module.css';
 export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
   const [editor] = useLexicalComposerContext();
 
-  const headerRef = useRef(null);
+  const h1Ref = useRef(null);
+  const h2Ref = useRef(null);
+  const h3Ref = useRef(null);
   const quoteRef = useRef(null);
   const dividerRef = useRef(null);
   const bulletListRef = useRef(null);
@@ -100,7 +102,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
         ) {
           e.preventDefault();
 
-          headerRef.current?.focus();
+          h1Ref.current?.focus();
           setSelectedTool(0);
         }
       },
@@ -111,21 +113,27 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
   useEffect(() => {
     switch (selectedTool) {
       case 0:
-        headerRef.current?.focus();
+        h1Ref.current?.focus();
         break;
       case 1:
-        quoteRef.current?.focus();
+        h2Ref.current?.focus();
         break;
       case 2:
-        bulletListRef.current?.focus();
+        h3Ref.current?.focus();
         break;
       case 3:
-        numberListRef.current?.focus();
-        break;
-      case 4:
         checkListRef.current?.focus();
         break;
+      case 4:
+        bulletListRef.current?.focus();
+        break;
       case 5:
+        numberListRef.current?.focus();
+        break;
+      case 6:
+        quoteRef.current?.focus();
+        break;
+      case 7:
         dividerRef.current?.focus();
         break;
       default:
@@ -149,7 +157,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
       editor.focus();
     }
     else if (e.keyCode === 39) {
-      if (selectedTool === 5) return;
+      if (selectedTool === 7) return;
 
       setSelectedTool(selectedTool + 1);
     }
@@ -182,12 +190,14 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
 
   return (modalEditorContentRef?.current && isBlock && createPortal(
     <div onKeyDown={handleKeyDown} className={css.container} style={{ top: top, left: left }}>
-      <span className={css.placeholder} onClick={() => editor.focus()}>Type or select: </span>
-      <button ref={headerRef} id="tool" onClick={() => formatHeading('h1')}>header</button>
-      <button ref={quoteRef} id="tool" onClick={() => formatQuote()}>quote</button>
+      <span className={css.placeholder} onClick={() => editor.focus()}>Type or use: </span>
+      <button ref={h1Ref} id="tool" onClick={() => formatHeading('h1')}>h1</button>
+      <button ref={h2Ref} id="tool" onClick={() => formatHeading('h2')}>h2</button>
+      <button ref={h3Ref} id="tool" onClick={() => formatHeading('h3')}>h3</button>
+      <button ref={checkListRef} id="tool" onClick={() => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined)}>to-do</button>
       <button ref={bulletListRef} id="tool" onClick={() => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined)}>bullet list</button>
       <button ref={numberListRef} id="tool" onClick={() => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined)}>number list</button>
-      <button ref={checkListRef} id="tool" onClick={() => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined)}>check list</button>
+      <button ref={quoteRef} id="tool" onClick={() => formatQuote()}>quote</button>
       <button ref={dividerRef} id="tool" onClick={() => editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined)}>divider</button>
     </div>,
     modalEditorContentRef?.current
