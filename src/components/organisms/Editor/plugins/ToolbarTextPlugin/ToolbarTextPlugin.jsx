@@ -4,6 +4,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 import {
   FORMAT_TEXT_COMMAND,
   COMMAND_PRIORITY_LOW,
+  COMMAND_PRIORITY_CRITICAL,
   SELECTION_CHANGE_COMMAND,
   $getSelection,
   $isRangeSelection,
@@ -37,6 +38,27 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
   const [left, setLeft] = useState(0);
   const [transform, setTransform] = useState('none');
 
+  const [isBold, setIsBold] = useState(false);
+  const [isItalic, setIsItalic] = useState(false);
+  const [isUnderline, setIsUnderline] = useState(false);
+  const [isStrikethrough, setIsStrikethrough] = useState(false);
+  const [isSubscript, setIsSubscript] = useState(false);
+  const [isSuperscript, setIsSuperscript] = useState(false);
+  const [isCode, setIsCode] = useState(false);
+
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const viewport = window.visualViewport.width;
+
+    if (viewport > 639) {
+      setIsSmallScreen(false);
+    }
+    else if (viewport < 639) {
+      setIsSmallScreen(true);
+    }
+  }, []);
+
   useEffect(() => {
     editor.registerCommand(
       SELECTION_CHANGE_COMMAND,
@@ -44,6 +66,16 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
         const selection = $getSelection();
         const rootElement = editor.getRootElement();
         const nativeSelection = window.getSelection();
+
+        if ($isRangeSelection(selection)) {
+          setIsBold(selection.hasFormat('bold'));
+          setIsItalic(selection.hasFormat('italic'));
+          setIsUnderline(selection.hasFormat('underline'));
+          setIsStrikethrough(selection.hasFormat('strikethrough'));
+          setIsSubscript(selection.hasFormat('subscript'));
+          setIsSuperscript(selection.hasFormat('superscript'));
+          setIsCode(selection.hasFormat('code'));
+        }
 
         if (
           selection !== null &&
@@ -62,7 +94,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
 
           const viewport = window.visualViewport.width;
 
-          if(viewport > 639) {
+          if (viewport > 639) {
             setLeft('50%');
             setTransform('translateX(-50%)');
           }
@@ -77,7 +109,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           setIsText(false);
         }
       },
-      COMMAND_PRIORITY_LOW
+      COMMAND_PRIORITY_CRITICAL
     )
   }, [editor, modalEditorContentRef]);
 
@@ -115,7 +147,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
         ) {
           e.preventDefault();
 
-          copyRef.current?.focus();
+          boldRef.current?.focus();
           setSelectedTool(0);
         }
       },
@@ -126,34 +158,31 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
   useEffect(() => {
     switch (selectedTool) {
       case 0:
-        copyRef.current?.focus();
-        break;
-      case 1:
         boldRef.current?.focus();
         break;
-      case 2:
+      case 1:
         italicRef.current?.focus();
         break;
-      case 3:
+      case 2:
         underlineRef.current?.focus();
         break;
-      case 4:
+      case 3:
         strikethroughRef.current?.focus();
         break;
-      case 5:
-        subscriptRef.current?.focus();
-        break;
-      case 6:
-        superscriptRef.current?.focus();
-        break;
-      case 7:
+      case 4:
         colorRef.current?.focus();
         break;
-      case 8:
+      case 5:
         highlightRef.current?.focus();
         break;
-      case 9:
+      case 6:
         codeRef.current?.focus();
+        break;
+      case 7:
+        superscriptRef.current?.focus();
+        break;
+      case 8:
+        subscriptRef.current?.focus();
         break;
       default:
         return;
@@ -194,16 +223,16 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
 
   return (modalEditorContentRef?.current && isText && createPortal(
     <div onKeyDown={handleKeyDown} className={css.container} style={{ top: top, left: left, transform: transform }}>
-      <button ref={copyRef} id="tool" onClick={() => editor.dispatchCommand(COPY_COMMAND, null)}>copy</button>
-      <button className={css.bold} ref={boldRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>B</button>
-      <button className={css.italic} ref={italicRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>I</button>
-      <button className={css.underline} ref={underlineRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>U</button>
-      <button className={css.strikethrough} ref={strikethroughRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}>S</button>
-      <button ref={subscriptRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript')}>x<span className={css.subscript}>2</span></button>
-      <button ref={superscriptRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript')}>x<span className={css.superscript}>2</span></button>
+      {isSmallScreen && <button ref={copyRef} id="tool" onClick={() => editor.dispatchCommand(COPY_COMMAND, null)}>copy</button>}
+      <button className={`${css.bold} ${isBold && css.active}`} ref={boldRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>B</button>
+      <button className={`${css.italic} ${isItalic && css.active}`} ref={italicRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>I</button>
+      <button className={`${css.underline} ${isUnderline && css.active}`} ref={underlineRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>U</button>
+      <button className={`${css.strikethrough} ${isStrikethrough && css.active}`} ref={strikethroughRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}>S</button>
       <button className={css.color} ref={colorRef} id="tool" onClick={() => formatTextColor()}>C</button>
       <button className={css.highlight} ref={highlightRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'highlight')}>H</button>
-      <button className={css.code} ref={codeRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}>C</button>
+      <button className={`${css.code} ${isCode && css.active}`} ref={codeRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code')}>{`<>`}</button>
+      <button className={`${isSuperscript && css.active}`} ref={superscriptRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript')}>x<span className={css.superscript}>2</span></button>
+      <button className={`${isSubscript && css.active}`} ref={subscriptRef} id="tool" onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript')}>x<span className={css.subscript}>2</span></button>
     </div>,
     modalEditorContentRef?.current
   ));

@@ -56,14 +56,11 @@
 }
 
 .highlight {
-  padding: 2px;
   background-color: yellow !important;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
 }
 
-.code {
-  background-color: gray !important;
+.active {
+  background-color: #e8eddf !important;
 }
 
 @media (max-width: 639px) {
