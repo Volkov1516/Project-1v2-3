@@ -199,7 +199,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
       setSelectedTool(0);
     }
     else if (e.keyCode === 39) {
-      if (selectedTool === 9) return;
+      if (selectedTool === 8) return;
 
       setSelectedTool(selectedTool + 1);
     }
