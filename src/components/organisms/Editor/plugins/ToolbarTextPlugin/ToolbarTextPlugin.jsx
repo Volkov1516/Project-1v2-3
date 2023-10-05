@@ -46,6 +46,9 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
   const [isSuperscript, setIsSuperscript] = useState(false);
   const [isCode, setIsCode] = useState(false);
 
+  const [isColorDrpdown, setIsColorDropdown] = useState(false);
+  const [isBgDrpdown, setIsBgDropdown] = useState(false);
+
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
@@ -107,6 +110,8 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           setIsText(true);
         }
         else {
+          setIsBgDropdown(false);
+          setIsColorDropdown(false);
           setIsText(false);
         }
       },
@@ -123,6 +128,8 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
         }
         else {
           setIsText(false);
+          setIsColorDropdown(false);
+          setIsBgDropdown(false);
         }
       },
       COMMAND_PRIORITY_LOW
@@ -208,104 +215,146 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
       e.preventDefault();
       setIsText(false);
       setSelectedTool(0);
+      setIsColorDropdown(false);
+      setIsBgDropdown(false);
       editor.focus();
     }
   };
 
-  const formatTextColor = () => {
+  const formatTextColor = (color) => {
     editor.update(() => {
       const selection = $getSelection();
 
       if ($isRangeSelection(selection)) {
-        $patchStyleText(selection, { color: '#F55050' });
+        $patchStyleText(selection, { color: color });
+      }
+    });
+  };
+
+  const formatTextBg = (color) => {
+    editor.update(() => {
+      const selection = $getSelection();
+
+      if ($isRangeSelection(selection)) {
+        $patchStyleText(selection, { 'background-color': color });
       }
     });
   };
 
   return (modalEditorContentRef?.current && isText && createPortal(
-    <div onKeyDown={handleKeyDown} className={css.container} style={{ top: top, left: left, transform: transform }}>
-      {isSmallScreen && (
+    <>
+      {isColorDrpdown && (
+        <div className={css.dropdown} style={{ top: top - 36, left: left, transform: transform }}>
+          <button id="tool" onClick={() => formatTextColor("black")}>none</button>
+          <button id="tool" onClick={() => formatTextColor("red")}>red</button>
+          <button id="tool" onClick={() => formatTextColor("orange")}>orange</button>
+          <button id="tool" onClick={() => formatTextColor("yellow")}>yellow</button>
+          <button id="tool" onClick={() => formatTextColor("green")}>green</button>
+          <button id="tool" onClick={() => formatTextColor("blue")}>blue</button>
+          <button id="tool" onClick={() => formatTextColor("purple")}>purple</button>
+        </div>
+      )}
+      {isBgDrpdown && (
+        <div className={css.dropdown} style={{ top: top - 36, left: left, transform: transform }}>
+          <button id="tool" onClick={() => formatTextBg("white")}>none</button>
+          <button id="tool" onClick={() => formatTextBg("red")}>red</button>
+          <button id="tool" onClick={() => formatTextBg("orange")}>orange</button>
+          <button id="tool" onClick={() => formatTextBg("yellow")}>yellow</button>
+          <button id="tool" onClick={() => formatTextBg("green")}>green</button>
+          <button id="tool" onClick={() => formatTextBg("blue")}>blue</button>
+          <button id="tool" onClick={() => formatTextBg("purple")}>purple</button>
+        </div>
+      )}
+      <div onKeyDown={handleKeyDown} className={css.container} style={{ top: top, left: left, transform: transform }}>
+        {isSmallScreen && (
+          <button
+            id="tool"
+            ref={copyRef}
+            onClick={() => editor.dispatchCommand(COPY_COMMAND, null)}
+          >
+            copy
+          </button>
+        )}
         <button
           id="tool"
-          ref={copyRef}
-          onClick={() => editor.dispatchCommand(COPY_COMMAND, null)}
+          className={`${css.bold} ${isBold && css.active}`}
+          ref={boldRef}
+          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold")}
         >
-          copy
+          B
         </button>
-      )}
-      <button
-        id="tool"
-        className={`${css.bold} ${isBold && css.active}`}
-        ref={boldRef}
-        onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold")}
-      >
-        B
-      </button>
-      <button
-        id="tool"
-        className={`${css.italic} ${isItalic && css.active}`}
-        ref={italicRef}
-        onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic")}
-      >
-        I
-      </button>
-      <button
-        id="tool"
-        className={`${css.underline} ${isUnderline && css.active}`}
-        ref={underlineRef}
-        onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline")}
-      >
-        U
-      </button>
-      <button
-        id="tool"
-        className={`${css.strikethrough} ${isStrikethrough && css.active}`}
-        ref={strikethroughRef}
-        onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough")}
-      >
-        S
-      </button>
-      <button
-        id="tool"
-        className={css.color}
-        ref={colorRef}
-        onClick={() => formatTextColor()}
-      >
-        A
-      </button>
-      <button
-        id="tool"
-        className={css.highlight}
-        ref={highlightRef}
-        onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "highlight")}
-      >
-        A
-      </button>
-      <button
-        id="tool"
-        className={`${css.code} ${isCode && css.active}`}
-        ref={codeRef}
-        onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code")}
-      >
-        {`<>`}
-      </button>
-      <button
-        id="tool"
-        className={`${isSuperscript && css.active}`}
-        ref={superscriptRef}
-        onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript")}
-      >
-        x<span className={css.superscript}>2</span>
-      </button>
-      <button
-        id="tool"
-        className={`${isSubscript && css.active}`}
-        ref={subscriptRef}
-        onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript")}
-      >
-        x<span className={css.subscript}>2</span>
-      </button>
-    </div>,
+        <button
+          id="tool"
+          className={`${css.italic} ${isItalic && css.active}`}
+          ref={italicRef}
+          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic")}
+        >
+          I
+        </button>
+        <button
+          id="tool"
+          className={`${css.underline} ${isUnderline && css.active}`}
+          ref={underlineRef}
+          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline")}
+        >
+          U
+        </button>
+        <button
+          id="tool"
+          className={`${css.strikethrough} ${isStrikethrough && css.active}`}
+          ref={strikethroughRef}
+          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough")}
+        >
+          S
+        </button>
+        <button
+          id="tool"
+          className={css.color}
+          ref={colorRef}
+          onClick={() => {
+            setIsBgDropdown(false);
+            setIsColorDropdown(!isColorDrpdown);
+          }}
+        >
+          A
+        </button>
+        <button
+          id="tool"
+          className={css.highlight}
+          ref={highlightRef}
+          onClick={() => {
+            setIsColorDropdown(false);
+            setIsBgDropdown(!isBgDrpdown);
+          }}
+        >
+          A
+        </button>
+        <button
+          id="tool"
+          className={`${css.code} ${isCode && css.active}`}
+          ref={codeRef}
+          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code")}
+        >
+          {`<>`}
+        </button>
+        <button
+          id="tool"
+          className={`${isSuperscript && css.active}`}
+          ref={superscriptRef}
+          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript")}
+        >
+          x<span className={css.superscript}>2</span>
+        </button>
+        <button
+          id="tool"
+          className={`${isSubscript && css.active}`}
+          ref={subscriptRef}
+          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript")}
+        >
+          x<span className={css.subscript}>2</span>
+        </button>
+      </div>
+    </>,
     modalEditorContentRef?.current
   ));
 };
