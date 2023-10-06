@@ -39,6 +39,10 @@
   background-color: #C7C7C6;
 }
 
+.dropdown>button:focus {
+  outline: 1px solid black;
+}
+
 .container>button {
   width: 36px;
   height: 36px;

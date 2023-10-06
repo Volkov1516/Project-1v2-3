@@ -32,7 +32,27 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
   const highlightRef = useRef(null);
   const codeRef = useRef(null);
 
+  const textColorWhite = useRef(null);
+  const textColorBlack = useRef(null);
+  const textColorRed = useRef(null);
+  const textColorOrange = useRef(null);
+  const textColorYellow = useRef(null);
+  const textColorGreen = useRef(null);
+  const textColorBlue = useRef(null);
+  const textColorPurple = useRef(null);
+
+  const textBgWhite = useRef(null);
+  const textBgBlack = useRef(null);
+  const textBgRed = useRef(null);
+  const textBgOrange = useRef(null);
+  const textBgYellow = useRef(null);
+  const textBgGreen = useRef(null);
+  const textBgBlue = useRef(null);
+  const textBgPurple = useRef(null);
+
   const [selectedTool, setSelectedTool] = useState(0);
+  const [selectedToolTextColor, setSelectedToolTextColor] = useState(0);
+  const [selectedToolTextBg, setSelectedToolTextBg] = useState(0);
   const [isText, setIsText] = useState(false);
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
@@ -197,6 +217,68 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
     }
   }, [selectedTool]);
 
+  useEffect(() => {
+    switch (selectedToolTextColor) {
+      case 0:
+        textColorWhite.current?.focus();
+        break;
+      case 1:
+        textColorBlack.current?.focus();
+        break;
+      case 2:
+        textColorRed.current?.focus();
+        break;
+      case 3:
+        textColorOrange.current?.focus();
+        break;
+      case 4:
+        textColorYellow.current?.focus();
+        break;
+      case 5:
+        textColorGreen.current?.focus();
+        break;
+      case 6:
+        textColorBlue.current?.focus();
+        break;
+      case 7:
+        textColorPurple.current?.focus();
+        break;
+      default:
+        return;
+    }
+  }, [selectedToolTextColor, isColorDrpdown]);
+
+  useEffect(() => {
+    switch (selectedToolTextBg) {
+      case 0:
+        textBgWhite.current?.focus();
+        break;
+      case 1:
+        textBgBlack.current?.focus();
+        break;
+      case 2:
+        textBgRed.current?.focus();
+        break;
+      case 3:
+        textBgOrange.current?.focus();
+        break;
+      case 4:
+        textBgYellow.current?.focus();
+        break;
+      case 5:
+        textBgGreen.current?.focus();
+        break;
+      case 6:
+        textBgBlue.current?.focus();
+        break;
+      case 7:
+        textBgPurple.current?.focus();
+        break;
+      default:
+        return;
+    }
+  }, [selectedToolTextBg, isBgDrpdown]);
+
   const handleKeyDown = (e) => {
     if (e.keyCode === 37) {
       if (selectedTool === 0) return;
@@ -204,7 +286,17 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
       setSelectedTool(selectedTool - 1);
     }
     else if (e.keyCode === 38) {
-      setSelectedTool(0);
+      if (selectedTool === 4) {
+        setSelectedToolTextColor(0);
+        setIsColorDropdown(true);
+      }
+      else if(selectedTool === 5) {
+        setSelectedToolTextBg(0);
+        setIsBgDropdown(true);        
+      }
+      else {
+        setSelectedTool(0);
+      }
     }
     else if (e.keyCode === 39) {
       if (selectedTool === 8) return;
@@ -218,6 +310,48 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
       setIsColorDropdown(false);
       setIsBgDropdown(false);
       editor.focus();
+    }
+  };
+
+  const handleTextColorKeyDown = (e) => {
+    if (e.keyCode === 37) {
+      if (selectedToolTextColor === 0) return;
+
+      setSelectedToolTextColor(selectedToolTextColor - 1);
+    }
+    else if (e.keyCode === 38) {
+      return;
+    }
+    else if (e.keyCode === 39) {
+      if (selectedToolTextColor === 7) return;
+
+      setSelectedToolTextColor(selectedToolTextColor + 1);
+    }
+    else if (e.keyCode === 40) {
+      setIsColorDropdown(false);
+      setSelectedToolTextColor(0);
+      colorRef?.current?.focus();
+    }
+  };
+
+  const handleTextBgKeyDown = (e) => {
+    if (e.keyCode === 37) {
+      if (selectedToolTextBg === 0) return;
+
+      setSelectedToolTextBg(selectedToolTextBg - 1);
+    }
+    else if (e.keyCode === 38) {
+      return;
+    }
+    else if (e.keyCode === 39) {
+      if (selectedToolTextBg === 7) return;
+
+      setSelectedToolTextBg(selectedToolTextBg + 1);
+    }
+    else if (e.keyCode === 40) {
+      setIsBgDropdown(false);
+      setSelectedToolTextBg(0);
+      highlightRef?.current?.focus();
     }
   };
 
@@ -244,8 +378,9 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
   return (modalEditorContentRef?.current && isText && createPortal(
     <>
       {isColorDrpdown && (
-        <div className={css.dropdown} style={{ top: top - 36, left: left, transform: transform }}>
+        <div onKeyDown={handleTextColorKeyDown} className={css.dropdown} style={{ top: top - 36, left: left, transform: transform }}>
           <button
+            ref={textColorWhite}
             id="tool"
             onClick={() => formatTextColor("white")}
             style={{ color: "white" }}
@@ -253,6 +388,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textColorBlack}
             id="tool"
             onClick={() => formatTextColor("black")}
             style={{ color: "black" }}
@@ -260,6 +396,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textColorRed}
             id="tool"
             onClick={() => formatTextColor("red")}
             style={{ color: "red" }}
@@ -267,6 +404,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textColorOrange}
             id="tool"
             onClick={() => formatTextColor("orange")}
             style={{ color: "orange" }}
@@ -274,6 +412,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textColorYellow}
             id="tool"
             onClick={() => formatTextColor("yellow")}
             style={{ color: "yellow" }}
@@ -281,6 +420,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textColorGreen}
             id="tool"
             onClick={() => formatTextColor("green")}
             style={{ color: "green" }}
@@ -288,6 +428,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textColorBlue}
             id="tool"
             onClick={() => formatTextColor("blue")}
             style={{ color: "blue" }}
@@ -295,6 +436,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textColorPurple}
             id="tool"
             onClick={() => formatTextColor("purple")}
             style={{ color: "purple" }}
@@ -304,8 +446,9 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
         </div>
       )}
       {isBgDrpdown && (
-        <div className={css.dropdown} style={{ top: top - 36, left: left, transform: transform }}>
+        <div onKeyDown={handleTextBgKeyDown} className={css.dropdown} style={{ top: top - 36, left: left, transform: transform }}>
           <button
+            ref={textBgWhite}
             id="tool"
             onClick={() => formatTextBg("white")}
             style={{ backgroundColor: "white" }}
@@ -313,6 +456,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textBgBlack}
             id="tool"
             onClick={() => formatTextBg("black")}
             style={{ color: "white", backgroundColor: "black" }}
@@ -320,6 +464,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textBgRed}
             id="tool"
             onClick={() => formatTextBg("red")}
             style={{ backgroundColor: "red" }}
@@ -327,6 +472,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textBgOrange}
             id="tool"
             onClick={() => formatTextBg("orange")}
             style={{ backgroundColor: "orange" }}
@@ -334,6 +480,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textBgYellow}
             id="tool"
             onClick={() => formatTextBg("yellow")}
             style={{ backgroundColor: "yellow" }}
@@ -341,6 +488,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textBgGreen}
             id="tool"
             onClick={() => formatTextBg("green")}
             style={{ backgroundColor: "green" }}
@@ -348,6 +496,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textBgBlue}
             id="tool"
             onClick={() => formatTextBg("blue")}
             style={{ backgroundColor: "blue" }}
@@ -355,6 +504,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             A
           </button>
           <button
+            ref={textBgPurple}
             id="tool"
             onClick={() => formatTextBg("purple")}
             style={{ backgroundColor: "purple" }}
