@@ -245,24 +245,122 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
     <>
       {isColorDrpdown && (
         <div className={css.dropdown} style={{ top: top - 36, left: left, transform: transform }}>
-          <button id="tool" onClick={() => formatTextColor("black")}>none</button>
-          <button id="tool" onClick={() => formatTextColor("red")}>red</button>
-          <button id="tool" onClick={() => formatTextColor("orange")}>orange</button>
-          <button id="tool" onClick={() => formatTextColor("yellow")}>yellow</button>
-          <button id="tool" onClick={() => formatTextColor("green")}>green</button>
-          <button id="tool" onClick={() => formatTextColor("blue")}>blue</button>
-          <button id="tool" onClick={() => formatTextColor("purple")}>purple</button>
+          <button
+            id="tool"
+            onClick={() => formatTextColor("white")}
+            style={{ color: "white" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextColor("black")}
+            style={{ color: "black" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextColor("red")}
+            style={{ color: "red" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextColor("orange")}
+            style={{ color: "orange" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextColor("yellow")}
+            style={{ color: "yellow" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextColor("green")}
+            style={{ color: "green" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextColor("blue")}
+            style={{ color: "blue" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextColor("purple")}
+            style={{ color: "purple" }}
+          >
+            A
+          </button>
         </div>
       )}
       {isBgDrpdown && (
         <div className={css.dropdown} style={{ top: top - 36, left: left, transform: transform }}>
-          <button id="tool" onClick={() => formatTextBg("white")}>none</button>
-          <button id="tool" onClick={() => formatTextBg("red")}>red</button>
-          <button id="tool" onClick={() => formatTextBg("orange")}>orange</button>
-          <button id="tool" onClick={() => formatTextBg("yellow")}>yellow</button>
-          <button id="tool" onClick={() => formatTextBg("green")}>green</button>
-          <button id="tool" onClick={() => formatTextBg("blue")}>blue</button>
-          <button id="tool" onClick={() => formatTextBg("purple")}>purple</button>
+          <button
+            id="tool"
+            onClick={() => formatTextBg("white")}
+            style={{ backgroundColor: "white" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextBg("black")}
+            style={{ color: "white", backgroundColor: "black" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextBg("red")}
+            style={{ backgroundColor: "red" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextBg("orange")}
+            style={{ backgroundColor: "orange" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextBg("yellow")}
+            style={{ backgroundColor: "yellow" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextBg("green")}
+            style={{ backgroundColor: "green" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextBg("blue")}
+            style={{ backgroundColor: "blue" }}
+          >
+            A
+          </button>
+          <button
+            id="tool"
+            onClick={() => formatTextBg("purple")}
+            style={{ backgroundColor: "purple" }}
+          >
+            A
+          </button>
         </div>
       )}
       <div onKeyDown={handleKeyDown} className={css.container} style={{ top: top, left: left, transform: transform }}>
