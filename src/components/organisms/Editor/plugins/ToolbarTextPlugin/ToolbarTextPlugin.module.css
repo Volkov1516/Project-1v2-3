@@ -1,60 +1,58 @@
 .container {
   position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 1px;
   overflow-x: auto;
-  padding: 1px;
-  background-color: #F1EFEF;
+  border: 1px solid #BFC7B4;
+  border-radius: 4px;
+  background-color: #E8EDDF;
+}
+
+.container>button {
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border: none;
+  outline: none;
+  background-color: #E8EDDF;
+  text-align: center;
+  font-size: 16px;
+}
+
+.container>button:hover {
+  background-color: #BFC7B4;
+}
+
+.container>button:focus {
+  background-color: #BFC7B4;
 }
 
 .dropdown {
-  position: absolute;
-  background-color: #F1EFEF;
-  height: 36px;
-  width: 334px;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  position: absolute;
+  width: 326px;
+  border: 1px solid #BFC7B4;
+  border-radius: 4px 4px 0px 0px;
+  background-color: #E8EDDF;
 }
 
 .dropdown>button {
-  width: 28px;
-  height: 28px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  height: 36px;
   outline: none;
   border: none;
-  cursor: pointer;
-  border-radius: 50%;
+  background-color: #E8EDDF;
   font-size: 18px;
 }
 
 .dropdown>button:hover {
-  background-color: #C7C7C6;
+  background-color: #BFC7B4;
 }
 
 .dropdown>button:focus {
-  outline: 1px solid black;
-}
-
-.container>button {
-  width: 36px;
-  height: 36px;
-  text-align: center;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  background-color: #F1EFEF;
-}
-
-.container>button:focus {
-  outline: 1px solid black;
+  background-color: #BFC7B4;
 }
 
 .bold {
@@ -87,8 +85,9 @@
   color: red;
 }
 
-.highlight {
-  background-color: yellow !important;
+.highlight>mark {
+  padding: 0px 8px;
+  border-radius: 2px;
 }
 
 .code {
@@ -96,14 +95,15 @@
 }
 
 .active {
-  background-color: #C7C7C6 !important;
+  background-color: #BFC7B4 !important;
 }
 
 @media (max-width: 639px) {
   .container {
-    width: 100%;
-    justify-content: flex-start;
     overflow: auto;
+    justify-content: flex-start;
+    width: 100%;
+    border-radius: 0px;
   }
 
   .container>button {
@@ -112,18 +112,17 @@
     font-size: 18px;
   }
 
+  .container>button:hover {
+    background-color: transparent;
+  }
+
   .dropdown {
     width: 100%;
+    border-radius: 0px;
   }
 
   ::-webkit-scrollbar {
     width: 0px;
     height: 0px;
-  }
-}
-
-@media (min-width: 639px) {
-  .container>button:hover {
-    background-color: #C7C7C6;
   }
 }

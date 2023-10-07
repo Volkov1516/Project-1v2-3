@@ -290,9 +290,9 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
         setSelectedToolTextColor(0);
         setIsColorDropdown(true);
       }
-      else if(selectedTool === 5) {
+      else if (selectedTool === 5) {
         setSelectedToolTextBg(0);
-        setIsBgDropdown(true);        
+        setIsBgDropdown(true);
       }
       else {
         setSelectedTool(0);
@@ -385,7 +385,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             onClick={() => formatTextColor("white")}
             style={{ color: "white" }}
           >
-            A
+            a
           </button>
           <button
             ref={textColorBlack}
@@ -393,7 +393,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             onClick={() => formatTextColor("black")}
             style={{ color: "black" }}
           >
-            A
+            a
           </button>
           <button
             ref={textColorRed}
@@ -401,7 +401,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             onClick={() => formatTextColor("red")}
             style={{ color: "red" }}
           >
-            A
+            a
           </button>
           <button
             ref={textColorOrange}
@@ -409,7 +409,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             onClick={() => formatTextColor("orange")}
             style={{ color: "orange" }}
           >
-            A
+            a
           </button>
           <button
             ref={textColorYellow}
@@ -417,7 +417,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             onClick={() => formatTextColor("yellow")}
             style={{ color: "yellow" }}
           >
-            A
+            a
           </button>
           <button
             ref={textColorGreen}
@@ -425,7 +425,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             onClick={() => formatTextColor("green")}
             style={{ color: "green" }}
           >
-            A
+            a
           </button>
           <button
             ref={textColorBlue}
@@ -433,7 +433,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             onClick={() => formatTextColor("blue")}
             style={{ color: "blue" }}
           >
-            A
+            a
           </button>
           <button
             ref={textColorPurple}
@@ -441,7 +441,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             onClick={() => formatTextColor("purple")}
             style={{ color: "purple" }}
           >
-            A
+            a
           </button>
         </div>
       )}
@@ -451,65 +451,73 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             ref={textBgWhite}
             id="tool"
             onClick={() => formatTextBg("white")}
-            style={{ backgroundColor: "white" }}
           >
-            A
+            <mark style={{ backgroundColor: "white", padding: "0px 8px", borderRadius: "2px" }}>
+              a
+            </mark>
           </button>
           <button
             ref={textBgBlack}
             id="tool"
             onClick={() => formatTextBg("black")}
-            style={{ color: "white", backgroundColor: "black" }}
           >
-            A
+            <mark style={{ color: "white", backgroundColor: "black", padding: "0px 8px", borderRadius: "2px" }}>
+              a
+            </mark>
           </button>
           <button
             ref={textBgRed}
             id="tool"
             onClick={() => formatTextBg("red")}
-            style={{ backgroundColor: "red" }}
           >
-            A
+            <mark style={{ backgroundColor: "red", padding: "0px 8px", borderRadius: "2px" }}>
+              a
+            </mark>
           </button>
           <button
             ref={textBgOrange}
             id="tool"
             onClick={() => formatTextBg("orange")}
-            style={{ backgroundColor: "orange" }}
           >
-            A
+            <mark style={{ backgroundColor: "orange", padding: "0px 8px", borderRadius: "2px" }}>
+              a
+            </mark>
           </button>
           <button
             ref={textBgYellow}
             id="tool"
             onClick={() => formatTextBg("yellow")}
-            style={{ backgroundColor: "yellow" }}
           >
-            A
+            <mark style={{ backgroundColor: "yellow", padding: "0px 8px", borderRadius: "2px" }}>
+              a
+            </mark>
           </button>
           <button
             ref={textBgGreen}
             id="tool"
             onClick={() => formatTextBg("green")}
-            style={{ backgroundColor: "green" }}
           >
-            A
+            <mark style={{ backgroundColor: "green", padding: "0px 8px", borderRadius: "2px" }}>
+              a
+            </mark>
           </button>
           <button
             ref={textBgBlue}
             id="tool"
             onClick={() => formatTextBg("blue")}
-            style={{ backgroundColor: "blue" }}
           >
-            A
+            <mark style={{ backgroundColor: "blue", padding: "0px 8px", borderRadius: "2px" }}>
+              a
+            </mark>
           </button>
           <button
             ref={textBgPurple}
             id="tool"
             onClick={() => formatTextBg("purple")}
-            style={{ backgroundColor: "purple" }}
           >
-            A
+            <mark style={{ backgroundColor: "purple", padding: "0px 8px", borderRadius: "2px" }}>
+              a
+            </mark>
           </button>
         </div>
       )}
@@ -564,7 +572,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             setIsColorDropdown(!isColorDrpdown);
           }}
         >
-          A
+          C
         </button>
         <button
           id="tool"
@@ -575,7 +583,9 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             setIsBgDropdown(!isBgDrpdown);
           }}
         >
-          A
+          <mark>
+            H
+          </mark>
         </button>
         <button
           id="tool"
