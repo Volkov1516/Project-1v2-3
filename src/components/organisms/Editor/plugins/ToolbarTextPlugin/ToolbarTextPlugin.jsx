@@ -116,8 +116,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             const top = rect?.top - textRect?.top + modalEditorContentRef?.current?.scrollTop - 48;
 
             setTop(top);
-            setLeft('50%');
-            setTransform('translateX(-50%)');
+            setLeft(rect?.left);
           }
           else {
             const top = rect?.top - textRect?.top + modalEditorContentRef?.current?.scrollTop - 62;

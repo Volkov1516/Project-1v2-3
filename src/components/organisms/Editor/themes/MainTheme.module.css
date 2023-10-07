@@ -25,19 +25,12 @@
   text-decoration: underline line-through;
 }
 
-.highlight {
-  border-radius: 4px;
-  background-color: yellow;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-
 .code {
   padding: 2px 4px;
   background-color: #DEE2E6;
   border-radius: 4px;
   font-size: 14px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: monospace;
 }
 
 .subscript {
