@@ -535,7 +535,10 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           id="tool"
           className={`${css.bold} ${isBold && css.active}`}
           ref={boldRef}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold")}
+          onClick={() => {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
+            setIsBold(!isBold);
+          }}
         >
           B
         </button>
@@ -543,7 +546,10 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           id="tool"
           className={`${css.italic} ${isItalic && css.active}`}
           ref={italicRef}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic")}
+          onClick={() => {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
+            setIsItalic(!isItalic);
+          }}
         >
           I
         </button>
@@ -551,7 +557,10 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           id="tool"
           className={`${css.underline} ${isUnderline && css.active}`}
           ref={underlineRef}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline")}
+          onClick={() => {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
+            setIsUnderline(!isUnderline);
+          }}
         >
           U
         </button>
@@ -559,7 +568,10 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           id="tool"
           className={`${css.strikethrough} ${isStrikethrough && css.active}`}
           ref={strikethroughRef}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough")}
+          onClick={() => {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
+            setIsStrikethrough(!isStrikethrough);
+          }}
         >
           S
         </button>
@@ -591,7 +603,10 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           id="tool"
           className={`${css.code} ${isCode && css.active}`}
           ref={codeRef}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code")}
+          onClick={() => {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code");
+            setIsCode(!isCode);
+          }}
         >
           {`<>`}
         </button>
@@ -599,7 +614,10 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           id="tool"
           className={`${isSuperscript && css.active}`}
           ref={superscriptRef}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript")}
+          onClick={() => {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript");
+            setIsSuperscript(!isSuperscript);
+          }}
         >
           x<span className={css.superscript}>2</span>
         </button>
@@ -607,7 +625,10 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           id="tool"
           className={`${isSubscript && css.active}`}
           ref={subscriptRef}
-          onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript")}
+          onClick={() => {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript");
+            setIsSubscript(!isSubscript);
+          }}
         >
           x<span className={css.subscript}>2</span>
         </button>
