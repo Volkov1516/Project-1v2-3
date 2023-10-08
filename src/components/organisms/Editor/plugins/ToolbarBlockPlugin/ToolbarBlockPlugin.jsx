@@ -61,7 +61,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef, titleRef }) => {
             setLeft(16);
           }
 
-          setTop(top);
+          setTop(top - 4);
           setIsBlock(true);
         }
         else {
@@ -189,11 +189,11 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef, titleRef }) => {
   };
 
   return (modalEditorContentRef?.current && isBlock && createPortal(
-    <div onKeyDown={handleKeyDown} className={css.container} style={{ top: top, left: left }}>
+    <div onKeyDown={handleKeyDown} className={css.container} style={{ top, left }}>
       <span className={css.placeholder} onClick={() => editor.focus()}>Type or use: </span>
-      <button ref={h1Ref} id="tool" onClick={() => formatHeading('h1')}>h1</button>
-      <button ref={h2Ref} id="tool" onClick={() => formatHeading('h2')}>h2</button>
-      <button ref={h3Ref} id="tool" onClick={() => formatHeading('h3')}>h3</button>
+      <button ref={h1Ref} id="tool" onClick={() => formatHeading('h1')}>H1</button>
+      <button ref={h2Ref} id="tool" onClick={() => formatHeading('h2')}>H2</button>
+      <button ref={h3Ref} id="tool" onClick={() => formatHeading('h3')}>H3</button>
       <button ref={checkListRef} id="tool" onClick={() => editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined)}>to-do</button>
       <button ref={bulletListRef} id="tool" onClick={() => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined)}>bullet list</button>
       <button ref={numberListRef} id="tool" onClick={() => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined)}>number list</button>
