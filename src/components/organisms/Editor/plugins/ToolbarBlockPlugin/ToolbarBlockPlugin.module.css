@@ -1,9 +1,11 @@
 .container {
   position: absolute;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   column-gap: 8px;
+  width: 100%;
+  max-width: 600px;
 }
 
 .placeholder {
@@ -11,15 +13,25 @@
   white-space: nowrap;
 }
 
-.container>button {
+.tools {
+  display: flex;
+  column-gap: 8px;
+  overflow-x: auto;
+}
+
+.tools::-webkit-scrollbar {
+  height: 0px;
+}
+
+.tool {
   display: flex;
   justify-content: center;
   align-items: center;
   white-space: nowrap;
   height: 32px;
   padding: 0px 8px;
-  outline: 1px solid #BFC7B4;
-  border: none;
+  outline: none;
+  border: 1px solid #BFC7B4;
   border-radius: 2px;
   cursor: pointer;
   background-color: transparent;
@@ -27,21 +39,20 @@
   font-weight: 500;
 }
 
-.container>button:focus {
+.tool:focus {
   background-color: #BFC7B4;
   color: white;
 }
 
-.container>button:hover {
+.tool:hover {
   background-color: #BFC7B4;
   color: white;
 }
 
 @media (max-width: 639px) {
   .container {
-    width: calc(100% - 16px);
-    justify-content: flex-start;
-    overflow-x: auto;
+    width: calc(100vw - 32px);
+    overflow-x: hidden;
   }
 
   ::-webkit-scrollbar {

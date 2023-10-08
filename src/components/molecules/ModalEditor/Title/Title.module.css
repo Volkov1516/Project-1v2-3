@@ -14,7 +14,7 @@
 }
 
 .textarea::placeholder {
-  color: gray;
+  color: #BFC7B4;
 }
 
 @media (max-width: 639px) {
