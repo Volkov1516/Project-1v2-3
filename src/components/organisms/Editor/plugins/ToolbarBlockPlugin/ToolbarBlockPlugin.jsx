@@ -70,7 +70,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef, titleRef }) => {
       },
       COMMAND_PRIORITY_LOW
     )
-  }, [editor, modalEditorContentRef]);
+  }, [editor, modalEditorContentRef, titleRef]);
 
   useEffect(() => {
     editor.registerCommand(

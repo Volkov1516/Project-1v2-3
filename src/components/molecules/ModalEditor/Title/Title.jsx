@@ -10,7 +10,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
       ref.current.style.height = '40px';
       ref.current.style.height = (ref?.current.scrollHeight) + 'px';
     }
-  }, [titleInputValue]);
+  }, [titleInputValue, ref]);
 
   const onTitleChange = (e) => setTitleInputValue(e.target.value);
 
