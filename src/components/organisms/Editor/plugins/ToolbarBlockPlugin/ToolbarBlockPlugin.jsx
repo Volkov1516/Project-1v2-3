@@ -23,7 +23,7 @@ import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontal
 
 import css from './ToolbarBlockPlugin.module.css';
 
-export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
+export const ToolbarBlockPlugin = ({ modalEditorContentRef, titleRef }) => {
   const [editor] = useLexicalComposerContext();
 
   const h1Ref = useRef(null);
@@ -49,7 +49,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef }) => {
         const node = selection.getNodes();
 
         if (node[0].__type === ('paragraph' || 'root')) {
-          const top = nativeSelection.anchorNode.offsetTop + 52;
+          const top = nativeSelection.anchorNode.offsetTop + titleRef.current.scrollHeight;
           const viewport = window.visualViewport.width;
 
           if (viewport > 639) {

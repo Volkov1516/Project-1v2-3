@@ -1,16 +1,14 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 
 import css from './Title.module.css';
 
-export const Title = () => {
-  const titleRef = useRef(null);
-
+export const Title = forwardRef(function MyTitle(props, ref) {
   const [titleInputValue, setTitleInputValue] = useState('');
 
   useEffect(() => {
-    if (titleRef.current) {
-      titleRef.current.style.height = '40px';
-      titleRef.current.style.height = (titleRef.current.scrollHeight) + 'px';
+    if (ref?.current) {
+      ref.current.style.height = '40px';
+      ref.current.style.height = (ref?.current.scrollHeight) + 'px';
     }
   }, [titleInputValue]);
 
@@ -20,7 +18,7 @@ export const Title = () => {
 
   return (
     <textarea
-      ref={titleRef}
+      ref={ref}
       className={css.textarea}
       rows={1}
       spellCheck={false}
@@ -30,4 +28,4 @@ export const Title = () => {
       onKeyDown={handleEnter}
     />
   );
-};
+});

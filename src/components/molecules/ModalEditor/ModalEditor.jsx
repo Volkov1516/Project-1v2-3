@@ -8,6 +8,7 @@ import { Editor } from 'components/organisms/Editor/Editor';
 
 export const ModalEditor = () => {
   const modalEditorContentRef = useRef(null);
+  const titleRef = useRef(null);
 
   const [open, setOpen] = useState(false);
 
@@ -26,8 +27,8 @@ export const ModalEditor = () => {
             </div>
           </div>
           <div ref={modalEditorContentRef} className={css.content}>
-            <Title />
-            <Editor modalEditorContentRef={modalEditorContentRef} />
+            <Title ref={titleRef} />
+            <Editor modalEditorContentRef={modalEditorContentRef} titleRef={titleRef} />
           </div>
         </div>
       )}

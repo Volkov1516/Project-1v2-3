@@ -18,7 +18,7 @@ import { MainTheme } from './themes/MainTheme';
 
 import css from './Editor.module.css';
 
-export const Editor = ({ modalEditorContentRef }) => {
+export const Editor = ({ modalEditorContentRef, titleRef }) => {
   const initialConfig = {
     namespace: 'Editor',
     editable: true,
@@ -45,7 +45,7 @@ export const Editor = ({ modalEditorContentRef }) => {
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <ToolbarBlockPlugin modalEditorContentRef={modalEditorContentRef} />
+      <ToolbarBlockPlugin modalEditorContentRef={modalEditorContentRef} titleRef={titleRef} />
       <ToolbarTextPlugin modalEditorContentRef={modalEditorContentRef} />
       <div className={css.container} onContextMenu={handleContentMenu}>
         <RichTextPlugin
