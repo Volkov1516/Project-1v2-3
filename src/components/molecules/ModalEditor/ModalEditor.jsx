@@ -18,12 +18,17 @@ export const ModalEditor = ({ user }) => {
   const [editorState, setEditorState] = useState([]);
 
   const save = async () => {
-    await addDoc(collection(db, 'articles'), {
-      title: titleState,
-      content: editorState,
-      date: Timestamp.fromDate(new Date()),
-      userId: user?.uid
-    });
+    if (titleState == false && editorState == false) {
+      return;
+    }
+    else {
+      await addDoc(collection(db, 'articles'), {
+        title: titleState,
+        content: editorState,
+        date: Timestamp.fromDate(new Date()),
+        userId: user?.uid
+      });
+    }
   };
 
   return (

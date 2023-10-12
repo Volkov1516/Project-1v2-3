@@ -7,7 +7,7 @@ export const Home = ({ user, articles }) => {
     <div className={css.container}>
       <Header user={user} />
       <div className={css.main}>
-        {articles?.map((i) => <article key={i?.id}>{i?.data()?.title}</article>)}
+        {articles?.map((i) => <article key={i?.id}>{i?.data()?.title || 'Untitled'}</article>)}
       </div>
     </div>
   );
