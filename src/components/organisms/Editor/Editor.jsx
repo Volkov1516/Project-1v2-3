@@ -19,7 +19,14 @@ import { MainTheme } from './themes/MainTheme';
 
 import css from './Editor.module.css';
 
-export const Editor = ({ modalEditorContentRef, titleRef, setEditorState }) => {
+import { v4 as uuidv4 } from 'uuid';
+import { db } from 'firebase.js';
+import { doc, setDoc, Timestamp } from 'firebase/firestore';
+
+export const Editor = ({ user, modalEditorContentRef, titleRef, titleState }) => {
+  const newId = uuidv4();
+  let editorStateAutoSaveTimeout;
+
   const initialConfig = {
     namespace: 'Editor',
     editable: true,
@@ -44,10 +51,19 @@ export const Editor = ({ modalEditorContentRef, titleRef, setEditorState }) => {
     }
   };
 
-  const onEditorChange = (editorState) => {
+  const onEditorChange = async (editorState) => {
+    clearTimeout(editorStateAutoSaveTimeout);
+
     let state = JSON.stringify(editorState);
 
-    setEditorState(state);
+    editorStateAutoSaveTimeout = setTimeout(async () => {
+      await setDoc(doc(db, 'articles', newId), {
+        title: titleState,
+        content: state,
+        date: Timestamp.fromDate(new Date()),
+        userId: user?.uid
+      });
+    }, 1000);
   };
 
   return (
