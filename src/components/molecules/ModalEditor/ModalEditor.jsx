@@ -18,7 +18,7 @@ export const ModalEditor = ({ user }) => {
   const [editorState, setEditorState] = useState([]);
 
   const save = async () => {
-    if (titleState == false && editorState == false) {
+    if (titleState.length === 0 && editorState.length === 0) {
       return;
     }
     else {
