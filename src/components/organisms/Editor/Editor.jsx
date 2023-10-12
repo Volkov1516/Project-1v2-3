@@ -7,6 +7,7 @@ import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { ListItemNode, ListNode } from '@lexical/list';
 
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { ToolbarBlockPlugin } from './plugins/ToolbarBlockPlugin/ToolbarBlockPlugin';
 import { ToolbarTextPlugin } from './plugins/ToolbarTextPlugin/ToolbarTextPlugin';
@@ -18,7 +19,7 @@ import { MainTheme } from './themes/MainTheme';
 
 import css from './Editor.module.css';
 
-export const Editor = ({ modalEditorContentRef, titleRef }) => {
+export const Editor = ({ modalEditorContentRef, titleRef, setEditorState }) => {
   const initialConfig = {
     namespace: 'Editor',
     editable: true,
@@ -43,6 +44,12 @@ export const Editor = ({ modalEditorContentRef, titleRef }) => {
     }
   };
 
+  const onEditorChange = (editorState) => {
+    let state = JSON.stringify(editorState);
+
+    setEditorState(state);
+  };
+
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <ToolbarBlockPlugin modalEditorContentRef={modalEditorContentRef} titleRef={titleRef} />
@@ -52,6 +59,7 @@ export const Editor = ({ modalEditorContentRef, titleRef }) => {
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           ErrorBoundary={LexicalErrorBoundary}
         />
+        <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />
         <AutoFocusPlugin />
         <ListPlugin />
         <CheckListPlugin />

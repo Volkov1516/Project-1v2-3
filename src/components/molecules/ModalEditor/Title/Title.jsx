@@ -3,6 +3,8 @@ import { useState, useEffect, forwardRef } from 'react';
 import css from './Title.module.css';
 
 export const Title = forwardRef(function MyTitle(props, ref) {
+  const { setTitleState } = props;
+
   const [titleInputValue, setTitleInputValue] = useState('');
 
   useEffect(() => {
@@ -12,7 +14,10 @@ export const Title = forwardRef(function MyTitle(props, ref) {
     }
   }, [titleInputValue, ref]);
 
-  const onTitleChange = (e) => setTitleInputValue(e.target.value);
+  const onTitleChange = (e) => {
+    setTitleInputValue(e.target.value);
+    setTitleState(e.target.value);
+  };
 
   const handleEnter = (e) => e.key === 'Enter' && e.preventDefault();
 

@@ -8,7 +8,7 @@ import css from './Header.module.css';
 import Button from 'components/atoms/Button/Button';
 import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
 
-export const Header = () => {
+export const Header = ({ user }) => {
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
 
@@ -25,7 +25,7 @@ export const Header = () => {
   return (
     <div className={css.container}>
       <div className={css.left}>
-        <ModalEditor />
+        <ModalEditor user={user} />
         <Button variant="text" onClick={() => setCategoriesMenu(!categoriesMenu)} onMouseOver={() => setCategoriesMenu(true)} onMouseLeave={() => setCategoriesMenu(false)}>all articles</Button>
         <div className={css.serachBtn}><Button variant="text">search</Button></div>
       </div>
