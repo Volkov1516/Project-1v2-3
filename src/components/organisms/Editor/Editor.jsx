@@ -22,14 +22,22 @@ import css from './Editor.module.css';
 import { db } from 'firebase.js';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
 
-export const Editor = ({ modalEditorContentRef, titleRef, titleState, user, docState, setSaving }) => {
+export const Editor = ({ 
+  modalEditorContentRef, 
+  titleRef, 
+  titleState, 
+  user, 
+  docState, 
+  setSaving,
+  preview = false,
+}) => {
   const newId = localStorage.getItem('currentDocId');
   let editorStateAutoSaveTimeout;
 
   const initialConfig = {
     namespace: 'Editor',
     editorState: docState,
-    editable: true,
+    editable: !preview,
     theme: MainTheme,
     nodes: [
       HeadingNode,
@@ -72,15 +80,15 @@ export const Editor = ({ modalEditorContentRef, titleRef, titleState, user, docS
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <ToolbarBlockPlugin modalEditorContentRef={modalEditorContentRef} titleRef={titleRef} />
-      <ToolbarTextPlugin modalEditorContentRef={modalEditorContentRef} />
+      {!preview && <ToolbarBlockPlugin modalEditorContentRef={modalEditorContentRef} titleRef={titleRef} />}
+      {!preview && <ToolbarTextPlugin modalEditorContentRef={modalEditorContentRef} />}
       <div className={css.container} onContextMenu={handleContentMenu}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           ErrorBoundary={LexicalErrorBoundary}
         />
-        <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />
-        <AutoFocusPlugin />
+        {!preview && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
+        {!preview && <AutoFocusPlugin />}
         <ListPlugin />
         <CheckListPlugin />
         <HorizontalRulePlugin />
