@@ -12,6 +12,8 @@
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   width: 632px;
   height: 80%;
@@ -22,11 +24,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
 }
 
 .left {
   display: flex;
+  padding: 8px;
 }
 
 .right {
@@ -36,4 +38,37 @@
 .editor {
   overflow: auto;
   max-height: 100%;
+}
+
+@media (max-width: 639px) {
+  .container {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .content {
+    flex-direction: column-reverse;
+    margin: 8px;
+    height: 90%;
+  }
+
+  .header {
+    flex-direction: row-reverse;
+  }
+
+  .left {
+    flex-direction: row-reverse;
+  }
+
+  .editor {
+    padding: 8px;
+  }
 }
