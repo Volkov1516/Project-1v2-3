@@ -9,7 +9,8 @@ export const ModalPreview = ({
   openElement,
   modalPreviewStatus,
   setModalPreviewStatus,
-  docState
+  docState,
+  titleState
 }) => {
   return (
     <>
@@ -29,6 +30,7 @@ export const ModalPreview = ({
               </div>
             </div>
             <div className={css.editor}>
+              <div className={css.title}>{titleState || "Untitled"}</div>
               <Editor preview={true} docState={docState} />
             </div>
           </div>

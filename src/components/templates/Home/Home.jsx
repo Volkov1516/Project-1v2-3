@@ -63,6 +63,7 @@ export const Home = ({ user, articles }) => {
         modalPreviewStatus={modalPreviewStatus}
         setModalPreviewStatus={setModalPreviewStatus}
         docState={docState}
+        titleState={titleState}
       />
     </div>
   );
