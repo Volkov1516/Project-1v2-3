@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
@@ -11,6 +12,14 @@ import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
 export const Header = ({ user }) => {
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
+  const [modalEditorStatus, setModalEditorStatus] = useState(false);
+  const [titleState, setTitleState] = useState('');
+
+  const openModalEditor = () => {
+    const newId = uuidv4();
+    localStorage.setItem('currentDocId', newId);
+    setModalEditorStatus(true);
+  };
 
   const handleSignOut = () => {
     signOut(auth).then(() => {
@@ -25,8 +34,22 @@ export const Header = ({ user }) => {
   return (
     <div className={css.container}>
       <div className={css.left}>
-        <ModalEditor user={user} />
-        <Button variant="text" onClick={() => setCategoriesMenu(!categoriesMenu)} onMouseOver={() => setCategoriesMenu(true)} onMouseLeave={() => setCategoriesMenu(false)}>all articles</Button>
+        <ModalEditor
+          openElement={<Button variant="contained" size="large" onClick={openModalEditor}>CREATE</Button>}
+          modalEditorStatus={modalEditorStatus}
+          setModalEditorStatus={setModalEditorStatus}
+          user={user}
+          titleState={titleState}
+          setTitleState={setTitleState}
+        />
+        <Button
+          variant="text"
+          onClick={() => setCategoriesMenu(!categoriesMenu)}
+          onMouseOver={() => setCategoriesMenu(true)}
+          onMouseLeave={() => setCategoriesMenu(false)}
+        >
+          all articles
+        </Button>
         <div className={css.serachBtn}><Button variant="text">search</Button></div>
       </div>
       <div className={css.right}>

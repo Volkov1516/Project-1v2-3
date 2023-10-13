@@ -3,9 +3,9 @@ import { useState, useEffect, forwardRef } from 'react';
 import css from './Title.module.css';
 
 export const Title = forwardRef(function MyTitle(props, ref) {
-  const { setTitleState } = props;
+  const { setTitleState, titleState } = props;
 
-  const [titleInputValue, setTitleInputValue] = useState('');
+  const [titleInputValue, setTitleInputValue] = useState(titleState);
 
   useEffect(() => {
     if (ref?.current) {

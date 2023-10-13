@@ -22,12 +22,13 @@ import css from './Editor.module.css';
 import { db } from 'firebase.js';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
 
-export const Editor = ({ setSaving, user, modalEditorContentRef, titleRef, titleState }) => {
+export const Editor = ({ modalEditorContentRef, titleRef, titleState, user, docState, setSaving }) => {
   const newId = localStorage.getItem('currentDocId');
   let editorStateAutoSaveTimeout;
 
   const initialConfig = {
     namespace: 'Editor',
+    editorState: docState,
     editable: true,
     theme: MainTheme,
     nodes: [
