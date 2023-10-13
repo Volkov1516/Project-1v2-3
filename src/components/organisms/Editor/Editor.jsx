@@ -19,12 +19,11 @@ import { MainTheme } from './themes/MainTheme';
 
 import css from './Editor.module.css';
 
-import { v4 as uuidv4 } from 'uuid';
 import { db } from 'firebase.js';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
 
-export const Editor = ({ user, modalEditorContentRef, titleRef, titleState }) => {
-  const newId = uuidv4();
+export const Editor = ({ setSaving, user, modalEditorContentRef, titleRef, titleState }) => {
+  const newId = localStorage.getItem('currentDocId');
   let editorStateAutoSaveTimeout;
 
   const initialConfig = {
@@ -57,12 +56,16 @@ export const Editor = ({ user, modalEditorContentRef, titleRef, titleState }) =>
     let state = JSON.stringify(editorState);
 
     editorStateAutoSaveTimeout = setTimeout(async () => {
+      setSaving(true);
+
       await setDoc(doc(db, 'articles', newId), {
         title: titleState,
         content: state,
         date: Timestamp.fromDate(new Date()),
         userId: user?.uid
       });
+
+      setSaving(false);
     }, 1000);
   };
 

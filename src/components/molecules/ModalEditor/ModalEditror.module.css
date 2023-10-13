@@ -34,6 +34,36 @@
   align-items: center;
 }
 
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.savingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 4px;
+}
+
+.savingSpinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid #BFC7B4;
+  border-right: 2px solid #BFC7B4;
+  border-radius: 50%;
+  animation: spinner 1s linear infinite;
+}
+
+.savingText {
+  color: #BFC7B4;
+}
+
 .right {
   display: flex;
   justify-content: center;
