@@ -2,6 +2,7 @@ import React from 'react';
 
 import Button from 'components/atoms/Button/Button';
 import { Editor } from 'components/organisms/Editor/Editor';
+import { ModalDelete } from '../ModalDelete/ModalDelete';
 
 import css from './ModalPreview.module.css';
 
@@ -15,7 +16,8 @@ export const ModalPreview = ({
   currentDocIndex,
   setCurrentDocIndex,
   articles,
-  openModalEditorFromPreview
+  openModalEditorFromPreview,
+  currentDocId
 }) => {
   const prev = () => {
     if (currentDocIndex === 0) return;
@@ -43,7 +45,7 @@ export const ModalPreview = ({
                 </div>
                 <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
                 <Button variant="text">archive</Button>
-                <Button variant="text">delete</Button>
+                <ModalDelete title={titleState || "Untitled"} id={currentDocId} />
               </div>
               <div className={css.right}>
                 <Button variant="text" onClick={() => setModalPreviewStatus(false)}>close</Button>

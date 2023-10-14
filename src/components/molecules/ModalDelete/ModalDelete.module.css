@@ -1,0 +1,31 @@
+.container {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.text {
+  padding: 24px 16px 8px;
+  font-size: 16px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-around;
+  background-color: #e8eddf;
+}

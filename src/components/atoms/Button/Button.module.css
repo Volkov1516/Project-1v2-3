@@ -16,6 +16,10 @@
   color: #1971c2;
 }
 
+.text.red {
+  color: #e03131;
+}
+
 .contained {
   color: #FFFFFF;
   background-color: black;

@@ -6,6 +6,7 @@ const Button = memo(function Button({
   type = "button",
   variant,
   size,
+  color,
   children,
   onClick,
   onMouseOver,
@@ -13,7 +14,7 @@ const Button = memo(function Button({
 }) {
   return (
     <button
-      className={`${css.button} ${css[variant]} ${css[size]}`}
+      className={`${css.button} ${css[variant]} ${css[size]} ${css[color]}`}
       type={type}
       variant={variant}
       onClick={onClick}

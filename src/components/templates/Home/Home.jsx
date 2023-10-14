@@ -14,10 +14,12 @@ export const Home = ({ user, articles }) => {
   const [modalEditorStatus, setModalEditorStatus] = useState(false);
   const [modalPreviewStatus, setModalPreviewStatus] = useState(false);
   const [currentDocIndex, setCurrentDocIndex] = useState(null);
+  const [currentDocId, setCurrentDocId] = useState(null);
 
   const openModalEditor = (id, doc, title) => {
     setDocState(doc);
     setTitleState(title);
+    setCurrentDocId(id);
     localStorage.setItem('currentDocId', id);
     setModalEditorStatus(true);
   };
@@ -36,6 +38,7 @@ export const Home = ({ user, articles }) => {
       setCurrentDocIndex(index);
       setDocState(doc);
       setTitleState(title);
+      setCurrentDocId(id);
       localStorage.setItem('currentDocId', id);
       setModalPreviewStatus(true);
     }, 500);
@@ -67,6 +70,7 @@ export const Home = ({ user, articles }) => {
         docState={docState}
         titleState={titleState}
         setTitleState={setTitleState}
+        currentDocId={currentDocId}
       />
       <ModalPreview
         modalPreviewStatus={modalPreviewStatus}
@@ -78,6 +82,7 @@ export const Home = ({ user, articles }) => {
         setCurrentDocIndex={setCurrentDocIndex}
         articles={articles}
         openModalEditorFromPreview={openModalEditorFromPreview}
+        currentDocId={currentDocId}
       />
     </div>
   );

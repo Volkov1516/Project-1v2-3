@@ -5,6 +5,7 @@ import css from './ModalEditror.module.css';
 import Button from 'components/atoms/Button/Button';
 import { Title } from './Title/Title';
 import { Editor } from 'components/organisms/Editor/Editor';
+import { ModalDelete } from '../ModalDelete/ModalDelete';
 
 export const ModalEditor = ({
   openElement,
@@ -13,7 +14,8 @@ export const ModalEditor = ({
   user,
   docState,
   titleState,
-  setTitleState
+  setTitleState,
+  currentDocId
 }) => {
   const modalEditorContentRef = useRef(null);
   const titleRef = useRef(null);
@@ -41,6 +43,7 @@ export const ModalEditor = ({
               )}
             </div>
             <div className={css.right}>
+              <ModalDelete title={titleState || "Untitled"} id={currentDocId} />
               <Button variant="text">collection</Button>
               <Button variant="text">settings</Button>
             </div>
