@@ -32,6 +32,10 @@
   padding: 8px;
 }
 
+.navigation{
+  display: flex;
+}
+
 .right {
   display: flex;
 }

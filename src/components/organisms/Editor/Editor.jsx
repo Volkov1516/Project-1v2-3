@@ -7,6 +7,7 @@ import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { ListItemNode, ListNode } from '@lexical/list';
 
+import { RefreshStatePlugin } from './plugins/RefreshStatePlugin/RefreshStatePlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { ToolbarBlockPlugin } from './plugins/ToolbarBlockPlugin/ToolbarBlockPlugin';
@@ -25,11 +26,14 @@ import { doc, setDoc, Timestamp } from 'firebase/firestore';
 export const Editor = ({ 
   modalEditorContentRef, 
   titleRef, 
-  titleState, 
+  titleState,
+  setTitleState, 
   user, 
   docState, 
   setSaving,
   preview = false,
+  articles,
+  currentDocIndex
 }) => {
   const newId = localStorage.getItem('currentDocId');
   let editorStateAutoSaveTimeout;
@@ -87,6 +91,7 @@ export const Editor = ({
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           ErrorBoundary={LexicalErrorBoundary}
         />
+        {preview && <RefreshStatePlugin articles={articles} currentDocIndex={currentDocIndex} setTitleState={setTitleState} />}
         {!preview && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
         {!preview && <AutoFocusPlugin />}
         <ListPlugin />

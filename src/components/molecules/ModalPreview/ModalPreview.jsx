@@ -10,8 +10,24 @@ export const ModalPreview = ({
   modalPreviewStatus,
   setModalPreviewStatus,
   docState,
-  titleState
+  titleState,
+  setTitleState,
+  currentDocIndex,
+  setCurrentDocIndex,
+  articles,
 }) => {
+  const prev = () => {
+    if (currentDocIndex === 0) return;
+
+    setCurrentDocIndex(currentDocIndex - 1);
+  };
+
+  const next = () => {
+    if (currentDocIndex === articles?.length - 1) return;
+
+    setCurrentDocIndex(currentDocIndex + 1);
+  };
+
   return (
     <>
       {openElement}
@@ -20,9 +36,12 @@ export const ModalPreview = ({
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
             <div className={css.header}>
               <div className={css.left}>
-                <Button variant="contained">prev</Button>
-                <Button variant="contained">next</Button>
+                <div className={css.navigation}>
+                  <Button variant="contained" onClick={prev}>prev</Button>
+                  <Button variant="contained" onClick={next}>next</Button>
+                </div>
                 <Button variant="text">edit</Button>
+                <Button variant="text">archive</Button>
                 <Button variant="text">delete</Button>
               </div>
               <div className={css.right}>
@@ -31,7 +50,7 @@ export const ModalPreview = ({
             </div>
             <div className={css.editor}>
               <div className={css.title}>{titleState || "Untitled"}</div>
-              <Editor preview={true} docState={docState} />
+              <Editor preview={true} docState={docState} articles={articles} currentDocIndex={currentDocIndex} setTitleState={setTitleState} />
             </div>
           </div>
         </div>

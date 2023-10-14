@@ -13,6 +13,7 @@ export const Home = ({ user, articles }) => {
   const [titleState, setTitleState] = useState('');
   const [modalEditorStatus, setModalEditorStatus] = useState(false);
   const [modalPreviewStatus, setModalPreviewStatus] = useState(false);
+  const [currentDocIndex, setCurrentDocIndex] = useState(null);
 
   const openModalEditor = (id, doc, title) => {
     setDocState(doc);
@@ -21,10 +22,11 @@ export const Home = ({ user, articles }) => {
     setModalEditorStatus(true);
   };
 
-  const onMouseDown = (id, doc, title) => {
+  const onMouseDown = (id, doc, title, index) => {
     onMouseUp();
 
     mouseTimer = window.setTimeout(() => {
+      setCurrentDocIndex(index);
       setDocState(doc);
       setTitleState(title);
       localStorage.setItem('currentDocId', id);
@@ -38,13 +40,13 @@ export const Home = ({ user, articles }) => {
     <div className={css.container}>
       <Header user={user} />
       <div className={css.main}>
-        {articles?.map((i) => (
+        {articles?.map((i, index) => (
           <article
             key={i?.id}
             onClick={() => openModalEditor(i?.id, i?.data()?.content, i?.data()?.title)}
-            onMouseDown={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title)}
+            onMouseDown={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}
             onMouseUp={onMouseUp}
-            onTouchStart={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title)}
+            onTouchStart={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}
             onTouchEnd={onMouseUp}
           >
             {i?.data()?.title || 'Untitled'}
@@ -64,6 +66,10 @@ export const Home = ({ user, articles }) => {
         setModalPreviewStatus={setModalPreviewStatus}
         docState={docState}
         titleState={titleState}
+        setTitleState={setTitleState}
+        currentDocIndex={currentDocIndex}
+        setCurrentDocIndex={setCurrentDocIndex}
+        articles={articles}
       />
     </div>
   );

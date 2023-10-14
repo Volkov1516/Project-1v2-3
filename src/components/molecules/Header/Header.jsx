@@ -63,7 +63,7 @@ export const Header = ({ user }) => {
           <div className={css.dropdownItem} style={{ color: "#1971c2" }}>#projects</div>
           <div className={css.dropdownItem} style={{ width: "fit-content", color: "white", backgroundColor: "#e03131", paddingRight: "12px" }}>red</div>
           <div className={css.dropdownItem} style={{ width: "fit-content", color: "white", backgroundColor: "#1971c2", paddingRight: "12px" }}>blue</div>
-          <div className={css.dropdownItem}>trash</div>
+          <div className={css.dropdownItem}>archive</div>
         </div>
       )}
       {userMenu && (
