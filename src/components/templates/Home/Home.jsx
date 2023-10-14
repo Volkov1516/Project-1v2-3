@@ -37,9 +37,9 @@ export const Home = ({ user, articles }) => {
   const onMouseUp = () => mouseTimer && window.clearTimeout(mouseTimer);
 
   return (
-    <div className={css.container}>
+    <div className={css.container} onScroll={onMouseUp}>
       <Header user={user} />
-      <div className={css.main}>
+      <div className={css.main} onScroll={onMouseUp}>
         {articles?.map((i, index) => (
           <article
             key={i?.id}

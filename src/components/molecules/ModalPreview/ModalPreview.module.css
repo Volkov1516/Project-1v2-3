@@ -68,6 +68,7 @@
 
   .content {
     flex-direction: column-reverse;
+    justify-content:space-between;
     margin: 8px;
     height: 90%;
   }

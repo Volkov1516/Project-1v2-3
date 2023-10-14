@@ -17,6 +17,6 @@ article {
 
 @media (max-width: 639px) {
   .main {
-    padding: 8px 16px 200px;
+    padding: 50vh 16px 50vh;
   }
 }
