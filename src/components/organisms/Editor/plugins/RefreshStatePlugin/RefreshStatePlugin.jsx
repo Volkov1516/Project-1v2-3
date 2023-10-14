@@ -21,7 +21,7 @@ export const RefreshStatePlugin = ({articles, currentDocIndex, setTitleState}) =
 
       }
     });
-  }, [currentDocIndex]);
+  }, [editor, articles, currentDocIndex, setTitleState]);
 
   return null;
 };
