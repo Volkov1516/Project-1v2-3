@@ -22,6 +22,13 @@ export const Home = ({ user, articles }) => {
     setModalEditorStatus(true);
   };
 
+  const openModalEditorFromPreview = () => {
+    setDocState(articles[currentDocIndex]?.data()?.content);
+    setTitleState(articles[currentDocIndex]?.data()?.title);
+    localStorage.setItem('currentDocId', articles[currentDocIndex]?.id);
+    setModalEditorStatus(true);
+  };
+
   const onMouseDown = (id, doc, title, index) => {
     onMouseUp();
 
@@ -70,6 +77,7 @@ export const Home = ({ user, articles }) => {
         currentDocIndex={currentDocIndex}
         setCurrentDocIndex={setCurrentDocIndex}
         articles={articles}
+        openModalEditorFromPreview={openModalEditorFromPreview}
       />
     </div>
   );

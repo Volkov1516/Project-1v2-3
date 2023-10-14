@@ -15,6 +15,7 @@ export const ModalPreview = ({
   currentDocIndex,
   setCurrentDocIndex,
   articles,
+  openModalEditorFromPreview
 }) => {
   const prev = () => {
     if (currentDocIndex === 0) return;
@@ -40,7 +41,7 @@ export const ModalPreview = ({
                   <Button variant="contained" onClick={prev}>prev</Button>
                   <Button variant="contained" onClick={next}>next</Button>
                 </div>
-                <Button variant="text">edit</Button>
+                <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
                 <Button variant="text">archive</Button>
                 <Button variant="text">delete</Button>
               </div>
