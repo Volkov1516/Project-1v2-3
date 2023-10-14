@@ -15,6 +15,7 @@ export const Home = ({ user, articles }) => {
   const [modalPreviewStatus, setModalPreviewStatus] = useState(false);
   const [currentDocIndex, setCurrentDocIndex] = useState(null);
   const [currentDocId, setCurrentDocId] = useState(null);
+  const [contentType, setContentType] = useState('all articles');
 
   const openModalEditor = (id, doc, title) => {
     setDocState(doc);
@@ -48,21 +49,39 @@ export const Home = ({ user, articles }) => {
 
   return (
     <div className={css.container} onScroll={onMouseUp}>
-      <Header user={user} />
-      <div className={css.main} onScroll={onMouseUp}>
-        {articles?.map((i, index) => (
-          <article
-            key={i?.id}
-            onClick={() => openModalEditor(i?.id, i?.data()?.content, i?.data()?.title)}
-            onMouseDown={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}
-            onMouseUp={onMouseUp}
-            onTouchStart={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}
-            onTouchEnd={onMouseUp}
-          >
-            {i?.data()?.title || 'Untitled'}
-          </article>
-        ))}
-      </div>
+      <Header user={user} contentType={contentType} setContentType={setContentType} />
+      {contentType === 'all articles' && (
+        <div className={css.main} onScroll={onMouseUp}>
+          {articles?.map((i, index) => (
+            !i?.data()?.archive && <article
+              key={i?.id}
+              onClick={() => openModalEditor(i?.id, i?.data()?.content, i?.data()?.title)}
+              onMouseDown={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}
+              onMouseUp={onMouseUp}
+              onTouchStart={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}
+              onTouchEnd={onMouseUp}
+            >
+              {i?.data()?.title || 'Untitled'}
+            </article>
+          ))}
+        </div>
+      )}
+      {contentType === 'archive' && (
+        <div className={css.main} onScroll={onMouseUp}>
+          {articles?.map((i, index) => (
+            i?.data()?.archive && <article
+              key={i?.id}
+              onClick={() => openModalEditor(i?.id, i?.data()?.content, i?.data()?.title)}
+              onMouseDown={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}
+              onMouseUp={onMouseUp}
+              onTouchStart={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}
+              onTouchEnd={onMouseUp}
+            >
+              {i?.data()?.title || 'Untitled'}
+            </article>
+          ))}
+        </div>
+      )}
       <ModalEditor
         modalEditorStatus={modalEditorStatus}
         setModalEditorStatus={setModalEditorStatus}

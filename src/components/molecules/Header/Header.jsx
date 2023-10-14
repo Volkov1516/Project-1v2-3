@@ -9,7 +9,7 @@ import css from './Header.module.css';
 import Button from 'components/atoms/Button/Button';
 import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
 
-export const Header = ({ user }) => {
+export const Header = ({ user, contentType, setContentType }) => {
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [modalEditorStatus, setModalEditorStatus] = useState(false);
@@ -48,7 +48,7 @@ export const Header = ({ user }) => {
           onMouseOver={() => setCategoriesMenu(true)}
           onMouseLeave={() => setCategoriesMenu(false)}
         >
-          all articles
+          {contentType}
         </Button>
         <div className={css.serachBtn}><Button variant="text">search</Button></div>
       </div>
@@ -58,12 +58,12 @@ export const Header = ({ user }) => {
       {categoriesMenu && (
         <div className={css.dropdown} onMouseOver={() => setCategoriesMenu(true)} onMouseLeave={() => setCategoriesMenu(false)}>
           <div className={css.dropdownItem}>add category</div>
-          <div className={css.dropdownItem}>all articles</div>
+          <div className={css.dropdownItem} onClick={() => setContentType("all articles")}>all articles</div>
           <div className={css.dropdownItem} style={{ color: "#1971c2" }}>#goals</div>
           <div className={css.dropdownItem} style={{ color: "#1971c2" }}>#projects</div>
           <div className={css.dropdownItem} style={{ width: "fit-content", color: "white", backgroundColor: "#e03131", paddingRight: "12px" }}>red</div>
           <div className={css.dropdownItem} style={{ width: "fit-content", color: "white", backgroundColor: "#1971c2", paddingRight: "12px" }}>blue</div>
-          <div className={css.dropdownItem}>archive</div>
+          <div className={css.dropdownItem} onClick={() => setContentType("archive")}>archive</div>
         </div>
       )}
       {userMenu && (

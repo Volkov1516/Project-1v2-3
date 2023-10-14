@@ -1,4 +1,6 @@
 import React from 'react';
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from 'firebase.js';
 
 import Button from 'components/atoms/Button/Button';
 import { Editor } from 'components/organisms/Editor/Editor';
@@ -31,6 +33,14 @@ export const ModalPreview = ({
     setCurrentDocIndex(currentDocIndex + 1);
   };
 
+  const archive = async () => {
+    const articleRef = doc(db, "articles", currentDocId);
+
+    await updateDoc(articleRef, {
+      archive: !articles[currentDocIndex]?.data()?.archive
+    });
+  };
+
   return (
     <>
       {openElement}
@@ -44,7 +54,7 @@ export const ModalPreview = ({
                   <Button variant="contained" onClick={next}>next</Button>
                 </div>
                 <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
-                <Button variant="text">archive</Button>
+                <Button variant="text" onClick={archive}>{articles[currentDocIndex]?.data()?.archive ? 'unarchive' : 'archive'}</Button>
                 <ModalDelete title={titleState || "Untitled"} id={currentDocId} />
               </div>
               <div className={css.right}>

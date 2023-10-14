@@ -1,4 +1,6 @@
 import { useState, useRef } from 'react';
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from 'firebase.js';
 
 import css from './ModalEditror.module.css';
 
@@ -27,6 +29,14 @@ export const ModalEditor = ({
     setModalEditorStatus(false);
   };
 
+  const archive = async () => {
+    const articleRef = doc(db, "articles", currentDocId);
+
+    await updateDoc(articleRef, {
+      archive: true
+    });
+  };
+
   return (
     <>
       {openElement}
@@ -43,6 +53,7 @@ export const ModalEditor = ({
               )}
             </div>
             <div className={css.right}>
+              <Button variant="text" onClick={archive}>archive</Button>
               <ModalDelete title={titleState || "Untitled"} id={currentDocId} />
               <Button variant="text">collection</Button>
               <Button variant="text">settings</Button>
