@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_AUTH, SET_USER } from 'redux/features/user/userSlice';
+import { SET_ALL } from 'redux/features/article/articleSlice';
 
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -16,14 +17,13 @@ export const App = () => {
   const { logged } = useSelector(state => state.user);
 
   const [loading, setLoading] = useState(true);
-  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     const getArticles = async (res) => {
       const q = query(collection(db, 'articles'), where('userId', '==', res?.uid));
       const querySnapshot = await getDocs(q);
 
-      setArticles(querySnapshot.docs);
+      dispatch(SET_ALL(querySnapshot.docs));
     };
 
     onAuthStateChanged(auth, (res) => {
@@ -39,5 +39,5 @@ export const App = () => {
     });
   }, [dispatch]);
 
-  return loading ? <Loading /> : logged ? <Home articles={articles} /> : <Auth />;
+  return loading ? <Loading /> : logged ? <Home /> : <Auth />;
 };

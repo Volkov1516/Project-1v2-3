@@ -33,7 +33,6 @@ export const Editor = ({
   docState, 
   setSaving,
   preview = false,
-  articles,
   currentDocIndex
 }) => {
   const { user } = useSelector(state => state.user);
@@ -94,7 +93,7 @@ export const Editor = ({
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           ErrorBoundary={LexicalErrorBoundary}
         />
-        {preview && <RefreshStatePlugin articles={articles} currentDocIndex={currentDocIndex} setTitleState={setTitleState} />}
+        {preview && <RefreshStatePlugin currentDocIndex={currentDocIndex} setTitleState={setTitleState} />}
         {!preview && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
         {!preview && <AutoFocusPlugin />}
         <ListPlugin />

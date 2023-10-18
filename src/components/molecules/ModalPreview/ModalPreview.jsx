@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from 'firebase.js';
 
@@ -17,10 +18,11 @@ export const ModalPreview = ({
   setTitleState,
   currentDocIndex,
   setCurrentDocIndex,
-  articles,
   openModalEditorFromPreview,
   currentDocId
 }) => {
+  const { all } = useSelector(state => state.article);
+
   const prev = () => {
     if (currentDocIndex === 0) return;
 
@@ -28,7 +30,7 @@ export const ModalPreview = ({
   };
 
   const next = () => {
-    if (currentDocIndex === articles?.length - 1) return;
+    if (currentDocIndex === all?.length - 1) return;
 
     setCurrentDocIndex(currentDocIndex + 1);
   };
@@ -37,7 +39,7 @@ export const ModalPreview = ({
     const articleRef = doc(db, "articles", currentDocId);
 
     await updateDoc(articleRef, {
-      archive: !articles[currentDocIndex]?.data()?.archive
+      archive: !all[currentDocIndex]?.data()?.archive
     });
   };
 
@@ -54,7 +56,7 @@ export const ModalPreview = ({
                   <Button variant="contained" onClick={next}>next</Button>
                 </div>
                 <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
-                <Button variant="text" onClick={archive}>{articles[currentDocIndex]?.data()?.archive ? 'unarchive' : 'archive'}</Button>
+                <Button variant="text" onClick={archive}>{all[currentDocIndex]?.data()?.archive ? 'unarchive' : 'archive'}</Button>
                 <ModalDelete title={titleState || "Untitled"} id={currentDocId} />
               </div>
               <div className={css.right}>
@@ -63,7 +65,7 @@ export const ModalPreview = ({
             </div>
             <div className={css.editor}>
               <div className={css.title}>{titleState || "Untitled"}</div>
-              <Editor preview={true} docState={docState} articles={articles} currentDocIndex={currentDocIndex} setTitleState={setTitleState} />
+              <Editor preview={true} docState={docState} currentDocIndex={currentDocIndex} setTitleState={setTitleState} />
             </div>
           </div>
         </div>

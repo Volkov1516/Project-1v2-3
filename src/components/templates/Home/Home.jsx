@@ -1,12 +1,16 @@
 import { useState } from 'react';
 
+import { useSelector } from 'react-redux';
+
 import css from './Home.module.css';
 
 import { Header } from 'components/molecules/Header/Header';
 import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
 import { ModalPreview } from 'components/molecules/ModalPreview/ModalPreview';
 
-export const Home = ({ articles }) => {
+export const Home = () => {
+  const { all } = useSelector(state => state.article);
+
   let mouseTimer;
 
   const [docState, setDocState] = useState([]);
@@ -26,9 +30,9 @@ export const Home = ({ articles }) => {
   };
 
   const openModalEditorFromPreview = () => {
-    setDocState(articles[currentDocIndex]?.data()?.content);
-    setTitleState(articles[currentDocIndex]?.data()?.title);
-    localStorage.setItem('currentDocId', articles[currentDocIndex]?.id);
+    setDocState(all[currentDocIndex]?.data()?.content);
+    setTitleState(all[currentDocIndex]?.data()?.title);
+    localStorage.setItem('currentDocId', all[currentDocIndex]?.id);
     setModalEditorStatus(true);
   };
 
@@ -52,7 +56,7 @@ export const Home = ({ articles }) => {
       <Header contentType={contentType} setContentType={setContentType} />
       {contentType === 'all articles' && (
         <div className={css.main} onScroll={onMouseUp}>
-          {articles?.map((i, index) => (
+          {all?.map((i, index) => (
             !i?.data()?.archive && <article
               key={i?.id}
               onClick={() => openModalEditor(i?.id, i?.data()?.content, i?.data()?.title)}
@@ -68,7 +72,7 @@ export const Home = ({ articles }) => {
       )}
       {contentType === 'archive' && (
         <div className={css.main} onScroll={onMouseUp}>
-          {articles?.map((i, index) => (
+          {all?.map((i, index) => (
             i?.data()?.archive && <article
               key={i?.id}
               onClick={() => openModalEditor(i?.id, i?.data()?.content, i?.data()?.title)}
@@ -98,7 +102,6 @@ export const Home = ({ articles }) => {
         setTitleState={setTitleState}
         currentDocIndex={currentDocIndex}
         setCurrentDocIndex={setCurrentDocIndex}
-        articles={articles}
         openModalEditorFromPreview={openModalEditorFromPreview}
         currentDocId={currentDocId}
       />
