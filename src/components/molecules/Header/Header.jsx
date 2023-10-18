@@ -1,4 +1,8 @@
 import { useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+import { SET_CURRENT_ID, SET_CONTENT } from 'redux/features/article/articleSlice';
+
 import { v4 as uuidv4 } from 'uuid';
 
 import { auth } from 'firebase.js';
@@ -10,6 +14,9 @@ import Button from 'components/atoms/Button/Button';
 import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
 
 export const Header = ({ contentType, setContentType }) => {
+  const dispatch = useDispatch();
+  const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
+
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [modalEditorStatus, setModalEditorStatus] = useState(false);
@@ -17,7 +24,8 @@ export const Header = ({ contentType, setContentType }) => {
 
   const openModalEditor = () => {
     const newId = uuidv4();
-    localStorage.setItem('currentDocId', newId);
+    dispatch(SET_CURRENT_ID(newId));
+    dispatch(SET_CONTENT(EMPTY_CONTENT));
     setModalEditorStatus(true);
   };
 

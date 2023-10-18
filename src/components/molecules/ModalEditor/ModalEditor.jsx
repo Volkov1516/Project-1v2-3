@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
-import { doc, updateDoc } from "firebase/firestore";
+import { useSelector } from 'react-redux';
+import { doc, updateDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 
 import css from './ModalEditror.module.css';
@@ -13,23 +14,22 @@ export const ModalEditor = ({
   openElement,
   modalEditorStatus,
   setModalEditorStatus,
-  docState,
   titleState,
   setTitleState,
-  currentDocId
 }) => {
+  const { currentId } = useSelector(state => state.article);
+
   const modalEditorContentRef = useRef(null);
   const titleRef = useRef(null);
 
   const [saving, setSaving] = useState(false);
 
   const handleClose = () => {
-    localStorage.removeItem('currentDocId');
     setModalEditorStatus(false);
   };
 
   const archive = async () => {
-    const articleRef = doc(db, "articles", currentDocId);
+    const articleRef = doc(db, 'articles', currentId);
 
     await updateDoc(articleRef, {
       archive: true
@@ -53,7 +53,7 @@ export const ModalEditor = ({
             </div>
             <div className={css.right}>
               <Button variant="text" onClick={archive}>archive</Button>
-              <ModalDelete title={titleState || "Untitled"} id={currentDocId} />
+              <ModalDelete title={titleState || "Untitled"} />
               <Button variant="text">collection</Button>
               <Button variant="text">settings</Button>
             </div>
@@ -68,7 +68,6 @@ export const ModalEditor = ({
               modalEditorContentRef={modalEditorContentRef}
               titleRef={titleRef}
               titleState={titleState}
-              docState={docState}
               setSaving={setSaving}
             />
           </div>

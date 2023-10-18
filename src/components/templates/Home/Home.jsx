@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { SET_CURRENT_ID, SET_CURRENT_INDEX, SET_CONTENT } from 'redux/features/article/articleSlice';
 
 import css from './Home.module.css';
 
@@ -9,42 +11,38 @@ import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
 import { ModalPreview } from 'components/molecules/ModalPreview/ModalPreview';
 
 export const Home = () => {
-  const { all } = useSelector(state => state.article);
+  const dispatch = useDispatch();
+  const { all, currentIndex } = useSelector(state => state.article);
 
   let mouseTimer;
 
-  const [docState, setDocState] = useState([]);
   const [titleState, setTitleState] = useState('');
   const [modalEditorStatus, setModalEditorStatus] = useState(false);
   const [modalPreviewStatus, setModalPreviewStatus] = useState(false);
-  const [currentDocIndex, setCurrentDocIndex] = useState(null);
-  const [currentDocId, setCurrentDocId] = useState(null);
   const [contentType, setContentType] = useState('all articles');
 
-  const openModalEditor = (id, doc, title) => {
-    setDocState(doc);
+  const openModalEditor = (id, content, title) => {
     setTitleState(title);
-    setCurrentDocId(id);
-    localStorage.setItem('currentDocId', id);
+    dispatch(SET_CURRENT_ID(id));
+    dispatch(SET_CONTENT(content));
     setModalEditorStatus(true);
   };
 
   const openModalEditorFromPreview = () => {
-    setDocState(all[currentDocIndex]?.data()?.content);
-    setTitleState(all[currentDocIndex]?.data()?.title);
-    localStorage.setItem('currentDocId', all[currentDocIndex]?.id);
+    setTitleState(all[currentIndex]?.data()?.title);
+    dispatch(SET_CURRENT_ID(all[currentIndex]?.id));
+    dispatch(SET_CONTENT(all[currentIndex]?.data()?.content));
     setModalEditorStatus(true);
   };
 
-  const onMouseDown = (id, doc, title, index) => {
+  const onMouseDown = (id, content, title, index) => {
     onMouseUp();
 
     mouseTimer = window.setTimeout(() => {
-      setCurrentDocIndex(index);
-      setDocState(doc);
       setTitleState(title);
-      setCurrentDocId(id);
-      localStorage.setItem('currentDocId', id);
+      dispatch(SET_CURRENT_ID(id));
+      dispatch(SET_CURRENT_INDEX(index));
+      dispatch(SET_CONTENT(content));
       setModalPreviewStatus(true);
     }, 500);
   };
@@ -89,21 +87,15 @@ export const Home = () => {
       <ModalEditor
         modalEditorStatus={modalEditorStatus}
         setModalEditorStatus={setModalEditorStatus}
-        docState={docState}
         titleState={titleState}
         setTitleState={setTitleState}
-        currentDocId={currentDocId}
       />
       <ModalPreview
         modalPreviewStatus={modalPreviewStatus}
         setModalPreviewStatus={setModalPreviewStatus}
-        docState={docState}
         titleState={titleState}
         setTitleState={setTitleState}
-        currentDocIndex={currentDocIndex}
-        setCurrentDocIndex={setCurrentDocIndex}
         openModalEditorFromPreview={openModalEditorFromPreview}
-        currentDocId={currentDocId}
       />
     </div>
   );

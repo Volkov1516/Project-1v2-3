@@ -30,19 +30,17 @@ export const Editor = ({
   titleRef, 
   titleState,
   setTitleState, 
-  docState, 
   setSaving,
   preview = false,
-  currentDocIndex
 }) => {
   const { user } = useSelector(state => state.user);
+  const { currentId, content } = useSelector(state => state.article);
 
-  const newId = localStorage.getItem('currentDocId');
   let editorStateAutoSaveTimeout;
 
   const initialConfig = {
     namespace: 'Editor',
-    editorState: docState,
+    editorState: content,
     editable: !preview,
     theme: MainTheme,
     nodes: [
@@ -73,7 +71,7 @@ export const Editor = ({
     editorStateAutoSaveTimeout = setTimeout(async () => {
       setSaving(true);
 
-      await setDoc(doc(db, 'articles', newId), {
+      await setDoc(doc(db, 'articles', currentId), {
         title: titleState,
         content: state,
         date: Timestamp.fromDate(new Date()),
@@ -93,7 +91,7 @@ export const Editor = ({
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           ErrorBoundary={LexicalErrorBoundary}
         />
-        {preview && <RefreshStatePlugin currentDocIndex={currentDocIndex} setTitleState={setTitleState} />}
+        {preview && <RefreshStatePlugin setTitleState={setTitleState} />}
         {!preview && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
         {!preview && <AutoFocusPlugin />}
         <ListPlugin />

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 
@@ -6,11 +7,13 @@ import css from './ModalDelete.module.css';
 
 import Button from 'components/atoms/Button/Button';
 
-export const ModalDelete = ({ title, id }) => {
+export const ModalDelete = ({ title }) => {
+  const { currentId } = useSelector(state => state.article);
+
   const [open, setOpen] = useState(false);
 
   const deleteArticle = async () => {
-    await deleteDoc(doc(db, 'articles', id));
+    await deleteDoc(doc(db, 'articles', currentId));
     setOpen(false);
   };
 

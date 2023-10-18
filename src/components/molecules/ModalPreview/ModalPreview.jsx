@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { INCREMENT_CURRENT_INDEX, DECREMENT_CURRENT_INDEX } from 'redux/features/article/articleSlice';
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from 'firebase.js';
 
@@ -13,33 +14,30 @@ export const ModalPreview = ({
   openElement,
   modalPreviewStatus,
   setModalPreviewStatus,
-  docState,
   titleState,
   setTitleState,
-  currentDocIndex,
-  setCurrentDocIndex,
   openModalEditorFromPreview,
-  currentDocId
 }) => {
-  const { all } = useSelector(state => state.article);
+  const dispatch = useDispatch();
+  const { all, currentId, currentIndex } = useSelector(state => state.article);
 
   const prev = () => {
-    if (currentDocIndex === 0) return;
+    if (currentIndex === 0) return;
 
-    setCurrentDocIndex(currentDocIndex - 1);
+    dispatch(DECREMENT_CURRENT_INDEX());
   };
 
   const next = () => {
-    if (currentDocIndex === all?.length - 1) return;
+    if (currentIndex === all?.length - 1) return;
 
-    setCurrentDocIndex(currentDocIndex + 1);
+    dispatch(INCREMENT_CURRENT_INDEX())
   };
 
   const archive = async () => {
-    const articleRef = doc(db, "articles", currentDocId);
+    const articleRef = doc(db, 'articles', currentId);
 
     await updateDoc(articleRef, {
-      archive: !all[currentDocIndex]?.data()?.archive
+      archive: !all[currentIndex]?.data()?.archive
     });
   };
 
@@ -56,8 +54,8 @@ export const ModalPreview = ({
                   <Button variant="contained" onClick={next}>next</Button>
                 </div>
                 <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
-                <Button variant="text" onClick={archive}>{all[currentDocIndex]?.data()?.archive ? 'unarchive' : 'archive'}</Button>
-                <ModalDelete title={titleState || "Untitled"} id={currentDocId} />
+                <Button variant="text" onClick={archive}>{all[currentIndex]?.data()?.archive ? 'unarchive' : 'archive'}</Button>
+                <ModalDelete title={titleState || "Untitled"} />
               </div>
               <div className={css.right}>
                 <Button variant="text" onClick={() => setModalPreviewStatus(false)}>close</Button>
@@ -65,7 +63,7 @@ export const ModalPreview = ({
             </div>
             <div className={css.editor}>
               <div className={css.title}>{titleState || "Untitled"}</div>
-              <Editor preview={true} docState={docState} currentDocIndex={currentDocIndex} setTitleState={setTitleState} />
+              <Editor preview={true} setTitleState={setTitleState} />
             </div>
           </div>
         </div>
