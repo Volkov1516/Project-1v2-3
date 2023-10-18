@@ -37,7 +37,7 @@ export const App = () => {
         setLoading(false);
       }
     });
-  }, []);
+  }, [dispatch]);
 
   return loading ? <Loading /> : logged ? <Home articles={articles} /> : <Auth />;
 };
