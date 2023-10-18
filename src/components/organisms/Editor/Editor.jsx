@@ -1,3 +1,5 @@
+import { useSelector, useDispatch } from 'react-redux';
+
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -28,13 +30,14 @@ export const Editor = ({
   titleRef, 
   titleState,
   setTitleState, 
-  user, 
   docState, 
   setSaving,
   preview = false,
   articles,
   currentDocIndex
 }) => {
+  const { user } = useSelector(state => state.user);
+
   const newId = localStorage.getItem('currentDocId');
   let editorStateAutoSaveTimeout;
 
@@ -75,7 +78,7 @@ export const Editor = ({
         title: titleState,
         content: state,
         date: Timestamp.fromDate(new Date()),
-        userId: user?.uid
+        userId: user?.id
       });
 
       setSaving(false);

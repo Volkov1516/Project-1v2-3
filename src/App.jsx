@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
-import { auth } from 'firebase.js';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { SET_AUTH, SET_USER } from 'redux/features/user/userSlice';
+
+import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 
 import { Auth } from 'components/templates/Auth/Auth';
 import { Home } from 'components/templates/Home/Home';
 import { Loading } from 'components/templates/Loading/Loading';
 
-import { db } from 'firebase.js';
-import { collection, query, where, getDocs } from "firebase/firestore";
-
 export const App = () => {
+  const dispatch = useDispatch();
+  const { logged } = useSelector(state => state.user);
+
   const [loading, setLoading] = useState(true);
-  const [isAuth, setIsAuth] = useState(false);
-  const [user, setUser] = useState(null);
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -21,20 +24,20 @@ export const App = () => {
       const querySnapshot = await getDocs(q);
 
       setArticles(querySnapshot.docs);
-    }
+    };
 
     onAuthStateChanged(auth, (res) => {
       if (res) {
-        setIsAuth(true);
-        setLoading(false);
-        setUser(res);
+        dispatch(SET_AUTH(true));
+        dispatch(SET_USER({ id: res?.uid }));
         getArticles(res);
+        setLoading(false);
       } else {
-        setIsAuth(false);
+        dispatch(SET_AUTH(false));
         setLoading(false);
       }
     });
   }, []);
 
-  return loading ? <Loading /> : isAuth ? <Home user={user} articles={articles} /> : <Auth />;
+  return loading ? <Loading /> : logged ? <Home articles={articles} /> : <Auth />;
 };

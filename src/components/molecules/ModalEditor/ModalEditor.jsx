@@ -13,7 +13,6 @@ export const ModalEditor = ({
   openElement,
   modalEditorStatus,
   setModalEditorStatus,
-  user,
   docState,
   titleState,
   setTitleState,
@@ -69,7 +68,6 @@ export const ModalEditor = ({
               modalEditorContentRef={modalEditorContentRef}
               titleRef={titleRef}
               titleState={titleState}
-              user={user}
               docState={docState}
               setSaving={setSaving}
             />

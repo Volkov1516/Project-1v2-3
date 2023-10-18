@@ -6,7 +6,7 @@ import { Header } from 'components/molecules/Header/Header';
 import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
 import { ModalPreview } from 'components/molecules/ModalPreview/ModalPreview';
 
-export const Home = ({ user, articles }) => {
+export const Home = ({ articles }) => {
   let mouseTimer;
 
   const [docState, setDocState] = useState([]);
@@ -49,7 +49,7 @@ export const Home = ({ user, articles }) => {
 
   return (
     <div className={css.container} onScroll={onMouseUp}>
-      <Header user={user} contentType={contentType} setContentType={setContentType} />
+      <Header contentType={contentType} setContentType={setContentType} />
       {contentType === 'all articles' && (
         <div className={css.main} onScroll={onMouseUp}>
           {articles?.map((i, index) => (
@@ -85,7 +85,6 @@ export const Home = ({ user, articles }) => {
       <ModalEditor
         modalEditorStatus={modalEditorStatus}
         setModalEditorStatus={setModalEditorStatus}
-        user={user}
         docState={docState}
         titleState={titleState}
         setTitleState={setTitleState}

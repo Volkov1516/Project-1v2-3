@@ -16,7 +16,7 @@ import google from 'assets/google.svg'
 
 export const Auth = () => {
   const [authType, setAuthType] = useState('Log in');
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [focussedEmail, setFocussedEmail] = useState(false);
   const [focussedPassword, setFocussedPassword] = useState(false);

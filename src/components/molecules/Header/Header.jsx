@@ -9,7 +9,7 @@ import css from './Header.module.css';
 import Button from 'components/atoms/Button/Button';
 import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
 
-export const Header = ({ user, contentType, setContentType }) => {
+export const Header = ({ contentType, setContentType }) => {
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [modalEditorStatus, setModalEditorStatus] = useState(false);
@@ -38,7 +38,6 @@ export const Header = ({ user, contentType, setContentType }) => {
           openElement={<Button variant="contained" size="large" onClick={openModalEditor}>CREATE</Button>}
           modalEditorStatus={modalEditorStatus}
           setModalEditorStatus={setModalEditorStatus}
-          user={user}
           titleState={titleState}
           setTitleState={setTitleState}
         />
