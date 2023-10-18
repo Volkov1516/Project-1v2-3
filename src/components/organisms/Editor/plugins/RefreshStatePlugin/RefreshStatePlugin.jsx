@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { SET_TITLE } from 'redux/features/article/articleSlice';
 
 import { CLEAR_EDITOR_COMMAND } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
 export const RefreshStatePlugin = ({ setTitleState }) => {
+  const dispatch = useDispatch();
+
   const { filteredArticles, currentIndex } = useSelector(state => state.article);
 
   const [editor] = useLexicalComposerContext();
@@ -19,12 +22,12 @@ export const RefreshStatePlugin = ({ setTitleState }) => {
 
         setTimeout(() => {
           editor.setEditorState(state);
-          setTitleState(filteredArticles[currentIndex]?.data()?.title || 'Untitled');
+          dispatch(SET_TITLE(filteredArticles[currentIndex]?.data()?.title || 'Untitled'));
         });
 
       }
     });
-  }, [editor, filteredArticles, currentIndex, setTitleState]);
+  }, [editor, filteredArticles, currentIndex, dispatch]);
 
   return null;
 };

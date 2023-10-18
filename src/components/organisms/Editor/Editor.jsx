@@ -28,13 +28,11 @@ import { doc, setDoc, Timestamp } from 'firebase/firestore';
 export const Editor = ({ 
   modalEditorContentRef, 
   titleRef, 
-  titleState,
-  setTitleState, 
   setSaving,
   preview = false,
 }) => {
   const { user } = useSelector(state => state.user);
-  const { currentId, content } = useSelector(state => state.article);
+  const { currentId, content, title } = useSelector(state => state.article);
 
   let editorStateAutoSaveTimeout;
 
@@ -72,7 +70,7 @@ export const Editor = ({
       setSaving(true);
 
       await setDoc(doc(db, 'articles', currentId), {
-        title: titleState,
+        title: title,
         content: state,
         date: Timestamp.fromDate(new Date()),
         userId: user?.id
@@ -91,7 +89,7 @@ export const Editor = ({
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           ErrorBoundary={LexicalErrorBoundary}
         />
-        {preview && <RefreshStatePlugin setTitleState={setTitleState} />}
+        {preview && <RefreshStatePlugin />}
         {!preview && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
         {!preview && <AutoFocusPlugin />}
         <ListPlugin />

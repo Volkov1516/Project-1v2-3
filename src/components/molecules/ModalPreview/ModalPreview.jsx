@@ -14,12 +14,10 @@ export const ModalPreview = ({
   openElement,
   modalPreviewStatus,
   setModalPreviewStatus,
-  titleState,
-  setTitleState,
   openModalEditorFromPreview,
 }) => {
   const dispatch = useDispatch();
-  const { filteredArticles, currentId, currentIndex } = useSelector(state => state.article);
+  const { filteredArticles, currentId, currentIndex, title } = useSelector(state => state.article);
 
   const prev = () => {
     if (currentIndex === 0) return;
@@ -55,15 +53,15 @@ export const ModalPreview = ({
                 </div>
                 <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
                 <Button variant="text" onClick={archive}>{filteredArticles[currentIndex]?.data()?.archive ? 'unarchive' : 'archive'}</Button>
-                <ModalDelete title={titleState || "Untitled"} />
+                <ModalDelete title={title || "Untitled"} />
               </div>
               <div className={css.right}>
                 <Button variant="text" onClick={() => setModalPreviewStatus(false)}>close</Button>
               </div>
             </div>
             <div className={css.editor}>
-              <div className={css.title}>{titleState || "Untitled"}</div>
-              <Editor preview={true} setTitleState={setTitleState} />
+              <div className={css.title}>{title || "Untitled"}</div>
+              <Editor preview={true} />
             </div>
           </div>
         </div>

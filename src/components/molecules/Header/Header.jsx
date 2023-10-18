@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_CURRENT_ID, SET_CONTENT, SET_FILTERED_ARTICLES } from 'redux/features/article/articleSlice';
+import { SET_CURRENT_ID, SET_CONTENT, SET_FILTERED_ARTICLES, SET_TITLE } from 'redux/features/article/articleSlice';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -26,6 +26,7 @@ export const Header = () => {
   const openModalEditor = () => {
     const newId = uuidv4();
     dispatch(SET_CURRENT_ID(newId));
+    dispatch(SET_TITLE(''));
     dispatch(SET_CONTENT(EMPTY_CONTENT));
     setModalEditorStatus(true);
   };

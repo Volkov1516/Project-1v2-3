@@ -1,23 +1,21 @@
-import { useState, useEffect, forwardRef } from 'react';
+import { useEffect, forwardRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { SET_TITLE } from 'redux/features/article/articleSlice';
 
 import css from './Title.module.css';
 
 export const Title = forwardRef(function MyTitle(props, ref) {
-  const { setTitleState, titleState } = props;
-
-  const [titleInputValue, setTitleInputValue] = useState(titleState);
+  const dispatch = useDispatch();
+  const { title } = useSelector(state => state.article);
 
   useEffect(() => {
     if (ref?.current) {
       ref.current.style.height = '40px';
       ref.current.style.height = (ref?.current.scrollHeight) + 'px';
     }
-  }, [titleInputValue, ref]);
+  }, [title, ref]);
 
-  const onTitleChange = (e) => {
-    setTitleInputValue(e.target.value);
-    setTitleState(e.target.value);
-  };
+  const onTitleChange = (e) => dispatch(SET_TITLE(e.target.value));
 
   const handleEnter = (e) => e.key === 'Enter' && e.preventDefault();
 
@@ -28,7 +26,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
       rows={1}
       spellCheck={false}
       placeholder="Title"
-      value={titleInputValue}
+      value={title}
       onChange={onTitleChange}
       onKeyDown={handleEnter}
     />

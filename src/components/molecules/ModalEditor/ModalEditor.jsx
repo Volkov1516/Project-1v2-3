@@ -14,10 +14,8 @@ export const ModalEditor = ({
   openElement,
   modalEditorStatus,
   setModalEditorStatus,
-  titleState,
-  setTitleState,
 }) => {
-  const { currentId } = useSelector(state => state.article);
+  const { currentId, title } = useSelector(state => state.article);
 
   const modalEditorContentRef = useRef(null);
   const titleRef = useRef(null);
@@ -53,21 +51,16 @@ export const ModalEditor = ({
             </div>
             <div className={css.right}>
               <Button variant="text" onClick={archive}>archive</Button>
-              <ModalDelete title={titleState || "Untitled"} />
+              <ModalDelete title={title || "Untitled"} />
               <Button variant="text">collection</Button>
               <Button variant="text">settings</Button>
             </div>
           </div>
           <div ref={modalEditorContentRef} className={css.content}>
-            <Title
-              ref={titleRef}
-              titleState={titleState}
-              setTitleState={setTitleState}
-            />
+            <Title ref={titleRef} />
             <Editor
               modalEditorContentRef={modalEditorContentRef}
               titleRef={titleRef}
-              titleState={titleState}
               setSaving={setSaving}
             />
           </div>

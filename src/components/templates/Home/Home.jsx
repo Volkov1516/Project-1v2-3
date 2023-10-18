@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { SET_CURRENT_ID, SET_CURRENT_INDEX, SET_CONTENT } from 'redux/features/article/articleSlice';
+import { SET_CURRENT_ID, SET_CURRENT_INDEX, SET_TITLE, SET_CONTENT } from 'redux/features/article/articleSlice';
 
 import css from './Home.module.css';
 
@@ -16,19 +16,18 @@ export const Home = () => {
 
   let mouseTimer;
 
-  const [titleState, setTitleState] = useState('');
   const [modalEditorStatus, setModalEditorStatus] = useState(false);
   const [modalPreviewStatus, setModalPreviewStatus] = useState(false);
 
   const openModalEditor = (id, content, title) => {
-    setTitleState(title);
+    dispatch(SET_TITLE(title));
     dispatch(SET_CURRENT_ID(id));
     dispatch(SET_CONTENT(content));
     setModalEditorStatus(true);
   };
 
   const openModalEditorFromPreview = () => {
-    setTitleState(filteredArticles[currentIndex]?.data()?.title);
+    dispatch(SET_TITLE(filteredArticles[currentIndex]?.data()?.title));
     dispatch(SET_CURRENT_ID(filteredArticles[currentIndex]?.id));
     dispatch(SET_CONTENT(filteredArticles[currentIndex]?.data()?.content));
     setModalEditorStatus(true);
@@ -38,7 +37,7 @@ export const Home = () => {
     onMouseUp();
 
     mouseTimer = window.setTimeout(() => {
-      setTitleState(title);
+      dispatch(SET_TITLE(title));
       dispatch(SET_CURRENT_ID(id));
       dispatch(SET_CURRENT_INDEX(index));
       dispatch(SET_CONTENT(content));
@@ -68,14 +67,10 @@ export const Home = () => {
       <ModalEditor
         modalEditorStatus={modalEditorStatus}
         setModalEditorStatus={setModalEditorStatus}
-        titleState={titleState}
-        setTitleState={setTitleState}
       />
       <ModalPreview
         modalPreviewStatus={modalPreviewStatus}
         setModalPreviewStatus={setModalPreviewStatus}
-        titleState={titleState}
-        setTitleState={setTitleState}
         openModalEditorFromPreview={openModalEditorFromPreview}
       />
     </div>
