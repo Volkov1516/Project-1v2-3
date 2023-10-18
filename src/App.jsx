@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_AUTH, SET_USER } from 'redux/features/user/userSlice';
-import { SET_ALL } from 'redux/features/article/articleSlice';
+import { SET_ORIGINAL_ARTICLES, SET_FILTERED_ARTICLES } from 'redux/features/article/articleSlice';
 
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -23,7 +23,9 @@ export const App = () => {
       const q = query(collection(db, 'articles'), where('userId', '==', res?.uid));
       const querySnapshot = await getDocs(q);
 
-      dispatch(SET_ALL(querySnapshot.docs));
+      dispatch(SET_ORIGINAL_ARTICLES(querySnapshot.docs));
+      const unarchived = querySnapshot.docs?.filter(i => !i?.data()?.archive);
+      dispatch(SET_FILTERED_ARTICLES(unarchived));
     };
 
     onAuthStateChanged(auth, (res) => {

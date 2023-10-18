@@ -19,7 +19,7 @@ export const ModalPreview = ({
   openModalEditorFromPreview,
 }) => {
   const dispatch = useDispatch();
-  const { all, currentId, currentIndex } = useSelector(state => state.article);
+  const { filteredArticles, currentId, currentIndex } = useSelector(state => state.article);
 
   const prev = () => {
     if (currentIndex === 0) return;
@@ -28,7 +28,7 @@ export const ModalPreview = ({
   };
 
   const next = () => {
-    if (currentIndex === all?.length - 1) return;
+    if (currentIndex === filteredArticles?.length - 1) return;
 
     dispatch(INCREMENT_CURRENT_INDEX())
   };
@@ -37,7 +37,7 @@ export const ModalPreview = ({
     const articleRef = doc(db, 'articles', currentId);
 
     await updateDoc(articleRef, {
-      archive: !all[currentIndex]?.data()?.archive
+      archive: !filteredArticles[currentIndex]?.data()?.archive
     });
   };
 
@@ -54,7 +54,7 @@ export const ModalPreview = ({
                   <Button variant="contained" onClick={next}>next</Button>
                 </div>
                 <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
-                <Button variant="text" onClick={archive}>{all[currentIndex]?.data()?.archive ? 'unarchive' : 'archive'}</Button>
+                <Button variant="text" onClick={archive}>{filteredArticles[currentIndex]?.data()?.archive ? 'unarchive' : 'archive'}</Button>
                 <ModalDelete title={titleState || "Untitled"} />
               </div>
               <div className={css.right}>

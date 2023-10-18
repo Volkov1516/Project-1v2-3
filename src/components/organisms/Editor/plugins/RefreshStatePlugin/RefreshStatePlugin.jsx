@@ -5,26 +5,26 @@ import { CLEAR_EDITOR_COMMAND } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
 export const RefreshStatePlugin = ({ setTitleState }) => {
-  const { all, currentIndex } = useSelector(state => state.article);
+  const { filteredArticles, currentIndex } = useSelector(state => state.article);
 
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
     editor.update(() => {
-      if (!all[currentIndex]?.data()?.content) {
+      if (!filteredArticles[currentIndex]?.data()?.content) {
         editor.dispatchCommand(CLEAR_EDITOR_COMMAND, undefined);
       }
       else {
-        const state = editor?.parseEditorState(all[currentIndex]?.data()?.content);
+        const state = editor?.parseEditorState(filteredArticles[currentIndex]?.data()?.content);
 
         setTimeout(() => {
           editor.setEditorState(state);
-          setTitleState(all[currentIndex]?.data()?.title || 'Untitled');
+          setTitleState(filteredArticles[currentIndex]?.data()?.title || 'Untitled');
         });
 
       }
     });
-  }, [editor, all, currentIndex, setTitleState]);
+  }, [editor, filteredArticles, currentIndex, setTitleState]);
 
   return null;
 };

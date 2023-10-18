@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
 
 const initialState = {
-  all: [],
+  originalArticles: [],
+  filteredArticles: [],
   currentId: null,
   currentIndex: null,
   content: EMPTY_CONTENT
@@ -13,8 +14,11 @@ export const articleSlice = createSlice({
   name: 'article',
   initialState,
   reducers: {
-    SET_ALL: (state, action) => {
-      state.all = action.payload;
+    SET_ORIGINAL_ARTICLES: (state, action) => {
+      state.originalArticles = action.payload;
+    },
+    SET_FILTERED_ARTICLES: (state, action) => {
+      state.filteredArticles = action.payload;
     },
     SET_CURRENT_ID: (state, action) => {
       state.currentId = action.payload;
@@ -35,7 +39,8 @@ export const articleSlice = createSlice({
 });
 
 export const {
-  SET_ALL,
+  SET_ORIGINAL_ARTICLES,
+  SET_FILTERED_ARTICLES,
   SET_CURRENT_ID,
   SET_CURRENT_INDEX,
   INCREMENT_CURRENT_INDEX,
