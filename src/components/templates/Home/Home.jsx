@@ -60,6 +60,7 @@ export const Home = () => {
             onMouseUp={onMouseUp}
             onTouchStart={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}
             onTouchEnd={onMouseUp}
+            className={css[i?.data()?.color]}
           >
             {i?.data()?.title || 'Untitled'}
           </article>

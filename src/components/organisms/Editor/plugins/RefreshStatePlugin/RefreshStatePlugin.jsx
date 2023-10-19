@@ -5,7 +5,7 @@ import { SET_TITLE } from 'redux/features/article/articleSlice';
 import { CLEAR_EDITOR_COMMAND } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
-export const RefreshStatePlugin = ({ setTitleState }) => {
+export const RefreshStatePlugin = () => {
   const dispatch = useDispatch();
 
   const { filteredArticles, currentIndex } = useSelector(state => state.article);
