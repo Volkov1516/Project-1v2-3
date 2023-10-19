@@ -19,7 +19,7 @@
 
 .contained {
   color: gray;
-  background-color: #e8eddf;
+  background-color: #e8eddf !important;
 }
 
 .outlined {

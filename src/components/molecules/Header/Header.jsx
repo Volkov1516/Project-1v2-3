@@ -12,6 +12,7 @@ import css from './Header.module.css';
 
 import Button from 'components/atoms/Button/Button';
 import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
+import { ModalCategory } from '../ModalCategory/ModalCategory';
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -77,7 +78,7 @@ export const Header = () => {
       </div>
       {categoriesMenu && (
         <div className={css.dropdown} onMouseOver={() => setCategoriesMenu(true)} onMouseLeave={() => setCategoriesMenu(false)}>
-          <div className={css.dropdownItem}>add category</div>
+          <ModalCategory />
           <div className={css.dropdownItem} onClick={handleAll}>all articles</div>
           <div className={css.dropdownItem} style={{ color: "#1971c2" }}>#goals</div>
           <div className={css.dropdownItem} style={{ color: "#1971c2" }}>#projects</div>
