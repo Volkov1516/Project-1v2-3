@@ -24,6 +24,7 @@ import css from './Editor.module.css';
 
 import { db } from 'firebase.js';
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
+import { MetadataPlugin } from './plugins/MetadataPlugin/MetadataPlugin';
 
 export const Editor = ({ 
   modalEditorContentRef, 
@@ -84,6 +85,7 @@ export const Editor = ({
     <LexicalComposer initialConfig={initialConfig}>
       {!preview && <ToolbarBlockPlugin modalEditorContentRef={modalEditorContentRef} titleRef={titleRef} />}
       {!preview && <ToolbarTextPlugin modalEditorContentRef={modalEditorContentRef} />}
+      <MetadataPlugin />
       <div className={css.container} onContextMenu={handleContentMenu}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}

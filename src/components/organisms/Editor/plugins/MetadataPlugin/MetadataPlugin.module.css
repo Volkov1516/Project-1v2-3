@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  column-gap: 8px;
+  padding: 8px 0px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0px auto;
+}
+
+.date {
+  font-weight: 600;
+  color: #BFC7B4;
+  user-select: none;
+}
+
+.color {
+  font-weight: 600;
+  color: #BFC7B4;
+  user-select: none;
+}
+
+.category {
+  font-weight: 600;
+  color: #BFC7B4;
+  user-select: none;
+}

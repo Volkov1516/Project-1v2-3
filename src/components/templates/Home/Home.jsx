@@ -19,7 +19,8 @@ export const Home = () => {
   const [modalEditorStatus, setModalEditorStatus] = useState(false);
   const [modalPreviewStatus, setModalPreviewStatus] = useState(false);
 
-  const openModalEditor = (id, content, title) => {
+  const openModalEditor = (id, content, title, index) => {
+    dispatch(SET_CURRENT_INDEX(index));
     dispatch(SET_TITLE(title));
     dispatch(SET_CURRENT_ID(id));
     dispatch(SET_CONTENT(content));
@@ -54,7 +55,7 @@ export const Home = () => {
         {filteredArticles?.map((i, index) => (
           <article
             key={i?.id}
-            onClick={() => openModalEditor(i?.id, i?.data()?.content, i?.data()?.title)}
+            onClick={() => openModalEditor(i?.id, i?.data()?.content, i?.data()?.title, index)}
             onMouseDown={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}
             onMouseUp={onMouseUp}
             onTouchStart={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}

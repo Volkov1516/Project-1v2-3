@@ -61,7 +61,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef, titleRef }) => {
             setLeft(16);
           }
 
-          setTop(top - 4);
+          setTop(top - 4 + 37);
           setIsBlock(true);
         }
         else {
