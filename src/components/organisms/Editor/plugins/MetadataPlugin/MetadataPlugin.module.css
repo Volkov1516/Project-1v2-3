@@ -71,6 +71,7 @@
   left: 72px;
   background-color: #BFC7B4;
   z-index: 5;
+  user-select: none;
 }
 
 .colorsContainer>div {
