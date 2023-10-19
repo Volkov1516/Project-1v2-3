@@ -56,7 +56,8 @@
   .colorsContainer>div {
     width: fit-content;
     padding-right: 12px;
-    font-size: 24px;
+    font-size: 40px;
+    font-weight: 600;
     color: white;
     cursor: pointer;
   }
