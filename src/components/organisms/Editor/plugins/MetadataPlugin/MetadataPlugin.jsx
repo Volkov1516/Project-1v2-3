@@ -27,7 +27,7 @@ export const MetadataPlugin = () => {
       <div className={css.date}>
         {filteredArticles[currentIndex]?.data()?.date?.toDate().toLocaleDateString() || date.toLocaleDateString()}
       </div>
-      <div className={css.color} onClick={() => setColorsMenu(!colorsMenu)} onMouseOver={() => setColorsMenu(true)} onMouseLeave={() => setColorsMenu(false)}>color</div>
+      <div className={`${css.color} ${css[filteredArticles[currentIndex]?.data()?.color]}`} onClick={() => setColorsMenu(!colorsMenu)} onMouseOver={() => setColorsMenu(true)} onMouseLeave={() => setColorsMenu(false)}>color</div>
       <div className={css.category}>category</div>
       {colorsMenu && (
         <div className={css.colorsContainer} onMouseOver={() => setColorsMenu(true)} onMouseLeave={() => setColorsMenu(false)}>
