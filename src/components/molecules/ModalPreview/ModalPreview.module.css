@@ -81,10 +81,6 @@
     flex-direction: row-reverse;
   }
 
-  /* .right {
-    display: none;
-  } */
-
   .editor {
     padding: 8px;
   }
