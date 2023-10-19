@@ -33,12 +33,12 @@ export const MetadataPlugin = () => {
         <div className={css.colorsContainer} onMouseOver={() => setColorsMenu(true)} onMouseLeave={() => setColorsMenu(false)}>
           <div onClick={() => handleColor("white")} style={{backgroundColor: "white", color: "black"}}>white</div>
           <div onClick={() => handleColor("black")} style={{backgroundColor: "black"}}>black</div>
-          <div onClick={() => handleColor("red")} style={{backgroundColor: "red"}}>red</div>
-          <div onClick={() => handleColor("orange")} style={{backgroundColor: "orange"}}>orange</div>
-          <div onClick={() => handleColor("yellow")} style={{backgroundColor: "yellow"}}>yellow</div>
-          <div onClick={() => handleColor("green")} style={{backgroundColor: "green"}}>green</div>
-          <div onClick={() => handleColor("blue")} style={{backgroundColor: "blue"}}>blue</div>
-          <div onClick={() => handleColor("purple")} style={{backgroundColor: "purple"}}>purple</div>
+          <div onClick={() => handleColor("red")} style={{backgroundColor: "#e03131"}}>red</div>
+          <div onClick={() => handleColor("orange")} style={{backgroundColor: "#fd7e14"}}>orange</div>
+          <div onClick={() => handleColor("yellow")} style={{backgroundColor: "#ffd43b"}}>yellow</div>
+          <div onClick={() => handleColor("green")} style={{backgroundColor: "#2f9e44"}}>green</div>
+          <div onClick={() => handleColor("blue")} style={{backgroundColor: "#1971c2"}}>blue</div>
+          <div onClick={() => handleColor("purple")} style={{backgroundColor: "#9c36b5"}}>purple</div>
         </div>
       )}
     </div>

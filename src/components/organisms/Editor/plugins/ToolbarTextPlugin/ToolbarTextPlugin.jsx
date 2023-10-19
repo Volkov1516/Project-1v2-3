@@ -397,48 +397,48 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           <button
             ref={textColorRed}
             id="tool"
-            onClick={() => formatTextColor("red")}
-            style={{ color: "red" }}
+            onClick={() => formatTextColor("#e03131")}
+            style={{ color: "#e03131" }}
           >
             a
           </button>
           <button
             ref={textColorOrange}
             id="tool"
-            onClick={() => formatTextColor("orange")}
-            style={{ color: "orange" }}
+            onClick={() => formatTextColor("#fd7e14")}
+            style={{ color: "#fd7e14" }}
           >
             a
           </button>
           <button
             ref={textColorYellow}
             id="tool"
-            onClick={() => formatTextColor("yellow")}
-            style={{ color: "yellow" }}
+            onClick={() => formatTextColor("#ffd43b")}
+            style={{ color: "#ffd43b" }}
           >
             a
           </button>
           <button
             ref={textColorGreen}
             id="tool"
-            onClick={() => formatTextColor("green")}
-            style={{ color: "green" }}
+            onClick={() => formatTextColor("#2f9e44")}
+            style={{ color: "#2f9e44" }}
           >
             a
           </button>
           <button
             ref={textColorBlue}
             id="tool"
-            onClick={() => formatTextColor("blue")}
-            style={{ color: "blue" }}
+            onClick={() => formatTextColor("#1971c2")}
+            style={{ color: "#1971c2" }}
           >
             a
           </button>
           <button
             ref={textColorPurple}
             id="tool"
-            onClick={() => formatTextColor("purple")}
-            style={{ color: "purple" }}
+            onClick={() => formatTextColor("#9c36b5")}
+            style={{ color: "#9c36b5" }}
           >
             a
           </button>
@@ -467,54 +467,54 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           <button
             ref={textBgRed}
             id="tool"
-            onClick={() => formatTextBg("red")}
+            onClick={() => formatTextBg("#e03131")}
           >
-            <mark style={{ backgroundColor: "red", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "#e03131", padding: "0px 8px", borderRadius: "2px" }}>
               a
             </mark>
           </button>
           <button
             ref={textBgOrange}
             id="tool"
-            onClick={() => formatTextBg("orange")}
+            onClick={() => formatTextBg("#fd7e14")}
           >
-            <mark style={{ backgroundColor: "orange", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "#fd7e14", padding: "0px 8px", borderRadius: "2px" }}>
               a
             </mark>
           </button>
           <button
             ref={textBgYellow}
             id="tool"
-            onClick={() => formatTextBg("yellow")}
+            onClick={() => formatTextBg("#ffd43b")}
           >
-            <mark style={{ backgroundColor: "yellow", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "#ffd43b", padding: "0px 8px", borderRadius: "2px" }}>
               a
             </mark>
           </button>
           <button
             ref={textBgGreen}
             id="tool"
-            onClick={() => formatTextBg("green")}
+            onClick={() => formatTextBg("#2f9e44")}
           >
-            <mark style={{ backgroundColor: "green", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "#2f9e44", padding: "0px 8px", borderRadius: "2px" }}>
               a
             </mark>
           </button>
           <button
             ref={textBgBlue}
             id="tool"
-            onClick={() => formatTextBg("blue")}
+            onClick={() => formatTextBg("#1971c2")}
           >
-            <mark style={{ backgroundColor: "blue", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "#1971c2", padding: "0px 8px", borderRadius: "2px" }}>
               a
             </mark>
           </button>
           <button
             ref={textBgPurple}
             id="tool"
-            onClick={() => formatTextBg("purple")}
+            onClick={() => formatTextBg("#9c36b5")}
           >
-            <mark style={{ backgroundColor: "purple", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "#9c36b5", padding: "0px 8px", borderRadius: "2px" }}>
               a
             </mark>
           </button>

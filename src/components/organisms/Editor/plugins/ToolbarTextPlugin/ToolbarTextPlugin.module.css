@@ -82,12 +82,13 @@
 }
 
 .color {
-  color: red;
+  color: #e03131;
 }
 
 .highlight>mark {
   padding: 0px 8px;
   border-radius: 2px;
+  background-color: #ffd43b;
 }
 
 .code {
