@@ -70,8 +70,7 @@
     flex-direction: column-reverse;
     justify-content:space-between;
     margin: 8px;
-    padding-top: 29px;
-    height: 90%;
+    height: calc(100% - 56px);
   }
 
   .header {
@@ -82,11 +81,15 @@
     flex-direction: row-reverse;
   }
 
+  /* .right {
+    display: none;
+  } */
+
   .editor {
     padding: 8px;
   }
 
   .title {
-    padding: 0px;
+    padding: 29px 0px 0px;
   }
 }
