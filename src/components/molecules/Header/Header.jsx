@@ -16,6 +16,7 @@ import { ModalCategory } from '../ModalCategory/ModalCategory';
 
 export const Header = () => {
   const dispatch = useDispatch();
+  const { categories } = useSelector(state => state.user);
   const { originalArticles } = useSelector(state => state.article);
   const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
 
@@ -79,11 +80,10 @@ export const Header = () => {
       {categoriesMenu && (
         <div className={css.dropdown} onMouseOver={() => setCategoriesMenu(true)} onMouseLeave={() => setCategoriesMenu(false)}>
           <ModalCategory />
-          <div className={css.dropdownItem} onClick={handleAll}>all articles</div>
-          <div className={css.dropdownItem} style={{ color: "#1971c2" }}>#goals</div>
-          <div className={css.dropdownItem} style={{ color: "#1971c2" }}>#projects</div>
-          <div className={css.dropdownItem} style={{ width: "fit-content", color: "white", backgroundColor: "#e03131", paddingRight: "12px" }}>red</div>
-          <div className={css.dropdownItem} style={{ width: "fit-content", color: "white", backgroundColor: "#1971c2", paddingRight: "12px" }}>blue</div>
+          <div className={css.dropdownItem} style={{ color: "#1971c2" }} onClick={handleAll}>#all articles</div>
+          {categories?.map(i => (
+            <div key={i?.id} className={css.dropdownItem} style={{ color: "#1971c2" }}>#{i?.name}</div>
+          ))}
           <div className={css.dropdownItem} onClick={handleArchive}>archive</div>
         </div>
       )}
