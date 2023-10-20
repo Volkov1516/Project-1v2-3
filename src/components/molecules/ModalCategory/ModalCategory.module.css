@@ -36,6 +36,23 @@
   padding: 0px 8px 8px;
 }
 
+.categoryGroup {
+  margin: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.categoryInput {
+  padding: 8px;
+  outline: none;
+  border: none;
+  background-color: #e8eddf !important;
+  color: #1971c2; 
+  padding-left: 8px;
+  font-size: 16px;
+}
+
 @media (max-width: 639px) {
   .dropdownItem {
     font-size: 40px;

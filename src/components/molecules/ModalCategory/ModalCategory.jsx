@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { SET_CATEGORIES } from 'redux/features/user/userSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 import { db } from 'firebase.js';
@@ -9,8 +10,10 @@ import Button from 'components/atoms/Button/Button';
 
 import css from './ModalCategory.module.css';
 import { Input } from 'components/atoms/Input/Input';
+import { CategoryInput } from './CategoryInput';
 
 export const ModalCategory = () => {
+  const dispatch = useDispatch();
   const { user, categories } = useSelector(state => state.user);
 
   const [open, setOpen] = useState(false);
@@ -40,6 +43,22 @@ export const ModalCategory = () => {
     });
   };
 
+  const handleUpdateCategory = async (id, name) => {
+    if (!name) return;
+
+    let categoriesCopy = JSON.parse(JSON.stringify(categories));
+
+    categoriesCopy.map((i) => {
+      if (i.id === id) i.name = name;
+    });
+
+    dispatch(SET_CATEGORIES(categoriesCopy));
+
+    await setDoc(doc(db, 'categories', user?.id), {
+      categories: categoriesCopy
+    });
+  };
+
   return (
     <>
       <div className={css.dropdownItem} onClick={() => setOpen(true)}>edit categories</div>
@@ -54,7 +73,10 @@ export const ModalCategory = () => {
               <Button variant="contained" onClick={createCategory}>add</Button>
             </div>
             {categories?.map(i => (
-              <div key={i?.id} className={css.dropdownItem} style={{ color: "#1971c2" }} onClick={() => deleteCategory(i.id, i.name)}>#{i?.name}</div>
+              <div key={i.id} className={css.categoryGroup}>
+                <CategoryInput id={i.id} name={i.name} handleUpdateCategory={handleUpdateCategory} />
+                <Button variant="text" color="red" onClick={() => deleteCategory(i.id, i.name)}>delete</Button>
+              </div>
             ))}
           </div>
         </div>

@@ -72,7 +72,6 @@ export const Header = () => {
         >
           all articles
         </Button>
-        <div className={css.serachBtn}><Button variant="text">search</Button></div>
       </div>
       <div className={css.right}>
         <Button variant="text" onClick={() => setUserMenu(!userMenu)} onMouseOver={() => setUserMenu(true)} onMouseLeave={() => setUserMenu(false)}>user</Button>
