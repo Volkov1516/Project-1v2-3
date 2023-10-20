@@ -48,14 +48,14 @@ export const ModalCategory = () => {
 
     let categoriesCopy = JSON.parse(JSON.stringify(categories));
 
-    categoriesCopy.map((i) => {
+    let filtered = categoriesCopy.map((i) => {
       if (i.id === id) return i.name = name;
     });
 
-    dispatch(SET_CATEGORIES(categoriesCopy));
+    dispatch(SET_CATEGORIES(filtered));
 
     await setDoc(doc(db, 'categories', user?.id), {
-      categories: categoriesCopy
+      categories: filtered
     });
   };
 
