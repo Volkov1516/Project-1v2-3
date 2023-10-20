@@ -49,9 +49,12 @@ export const ModalCategory = () => {
     let categoriesCopy = JSON.parse(JSON.stringify(categories));
 
     categoriesCopy.map((i) => {
-      if (i.id === id) return i.name = name;
-
-      return;
+      if (i.id === id) {
+        return i.name = name
+      }
+      else {
+        return i;
+      }
     });
 
     dispatch(SET_CATEGORIES(categoriesCopy));
