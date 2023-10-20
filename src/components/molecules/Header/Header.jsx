@@ -63,6 +63,7 @@ export const Header = () => {
           setModalEditorStatus={setModalEditorStatus}
           titleState={titleState}
           setTitleState={setTitleState}
+          autofocus={true}
         />
         <Button
           variant="text"

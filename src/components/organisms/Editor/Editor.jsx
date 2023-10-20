@@ -31,6 +31,7 @@ export const Editor = ({
   titleRef, 
   setSaving,
   preview = false,
+  autofocus = true
 }) => {
   const { user } = useSelector(state => state.user);
   const { currentId, content, title } = useSelector(state => state.article);
@@ -93,7 +94,7 @@ export const Editor = ({
         />
         {preview && <RefreshStatePlugin />}
         {!preview && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
-        {!preview && <AutoFocusPlugin />}
+        {!preview && autofocus && <AutoFocusPlugin />}
         <ListPlugin />
         <CheckListPlugin />
         <HorizontalRulePlugin />

@@ -14,6 +14,7 @@ export const ModalEditor = ({
   openElement,
   modalEditorStatus,
   setModalEditorStatus,
+  autofocus
 }) => {
   const { currentId, title } = useSelector(state => state.article);
 
@@ -59,6 +60,7 @@ export const ModalEditor = ({
               modalEditorContentRef={modalEditorContentRef}
               titleRef={titleRef}
               setSaving={setSaving}
+              autofocus={autofocus}
             />
           </div>
         </div>

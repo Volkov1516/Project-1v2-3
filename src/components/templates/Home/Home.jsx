@@ -69,6 +69,7 @@ export const Home = () => {
       <ModalEditor
         modalEditorStatus={modalEditorStatus}
         setModalEditorStatus={setModalEditorStatus}
+        autofocus={false}
       />
       <ModalPreview
         modalPreviewStatus={modalPreviewStatus}
