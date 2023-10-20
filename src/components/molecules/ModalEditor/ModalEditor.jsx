@@ -45,15 +45,12 @@ export const ModalEditor = ({
               {saving && (
                 <div className={css.savingContainer}>
                   <div className={css.savingSpinner}></div>
-                  <span className={css.savingText}>saving...</span>
                 </div>
               )}
             </div>
             <div className={css.right}>
               <Button variant="text" onClick={archive}>archive</Button>
               <ModalDelete title={title || "Untitled"} />
-              <Button variant="text">collection</Button>
-              <Button variant="text">settings</Button>
             </div>
           </div>
           <div ref={modalEditorContentRef} className={css.content}>
