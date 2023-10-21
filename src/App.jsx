@@ -18,7 +18,6 @@ export const App = () => {
   const { logged } = useSelector(state => state.user);
 
   const [loading, setLoading] = useState(true);
-  const [modalEditorStatus2, setModalEditorStatus2] = useState(false);
 
   useEffect(() => {
     const getArticles = async (res) => {
@@ -80,7 +79,7 @@ export const App = () => {
     window.addEventListener('popstate', handlePopState);
 
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [dispatch]);
 
   return loading ? <Loading /> : logged ? <Home /> : <Auth />;
 };
