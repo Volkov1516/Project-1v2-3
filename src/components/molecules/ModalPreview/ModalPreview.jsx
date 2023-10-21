@@ -1,6 +1,6 @@
-import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { INCREMENT_CURRENT_INDEX, DECREMENT_CURRENT_INDEX } from 'redux/features/article/articleSlice';
+import { SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from 'firebase.js';
 
@@ -10,14 +10,10 @@ import { ModalDelete } from '../ModalDelete/ModalDelete';
 
 import css from './ModalPreview.module.css';
 
-export const ModalPreview = ({
-  openElement,
-  modalPreviewStatus,
-  setModalPreviewStatus,
-  openModalEditorFromPreview,
-}) => {
+export const ModalPreview = ({ openElement, openModalEditorFromPreview }) => {
   const dispatch = useDispatch();
   const { filteredArticles, currentId, currentIndex, title } = useSelector(state => state.article);
+  const { modalPreview } = useSelector(state => state.modal);
 
   const prev = () => {
     if (currentIndex === 0) return;
@@ -28,7 +24,7 @@ export const ModalPreview = ({
   const next = () => {
     if (currentIndex === filteredArticles?.length - 1) return;
 
-    dispatch(INCREMENT_CURRENT_INDEX())
+    dispatch(INCREMENT_CURRENT_INDEX());
   };
 
   const archive = async () => {
@@ -39,11 +35,16 @@ export const ModalPreview = ({
     });
   };
 
+  const close = () => {
+    window.history.back();
+    dispatch(SET_MODAL_PREVIEW(false));
+  };
+
   return (
     <>
       {openElement}
-      {modalPreviewStatus && (
-        <div className={css.container} onClick={() => setModalPreviewStatus(false)}>
+      {modalPreview && (
+        <div className={css.container} onClick={close}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
             <div className={css.header}>
               <div className={css.left}>
@@ -56,7 +57,7 @@ export const ModalPreview = ({
                 <ModalDelete title={title || "Untitled"} />
               </div>
               <div className={css.right}>
-                <Button variant="text" onClick={() => setModalPreviewStatus(false)}>close</Button>
+                <Button variant="text" onClick={close}>close</Button>
               </div>
             </div>
             <div className={css.editor}>

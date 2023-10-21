@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_CURRENT_ID, SET_CONTENT, SET_FILTERED_ARTICLES, SET_TITLE, SET_CURRENT_INDEX } from 'redux/features/article/articleSlice';
+import { SET_MODAL_EDITOR_EMPTY } from 'redux/features/modal/modalSlice';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -18,20 +19,22 @@ export const Header = () => {
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state.user);
   const { originalArticles } = useSelector(state => state.article);
+  const { modalEditorEmpty } = useSelector(state => state.modal);
   const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
 
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
-  const [modalEditorStatus, setModalEditorStatus] = useState(false);
   const [titleState, setTitleState] = useState('');
 
   const openModalEditor = () => {
+    window.history.pushState({ modalEditorEmpty: 'opened' }, '', '#editor');
+
     const newId = uuidv4();
     dispatch(SET_CURRENT_ID(newId));
     dispatch(SET_CURRENT_INDEX(null));
     dispatch(SET_TITLE(''));
     dispatch(SET_CONTENT(EMPTY_CONTENT));
-    setModalEditorStatus(true);
+    dispatch(SET_MODAL_EDITOR_EMPTY(true));
   };
 
   const handleSignOut = () => {
@@ -75,8 +78,8 @@ export const Header = () => {
       <div className={css.left}>
         <ModalEditor
           openElement={<Button variant="contained" size="large" onClick={openModalEditor}>CREATE</Button>}
-          modalEditorStatus={modalEditorStatus}
-          setModalEditorStatus={setModalEditorStatus}
+          modalEditorStatus={modalEditorEmpty}
+          setModalEditorStatus={() => dispatch(SET_MODAL_EDITOR_EMPTY(false))}
           titleState={titleState}
           setTitleState={setTitleState}
           autofocus={true}

@@ -24,7 +24,8 @@ export const ModalEditor = ({
   const [saving, setSaving] = useState(false);
 
   const handleClose = () => {
-    setModalEditorStatus(false);
+    window.history.back();
+    setModalEditorStatus();
   };
 
   const archive = async () => {

@@ -1,8 +1,6 @@
-import { useState } from 'react';
-
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SET_CURRENT_ID, SET_CURRENT_INDEX, SET_TITLE, SET_CONTENT } from 'redux/features/article/articleSlice';
+import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING } from 'redux/features/modal/modalSlice';
 
 import css from './Home.module.css';
 
@@ -13,36 +11,40 @@ import { ModalPreview } from 'components/molecules/ModalPreview/ModalPreview';
 export const Home = () => {
   const dispatch = useDispatch();
   const { filteredArticles, currentIndex } = useSelector(state => state.article);
+  const { modalEditorExisting } = useSelector(state => state.modal);
 
   let mouseTimer;
 
-  const [modalEditorStatus, setModalEditorStatus] = useState(false);
-  const [modalPreviewStatus, setModalPreviewStatus] = useState(false);
-
   const openModalEditor = (id, content, title, index) => {
+    window.history.pushState({modalEditor: 'opened'}, '', '#editor');
+
     dispatch(SET_CURRENT_INDEX(index));
     dispatch(SET_TITLE(title));
     dispatch(SET_CURRENT_ID(id));
     dispatch(SET_CONTENT(content));
-    setModalEditorStatus(true);
+    dispatch(SET_MODAL_EDITOR_EXISTING(true));
   };
 
   const openModalEditorFromPreview = () => {
+    window.history.pushState({modalEditor: 'opened'}, '', '#editor');
+
     dispatch(SET_TITLE(filteredArticles[currentIndex]?.data()?.title));
     dispatch(SET_CURRENT_ID(filteredArticles[currentIndex]?.id));
     dispatch(SET_CONTENT(filteredArticles[currentIndex]?.data()?.content));
-    setModalEditorStatus(true);
+    dispatch(SET_MODAL_EDITOR_EXISTING(true));
   };
 
   const onMouseDown = (id, content, title, index) => {
     onMouseUp();
 
     mouseTimer = window.setTimeout(() => {
+      window.history.pushState({ modalPreview: 'opened' }, '', '#preview');
+
       dispatch(SET_TITLE(title));
       dispatch(SET_CURRENT_ID(id));
       dispatch(SET_CURRENT_INDEX(index));
       dispatch(SET_CONTENT(content));
-      setModalPreviewStatus(true);
+      dispatch(SET_MODAL_PREVIEW(true));
     }, 500);
   };
 
@@ -67,15 +69,11 @@ export const Home = () => {
         ))}
       </div>
       <ModalEditor
-        modalEditorStatus={modalEditorStatus}
-        setModalEditorStatus={setModalEditorStatus}
+        modalEditorStatus={modalEditorExisting}
+        setModalEditorStatus={() => dispatch(SET_MODAL_EDITOR_EXISTING(false))}
         autofocus={false}
       />
-      <ModalPreview
-        modalPreviewStatus={modalPreviewStatus}
-        setModalPreviewStatus={setModalPreviewStatus}
-        openModalEditorFromPreview={openModalEditorFromPreview}
-      />
+      <ModalPreview openModalEditorFromPreview={openModalEditorFromPreview} />
     </div>
   );
 };
