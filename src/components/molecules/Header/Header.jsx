@@ -54,6 +54,22 @@ export const Header = () => {
     dispatch(SET_FILTERED_ARTICLES(archive));
   };
 
+  const setFilteredByCategory = (id) => {
+    const unarchived = originalArticles?.filter(i => !i?.data()?.archive);
+    let newArr = [];
+
+    unarchived?.map(i => i.data()?.categories?.map(j => {
+      if (j.id === id) {
+        return newArr.push(i);
+      }
+      else {
+        return i;
+      }
+    }));
+
+    dispatch(SET_FILTERED_ARTICLES(newArr));
+  };
+
   return (
     <div className={css.container}>
       <div className={css.left}>
@@ -82,7 +98,7 @@ export const Header = () => {
           <ModalCategory />
           <div className={css.dropdownItem} style={{ color: "#1971c2" }} onClick={handleAll}>#all articles</div>
           {categories?.map(i => (
-            <div key={i?.id} className={css.dropdownItem} style={{ color: "#1971c2" }}>#{i?.name}</div>
+            <div key={i?.id} className={css.dropdownItem} style={{ color: "#1971c2" }} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</div>
           ))}
           <div className={css.dropdownItem} onClick={handleArchive}>archive</div>
         </div>
