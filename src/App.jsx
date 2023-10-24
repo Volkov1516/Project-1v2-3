@@ -29,6 +29,7 @@ export const App = () => {
         title: doc?.data()?.title,
         content: doc?.data()?.content,
         categories: doc?.data()?.categories,
+        color: doc?.data()?.color,
         date: doc?.data()?.date?.toDate().toLocaleDateString(),
         archive: doc?.data()?.archive,
       }));
