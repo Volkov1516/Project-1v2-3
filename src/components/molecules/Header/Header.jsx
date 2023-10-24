@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SET_CURRENT_ID, SET_CONTENT, SET_FILTERED_ARTICLES, SET_TITLE, SET_CURRENT_INDEX } from 'redux/features/article/articleSlice';
 import { SET_MODAL_EDITOR_EMPTY } from 'redux/features/modal/modalSlice';
 
-import { v4 as uuidv4 } from 'uuid';
-
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
+
+import { v4 as uuidv4 } from 'uuid';
 
 import css from './Header.module.css';
 
@@ -94,7 +94,7 @@ export const Header = () => {
         </Button>
       </div>
       <div className={css.right}>
-        <Button variant="text" onClick={() => setUserMenu(!userMenu)} onMouseOver={() => setUserMenu(true)} onMouseLeave={() => setUserMenu(false)}>user</Button>
+        <Button variant="text" onClick={() => setUserMenu(!userMenu)} onMouseOver={() => setUserMenu(true)} onMouseLeave={() => setUserMenu(false)}>menu</Button>
       </div>
       {categoriesMenu && (
         <div className={css.dropdown} onMouseOver={() => setCategoriesMenu(true)} onMouseLeave={() => setCategoriesMenu(false)}>

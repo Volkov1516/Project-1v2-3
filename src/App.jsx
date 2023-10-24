@@ -20,8 +20,8 @@ export const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getArticles = async (res) => {
-      const q = query(collection(db, 'articles'), where('userId', '==', res?.uid));
+    const getArticles = async (user) => {
+      const q = query(collection(db, 'articles'), where('userId', '==', user?.uid));
       const querySnapshot = await getDocs(q);
 
       dispatch(SET_ORIGINAL_ARTICLES(querySnapshot.docs));
@@ -29,22 +29,22 @@ export const App = () => {
       dispatch(SET_FILTERED_ARTICLES(unarchived));
     };
 
-    const getCategories = async (res) => {
-      const docRef = doc(db, 'categories', res?.uid);
+    const getCategories = async (user) => {
+      const docRef = doc(db, 'categories', user?.uid);
       const docSnap = await getDoc(docRef);
 
       dispatch(SET_CATEGORIES(docSnap?.data()?.categories));
     };
 
-    onAuthStateChanged(auth, (res) => {
-      if (res) {
-        window.history.pushState({}, '', '/');
-
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
         dispatch(SET_AUTH(true));
-        dispatch(SET_USER({ id: res?.uid }));
-        getArticles(res);
-        getCategories(res);
+        dispatch(SET_USER({ id: user?.uid }));
+        getArticles(user);
+        getCategories(user);
         setLoading(false);
+
+        window.history.pushState({}, '', '/');
       } else {
         dispatch(SET_AUTH(false));
         setLoading(false);

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { SET_CATEGORIES } from 'redux/features/user/userSlice';
+import { ADD_CATEGORY, DELETE_CATEGORY, UPDATE_CATEGORY } from 'redux/features/user/userSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 import { db } from 'firebase.js';
@@ -20,19 +20,22 @@ export const ModalCategory = () => {
   const [inputValue, setInputValue] = useState('');
 
   const createCategory = async () => {
+    if (!inputValue) return;
+
     const newId = uuidv4();
 
-    await setDoc(doc(db, 'categories', user?.id),
-      {
-        categories: arrayUnion({
-          id: newId,
-          name: inputValue
-        })
-      },
-      {
-        merge: true
-      }
-    );
+    await setDoc(doc(db, 'categories', user?.id), {
+      categories: arrayUnion({
+        id: newId,
+        name: inputValue
+      })
+    }, { merge: true })
+      .then(() => {
+        dispatch(ADD_CATEGORY({ id: newId, name: inputValue }));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const deleteCategory = async (id, name) => {
@@ -40,7 +43,13 @@ export const ModalCategory = () => {
 
     await updateDoc(docRef, {
       categories: arrayRemove({ id, name })
-    });
+    })
+      .then(() => {
+        dispatch(DELETE_CATEGORY(id));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleUpdateCategory = async (id, name) => {
@@ -50,18 +59,22 @@ export const ModalCategory = () => {
 
     categoriesCopy.map((i) => {
       if (i.id === id) {
-        return i.name = name
+        return i.name = name;
       }
       else {
         return i;
       }
     });
 
-    dispatch(SET_CATEGORIES(categoriesCopy));
-
     await setDoc(doc(db, 'categories', user?.id), {
       categories: categoriesCopy
-    });
+    })
+      .then(() => {
+        dispatch(UPDATE_CATEGORY(categoriesCopy));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

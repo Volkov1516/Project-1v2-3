@@ -7,12 +7,12 @@ import {
   GoogleAuthProvider
 } from 'firebase/auth';
 
-import { Input } from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
+import { Input } from 'components/atoms/Input/Input';
 
 import css from './Auth.module.css';
 import logo from 'assets/logo.png';
-import google from 'assets/google.svg'
+import google from 'assets/google.svg';
 
 export const Auth = () => {
   const [authType, setAuthType] = useState('Log in');
@@ -47,10 +47,6 @@ export const Auth = () => {
 
     if (authType === 'Sing up') {
       await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user);
-        })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
@@ -59,10 +55,6 @@ export const Auth = () => {
     }
     else if (authType === 'Log in') {
       signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user);
-        })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
@@ -75,14 +67,7 @@ export const Auth = () => {
     const provider = new GoogleAuthProvider();
 
     await signInWithPopup(auth, provider)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        console.log(token);
-
-        const user = result.user;
-        console.log(user);
-      }).catch((error) => {
+      .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
