@@ -31,7 +31,7 @@ export const ModalPreview = ({ openElement, openModalEditorFromPreview }) => {
     const articleRef = doc(db, 'articles', currentId);
 
     await updateDoc(articleRef, {
-      archive: !filteredArticles[currentIndex]?.data()?.archive
+      archive: !filteredArticles[currentIndex]?.archive
     });
   };
 
@@ -53,7 +53,7 @@ export const ModalPreview = ({ openElement, openModalEditorFromPreview }) => {
                   <Button variant="contained" onClick={next}>next</Button>
                 </div>
                 <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
-                <Button variant="text" onClick={archive}>{filteredArticles[currentIndex]?.data()?.archive ? 'unarchive' : 'archive'}</Button>
+                <Button variant="text" onClick={archive}>{filteredArticles[currentIndex]?.archive ? 'unarchive' : 'archive'}</Button>
                 <ModalDelete title={title || "Untitled"} />
               </div>
               <div className={css.right}>

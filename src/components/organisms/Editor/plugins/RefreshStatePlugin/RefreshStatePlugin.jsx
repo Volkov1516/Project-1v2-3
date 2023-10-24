@@ -14,15 +14,15 @@ export const RefreshStatePlugin = () => {
 
   useEffect(() => {
     editor.update(() => {
-      if (!filteredArticles[currentIndex]?.data()?.content) {
+      if (!filteredArticles[currentIndex]?.content) {
         editor.dispatchCommand(CLEAR_EDITOR_COMMAND, undefined);
       }
       else {
-        const state = editor?.parseEditorState(filteredArticles[currentIndex]?.data()?.content);
+        const state = editor?.parseEditorState(filteredArticles[currentIndex]?.content);
 
         setTimeout(() => {
           editor.setEditorState(state);
-          dispatch(SET_TITLE(filteredArticles[currentIndex]?.data()?.title || 'Untitled'));
+          dispatch(SET_TITLE(filteredArticles[currentIndex]?.title || 'Untitled'));
         });
 
       }

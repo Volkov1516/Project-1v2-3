@@ -48,20 +48,20 @@ export const Header = () => {
   };
 
   const handleAll = () => {
-    const unarchived = originalArticles?.filter(i => !i?.data()?.archive);
+    const unarchived = originalArticles?.filter(i => !i?.archive);
     dispatch(SET_FILTERED_ARTICLES(unarchived));
   };
 
   const handleArchive = () => {
-    const archive = originalArticles?.filter(i => i?.data()?.archive);
+    const archive = originalArticles?.filter(i => i?.archive);
     dispatch(SET_FILTERED_ARTICLES(archive));
   };
 
   const setFilteredByCategory = (id) => {
-    const unarchived = originalArticles?.filter(i => !i?.data()?.archive);
+    const unarchived = originalArticles?.filter(i => !i?.archive);
     let newArr = [];
 
-    unarchived?.map(i => i.data()?.categories?.map(j => {
+    unarchived?.map(i => i?.categories?.map(j => {
       if (j.id === id) {
         return newArr.push(i);
       }

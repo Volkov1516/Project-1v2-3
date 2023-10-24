@@ -21,12 +21,21 @@ export const App = () => {
 
   useEffect(() => {
     const getArticles = async (user) => {
+      const originalArticles = [];
       const q = query(collection(db, 'articles'), where('userId', '==', user?.uid));
       const querySnapshot = await getDocs(q);
+      querySnapshot?.forEach((doc) => originalArticles.push({
+        id: doc?.id,
+        title: doc?.data()?.title,
+        content: doc?.data()?.content,
+        categories: doc?.data()?.categories,
+        date: doc?.data()?.date?.toDate().toLocaleDateString(),
+        archive: doc?.data()?.archive,
+      }));
+      const archivedArticles = originalArticles?.filter(i => !i?.archive);
 
-      dispatch(SET_ORIGINAL_ARTICLES(querySnapshot.docs));
-      const unarchived = querySnapshot.docs?.filter(i => !i?.data()?.archive);
-      dispatch(SET_FILTERED_ARTICLES(unarchived));
+      dispatch(SET_ORIGINAL_ARTICLES(JSON.parse(JSON.stringify(originalArticles))));
+      dispatch(SET_FILTERED_ARTICLES(JSON.parse(JSON.stringify(archivedArticles))));
     };
 
     const getCategories = async (user) => {

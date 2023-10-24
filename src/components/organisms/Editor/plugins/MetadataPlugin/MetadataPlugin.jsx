@@ -48,12 +48,12 @@ export const MetadataPlugin = () => {
   return (
     <div className={css.container}>
       <div className={css.date}>
-        {filteredArticles[currentIndex]?.data()?.date?.toDate().toLocaleDateString() || date.toLocaleDateString()}
+        {filteredArticles[currentIndex]?.date || date.toLocaleDateString()}
       </div>
-      <div className={`${css.color} ${css[filteredArticles[currentIndex]?.data()?.color]}`} onClick={() => setColorsMenu(!colorsMenu)} onMouseOver={() => setColorsMenu(true)} onMouseLeave={() => setColorsMenu(false)}>color</div>
+      <div className={`${css.color} ${css[filteredArticles[currentIndex]?.color]}`} onClick={() => setColorsMenu(!colorsMenu)} onMouseOver={() => setColorsMenu(true)} onMouseLeave={() => setColorsMenu(false)}>color</div>
       <div className={css.category} onClick={() => setCategoriesMenu(!categoriesMenu)} onMouseOver={() => setCategoriesMenu(true)} onMouseLeave={() => setCategoriesMenu(false)}>category</div>
-      {categories?.map(i => filteredArticles[currentIndex]?.data()?.categories?.map(j => {
-        return i.id === j.id && <div className={css.category} style={{ color: "#1971c2" }} onClick={() => handleRemoveCategory(i.id)}>#{i?.name}</div>
+      {categories?.map(i => filteredArticles[currentIndex]?.categories?.map(j => {
+        return i.id === j.id && <div key={i.id} className={css.category} style={{ color: "#1971c2" }} onClick={() => handleRemoveCategory(i.id)}>#{i?.name}</div>
       }))}
       {colorsMenu && (
         <div className={css.colorsContainer} onMouseOver={() => setColorsMenu(true)} onMouseLeave={() => setColorsMenu(false)}>

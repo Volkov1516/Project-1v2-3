@@ -28,9 +28,9 @@ export const Home = () => {
   const openModalEditorFromPreview = () => {
     window.history.pushState({modalEditor: 'opened'}, '', '#editor');
 
-    dispatch(SET_TITLE(filteredArticles[currentIndex]?.data()?.title));
+    dispatch(SET_TITLE(filteredArticles[currentIndex]?.title));
     dispatch(SET_CURRENT_ID(filteredArticles[currentIndex]?.id));
-    dispatch(SET_CONTENT(filteredArticles[currentIndex]?.data()?.content));
+    dispatch(SET_CONTENT(filteredArticles[currentIndex]?.content));
     dispatch(SET_MODAL_EDITOR_EXISTING(true));
   };
 
@@ -57,14 +57,14 @@ export const Home = () => {
         {filteredArticles?.map((i, index) => (
           <article
             key={i?.id}
-            onClick={() => openModalEditor(i?.id, i?.data()?.content, i?.data()?.title, index)}
-            onMouseDown={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}
+            onClick={() => openModalEditor(i?.id, i?.content, i?.title, index)}
+            onMouseDown={() => onMouseDown(i?.id, i?.content, i?.title, index)}
             onMouseUp={onMouseUp}
-            onTouchStart={() => onMouseDown(i?.id, i?.data()?.content, i?.data()?.title, index)}
+            onTouchStart={() => onMouseDown(i?.id, i?.content, i?.title, index)}
             onTouchEnd={onMouseUp}
-            className={css[i?.data()?.color]}
+            className={css[i?.color]}
           >
-            {i?.data()?.title || 'Untitled'}
+            {i?.title || 'Untitled'}
           </article>
         ))}
       </div>
