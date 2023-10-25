@@ -8,26 +8,26 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 export const RefreshStatePlugin = () => {
   const dispatch = useDispatch();
 
-  const { filteredArticles, currentIndex } = useSelector(state => state.article);
+  const { filteredArticles, articleIndex } = useSelector(state => state.article);
 
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {
     editor.update(() => {
-      if (!filteredArticles[currentIndex]?.content) {
+      if (!filteredArticles[articleIndex]?.content) {
         editor.dispatchCommand(CLEAR_EDITOR_COMMAND, undefined);
       }
       else {
-        const state = editor?.parseEditorState(filteredArticles[currentIndex]?.content);
+        const state = editor?.parseEditorState(filteredArticles[articleIndex]?.content);
 
         setTimeout(() => {
           editor.setEditorState(state);
-          dispatch(SET_TITLE(filteredArticles[currentIndex]?.title || 'Untitled'));
+          dispatch(SET_TITLE(filteredArticles[articleIndex]?.title || 'Untitled'));
         });
 
       }
     });
-  }, [editor, filteredArticles, currentIndex, dispatch]);
+  }, [editor, filteredArticles, articleIndex, dispatch]);
 
   return null;
 };

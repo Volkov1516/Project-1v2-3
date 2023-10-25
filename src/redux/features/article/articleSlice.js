@@ -5,8 +5,8 @@ const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"for
 const initialState = {
   originalArticles: [],
   filteredArticles: [],
-  currentId: null,
-  currentIndex: null,
+  articleId: null,
+  articleIndex: null,
   title: '',
   content: EMPTY_CONTENT
 };
@@ -22,16 +22,16 @@ export const articleSlice = createSlice({
       state.filteredArticles = action.payload;
     },
     SET_CURRENT_ID: (state, action) => {
-      state.currentId = action.payload;
+      state.articleId = action.payload;
     },
     SET_CURRENT_INDEX: (state, action) => {
-      state.currentIndex = action.payload;
+      state.articleIndex = action.payload;
     },
     INCREMENT_CURRENT_INDEX: (state) => {
-      state.currentIndex += 1;
+      state.articleIndex += 1;
     },
     DECREMENT_CURRENT_INDEX: (state) => {
-      state.currentIndex -= 1;
+      state.articleIndex -= 1;
     },
     SET_TITLE: (state, action) => {
       state.title = action.payload;

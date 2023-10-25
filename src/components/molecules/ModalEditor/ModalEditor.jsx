@@ -16,7 +16,7 @@ export const ModalEditor = ({
   setModalEditorStatus,
   autofocus
 }) => {
-  const { currentId, title } = useSelector(state => state.article);
+  const { articleId, title } = useSelector(state => state.article);
 
   const modalEditorContentRef = useRef(null);
   const titleRef = useRef(null);
@@ -29,7 +29,7 @@ export const ModalEditor = ({
   };
 
   const archive = async () => {
-    const articleRef = doc(db, 'articles', currentId);
+    const articleRef = doc(db, 'articles', articleId);
 
     await updateDoc(articleRef, {
       archive: true

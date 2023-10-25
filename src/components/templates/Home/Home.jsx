@@ -10,7 +10,7 @@ import { ModalPreview } from 'components/molecules/ModalPreview/ModalPreview';
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const { filteredArticles, currentIndex } = useSelector(state => state.article);
+  const { filteredArticles, articleIndex } = useSelector(state => state.article);
   const { modalEditorExisting } = useSelector(state => state.modal);
 
   let mouseTimer;
@@ -28,9 +28,9 @@ export const Home = () => {
   const openModalEditorFromPreview = () => {
     window.history.pushState({modalEditor: 'opened'}, '', '#editor');
 
-    dispatch(SET_TITLE(filteredArticles[currentIndex]?.title));
-    dispatch(SET_CURRENT_ID(filteredArticles[currentIndex]?.id));
-    dispatch(SET_CONTENT(filteredArticles[currentIndex]?.content));
+    dispatch(SET_TITLE(filteredArticles[articleIndex]?.title));
+    dispatch(SET_CURRENT_ID(filteredArticles[articleIndex]?.id));
+    dispatch(SET_CONTENT(filteredArticles[articleIndex]?.content));
     dispatch(SET_MODAL_EDITOR_EXISTING(true));
   };
 

@@ -34,7 +34,7 @@ export const Editor = ({
   autofocus = true
 }) => {
   const { user } = useSelector(state => state.user);
-  const { currentId, content, title } = useSelector(state => state.article);
+  const { articleId, content, title } = useSelector(state => state.article);
 
   let editorStateAutoSaveTimeout;
 
@@ -71,7 +71,7 @@ export const Editor = ({
     editorStateAutoSaveTimeout = setTimeout(async () => {
       setSaving(true);
 
-      await setDoc(doc(db, 'articles', currentId), {
+      await setDoc(doc(db, 'articles', articleId), {
         title: title,
         content: state,
         date: Timestamp.fromDate(new Date()),

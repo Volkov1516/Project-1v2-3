@@ -8,12 +8,12 @@ import css from './ModalDelete.module.css';
 import Button from 'components/atoms/Button/Button';
 
 export const ModalDelete = ({ title }) => {
-  const { currentId } = useSelector(state => state.article);
+  const { articleId } = useSelector(state => state.article);
 
   const [open, setOpen] = useState(false);
 
   const deleteArticle = async () => {
-    await deleteDoc(doc(db, 'articles', currentId));
+    await deleteDoc(doc(db, 'articles', articleId));
     setOpen(false);
   };
 

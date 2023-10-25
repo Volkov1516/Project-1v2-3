@@ -8,7 +8,7 @@ import css from './MetadataPlugin.module.css';
 
 export const MetadataPlugin = () => {
   const { categories } = useSelector(state => state.user);
-  const { filteredArticles, currentIndex, currentId } = useSelector(state => state.article);
+  const { filteredArticles, articleIndex, articleId } = useSelector(state => state.article);
 
   let date = new Date();
 
@@ -16,7 +16,7 @@ export const MetadataPlugin = () => {
   const [categoriesMenu, setCategoriesMenu] = useState(false);
 
   const handleColor = async (color) => {
-    const id = filteredArticles[currentIndex]?.id;
+    const id = filteredArticles[articleIndex]?.id;
     const articleRef = doc(db, 'articles', id);
 
     await updateDoc(articleRef, {
@@ -25,7 +25,7 @@ export const MetadataPlugin = () => {
   };
 
   const handleSetCategory = async (id) => {
-    await setDoc(doc(db, 'articles', currentId),
+    await setDoc(doc(db, 'articles', articleId),
       {
         categories: arrayUnion({
           id,
@@ -38,7 +38,7 @@ export const MetadataPlugin = () => {
   };
 
   const handleRemoveCategory = async (id) => {
-    const docRef = doc(db, 'articles', currentId);
+    const docRef = doc(db, 'articles', articleId);
 
     await updateDoc(docRef, {
       categories: arrayRemove({ id })
@@ -48,11 +48,11 @@ export const MetadataPlugin = () => {
   return (
     <div className={css.container}>
       <div className={css.date}>
-        {filteredArticles[currentIndex]?.date || date.toLocaleDateString()}
+        {filteredArticles[articleIndex]?.date || date.toLocaleDateString()}
       </div>
-      <div className={`${css.color} ${css[filteredArticles[currentIndex]?.color]}`} onClick={() => setColorsMenu(!colorsMenu)} onMouseOver={() => setColorsMenu(true)} onMouseLeave={() => setColorsMenu(false)}>color</div>
+      <div className={`${css.color} ${css[filteredArticles[articleIndex]?.color]}`} onClick={() => setColorsMenu(!colorsMenu)} onMouseOver={() => setColorsMenu(true)} onMouseLeave={() => setColorsMenu(false)}>color</div>
       <div className={css.category} onClick={() => setCategoriesMenu(!categoriesMenu)} onMouseOver={() => setCategoriesMenu(true)} onMouseLeave={() => setCategoriesMenu(false)}>category</div>
-      {categories?.map(i => filteredArticles[currentIndex]?.categories?.map(j => {
+      {categories?.map(i => filteredArticles[articleIndex]?.categories?.map(j => {
         return i.id === j.id && <div key={i.id} className={css.category} style={{ color: "#1971c2" }} onClick={() => handleRemoveCategory(i.id)}>#{i?.name}</div>
       }))}
       {colorsMenu && (

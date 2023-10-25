@@ -12,26 +12,26 @@ import css from './ModalPreview.module.css';
 
 export const ModalPreview = ({ openElement, openModalEditorFromPreview }) => {
   const dispatch = useDispatch();
-  const { filteredArticles, currentId, currentIndex, title } = useSelector(state => state.article);
+  const { filteredArticles, articleId, articleIndex, title } = useSelector(state => state.article);
   const { modalPreview } = useSelector(state => state.modal);
 
   const prev = () => {
-    if (currentIndex === 0) return;
+    if (articleIndex === 0) return;
 
     dispatch(DECREMENT_CURRENT_INDEX());
   };
 
   const next = () => {
-    if (currentIndex === filteredArticles?.length - 1) return;
+    if (articleIndex === filteredArticles?.length - 1) return;
 
     dispatch(INCREMENT_CURRENT_INDEX());
   };
 
   const archive = async () => {
-    const articleRef = doc(db, 'articles', currentId);
+    const articleRef = doc(db, 'articles', articleId);
 
     await updateDoc(articleRef, {
-      archive: !filteredArticles[currentIndex]?.archive
+      archive: !filteredArticles[articleIndex]?.archive
     });
   };
 
@@ -53,7 +53,7 @@ export const ModalPreview = ({ openElement, openModalEditorFromPreview }) => {
                   <Button variant="contained" onClick={next}>next</Button>
                 </div>
                 <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
-                <Button variant="text" onClick={archive}>{filteredArticles[currentIndex]?.archive ? 'unarchive' : 'archive'}</Button>
+                <Button variant="text" onClick={archive}>{filteredArticles[articleIndex]?.archive ? 'unarchive' : 'archive'}</Button>
                 <ModalDelete title={title || "Untitled"} />
               </div>
               <div className={css.right}>
