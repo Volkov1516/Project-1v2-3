@@ -1,4 +1,5 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
 
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
@@ -23,18 +24,19 @@ import { MainTheme } from './themes/MainTheme';
 import css from './Editor.module.css';
 
 import { db } from 'firebase.js';
-import { doc, setDoc, Timestamp } from 'firebase/firestore';
+import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 import { MetadataPlugin } from './plugins/MetadataPlugin/MetadataPlugin';
 
-export const Editor = ({ 
-  modalEditorContentRef, 
-  titleRef, 
+export const Editor = ({
+  modalEditorContentRef,
+  titleRef,
   setSaving,
   preview = false,
   autofocus = true
 }) => {
+  const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
-  const { articleId, content, title } = useSelector(state => state.article);
+  const { articleId, content, title, newArticle } = useSelector(state => state.article);
 
   let editorStateAutoSaveTimeout;
 
@@ -71,12 +73,26 @@ export const Editor = ({
     editorStateAutoSaveTimeout = setTimeout(async () => {
       setSaving(true);
 
-      await setDoc(doc(db, 'articles', articleId), {
-        title: title,
-        content: state,
-        date: Timestamp.fromDate(new Date()),
-        userId: user?.id
-      });
+      if (newArticle) {
+        await setDoc(doc(db, 'articles', articleId), {
+          title: title,
+          content: state,
+          date: Timestamp.fromDate(new Date()),
+          userId: user?.id
+        })
+          .then(() => {
+            dispatch(SET_NEW_ARTICLE(false));
+          })
+          .catch((error) => console.log(error));
+      }
+      else {
+        await updateDoc(doc(db, 'articles', articleId), {
+          title: title,
+          content: state,
+        })
+          .then(() => { })
+          .catch((error) => console.log(error));
+      }
 
       setSaving(false);
     }, 1000);

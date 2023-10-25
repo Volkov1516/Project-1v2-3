@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_AUTH, SET_USER, SET_CATEGORIES } from 'redux/features/user/userSlice';
-import { SET_ORIGINAL_ARTICLES, SET_FILTERED_ARTICLES } from 'redux/features/article/articleSlice';
+import { SET_ORIGINAL_ARTICLES, SET_FILTERED_ARTICLES, SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY } from 'redux/features/modal/modalSlice';
 
 import { auth, db } from 'firebase.js';
@@ -75,6 +75,7 @@ export const App = () => {
         dispatch(SET_MODAL_EDITOR_EXISTING(true));
       }
       else {
+        dispatch(SET_NEW_ARTICLE(false));
         dispatch(SET_MODAL_EDITOR_EXISTING(false));
       }
 
@@ -82,6 +83,7 @@ export const App = () => {
         dispatch(SET_MODAL_EDITOR_EMPTY(true));
       }
       else {
+        dispatch(SET_NEW_ARTICLE(false));
         dispatch(SET_MODAL_EDITOR_EMPTY(false));
       }
     };

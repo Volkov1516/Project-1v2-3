@@ -16,8 +16,7 @@ export const MetadataPlugin = () => {
   const [categoriesMenu, setCategoriesMenu] = useState(false);
 
   const handleColor = async (color) => {
-    const id = filteredArticles[articleIndex]?.id;
-    const articleRef = doc(db, 'articles', id);
+    const articleRef = doc(db, 'articles', articleId);
 
     await updateDoc(articleRef, {
       color: color

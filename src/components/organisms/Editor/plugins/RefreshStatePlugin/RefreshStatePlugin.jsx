@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { SET_TITLE } from 'redux/features/article/articleSlice';
+import { SET_TITLE, SET_CURRENT_ID } from 'redux/features/article/articleSlice';
 
 import { CLEAR_EDITOR_COMMAND } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
@@ -23,6 +23,7 @@ export const RefreshStatePlugin = () => {
         setTimeout(() => {
           editor.setEditorState(state);
           dispatch(SET_TITLE(filteredArticles[articleIndex]?.title || 'Untitled'));
+          dispatch(SET_CURRENT_ID(filteredArticles[articleIndex]?.id));
         });
 
       }

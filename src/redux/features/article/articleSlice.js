@@ -8,7 +8,8 @@ const initialState = {
   articleId: null,
   articleIndex: null,
   title: '',
-  content: EMPTY_CONTENT
+  content: EMPTY_CONTENT,
+  newArticle: false
 };
 
 export const articleSlice = createSlice({
@@ -38,6 +39,9 @@ export const articleSlice = createSlice({
     },
     SET_CONTENT: (state, action) => {
       state.content = action.payload;
+    },
+    SET_NEW_ARTICLE: (state, action) => {
+      state.newArticle = action.payload;
     }
   }
 });
@@ -50,6 +54,7 @@ export const {
   INCREMENT_CURRENT_INDEX,
   DECREMENT_CURRENT_INDEX,
   SET_TITLE,
-  SET_CONTENT
+  SET_CONTENT,
+  SET_NEW_ARTICLE
 } = articleSlice.actions;
 export default articleSlice.reducer;

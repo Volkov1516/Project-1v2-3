@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
+import { SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
 
 import css from './ModalEditror.module.css';
 
@@ -16,6 +17,7 @@ export const ModalEditor = ({
   setModalEditorStatus,
   autofocus
 }) => {
+  const dispatch = useDispatch();
   const { articleId, title } = useSelector(state => state.article);
 
   const modalEditorContentRef = useRef(null);
@@ -24,6 +26,7 @@ export const ModalEditor = ({
   const [saving, setSaving] = useState(false);
 
   const handleClose = () => {
+    dispatch(SET_NEW_ARTICLE(false));
     window.history.back();
     setModalEditorStatus();
   };

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_CURRENT_ID, SET_CONTENT, SET_FILTERED_ARTICLES, SET_TITLE, SET_CURRENT_INDEX } from 'redux/features/article/articleSlice';
+import { SET_CURRENT_ID, SET_CONTENT, SET_FILTERED_ARTICLES, SET_TITLE, SET_CURRENT_INDEX, SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
 import { SET_MODAL_EDITOR_EMPTY } from 'redux/features/modal/modalSlice';
 
 import { auth } from 'firebase.js';
@@ -34,6 +34,7 @@ export const Header = () => {
     dispatch(SET_CURRENT_INDEX(null));
     dispatch(SET_TITLE(''));
     dispatch(SET_CONTENT(EMPTY_CONTENT));
+    dispatch(SET_NEW_ARTICLE(true));
     dispatch(SET_MODAL_EDITOR_EMPTY(true));
   };
 
