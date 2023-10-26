@@ -23,8 +23,8 @@ export const articleSlice = createSlice({
       state.filteredArticles = action.payload;
     },
     ADD_ARTICLE: (state, action) => {
-      state.originalArticles.push(action.payload);
-      state.filteredArticles.push(action.payload);
+      state.originalArticles.unshift(action.payload);
+      state.filteredArticles.unshift(action.payload);
     },
     UPDATE_ARTICLE: (state, action) => {
       let newOriginal = state.originalArticles.map(i => {

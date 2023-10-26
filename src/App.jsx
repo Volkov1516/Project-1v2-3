@@ -7,7 +7,7 @@ import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY } 
 
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, collection, query, where, getDocs, getDoc } from 'firebase/firestore';
+import { doc, collection, query, where, orderBy, getDocs, getDoc } from 'firebase/firestore';
 
 import { Auth } from 'components/templates/Auth/Auth';
 import { Home } from 'components/templates/Home/Home';
@@ -22,7 +22,7 @@ export const App = () => {
   useEffect(() => {
     const getArticles = async (user) => {
       const originalArticles = [];
-      const q = query(collection(db, 'articles'), where('userId', '==', user?.uid));
+      const q = query(collection(db, 'articles'), where('userId', '==', user?.uid), orderBy('date', 'desc'));
       const querySnapshot = await getDocs(q);
       querySnapshot?.forEach((doc) => originalArticles.push({
         id: doc?.id,
