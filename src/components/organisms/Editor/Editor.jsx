@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
+import { SET_NEW_ARTICLE, ADD_ARTICLE, UPDATE_ARTICLE } from 'redux/features/article/articleSlice';
 
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
@@ -82,6 +82,13 @@ export const Editor = ({
         })
           .then(() => {
             dispatch(SET_NEW_ARTICLE(false));
+            dispatch(ADD_ARTICLE({
+              id: articleId,
+              title: title,
+              content: state,
+              date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
+              userId: user?.id
+            }));
           })
           .catch((error) => console.log(error));
       }
@@ -90,7 +97,9 @@ export const Editor = ({
           title: title,
           content: state,
         })
-          .then(() => { })
+          .then(() => {
+            dispatch(UPDATE_ARTICLE({ id: articleId, title: title, content: state }));
+          })
           .catch((error) => console.log(error));
       }
 

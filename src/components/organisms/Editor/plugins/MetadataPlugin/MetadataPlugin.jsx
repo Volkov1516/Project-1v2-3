@@ -68,7 +68,7 @@ export const MetadataPlugin = () => {
       )}
       {categoriesMenu && (
         <div className={css.categoriesContainer} onMouseOver={() => setCategoriesMenu(true)} onMouseLeave={() => setCategoriesMenu(false)}>
-          {categories?.map(i => <div onClick={() => handleSetCategory(i?.id)}>#{i?.name}</div>)}
+          {categories?.map(i => <div key={i.id} onClick={() => handleSetCategory(i?.id)}>#{i?.name}</div>)}
         </div>
       )}
     </div>

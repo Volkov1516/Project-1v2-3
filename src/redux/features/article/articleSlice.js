@@ -22,6 +22,53 @@ export const articleSlice = createSlice({
     SET_FILTERED_ARTICLES: (state, action) => {
       state.filteredArticles = action.payload;
     },
+    ADD_ARTICLE: (state, action) => {
+      state.originalArticles.push(action.payload);
+      state.filteredArticles.push(action.payload);
+    },
+    UPDATE_ARTICLE: (state, action) => {
+      let newOriginal = state.originalArticles.map(i => {
+        if (i.id === action.payload.id) {
+          let newObj = {
+            id: i?.id,
+            title: action.payload.title,
+            content: action.payload.content,
+            categories: i?.categories,
+            color: i?.color,
+            date: i?.date,
+            archive: i?.archive,
+          }
+
+          return newObj;
+        }
+        else {
+          return i;
+        }
+      });
+
+      state.originalArticles = JSON.parse(JSON.stringify(newOriginal));
+
+      let newFiltered = state.filteredArticles.map(i => {
+        if (i.id === action.payload.id) {
+          let newObj = {
+            id: i?.id,
+            title: action.payload.title,
+            content: action.payload.content,
+            categories: i?.categories,
+            color: i?.color,
+            date: i?.date,
+            archive: i?.archive,
+          }
+
+          return newObj;
+        }
+        else {
+          return i;
+        }
+      });
+
+      state.filteredArticles = JSON.parse(JSON.stringify(newFiltered));
+    },
     SET_CURRENT_ID: (state, action) => {
       state.articleId = action.payload;
     },
@@ -49,6 +96,8 @@ export const articleSlice = createSlice({
 export const {
   SET_ORIGINAL_ARTICLES,
   SET_FILTERED_ARTICLES,
+  ADD_ARTICLE,
+  UPDATE_ARTICLE,
   SET_CURRENT_ID,
   SET_CURRENT_INDEX,
   INCREMENT_CURRENT_INDEX,
