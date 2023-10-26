@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { DELETE_ARTICLE } from 'redux/features/article/articleSlice';
+import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 
@@ -8,12 +10,22 @@ import css from './ModalDelete.module.css';
 import Button from 'components/atoms/Button/Button';
 
 export const ModalDelete = ({ title }) => {
+  const dispatch = useDispatch();
   const { articleId } = useSelector(state => state.article);
 
   const [open, setOpen] = useState(false);
 
   const deleteArticle = async () => {
-    await deleteDoc(doc(db, 'articles', articleId));
+    await deleteDoc(doc(db, 'articles', articleId))
+      .then(() => {
+        dispatch(DELETE_ARTICLE({ id: articleId }));
+        window.history.back();
+        dispatch(SET_MODAL_PREVIEW(false));
+        dispatch(SET_MODAL_EDITOR_EMPTY(false));
+        dispatch(SET_MODAL_EDITOR_EXISTING(false));
+      })
+      .catch((error) => console.log(error));
+
     setOpen(false);
   };
 

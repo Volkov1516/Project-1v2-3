@@ -241,6 +241,13 @@ export const articleSlice = createSlice({
 
       state.filteredArticles = JSON.parse(JSON.stringify(newFiltered));
     },
+    DELETE_ARTICLE: (state, action) => {
+      let newOriginal = state.originalArticles.filter(i => i?.id !== action.payload.id);
+      state.originalArticles = newOriginal;
+
+      let newFiltered = state.filteredArticles.filter(i => i?.id !== action.payload.id);
+      state.filteredArticles = newFiltered;
+    },
     SET_CURRENT_ID: (state, action) => {
       state.articleId = action.payload;
     },
@@ -274,6 +281,7 @@ export const {
   ADD_CATEGORY,
   REMOVE_CATEGORY,
   SET_ARCHIVE,
+  DELETE_ARTICLE,
   SET_CURRENT_ID,
   SET_CURRENT_INDEX,
   INCREMENT_CURRENT_INDEX,

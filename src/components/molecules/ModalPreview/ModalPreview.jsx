@@ -34,7 +34,6 @@ export const ModalPreview = ({ openElement, openModalEditorFromPreview }) => {
       archive: !filteredArticles[articleIndex]?.archive
     })
       .then(() => {
-        // close();
         dispatch(SET_ARCHIVE({ id: articleId, archive: !filteredArticles[articleIndex]?.archive }));
       })
       .catch((error) => console.log(error));
