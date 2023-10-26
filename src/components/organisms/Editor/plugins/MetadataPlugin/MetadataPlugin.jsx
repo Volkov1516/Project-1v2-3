@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { SET_COLOR } from 'redux/features/article/articleSlice';
 
 import { doc, updateDoc, setDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db } from 'firebase.js';
@@ -7,6 +8,7 @@ import { db } from 'firebase.js';
 import css from './MetadataPlugin.module.css';
 
 export const MetadataPlugin = () => {
+  const dispatch = useDispatch();
   const { categories } = useSelector(state => state.user);
   const { filteredArticles, articleIndex, articleId } = useSelector(state => state.article);
 
@@ -20,7 +22,11 @@ export const MetadataPlugin = () => {
 
     await updateDoc(articleRef, {
       color: color
-    });
+    })
+      .then(() => {
+        dispatch(SET_COLOR({ id: articleId, color: color }));
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleSetCategory = async (id) => {
