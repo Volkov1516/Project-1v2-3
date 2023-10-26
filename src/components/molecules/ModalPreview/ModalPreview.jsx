@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { INCREMENT_CURRENT_INDEX, DECREMENT_CURRENT_INDEX } from 'redux/features/article/articleSlice';
+import { INCREMENT_CURRENT_INDEX, DECREMENT_CURRENT_INDEX, SET_ARCHIVE } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from 'firebase.js';
@@ -32,7 +32,12 @@ export const ModalPreview = ({ openElement, openModalEditorFromPreview }) => {
 
     await updateDoc(articleRef, {
       archive: !filteredArticles[articleIndex]?.archive
-    });
+    })
+      .then(() => {
+        // close();
+        dispatch(SET_ARCHIVE({ id: articleId, archive: !filteredArticles[articleIndex]?.archive }));
+      })
+      .catch((error) => console.log(error));
   };
 
   const close = () => {
