@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { SET_COLOR } from 'redux/features/article/articleSlice';
+import { SET_COLOR, ADD_CATEGORY, REMOVE_CATEGORY } from 'redux/features/article/articleSlice';
 
 import { doc, updateDoc, setDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db } from 'firebase.js';
@@ -39,7 +39,11 @@ export const MetadataPlugin = () => {
       {
         merge: true
       }
-    );
+    )
+      .then(() => {
+        dispatch(ADD_CATEGORY({ id: articleId, category: id }));
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleRemoveCategory = async (id) => {
@@ -47,7 +51,11 @@ export const MetadataPlugin = () => {
 
     await updateDoc(docRef, {
       categories: arrayRemove({ id })
-    });
+    })
+      .then(() => {
+        dispatch(REMOVE_CATEGORY({ id: articleId, category: id }));
+      })
+      .catch((error) => console.log(error));
   };
 
   return (

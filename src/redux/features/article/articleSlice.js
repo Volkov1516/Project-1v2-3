@@ -112,6 +112,92 @@ export const articleSlice = createSlice({
 
       state.filteredArticles = JSON.parse(JSON.stringify(newFiltered));
     },
+    ADD_CATEGORY: (state, action) => {
+      let newOriginal = state.originalArticles.map(i => {
+        if (i.id === action.payload.id) {
+          let newObj = {
+            id: i?.id,
+            title: i?.title,
+            content: i?.content,
+            categories: [...i?.categories, { id: action.payload.category }],
+            color: i?.color,
+            date: i?.date,
+            archive: i?.archive,
+          }
+
+          return newObj;
+        }
+        else {
+          return i;
+        }
+      });
+
+      state.originalArticles = JSON.parse(JSON.stringify(newOriginal));
+
+      let newFiltered = state.filteredArticles.map(i => {
+        if (i.id === action.payload.id) {
+          let newObj = {
+            id: i?.id,
+            title: i?.title,
+            content: i?.content,
+            categories: [...i?.categories, { id: action.payload.category }],
+            color: i?.color,
+            date: i?.date,
+            archive: i?.archive,
+          }
+
+          return newObj;
+        }
+        else {
+          return i;
+        }
+      });
+
+      state.filteredArticles = JSON.parse(JSON.stringify(newFiltered));
+    },
+    REMOVE_CATEGORY: (state, action) => {
+      let newOriginal = state.originalArticles.map(i => {
+        if (i.id === action.payload.id) {
+          let newObj = {
+            id: i?.id,
+            title: i?.title,
+            content: i?.content,
+            categories: i?.categories?.filter(i => i.id !== action.payload.category),
+            color: i?.color,
+            date: i?.date,
+            archive: i?.archive,
+          }
+
+          return newObj;
+        }
+        else {
+          return i;
+        }
+      });
+
+      state.originalArticles = JSON.parse(JSON.stringify(newOriginal));
+
+      let newFiltered = state.filteredArticles.map(i => {
+        if (i.id === action.payload.id) {
+          let newObj = {
+            id: i?.id,
+            title: i?.title,
+            content: i?.content,
+            categories: i?.categories?.filter(i => i.id !== action.payload.category),
+            color: i?.color,
+            date: i?.date,
+            archive: i?.archive,
+          }
+
+          return newObj;
+        }
+        else {
+          return i;
+        }
+      });
+
+      state.filteredArticles = JSON.parse(JSON.stringify(newFiltered));
+    },
     SET_CURRENT_ID: (state, action) => {
       state.articleId = action.payload;
     },
@@ -142,6 +228,8 @@ export const {
   ADD_ARTICLE,
   UPDATE_ARTICLE,
   SET_COLOR,
+  ADD_CATEGORY,
+  REMOVE_CATEGORY,
   SET_CURRENT_ID,
   SET_CURRENT_INDEX,
   INCREMENT_CURRENT_INDEX,
