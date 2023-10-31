@@ -13,7 +13,7 @@ import css from './Header.module.css';
 
 import Button from 'components/atoms/Button/Button';
 import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
-import { ModalCategory } from '../ModalCategory/ModalCategory';
+import { ModalCategory } from '../../molecules/ModalCategory/ModalCategory';
 
 export const Header = () => {
   const dispatch = useDispatch();
