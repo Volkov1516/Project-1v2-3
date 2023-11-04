@@ -18,14 +18,13 @@ export const RefreshStatePlugin = () => {
         editor.dispatchCommand(CLEAR_EDITOR_COMMAND, undefined);
       }
       else {
-        const state = editor?.parseEditorState(filteredArticles[articleIndex]?.content);
-
         setTimeout(() => {
-          editor.setEditorState(state);
-          dispatch(SET_TITLE(filteredArticles[articleIndex]?.title || 'Untitled'));
-          dispatch(SET_CURRENT_ID(filteredArticles[articleIndex]?.id));
-        });
+          const state = editor?.parseEditorState(filteredArticles[articleIndex]?.content);
 
+          dispatch(SET_CURRENT_ID(filteredArticles[articleIndex]?.id));
+          dispatch(SET_TITLE(filteredArticles[articleIndex]?.title || 'Untitled'));
+          editor.setEditorState(state);
+        });
       }
     });
   }, [editor, filteredArticles, articleIndex, dispatch]);
