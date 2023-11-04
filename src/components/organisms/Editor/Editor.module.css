@@ -12,4 +12,5 @@
   resize: none;
   outline: 0;
   tab-size: 1;
+  user-select: none !important;
 }
