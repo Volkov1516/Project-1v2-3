@@ -1,4 +1,4 @@
-.textarea {
+textarea {
   margin:  0 auto;
   padding-left: 10px;
   width: 100%;
@@ -13,12 +13,52 @@
   overflow: auto;
 }
 
-.textarea::placeholder {
+textarea::placeholder {
   color: #BFC7B4;
 }
 
+textarea.white {
+  background-color: white;
+  color: black;
+}
+
+textarea.black {
+  background-color: black;
+  color: white;
+}
+
+textarea.red {
+  background-color: #e03131;
+  color: white;
+}
+
+textarea.orange {
+  background-color: #fd7e14;
+  color: white;
+}
+
+textarea.yellow {
+  background-color: #ffd43b;
+  color: white;
+}
+
+textarea.green {
+  background-color: #2f9e44;
+  color: white;
+}
+
+textarea.blue {
+  background-color: #1971c2;
+  color: white;
+}
+
+textarea.purple {
+  background-color: #9c36b5;
+  color: white;
+}
+
 @media (max-width: 639px) {
-  .textarea {
+  textarea {
     padding-left: 0;
   }
 }

@@ -6,7 +6,7 @@ import css from './Title.module.css';
 
 export const Title = forwardRef(function MyTitle(props, ref) {
   const dispatch = useDispatch();
-  const { title } = useSelector(state => state.article);
+  const { title, filteredArticles, articleIndex } = useSelector(state => state.article);
 
   useEffect(() => {
     if (ref?.current) {
@@ -22,7 +22,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
   return (
     <textarea
       ref={ref}
-      className={css.textarea}
+      className={css[filteredArticles[articleIndex]?.color]}
       rows={1}
       spellCheck={false}
       placeholder="Title"

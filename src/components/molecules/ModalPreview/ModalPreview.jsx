@@ -65,7 +65,7 @@ export const ModalPreview = ({ openElement, openModalEditorFromPreview }) => {
               </div>
             </div>
             <div className={css.editor}>
-              <div className={css.title}>{title || "Untitled"}</div>
+              <div className={`${css.title} ${css[filteredArticles[articleIndex]?.color]}`}>{title || "Untitled"}</div>
               <Editor preview={true} />
             </div>
           </div>

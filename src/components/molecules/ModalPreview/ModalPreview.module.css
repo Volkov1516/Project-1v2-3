@@ -46,10 +46,50 @@
 }
 
 .title {
-  padding: 0px 8px;
+  margin-left: 8px;
   text-transform: uppercase;
   font-size: 40px;
   font-weight: 800;
+}
+
+.title.white {
+  background-color: white;
+  color: black;
+}
+
+.title.black {
+  background-color: black;
+  color: white;
+}
+
+.title.red {
+  background-color: #e03131;
+  color: white;
+}
+
+.title.orange {
+  background-color: #fd7e14;
+  color: white;
+}
+
+.title.yellow {
+  background-color: #ffd43b;
+  color: white;
+}
+
+.title.green {
+  background-color: #2f9e44;
+  color: white;
+}
+
+.title.blue {
+  background-color: #1971c2;
+  color: white;
+}
+
+.title.purple {
+  background-color: #9c36b5;
+  color: white;
 }
 
 @media (max-width: 639px) {
@@ -86,6 +126,7 @@
   }
 
   .title {
+    margin-left: 0px;
     padding: 29px 0px 0px;
   }
 }
