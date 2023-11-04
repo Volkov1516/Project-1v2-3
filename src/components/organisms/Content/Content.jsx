@@ -20,9 +20,9 @@ export const Content = ({ mouseTimer }) => {
 
   const onMouseDown = (id, content, title, index) => {
     onMouseUp();
-    window.navigator.vibrate(500);
 
     mouseTimer = window.setTimeout(() => {
+      window.navigator.vibrate(100);
       window.history.pushState({ modalPreview: 'opened' }, '', '#preview');
 
       dispatch(SET_TITLE(title));
