@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_AUTH, SET_USER, SET_CATEGORIES } from 'redux/features/user/userSlice';
@@ -9,9 +9,10 @@ import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, collection, query, where, orderBy, getDocs, getDoc } from 'firebase/firestore';
 
-import { Auth } from 'components/templates/Auth/Auth';
-import { Home } from 'components/templates/Home/Home';
 import { Loading } from 'components/templates/Loading/Loading';
+
+const LazyAuth = lazy(() => import('components/templates/Auth/Auth'));
+const LazyHome = lazy(() => import('components/templates/Home/Home'));
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -64,14 +65,14 @@ export const App = () => {
 
   useEffect(() => {
     const handlePopState = (e) => {
-      if(e.state && e.state.modalPreview === 'opened') {
+      if (e.state && e.state.modalPreview === 'opened') {
         dispatch(SET_MODAL_PREVIEW(true));
       }
       else {
         dispatch(SET_MODAL_PREVIEW(false));
       }
 
-      if(e.state && e.state.modalEditor === 'opened') {
+      if (e.state && e.state.modalEditor === 'opened') {
         dispatch(SET_MODAL_EDITOR_EXISTING(true));
       }
       else {
@@ -79,7 +80,7 @@ export const App = () => {
         dispatch(SET_MODAL_EDITOR_EXISTING(false));
       }
 
-      if(e.state && e.state.modalEditorEmpty === 'opened') {
+      if (e.state && e.state.modalEditorEmpty === 'opened') {
         dispatch(SET_MODAL_EDITOR_EMPTY(true));
       }
       else {
@@ -93,5 +94,5 @@ export const App = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, [dispatch]);
 
-  return loading ? <Loading /> : logged ? <Home /> : <Auth />;
+  return loading ? <Loading /> : logged ? <Suspense fallback={<Loading />}><LazyHome /></Suspense> : <Suspense fallback={<Loading />}><LazyAuth /></Suspense>;
 };

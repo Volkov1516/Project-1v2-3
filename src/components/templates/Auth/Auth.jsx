@@ -14,7 +14,7 @@ import css from './Auth.module.css';
 import logo from 'assets/logo.png';
 import google from 'assets/google.svg';
 
-export const Auth = () => {
+export default function Auth() {
   const [authType, setAuthType] = useState('Log in');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

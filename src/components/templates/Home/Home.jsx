@@ -7,7 +7,7 @@ import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
 import { ModalPreview } from 'components/molecules/ModalPreview/ModalPreview';
 import { Content } from 'components/organisms/Content/Content';
 
-export const Home = () => {
+export default function Home() {
   const dispatch = useDispatch();
   const { filteredArticles, articleIndex } = useSelector(state => state.article);
 
