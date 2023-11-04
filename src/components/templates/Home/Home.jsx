@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_CURRENT_ID, SET_TITLE, SET_CONTENT } from 'redux/features/article/articleSlice';
-import { SET_MODAL_EDITOR_EXISTING } from 'redux/features/modal/modalSlice';
+import { SET_MODAL_EDITOR_EXISTING, SET_MODAL_AUTOFOCUS } from 'redux/features/modal/modalSlice';
 
 import { Header } from 'components/organisms/Header/Header';
 import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
@@ -20,6 +20,7 @@ export const Home = () => {
     dispatch(SET_TITLE(filteredArticles[articleIndex]?.title));
     dispatch(SET_CURRENT_ID(filteredArticles[articleIndex]?.id));
     dispatch(SET_CONTENT(filteredArticles[articleIndex]?.content));
+    dispatch(SET_MODAL_AUTOFOCUS(false));
     dispatch(SET_MODAL_EDITOR_EXISTING(true));
   };
 
@@ -29,11 +30,7 @@ export const Home = () => {
     <div onScroll={onMouseUp}>
       <Header />
       <Content mouseTimer={mouseTimer} />
-      <ModalEditor
-        modalEditorStatus={modalEditorExisting}
-        setModalEditorStatus={() => dispatch(SET_MODAL_EDITOR_EXISTING(false))}
-        autofocus={false}
-      />
+      <ModalEditor />
       <ModalPreview openModalEditorFromPreview={openModalEditorFromPreview} />
     </div>
   );

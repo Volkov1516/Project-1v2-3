@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 import { SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
+import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING } from 'redux/features/modal/modalSlice';
 
 import css from './ModalEditror.module.css';
 
@@ -11,14 +12,10 @@ import { Title } from './Title/Title';
 import { Editor } from 'components/organisms/Editor/Editor';
 import { ModalDelete } from '../ModalDelete/ModalDelete';
 
-export const ModalEditor = ({
-  openElement,
-  modalEditorStatus,
-  setModalEditorStatus,
-  autofocus
-}) => {
+export const ModalEditor = () => {
   const dispatch = useDispatch();
   const { articleId, title } = useSelector(state => state.article);
+  const { autofocus, modalEditorEmpty, modalEditorExisting } = useSelector(state => state.modal);
 
   const modalEditorContentRef = useRef(null);
   const titleRef = useRef(null);
@@ -28,7 +25,9 @@ export const ModalEditor = ({
   const handleClose = () => {
     dispatch(SET_NEW_ARTICLE(false));
     window.history.back();
-    setModalEditorStatus();
+
+    dispatch(SET_MODAL_EDITOR_EMPTY(false));
+    dispatch(SET_MODAL_EDITOR_EXISTING(false));
   };
 
   const archive = async () => {
@@ -41,8 +40,7 @@ export const ModalEditor = ({
 
   return (
     <>
-      {openElement}
-      {modalEditorStatus && (
+      {(modalEditorEmpty || modalEditorExisting) && (
         <div className={css.container}>
           <div className={css.header}>
             <div className={css.left}>

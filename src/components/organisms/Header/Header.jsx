@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_CURRENT_ID, SET_CONTENT, SET_FILTERED_ARTICLES, SET_TITLE, SET_CURRENT_INDEX, SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
-import { SET_MODAL_EDITOR_EMPTY } from 'redux/features/modal/modalSlice';
+import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_AUTOFOCUS } from 'redux/features/modal/modalSlice';
 
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
@@ -12,19 +12,16 @@ import { v4 as uuidv4 } from 'uuid';
 import css from './Header.module.css';
 
 import Button from 'components/atoms/Button/Button';
-import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
 import { ModalCategory } from '../../molecules/ModalCategory/ModalCategory';
 
 export const Header = () => {
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state.user);
   const { originalArticles } = useSelector(state => state.article);
-  const { modalEditorEmpty } = useSelector(state => state.modal);
   const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
 
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
-  const [titleState, setTitleState] = useState('');
 
   const openModalEditor = () => {
     window.history.pushState({ modalEditorEmpty: 'opened' }, '', '#editor');
@@ -35,6 +32,7 @@ export const Header = () => {
     dispatch(SET_TITLE(''));
     dispatch(SET_CONTENT(EMPTY_CONTENT));
     dispatch(SET_NEW_ARTICLE(true));
+    dispatch(SET_MODAL_AUTOFOCUS(true));
     dispatch(SET_MODAL_EDITOR_EMPTY(true));
   };
 
@@ -77,14 +75,7 @@ export const Header = () => {
   return (
     <div className={css.container}>
       <div className={css.left}>
-        <ModalEditor
-          openElement={<Button variant="contained" size="large" onClick={openModalEditor}>CREATE</Button>}
-          modalEditorStatus={modalEditorEmpty}
-          setModalEditorStatus={() => dispatch(SET_MODAL_EDITOR_EMPTY(false))}
-          titleState={titleState}
-          setTitleState={setTitleState}
-          autofocus={true}
-        />
+      <Button variant="contained" size="large" onClick={openModalEditor}>CREATE</Button>
         <Button
           variant="text"
           onClick={() => setCategoriesMenu(!categoriesMenu)}
