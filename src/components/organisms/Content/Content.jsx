@@ -46,7 +46,7 @@ export const Content = ({ mouseTimer }) => {
           onTouchEnd={onMouseUp}
           className={css[i?.color]}
         >
-          {i?.title || 'Untitled'}
+          <mark className={css[i?.color]}>{i?.title || 'Untitled'}</mark>
         </article>
       ))}
     </div>

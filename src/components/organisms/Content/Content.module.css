@@ -6,51 +6,54 @@
 
 article {
   width: fit-content;
-  padding-right: 16px;
   text-transform: uppercase;
   font-size: 40px;
   font-weight: 800;
-  line-height: 1.2em;
   cursor: pointer;
   user-select: none;
 }
 
-article.white {
+mark {
+  background-color: transparent;
+  padding-right: 16px;
+}
+
+mark.white {
   background-color: white;
   color: black;
 }
 
-article.black {
+mark.black {
   background-color: black;
   color: white;
 }
 
-article.red {
+mark.red {
   background-color: #e03131;
   color: white;
 }
 
-article.orange {
+mark.orange {
   background-color: #fd7e14;
   color: white;
 }
 
-article.yellow {
+mark.yellow {
   background-color: #ffd43b;
   color: white;
 }
 
-article.green {
+mark.green {
   background-color: #2f9e44;
   color: white;
 }
 
-article.blue {
+mark.blue {
   background-color: #1971c2;
   color: white;
 }
 
-article.purple {
+mark.purple {
   background-color: #9c36b5;
   color: white;
 }
