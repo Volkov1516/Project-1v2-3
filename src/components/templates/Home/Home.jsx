@@ -10,7 +10,6 @@ import { Content } from 'components/organisms/Content/Content';
 export const Home = () => {
   const dispatch = useDispatch();
   const { filteredArticles, articleIndex } = useSelector(state => state.article);
-  const { modalEditorExisting } = useSelector(state => state.modal);
 
   let mouseTimer;
 
