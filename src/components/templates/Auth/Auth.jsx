@@ -6,10 +6,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider
 } from 'firebase/auth';
-
 import Button from 'components/atoms/Button/Button';
 import { Input } from 'components/atoms/Input/Input';
-
 import css from './Auth.module.css';
 import logo from 'assets/logo.png';
 import google from 'assets/google.svg';

@@ -6,17 +6,15 @@ import { INCREMENT_CURRENT_INDEX, DECREMENT_CURRENT_INDEX, SET_ARCHIVE } from 'r
 import { SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from 'firebase.js';
-
 import Button from 'components/atoms/Button/Button';
 import { Editor } from 'components/organisms/Editor/Editor';
 import { ModalDelete } from '../ModalDelete/ModalDelete';
-
 import css from './ModalPreview.module.css';
 
 export const ModalPreview = () => {
   const dispatch = useDispatch();
   const { filteredArticles, articleId, articleIndex, title } = useSelector(state => state.article);
-  const { modalPreview, scrollOffset } = useSelector(state => state.modal);
+  const { scrollOffset } = useSelector(state => state.modal);
 
   useEffect(() => {
     const modalPreviewElement = document?.getElementById('modalPreview');
@@ -70,31 +68,27 @@ export const ModalPreview = () => {
   };
 
   return (
-    <>
-      {modalPreview && (
-        <div className={css.container} onClick={close}>
-          <div className={css.content} onClick={(e) => e.stopPropagation()}>
-            <div className={css.header}>
-              <div className={css.left}>
-                <div className={css.navigation}>
-                  <Button variant="contained" onClick={prev}>prev</Button>
-                  <Button variant="contained" onClick={next}>next</Button>
-                </div>
-                <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
-                <Button variant="text" onClick={archive}>{filteredArticles[articleIndex]?.archive ? 'unarchive' : 'archive'}</Button>
-                <ModalDelete title={title || "Untitled"} />
-              </div>
-              <div className={css.right}>
-                <Button variant="text" onClick={close}>close</Button>
-              </div>
+    <div className={css.container} onClick={close}>
+      <div className={css.content} onClick={(e) => e.stopPropagation()}>
+        <div className={css.header}>
+          <div className={css.left}>
+            <div className={css.navigation}>
+              <Button variant="contained" onClick={prev}>prev</Button>
+              <Button variant="contained" onClick={next}>next</Button>
             </div>
-            <div id="modalPreview" className={css.editor}>
-              <div className={`${css.title} ${css[filteredArticles[articleIndex]?.color]}`}>{title || "Untitled"}</div>
-              <Editor preview={true} />
-            </div>
+            <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
+            <Button variant="text" onClick={archive}>{filteredArticles[articleIndex]?.archive ? 'unarchive' : 'archive'}</Button>
+            <ModalDelete title={title || "Untitled"} />
+          </div>
+          <div className={css.right}>
+            <Button variant="text" onClick={close}>close</Button>
           </div>
         </div>
-      )}
-    </>
+        <div id="modalPreview" className={css.editor}>
+          <div className={`${css.title} ${css[filteredArticles[articleIndex]?.color]}`}>{title || "Untitled"}</div>
+          <Editor preview={true} />
+        </div>
+      </div>
+    </div>
   );
 };

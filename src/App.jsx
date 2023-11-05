@@ -1,21 +1,18 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { SET_AUTH, SET_USER, SET_CATEGORIES } from 'redux/features/user/userSlice';
 import { SET_ORIGINAL_ARTICLES, SET_FILTERED_ARTICLES, SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, collection, query, where, orderBy, getDocs, getDoc } from 'firebase/firestore';
-
 import { Loading } from 'components/templates/Loading/Loading';
 const LazyAuthComponent = lazy(() => import('components/templates/Auth/Auth'));
 const LazyHomeComponent = lazy(() => import('components/templates/Home/Home'));
 
 export const App = () => {
   const dispatch = useDispatch();
-  const { logged } = useSelector(state => state.user);
-
-  const [loading, setLoading] = useState(true);
+  const [logged, setLogged] = useState(true);
 
   useEffect(() => {
     const getArticles = async (user) => {
@@ -44,20 +41,22 @@ export const App = () => {
       dispatch(SET_CATEGORIES(docSnap?.data()?.categories));
     };
 
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(SET_AUTH(true));
         dispatch(SET_USER({ id: user?.uid }));
         getArticles(user);
         getCategories(user);
-        setLoading(false);
+        setLogged(true);
 
         window.history.pushState({}, '', '/');
       } else {
         dispatch(SET_AUTH(false));
-        setLoading(false);
+        setLogged(false);
       }
     });
+
+    return () => unsubscribe();
   }, [dispatch]);
 
   useEffect(() => {
@@ -91,7 +90,7 @@ export const App = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, [dispatch]);
 
-  return loading ? <Loading /> : logged
+  return logged
     ? <Suspense fallback={<Loading />}><LazyHomeComponent /></Suspense>
     : <Suspense fallback={<Loading />}><LazyAuthComponent /></Suspense>;
 };
