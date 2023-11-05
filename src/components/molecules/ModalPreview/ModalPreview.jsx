@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_CURRENT_ID, SET_TITLE, SET_CONTENT } from 'redux/features/article/articleSlice';
-import { SET_MODAL_EDITOR_EXISTING, SET_MODAL_AUTOFOCUS } from 'redux/features/modal/modalSlice';
+import { SET_MODAL_EDITOR_EXISTING, SET_MODAL_AUTOFOCUS, SET_MODAL_SCROLL } from 'redux/features/modal/modalSlice';
 import { INCREMENT_CURRENT_INDEX, DECREMENT_CURRENT_INDEX, SET_ARCHIVE } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
 import { doc, updateDoc } from "firebase/firestore";
@@ -15,10 +16,18 @@ import css from './ModalPreview.module.css';
 export const ModalPreview = () => {
   const dispatch = useDispatch();
   const { filteredArticles, articleId, articleIndex, title } = useSelector(state => state.article);
-  const { modalPreview } = useSelector(state => state.modal);
+  const { modalPreview, scrollOffset } = useSelector(state => state.modal);
+
+  useEffect(() => {
+    const modalPreviewElement = document?.getElementById('modalPreview');
+    modalPreviewElement?.scrollTo({ top: scrollOffset, behavior: 'smooth' });
+  }, [scrollOffset]);
 
   const openModalEditorFromPreview = () => {
     window.history.pushState({ modalEditor: 'opened' }, '', '#editor');
+
+    const modalPreviewElement = document.getElementById('modalPreview');
+    dispatch(SET_MODAL_SCROLL(modalPreviewElement.scrollTop));
 
     dispatch(SET_TITLE(filteredArticles[articleIndex]?.title));
     dispatch(SET_CURRENT_ID(filteredArticles[articleIndex]?.id));

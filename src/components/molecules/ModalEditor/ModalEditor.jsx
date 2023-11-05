@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 import { SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
-import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING } from 'redux/features/modal/modalSlice';
+import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING, SET_MODAL_SCROLL } from 'redux/features/modal/modalSlice';
 
 import css from './ModalEditror.module.css';
 
@@ -15,7 +15,7 @@ import { ModalDelete } from '../ModalDelete/ModalDelete';
 export const ModalEditor = () => {
   const dispatch = useDispatch();
   const { articleId, title } = useSelector(state => state.article);
-  const { autofocus, modalEditorEmpty, modalEditorExisting } = useSelector(state => state.modal);
+  const { autofocus, modalEditorEmpty, modalEditorExisting, scrollOffset } = useSelector(state => state.modal);
 
   const modalEditorContentRef = useRef(null);
   const titleRef = useRef(null);
@@ -23,6 +23,9 @@ export const ModalEditor = () => {
   const [saving, setSaving] = useState(false);
 
   const handleClose = () => {
+    const modalEditorElement = document.getElementById('modalEditor');
+    dispatch(SET_MODAL_SCROLL(modalEditorElement.scrollTop));
+
     dispatch(SET_NEW_ARTICLE(false));
     window.history.back();
 
@@ -38,10 +41,15 @@ export const ModalEditor = () => {
     });
   };
 
+  useEffect(() => {
+    const modalEditorElement = document?.getElementById('modalEditor');
+    modalEditorElement?.scrollTo({ top: scrollOffset, behavior: 'smooth' });
+  }, [scrollOffset]);
+
   return (
     <>
       {(modalEditorEmpty || modalEditorExisting) && (
-        <div className={css.container}>
+        <div id="modalEditor" className={css.container}>
           <div className={css.header}>
             <div className={css.left}>
               <Button variant="text" onClick={handleClose}>close</Button>
