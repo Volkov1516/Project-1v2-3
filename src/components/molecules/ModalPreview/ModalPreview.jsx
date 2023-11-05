@@ -12,13 +12,13 @@ import { ModalDelete } from '../ModalDelete/ModalDelete';
 
 import css from './ModalPreview.module.css';
 
-export const ModalPreview = ({ openElement }) => {
+export const ModalPreview = () => {
   const dispatch = useDispatch();
   const { filteredArticles, articleId, articleIndex, title } = useSelector(state => state.article);
   const { modalPreview } = useSelector(state => state.modal);
 
   const openModalEditorFromPreview = () => {
-    window.history.pushState({modalEditor: 'opened'}, '', '#editor');
+    window.history.pushState({ modalEditor: 'opened' }, '', '#editor');
 
     dispatch(SET_TITLE(filteredArticles[articleIndex]?.title));
     dispatch(SET_CURRENT_ID(filteredArticles[articleIndex]?.id));
@@ -30,12 +30,16 @@ export const ModalPreview = ({ openElement }) => {
   const prev = () => {
     if (articleIndex === 0) return;
 
+    const modalPreviewElement = document.getElementById('modalPreview');
+    modalPreviewElement.scrollTo({ top: 0, behavior: 'smooth' });
     dispatch(DECREMENT_CURRENT_INDEX());
   };
 
   const next = () => {
     if (articleIndex === filteredArticles?.length - 1) return;
 
+    const modalPreviewElement = document.getElementById('modalPreview');
+    modalPreviewElement.scrollTo({ top: 0, behavior: 'smooth' });
     dispatch(INCREMENT_CURRENT_INDEX());
   };
 
@@ -58,7 +62,6 @@ export const ModalPreview = ({ openElement }) => {
 
   return (
     <>
-      {openElement}
       {modalPreview && (
         <div className={css.container} onClick={close}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
@@ -76,7 +79,7 @@ export const ModalPreview = ({ openElement }) => {
                 <Button variant="text" onClick={close}>close</Button>
               </div>
             </div>
-            <div className={css.editor}>
+            <div id="modalPreview" className={css.editor}>
               <div className={`${css.title} ${css[filteredArticles[articleIndex]?.color]}`}>{title || "Untitled"}</div>
               <Editor preview={true} />
             </div>
