@@ -1,5 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_NEW_ARTICLE, ADD_ARTICLE, UPDATE_ARTICLE } from 'redux/features/article/articleSlice';
+import { db } from 'firebase.js';
+import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
@@ -7,9 +9,10 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
-import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { ListItemNode, ListNode } from '@lexical/list';
+import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 
+import { MetadataPlugin } from './plugins/MetadataPlugin/MetadataPlugin';
 import { RefreshStatePlugin } from './plugins/RefreshStatePlugin/RefreshStatePlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
@@ -22,10 +25,6 @@ import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { MainTheme } from './themes/MainTheme';
 
 import css from './Editor.module.css';
-
-import { db } from 'firebase.js';
-import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
-import { MetadataPlugin } from './plugins/MetadataPlugin/MetadataPlugin';
 
 export const Editor = ({
   modalEditorContentRef,

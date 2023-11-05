@@ -1,4 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { SET_CURRENT_ID, SET_TITLE, SET_CONTENT } from 'redux/features/article/articleSlice';
+import { SET_MODAL_EDITOR_EXISTING, SET_MODAL_AUTOFOCUS } from 'redux/features/modal/modalSlice';
 import { INCREMENT_CURRENT_INDEX, DECREMENT_CURRENT_INDEX, SET_ARCHIVE } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
 import { doc, updateDoc } from "firebase/firestore";
@@ -10,10 +12,20 @@ import { ModalDelete } from '../ModalDelete/ModalDelete';
 
 import css from './ModalPreview.module.css';
 
-export const ModalPreview = ({ openElement, openModalEditorFromPreview }) => {
+export const ModalPreview = ({ openElement }) => {
   const dispatch = useDispatch();
   const { filteredArticles, articleId, articleIndex, title } = useSelector(state => state.article);
   const { modalPreview } = useSelector(state => state.modal);
+
+  const openModalEditorFromPreview = () => {
+    window.history.pushState({modalEditor: 'opened'}, '', '#editor');
+
+    dispatch(SET_TITLE(filteredArticles[articleIndex]?.title));
+    dispatch(SET_CURRENT_ID(filteredArticles[articleIndex]?.id));
+    dispatch(SET_CONTENT(filteredArticles[articleIndex]?.content));
+    dispatch(SET_MODAL_AUTOFOCUS(false));
+    dispatch(SET_MODAL_EDITOR_EXISTING(true));
+  };
 
   const prev = () => {
     if (articleIndex === 0) return;

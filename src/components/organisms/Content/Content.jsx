@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_CURRENT_ID, SET_CURRENT_INDEX, SET_TITLE, SET_CONTENT } from 'redux/features/article/articleSlice';
-import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING } from 'redux/features/modal/modalSlice';
+import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_AUTOFOCUS } from 'redux/features/modal/modalSlice';
 
 import css from './Content.module.css';
 
@@ -15,6 +15,7 @@ export const Content = ({ mouseTimer }) => {
     dispatch(SET_TITLE(title));
     dispatch(SET_CURRENT_ID(id));
     dispatch(SET_CONTENT(content));
+    dispatch(SET_MODAL_AUTOFOCUS(false));
     dispatch(SET_MODAL_EDITOR_EXISTING(true));
   };
 

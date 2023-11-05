@@ -1,12 +1,9 @@
 import { useState } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { SET_CURRENT_ID, SET_CONTENT, SET_FILTERED_ARTICLES, SET_TITLE, SET_CURRENT_INDEX, SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
 import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_AUTOFOCUS } from 'redux/features/modal/modalSlice';
-
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
-
 import { v4 as uuidv4 } from 'uuid';
 
 import css from './Header.module.css';

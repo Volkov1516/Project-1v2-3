@@ -1,18 +1,15 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_AUTH, SET_USER, SET_CATEGORIES } from 'redux/features/user/userSlice';
 import { SET_ORIGINAL_ARTICLES, SET_FILTERED_ARTICLES, SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY } from 'redux/features/modal/modalSlice';
-
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, collection, query, where, orderBy, getDocs, getDoc } from 'firebase/firestore';
 
 import { Loading } from 'components/templates/Loading/Loading';
-
-const LazyAuth = lazy(() => import('components/templates/Auth/Auth'));
-const LazyHome = lazy(() => import('components/templates/Home/Home'));
+const LazyAuthComponent = lazy(() => import('components/templates/Auth/Auth'));
+const LazyHomeComponent = lazy(() => import('components/templates/Home/Home'));
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -94,5 +91,7 @@ export const App = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, [dispatch]);
 
-  return loading ? <Loading /> : logged ? <Suspense fallback={<Loading />}><LazyHome /></Suspense> : <Suspense fallback={<Loading />}><LazyAuth /></Suspense>;
+  return loading ? <Loading /> : logged
+    ? <Suspense fallback={<Loading />}><LazyHomeComponent /></Suspense>
+    : <Suspense fallback={<Loading />}><LazyAuthComponent /></Suspense>;
 };
