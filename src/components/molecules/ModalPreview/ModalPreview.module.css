@@ -123,11 +123,10 @@
   }
 
   .editor {
-    padding: 8px;
+    padding: 37px 8px 8px;
   }
 
   .title {
     margin-left: 0px;
-    padding: 29px 0px 0px;
   }
 }
