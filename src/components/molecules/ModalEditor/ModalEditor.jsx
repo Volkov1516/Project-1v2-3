@@ -65,6 +65,7 @@ export const ModalEditor = () => {
         <Editor
           modalEditorContentRef={modalEditorContentRef}
           titleRef={titleRef}
+          saving={saving}
           setSaving={setSaving}
           autofocus={autofocus}
         />

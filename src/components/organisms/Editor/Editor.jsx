@@ -29,6 +29,7 @@ import css from './Editor.module.css';
 export const Editor = ({
   modalEditorContentRef,
   titleRef,
+  saving,
   setSaving,
   preview = false,
   autofocus = true
@@ -65,45 +66,47 @@ export const Editor = ({
   };
 
   const onEditorChange = async (editorState) => {
-    clearTimeout(editorStateAutoSaveTimeout);
+    if (!saving) {
+      clearTimeout(editorStateAutoSaveTimeout);
 
-    let state = JSON.stringify(editorState);
+      let state = JSON.stringify(editorState);
 
-    editorStateAutoSaveTimeout = setTimeout(async () => {
-      setSaving(true);
+      editorStateAutoSaveTimeout = setTimeout(async () => {
+        setSaving(true);
 
-      if (newArticle) {
-        await setDoc(doc(db, 'articles', articleId), {
-          title: title,
-          content: state,
-          date: Timestamp.fromDate(new Date()),
-          userId: user?.id
-        })
-          .then(() => {
-            dispatch(SET_NEW_ARTICLE(false));
-            dispatch(ADD_ARTICLE({
-              id: articleId,
-              title: title,
-              content: state,
-              date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
-              userId: user?.id
-            }));
+        if (newArticle) {
+          await setDoc(doc(db, 'articles', articleId), {
+            title: title,
+            content: state,
+            date: Timestamp.fromDate(new Date()),
+            userId: user?.id
           })
-          .catch((error) => console.log(error));
-      }
-      else {
-        await updateDoc(doc(db, 'articles', articleId), {
-          title: title,
-          content: state,
-        })
-          .then(() => {
-            dispatch(UPDATE_ARTICLE({ id: articleId, title: title, content: state }));
+            .then(() => {
+              dispatch(SET_NEW_ARTICLE(false));
+              dispatch(ADD_ARTICLE({
+                id: articleId,
+                title: title,
+                content: state,
+                date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
+                userId: user?.id
+              }));
+            })
+            .catch((error) => console.log(error));
+        }
+        else {
+          await updateDoc(doc(db, 'articles', articleId), {
+            title: title,
+            content: state,
           })
-          .catch((error) => console.log(error));
-      }
+            .then(() => {
+              dispatch(UPDATE_ARTICLE({ id: articleId, title: title, content: state }));
+            })
+            .catch((error) => console.log(error));
+        }
 
-      setSaving(false);
-    }, 1000);
+        setSaving(false);
+      }, 1000);
+    }
   };
 
   return (
