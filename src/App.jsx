@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
-import { SET_AUTH, SET_USER, SET_CATEGORIES } from 'redux/features/user/userSlice';
+import { SET_USER, SET_CATEGORIES } from 'redux/features/user/userSlice';
 import { SET_ORIGINAL_ARTICLES, SET_FILTERED_ARTICLES, SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
@@ -43,7 +43,6 @@ export const App = () => {
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(SET_AUTH(true));
         dispatch(SET_USER({ id: user?.uid }));
         getArticles(user);
         getCategories(user);
@@ -51,7 +50,6 @@ export const App = () => {
 
         window.history.pushState({}, '', '/');
       } else {
-        dispatch(SET_AUTH(false));
         setLogged(false);
       }
     });
