@@ -2,7 +2,7 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { SET_USER, SET_CATEGORIES } from 'redux/features/user/userSlice';
 import { setArticles, setFilteredArticlesId, setIsNewArticle } from 'redux/features/article/articleSlice';
-import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY } from 'redux/features/modal/modalSlice';
+import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY, SET_MODAL_SCROLL } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, collection, query, where, orderBy, getDocs, getDoc } from 'firebase/firestore';
@@ -31,7 +31,7 @@ export const App = () => {
         archive: doc?.data()?.archive,
       }));
       articles?.forEach(i => !i?.archive && filteredArticlesId.push(i?.id));
-      
+
       dispatch(setArticles(JSON.parse(JSON.stringify(articles))));
       dispatch(setFilteredArticlesId(filteredArticlesId));
     };
@@ -74,6 +74,9 @@ export const App = () => {
       else {
         dispatch(setIsNewArticle(false));
         dispatch(SET_MODAL_EDITOR_EXISTING(false));
+
+        const modalEditorElement = document.getElementById('modalEditor');
+        dispatch(SET_MODAL_SCROLL(modalEditorElement?.scrollTop));
       }
 
       if (e.state && e.state.modalEditorEmpty === 'opened') {
