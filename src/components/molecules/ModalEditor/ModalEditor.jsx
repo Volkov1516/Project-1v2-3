@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
-import { setNewArticle } from 'redux/features/article/articleSlice';
+import { setIsNewArticle } from 'redux/features/article/articleSlice';
 import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING, SET_MODAL_SCROLL } from 'redux/features/modal/modalSlice';
 import Button from 'components/atoms/Button/Button';
 import { Title } from './Title/Title';
@@ -24,7 +24,7 @@ export const ModalEditor = () => {
     const modalEditorElement = document.getElementById('modalEditor');
     dispatch(SET_MODAL_SCROLL(modalEditorElement.scrollTop));
 
-    dispatch(setNewArticle(false));
+    dispatch(setIsNewArticle(false));
     window.history.back();
 
     dispatch(SET_MODAL_EDITOR_EMPTY(false));

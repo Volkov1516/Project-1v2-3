@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setNewArticle, addArticle, updateArticle } from 'redux/features/article/articleSlice';
+import { setIsNewArticle, addArticle, updateArticle } from 'redux/features/article/articleSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 
@@ -36,7 +36,7 @@ export const Editor = ({
 }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
-  const { articleId, content, title, newArticle } = useSelector(state => state.article);
+  const { articleId, content, title, isNewArticle } = useSelector(state => state.article);
 
   let editorStateAutoSaveTimeout;
 
@@ -74,7 +74,7 @@ export const Editor = ({
       editorStateAutoSaveTimeout = setTimeout(async () => {
         setSaving(true);
 
-        if (newArticle) {
+        if (isNewArticle) {
           await setDoc(doc(db, 'articles', articleId), {
             title: title,
             content: state,
@@ -82,7 +82,7 @@ export const Editor = ({
             userId: user?.id
           })
             .then(() => {
-              dispatch(setNewArticle(false));
+              dispatch(setIsNewArticle(false));
               dispatch(addArticle({
                 id: articleId,
                 title: title,

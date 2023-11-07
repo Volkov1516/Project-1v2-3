@@ -1,36 +1,44 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentId, setContent, setFilteredArticlesId, setTitle, setCurrentIndex, setNewArticle } from 'redux/features/article/articleSlice';
+import {
+  setFilteredArticlesId,
+  setArticleId,
+  setArticleTitle,
+  setArticleContent,
+  setArticleColor,
+  setArticleIndex,
+  setIsNewArticle
+} from 'redux/features/article/articleSlice';
 import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_AUTOFOCUS } from 'redux/features/modal/modalSlice';
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
-
-import css from './Header.module.css';
-
 import Button from 'components/atoms/Button/Button';
 import { ModalCategory } from '../../molecules/ModalCategory/ModalCategory';
+import css from './Header.module.css';
 
 export const Header = () => {
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state.user);
   const { articles } = useSelector(state => state.article);
-  const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
 
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
 
   const openModalEditor = () => {
-    window.history.pushState({ modalEditorEmpty: 'opened' }, '', '#editor');
-
     const newId = uuidv4();
-    dispatch(setCurrentId(newId));
-    dispatch(setCurrentIndex(null));
-    dispatch(setTitle(''));
-    dispatch(setContent(EMPTY_CONTENT));
-    dispatch(setNewArticle(true));
+    const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
+
+    dispatch(setArticleId(newId));
+    dispatch(setArticleTitle(''));
+    dispatch(setArticleContent(EMPTY_CONTENT));
+    dispatch(setArticleColor(null));
+    dispatch(setArticleIndex(null));
+    dispatch(setIsNewArticle(true));
     dispatch(SET_MODAL_AUTOFOCUS(true));
     dispatch(SET_MODAL_EDITOR_EMPTY(true));
+
+    window.history.pushState({ modalEditorEmpty: 'opened' }, '', '#editor');
   };
 
   const handleSignOut = () => {

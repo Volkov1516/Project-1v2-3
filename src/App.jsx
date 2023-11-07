@@ -1,7 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { SET_USER, SET_CATEGORIES } from 'redux/features/user/userSlice';
-import { setArticles, setFilteredArticlesId, setNewArticle } from 'redux/features/article/articleSlice';
+import { setArticles, setFilteredArticlesId, setIsNewArticle } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -72,7 +72,7 @@ export const App = () => {
         dispatch(SET_MODAL_EDITOR_EXISTING(true));
       }
       else {
-        dispatch(setNewArticle(false));
+        dispatch(setIsNewArticle(false));
         dispatch(SET_MODAL_EDITOR_EXISTING(false));
       }
 
@@ -80,7 +80,7 @@ export const App = () => {
         dispatch(SET_MODAL_EDITOR_EMPTY(true));
       }
       else {
-        dispatch(setNewArticle(false));
+        dispatch(setIsNewArticle(false));
         dispatch(SET_MODAL_EDITOR_EMPTY(false));
       }
     };

@@ -1,6 +1,6 @@
 import { useEffect, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setTitle } from 'redux/features/article/articleSlice';
+import { setArticleTitle } from 'redux/features/article/articleSlice';
 
 import css from './Title.module.css';
 
@@ -15,7 +15,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
     }
   }, [title, ref]);
 
-  const onTitleChange = (e) => dispatch(setTitle(e.target.value));
+  const onTitleChange = (e) => dispatch(setArticleTitle(e.target.value));
 
   const handleEnter = (e) => e.key === 'Enter' && e.preventDefault();
 

@@ -13,7 +13,7 @@ const initialState = {
   categories: [],
   date: null,
   archive: null,
-  newArticle: false
+  isNewArticle: false
 };
 
 export const articleSlice = createSlice({
@@ -26,47 +26,16 @@ export const articleSlice = createSlice({
     setFilteredArticlesId: (state, action) => {
       state.filteredArticlesId = action.payload;
     },
-    setCurrentIndex: (state, action) => {
-      state.articleIndex = action.payload;
-    },
-    incrementIndex: (state) => {
-      state.articleIndex += 1;
-      const currentID = state.filteredArticlesId[state.articleIndex];
-      const currentArticle = state.articles?.find(i => i.id === currentID);
-
-      state.articleId = currentArticle?.id;
-      state.title = currentArticle?.title || 'Untitled';
-      state.content = currentArticle?.content;
-      state.color = currentArticle?.color;
-      state.categories = currentArticle?.categories;
-      state.date = currentArticle?.date;
-      state.archive = currentArticle?.archive;
-    },
-    decrementIndex: (state) => {
-      state.articleIndex -= 1;
-
-      const currentID = state.filteredArticlesId[state.articleIndex];
-      const currentArticle = state.articles?.find(i => i.id === currentID);
-
-      state.articleId = currentArticle?.id;
-      state.title = currentArticle?.title || 'Untitled';
-      state.content = currentArticle?.content;
-      state.color = currentArticle?.color;
-      state.categories = currentArticle?.categories;
-      state.date = currentArticle?.date;
-      state.archive = currentArticle?.archive;
-    },
-    
-    setCurrentId: (state, action) => {
+    setArticleId: (state, action) => {
       state.articleId = action.payload;
     },
-    setTitle: (state, action) => {
+    setArticleTitle: (state, action) => {
       state.title = action.payload;
     },
-    setContent: (state, action) => {
+    setArticleContent: (state, action) => {
       state.content = action.payload;
     },
-    setColor: (state, action) => {
+    setArticleColor: (state, action) => {
       state.color = action.payload;
     },
     updateColor: (state, action) => {
@@ -193,8 +162,38 @@ export const articleSlice = createSlice({
       let newFiltered = state.filteredArticlesId.filter(i => i !== action.payload.id);
       state.filteredArticlesId = newFiltered;
     },
-    setNewArticle: (state, action) => {
-      state.newArticle = action.payload;
+    setIsNewArticle: (state, action) => {
+      state.isNewArticle = action.payload;
+    },
+    setArticleIndex: (state, action) => {
+      state.articleIndex = action.payload;
+    },
+    incrementIndex: (state) => {
+      state.articleIndex += 1;
+      const currentID = state.filteredArticlesId[state.articleIndex];
+      const currentArticle = state.articles?.find(i => i.id === currentID);
+
+      state.articleId = currentArticle?.id;
+      state.title = currentArticle?.title || 'Untitled';
+      state.content = currentArticle?.content;
+      state.color = currentArticle?.color;
+      state.categories = currentArticle?.categories;
+      state.date = currentArticle?.date;
+      state.archive = currentArticle?.archive;
+    },
+    decrementIndex: (state) => {
+      state.articleIndex -= 1;
+
+      const currentID = state.filteredArticlesId[state.articleIndex];
+      const currentArticle = state.articles?.find(i => i.id === currentID);
+
+      state.articleId = currentArticle?.id;
+      state.title = currentArticle?.title || 'Untitled';
+      state.content = currentArticle?.content;
+      state.color = currentArticle?.color;
+      state.categories = currentArticle?.categories;
+      state.date = currentArticle?.date;
+      state.archive = currentArticle?.archive;
     }
   }
 });
@@ -202,13 +201,13 @@ export const articleSlice = createSlice({
 export const {
   setArticles,
   setFilteredArticlesId,
-  setCurrentIndex,
+  setArticleIndex,
   incrementIndex,
   decrementIndex,
-  setCurrentId,
-  setTitle,
-  setContent,
-  setColor,
+  setArticleId,
+  setArticleTitle,
+  setArticleContent,
+  setArticleColor,
   updateColor,
   addCategory,
   removeCategory,
@@ -216,6 +215,6 @@ export const {
   addArticle,
   updateArticle,
   deleteArticle,
-  setNewArticle
+  setIsNewArticle
 } = articleSlice.actions;
 export default articleSlice.reducer;
