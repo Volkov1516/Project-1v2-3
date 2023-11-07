@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setNewArticle, addArticle, updateArticle, setContent } from 'redux/features/article/articleSlice';
+import { setNewArticle, addArticle, updateArticle } from 'redux/features/article/articleSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 

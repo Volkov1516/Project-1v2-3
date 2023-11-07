@@ -5,7 +5,7 @@ import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext
 
 export const RefreshStatePlugin = () => {
   const dispatch = useDispatch();
-  const { articles, articleIndex, content } = useSelector(state => state.article);
+  const { articleIndex, content } = useSelector(state => state.article);
 
   const [editor] = useLexicalComposerContext();
 
@@ -21,7 +21,7 @@ export const RefreshStatePlugin = () => {
         });
       }
     });
-  }, [dispatch, articles, articleIndex, editor]);
+  }, [dispatch, articleIndex, content, editor]);
 
   return null;
 };
