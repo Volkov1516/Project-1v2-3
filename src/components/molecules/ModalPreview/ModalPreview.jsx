@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_MODAL_EDITOR_EXISTING, SET_MODAL_AUTOFOCUS, SET_MODAL_SCROLL } from 'redux/features/modal/modalSlice';
-import { incrementIndex, decrementIndex, setArchive } from 'redux/features/article/articleSlice';
+import { incrementIndex, decrementIndex, setArticleArchive } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from 'firebase.js';
@@ -12,7 +12,7 @@ import css from './ModalPreview.module.css';
 
 export const ModalPreview = () => {
   const dispatch = useDispatch();
-  const { articles, filteredArticlesId, articleId, articleIndex, title, color, archive } = useSelector(state => state.article);
+  const { articles, filteredArticlesId, articleId, articleIndex, title, color, isArchived } = useSelector(state => state.article);
   const { scrollOffset } = useSelector(state => state.modal);
 
   useEffect(() => {
@@ -47,14 +47,12 @@ export const ModalPreview = () => {
 
   const handleArchive = async () => {
     const articleRef = doc(db, 'articles', articleId);
-    const currentID = filteredArticlesId[articleIndex];
-    const currentArticle = articles?.find(i => i.id === currentID);
 
-    await updateDoc(articleRef, {
-      archive: !currentArticle?.archive
-    })
+    await updateDoc(articleRef, { archive: !isArchived })
       .then(() => {
-        dispatch(setArchive({ id: articleId, archive: !currentArticle?.archive }));
+        dispatch(setArticleArchive({ id: articleId, archive: !isArchived }));
+        dispatch(SET_MODAL_PREVIEW(false));
+        window.history.back();
       })
       .catch((error) => console.log(error));
   };
@@ -74,7 +72,7 @@ export const ModalPreview = () => {
               <Button variant="contained" onClick={next}>next</Button>
             </div>
             <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
-            <Button variant="text" onClick={handleArchive}>{archive ? 'unarchive' : 'archive'}</Button>
+            <Button variant="text" onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</Button>
             <ModalDelete title={title || "Untitled"} />
           </div>
           <div className={css.right}>

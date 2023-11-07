@@ -13,7 +13,8 @@ const initialState = {
   categories: [],
   date: null,
   archive: null,
-  isNewArticle: false
+  isArchived: false,
+  isNewArticle: false,
 };
 
 export const articleSlice = createSlice({
@@ -105,7 +106,7 @@ export const articleSlice = createSlice({
 
       state.articles = JSON.parse(JSON.stringify(newArticles));
     },
-    setArchive: (state, action) => {
+    setArticleArchive: (state, action) => {
       let newArticles = state.articles.map(i => {
         if (i.id === action.payload.id) {
           let newObj = {
@@ -125,7 +126,14 @@ export const articleSlice = createSlice({
         }
       });
 
+      let newFilteredId = state.filteredArticlesId.filter(i => i !== action.payload.id);
+
       state.articles = JSON.parse(JSON.stringify(newArticles));
+      state.filteredArticlesId = newFilteredId;
+      state.isArchived = !state.isArchived;
+    },
+    setIsArchived: (state, action) => {
+      state.isArchived = action.payload;
     },
     addArticle: (state, action) => {
       state.articles.unshift(action.payload);
@@ -180,6 +188,7 @@ export const articleSlice = createSlice({
       state.categories = currentArticle?.categories;
       state.date = currentArticle?.date;
       state.archive = currentArticle?.archive;
+      state.isArchived = currentArticle?.archive;
     },
     decrementIndex: (state) => {
       state.articleIndex -= 1;
@@ -194,6 +203,7 @@ export const articleSlice = createSlice({
       state.categories = currentArticle?.categories;
       state.date = currentArticle?.date;
       state.archive = currentArticle?.archive;
+      state.isArchived = currentArticle?.archive;
     }
   }
 });
@@ -211,7 +221,8 @@ export const {
   updateColor,
   addCategory,
   removeCategory,
-  setArchive,
+  setArticleArchive,
+  setIsArchived,
   addArticle,
   updateArticle,
   deleteArticle,
