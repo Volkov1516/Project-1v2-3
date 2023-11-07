@@ -6,7 +6,7 @@ import css from './Content.module.css';
 
 export const Content = ({ mouseTimer }) => {
   const dispatch = useDispatch();
-  const { articles, filteredArticlesId, archive } = useSelector(state => state.article);
+  const { articles, filteredArticlesId } = useSelector(state => state.article);
 
   const openModalEditor = (id, content, title, index, color) => {
     dispatch(setArticleId(id));

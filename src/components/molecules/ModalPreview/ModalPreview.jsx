@@ -12,7 +12,7 @@ import css from './ModalPreview.module.css';
 
 export const ModalPreview = () => {
   const dispatch = useDispatch();
-  const { articles, filteredArticlesId, articleId, articleIndex, title, color, isArchived } = useSelector(state => state.article);
+  const { filteredArticlesId, articleId, articleIndex, title, color, isArchived } = useSelector(state => state.article);
   const { scrollOffset } = useSelector(state => state.modal);
 
   useEffect(() => {
