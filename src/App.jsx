@@ -1,7 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { SET_USER, SET_CATEGORIES } from 'redux/features/user/userSlice';
-import { SET_ORIGINAL_ARTICLES, SET_FILTERED_ARTICLES, SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
+import { setArticles, setFilteredArticlesId, setNewArticle } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -16,10 +16,12 @@ export const App = () => {
 
   useEffect(() => {
     const getArticles = async (user) => {
-      const originalArticles = [];
+      const articles = [];
+      const filteredArticlesId = [];
+
       const q = query(collection(db, 'articles'), where('userId', '==', user?.uid), orderBy('date', 'desc'));
       const querySnapshot = await getDocs(q);
-      querySnapshot?.forEach((doc) => originalArticles.push({
+      querySnapshot?.forEach((doc) => articles.push({
         id: doc?.id,
         title: doc?.data()?.title,
         content: doc?.data()?.content,
@@ -28,10 +30,10 @@ export const App = () => {
         date: doc?.data()?.date?.toDate().toLocaleDateString(),
         archive: doc?.data()?.archive,
       }));
-      const archivedArticles = originalArticles?.filter(i => !i?.archive);
-
-      dispatch(SET_ORIGINAL_ARTICLES(JSON.parse(JSON.stringify(originalArticles))));
-      dispatch(SET_FILTERED_ARTICLES(JSON.parse(JSON.stringify(archivedArticles))));
+      articles?.forEach(i => !i?.archive && filteredArticlesId.push(i?.id));
+      
+      dispatch(setArticles(JSON.parse(JSON.stringify(articles))));
+      dispatch(setFilteredArticlesId(filteredArticlesId));
     };
 
     const getCategories = async (user) => {
@@ -70,7 +72,7 @@ export const App = () => {
         dispatch(SET_MODAL_EDITOR_EXISTING(true));
       }
       else {
-        dispatch(SET_NEW_ARTICLE(false));
+        dispatch(setNewArticle(false));
         dispatch(SET_MODAL_EDITOR_EXISTING(false));
       }
 
@@ -78,7 +80,7 @@ export const App = () => {
         dispatch(SET_MODAL_EDITOR_EMPTY(true));
       }
       else {
-        dispatch(SET_NEW_ARTICLE(false));
+        dispatch(setNewArticle(false));
         dispatch(SET_MODAL_EDITOR_EMPTY(false));
       }
     };

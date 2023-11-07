@@ -3,12 +3,16 @@ import { createSlice } from '@reduxjs/toolkit';
 const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
 
 const initialState = {
-  originalArticles: [],
-  filteredArticles: [],
-  articleId: null,
+  articles: [],
+  filteredArticlesId: [],
   articleIndex: null,
+  articleId: null,
   title: '',
   content: EMPTY_CONTENT,
+  color: null,
+  categories: [],
+  date: null,
+  archive: null,
   newArticle: false
 };
 
@@ -16,278 +20,202 @@ export const articleSlice = createSlice({
   name: 'article',
   initialState,
   reducers: {
-    SET_ORIGINAL_ARTICLES: (state, action) => {
-      state.originalArticles = action.payload;
+    setArticles: (state, action) => {
+      state.articles = action.payload;
     },
-    SET_FILTERED_ARTICLES: (state, action) => {
-      state.filteredArticles = action.payload;
+    setFilteredArticlesId: (state, action) => {
+      state.filteredArticlesId = action.payload;
     },
-    ADD_ARTICLE: (state, action) => {
-      state.originalArticles.unshift(action.payload);
-      state.filteredArticles.unshift(action.payload);
-    },
-    UPDATE_ARTICLE: (state, action) => {
-      let newOriginal = state.originalArticles.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: action.payload.title,
-            content: action.payload.content,
-            categories: i?.categories,
-            color: i?.color,
-            date: i?.date,
-            archive: i?.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.originalArticles = JSON.parse(JSON.stringify(newOriginal));
-
-      let newFiltered = state.filteredArticles.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: action.payload.title,
-            content: action.payload.content,
-            categories: i?.categories,
-            color: i?.color,
-            date: i?.date,
-            archive: i?.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.filteredArticles = JSON.parse(JSON.stringify(newFiltered));
-    },
-    SET_COLOR: (state, action) => {
-      let newOriginal = state.originalArticles.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: i?.title,
-            content: i?.content,
-            categories: i?.categories,
-            color: action.payload.color,
-            date: i?.date,
-            archive: i?.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.originalArticles = JSON.parse(JSON.stringify(newOriginal));
-
-      let newFiltered = state.filteredArticles.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: i?.title,
-            content: i?.content,
-            categories: i?.categories,
-            color: action.payload.color,
-            date: i?.date,
-            archive: i?.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.filteredArticles = JSON.parse(JSON.stringify(newFiltered));
-    },
-    ADD_CATEGORY: (state, action) => {
-      let newOriginal = state.originalArticles.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: i?.title,
-            content: i?.content,
-            categories: [...i?.categories, { id: action.payload.category }],
-            color: i?.color,
-            date: i?.date,
-            archive: i?.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.originalArticles = JSON.parse(JSON.stringify(newOriginal));
-
-      let newFiltered = state.filteredArticles.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: i?.title,
-            content: i?.content,
-            categories: [...i?.categories, { id: action.payload.category }],
-            color: i?.color,
-            date: i?.date,
-            archive: i?.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.filteredArticles = JSON.parse(JSON.stringify(newFiltered));
-    },
-    REMOVE_CATEGORY: (state, action) => {
-      let newOriginal = state.originalArticles.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: i?.title,
-            content: i?.content,
-            categories: i?.categories?.filter(i => i.id !== action.payload.category),
-            color: i?.color,
-            date: i?.date,
-            archive: i?.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.originalArticles = JSON.parse(JSON.stringify(newOriginal));
-
-      let newFiltered = state.filteredArticles.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: i?.title,
-            content: i?.content,
-            categories: i?.categories?.filter(i => i.id !== action.payload.category),
-            color: i?.color,
-            date: i?.date,
-            archive: i?.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.filteredArticles = JSON.parse(JSON.stringify(newFiltered));
-    },
-    SET_ARCHIVE: (state, action) => {
-      let newOriginal = state.originalArticles.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: i?.title,
-            content: i?.content,
-            categories: i?.categories,
-            color: i?.color,
-            date: i?.date,
-            archive: action.payload.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.originalArticles = JSON.parse(JSON.stringify(newOriginal));
-
-      let newFiltered = state.filteredArticles.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: i?.title,
-            content: i?.content,
-            categories: i?.categories,
-            color: i?.color,
-            date: i?.date,
-            archive: action.payload.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.filteredArticles = JSON.parse(JSON.stringify(newFiltered));
-    },
-    DELETE_ARTICLE: (state, action) => {
-      let newOriginal = state.originalArticles.filter(i => i?.id !== action.payload.id);
-      state.originalArticles = newOriginal;
-
-      let newFiltered = state.filteredArticles.filter(i => i?.id !== action.payload.id);
-      state.filteredArticles = newFiltered;
-    },
-    SET_CURRENT_ID: (state, action) => {
-      state.articleId = action.payload;
-    },
-    SET_CURRENT_INDEX: (state, action) => {
+    setCurrentIndex: (state, action) => {
       state.articleIndex = action.payload;
     },
-    INCREMENT_CURRENT_INDEX: (state) => {
+    incrementIndex: (state) => {
       state.articleIndex += 1;
+      const currentID = state.filteredArticlesId[state.articleIndex];
+      const currentArticle = state.articles?.find(i => i.id === currentID);
+
+      state.articleId = currentArticle?.id;
+      state.title = currentArticle?.title || 'Untitled';
+      state.content = currentArticle?.content;
+      state.color = currentArticle?.color;
+      state.categories = currentArticle?.categories;
+      state.date = currentArticle?.date;
+      state.archive = currentArticle?.archive;
     },
-    DECREMENT_CURRENT_INDEX: (state) => {
+    decrementIndex: (state) => {
       state.articleIndex -= 1;
+
+      const currentID = state.filteredArticlesId[state.articleIndex];
+      const currentArticle = state.articles?.find(i => i.id === currentID);
+
+      state.articleId = currentArticle?.id;
+      state.title = currentArticle?.title || 'Untitled';
+      state.content = currentArticle?.content;
+      state.color = currentArticle?.color;
+      state.categories = currentArticle?.categories;
+      state.date = currentArticle?.date;
+      state.archive = currentArticle?.archive;
     },
-    SET_TITLE: (state, action) => {
+    
+    setCurrentId: (state, action) => {
+      state.articleId = action.payload;
+    },
+    setTitle: (state, action) => {
       state.title = action.payload;
     },
-    SET_CONTENT: (state, action) => {
+    setContent: (state, action) => {
       state.content = action.payload;
     },
-    SET_NEW_ARTICLE: (state, action) => {
+    setColor: (state, action) => {
+      state.color = action.payload;
+    },
+    updateColor: (state, action) => {
+      let newArticles = state.articles.map(i => {
+        if (i.id === action.payload.id) {
+          let newObj = {
+            id: i?.id,
+            title: i?.title,
+            content: i?.content,
+            categories: i?.categories,
+            color: action.payload.color,
+            date: i?.date,
+            archive: i?.archive,
+          }
+
+          return newObj;
+        }
+        else {
+          return i;
+        }
+      });
+
+      state.articles = JSON.parse(JSON.stringify(newArticles));
+      state.color = action.payload.color;
+    },
+    addCategory: (state, action) => {
+      let newArticles = state.articles.map(i => {
+        if (i.id === action.payload.id) {
+          let newObj = {
+            id: i?.id,
+            title: i?.title,
+            content: i?.content,
+            categories: [...i?.categories, { id: action.payload.category }],
+            color: i?.color,
+            date: i?.date,
+            archive: i?.archive,
+          }
+
+          return newObj;
+        }
+        else {
+          return i;
+        }
+      });
+
+      state.articles = JSON.parse(JSON.stringify(newArticles));
+    },
+    removeCategory: (state, action) => {
+      let newArticles = state.articles.map(i => {
+        if (i.id === action.payload.id) {
+          let newObj = {
+            id: i?.id,
+            title: i?.title,
+            content: i?.content,
+            categories: i?.categories?.filter(i => i.id !== action.payload.category),
+            color: i?.color,
+            date: i?.date,
+            archive: i?.archive,
+          }
+
+          return newObj;
+        }
+        else {
+          return i;
+        }
+      });
+
+      state.articles = JSON.parse(JSON.stringify(newArticles));
+    },
+    setArchive: (state, action) => {
+      let newArticles = state.articles.map(i => {
+        if (i.id === action.payload.id) {
+          let newObj = {
+            id: i?.id,
+            title: i?.title,
+            content: i?.content,
+            categories: i?.categories,
+            color: i?.color,
+            date: i?.date,
+            archive: action.payload.archive,
+          }
+
+          return newObj;
+        }
+        else {
+          return i;
+        }
+      });
+
+      state.articles = JSON.parse(JSON.stringify(newArticles));
+    },
+    addArticle: (state, action) => {
+      state.articles.unshift(action.payload);
+      state.filteredArticlesId.unshift(action.payload.id);
+    },
+    updateArticle: (state, action) => {
+      let newArticles = state.articles.map(i => {
+        if (i.id === action.payload.id) {
+          let newObj = {
+            id: i?.id,
+            title: action.payload.title,
+            content: action.payload.content,
+            categories: i?.categories,
+            color: i?.color,
+            date: i?.date,
+            archive: i?.archive,
+          }
+
+          return newObj;
+        }
+        else {
+          return i;
+        }
+      });
+
+      state.articles = JSON.parse(JSON.stringify(newArticles));
+      state.title = action.payload.title;
+      state.content = action.payload.content;
+    },
+    deleteArticle: (state, action) => {
+      let newArticles = state.articles.filter(i => i?.id !== action.payload.id);
+      state.articles = newArticles;
+
+      let newFiltered = state.filteredArticlesId.filter(i => i !== action.payload.id);
+      state.filteredArticlesId = newFiltered;
+    },
+    setNewArticle: (state, action) => {
       state.newArticle = action.payload;
     }
   }
 });
 
 export const {
-  SET_ORIGINAL_ARTICLES,
-  SET_FILTERED_ARTICLES,
-  ADD_ARTICLE,
-  UPDATE_ARTICLE,
-  SET_COLOR,
-  ADD_CATEGORY,
-  REMOVE_CATEGORY,
-  SET_ARCHIVE,
-  DELETE_ARTICLE,
-  SET_CURRENT_ID,
-  SET_CURRENT_INDEX,
-  INCREMENT_CURRENT_INDEX,
-  DECREMENT_CURRENT_INDEX,
-  SET_TITLE,
-  SET_CONTENT,
-  SET_NEW_ARTICLE
+  setArticles,
+  setFilteredArticlesId,
+  setCurrentIndex,
+  incrementIndex,
+  decrementIndex,
+  setCurrentId,
+  setTitle,
+  setContent,
+  setColor,
+  updateColor,
+  addCategory,
+  removeCategory,
+  setArchive,
+  addArticle,
+  updateArticle,
+  deleteArticle,
+  setNewArticle
 } = articleSlice.actions;
 export default articleSlice.reducer;

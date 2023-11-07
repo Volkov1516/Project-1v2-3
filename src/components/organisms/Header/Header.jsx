@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SET_CURRENT_ID, SET_CONTENT, SET_FILTERED_ARTICLES, SET_TITLE, SET_CURRENT_INDEX, SET_NEW_ARTICLE } from 'redux/features/article/articleSlice';
+import { setCurrentId, setContent, setFilteredArticlesId, setTitle, setCurrentIndex, setNewArticle } from 'redux/features/article/articleSlice';
 import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_AUTOFOCUS } from 'redux/features/modal/modalSlice';
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
@@ -14,7 +14,7 @@ import { ModalCategory } from '../../molecules/ModalCategory/ModalCategory';
 export const Header = () => {
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state.user);
-  const { originalArticles } = useSelector(state => state.article);
+  const { articles } = useSelector(state => state.article);
   const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
 
   const [categoriesMenu, setCategoriesMenu] = useState(false);
@@ -24,11 +24,11 @@ export const Header = () => {
     window.history.pushState({ modalEditorEmpty: 'opened' }, '', '#editor');
 
     const newId = uuidv4();
-    dispatch(SET_CURRENT_ID(newId));
-    dispatch(SET_CURRENT_INDEX(null));
-    dispatch(SET_TITLE(''));
-    dispatch(SET_CONTENT(EMPTY_CONTENT));
-    dispatch(SET_NEW_ARTICLE(true));
+    dispatch(setCurrentId(newId));
+    dispatch(setCurrentIndex(null));
+    dispatch(setTitle(''));
+    dispatch(setContent(EMPTY_CONTENT));
+    dispatch(setNewArticle(true));
     dispatch(SET_MODAL_AUTOFOCUS(true));
     dispatch(SET_MODAL_EDITOR_EMPTY(true));
   };
@@ -44,35 +44,39 @@ export const Header = () => {
   };
 
   const handleAll = () => {
-    const unarchived = originalArticles?.filter(i => !i?.archive);
-    dispatch(SET_FILTERED_ARTICLES(unarchived));
+    const filteredArticlesId = [];
+    articles?.forEach(i => !i?.archive && filteredArticlesId.push(i?.id));
+
+    dispatch(setFilteredArticlesId(filteredArticlesId));
   };
 
   const handleArchive = () => {
-    const archive = originalArticles?.filter(i => i?.archive);
-    dispatch(SET_FILTERED_ARTICLES(archive));
+    const filteredArticlesId = [];
+    articles?.forEach(i => i?.archive && filteredArticlesId.push(i?.id));
+
+    dispatch(setFilteredArticlesId(filteredArticlesId));
   };
 
   const setFilteredByCategory = (id) => {
-    const unarchived = originalArticles?.filter(i => !i?.archive);
+    const unarchived = articles?.filter(i => !i?.archive);
     let newArr = [];
 
     unarchived?.map(i => i?.categories?.map(j => {
       if (j.id === id) {
-        return newArr.push(i);
+        return newArr.push(i?.id);
       }
       else {
         return i;
       }
     }));
 
-    dispatch(SET_FILTERED_ARTICLES(newArr));
+    dispatch(setFilteredArticlesId(newArr));
   };
 
   return (
     <div className={css.container}>
       <div className={css.left}>
-      <Button variant="contained" size="large" onClick={openModalEditor}>CREATE</Button>
+        <Button variant="contained" size="large" onClick={openModalEditor}>CREATE</Button>
         <Button
           variant="text"
           onClick={() => setCategoriesMenu(!categoriesMenu)}

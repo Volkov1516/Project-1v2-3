@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { SET_CURRENT_ID, SET_TITLE, SET_CONTENT } from 'redux/features/article/articleSlice';
 import { SET_MODAL_EDITOR_EXISTING, SET_MODAL_AUTOFOCUS, SET_MODAL_SCROLL } from 'redux/features/modal/modalSlice';
-import { INCREMENT_CURRENT_INDEX, DECREMENT_CURRENT_INDEX, SET_ARCHIVE } from 'redux/features/article/articleSlice';
+import { incrementIndex, decrementIndex, setArchive } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from 'firebase.js';
@@ -13,7 +12,7 @@ import css from './ModalPreview.module.css';
 
 export const ModalPreview = () => {
   const dispatch = useDispatch();
-  const { filteredArticles, articleId, articleIndex, title } = useSelector(state => state.article);
+  const { articles, filteredArticlesId, articleId, articleIndex, title, color, archive } = useSelector(state => state.article);
   const { scrollOffset } = useSelector(state => state.modal);
 
   useEffect(() => {
@@ -26,10 +25,6 @@ export const ModalPreview = () => {
 
     const modalPreviewElement = document.getElementById('modalPreview');
     dispatch(SET_MODAL_SCROLL(modalPreviewElement.scrollTop));
-
-    dispatch(SET_TITLE(filteredArticles[articleIndex]?.title));
-    dispatch(SET_CURRENT_ID(filteredArticles[articleIndex]?.id));
-    dispatch(SET_CONTENT(filteredArticles[articleIndex]?.content));
     dispatch(SET_MODAL_AUTOFOCUS(false));
     dispatch(SET_MODAL_EDITOR_EXISTING(true));
   };
@@ -39,25 +34,27 @@ export const ModalPreview = () => {
 
     const modalPreviewElement = document.getElementById('modalPreview');
     modalPreviewElement.scrollTo({ top: 0, behavior: 'smooth' });
-    dispatch(DECREMENT_CURRENT_INDEX());
+    dispatch(decrementIndex());
   };
 
   const next = () => {
-    if (articleIndex === filteredArticles?.length - 1) return;
+    if (articleIndex === filteredArticlesId?.length - 1) return;
 
     const modalPreviewElement = document.getElementById('modalPreview');
     modalPreviewElement.scrollTo({ top: 0, behavior: 'smooth' });
-    dispatch(INCREMENT_CURRENT_INDEX());
+    dispatch(incrementIndex());
   };
 
-  const archive = async () => {
+  const handleArchive = async () => {
     const articleRef = doc(db, 'articles', articleId);
+    const currentID = filteredArticlesId[articleIndex];
+    const currentArticle = articles?.find(i => i.id === currentID);
 
     await updateDoc(articleRef, {
-      archive: !filteredArticles[articleIndex]?.archive
+      archive: !currentArticle?.archive
     })
       .then(() => {
-        dispatch(SET_ARCHIVE({ id: articleId, archive: !filteredArticles[articleIndex]?.archive }));
+        dispatch(setArchive({ id: articleId, archive: !currentArticle?.archive }));
       })
       .catch((error) => console.log(error));
   };
@@ -77,7 +74,7 @@ export const ModalPreview = () => {
               <Button variant="contained" onClick={next}>next</Button>
             </div>
             <Button variant="text" onClick={openModalEditorFromPreview}>edit</Button>
-            <Button variant="text" onClick={archive}>{filteredArticles[articleIndex]?.archive ? 'unarchive' : 'archive'}</Button>
+            <Button variant="text" onClick={handleArchive}>{archive ? 'unarchive' : 'archive'}</Button>
             <ModalDelete title={title || "Untitled"} />
           </div>
           <div className={css.right}>
@@ -85,7 +82,7 @@ export const ModalPreview = () => {
           </div>
         </div>
         <div id="modalPreview" className={css.editor}>
-          <div className={`${css.title} ${css[filteredArticles[articleIndex]?.color]}`}>{title || "Untitled"}</div>
+          <div className={`${css.title} ${css[color]}`}>{title || "Untitled"}</div>
           <Editor preview={true} />
         </div>
       </div>

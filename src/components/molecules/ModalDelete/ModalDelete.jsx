@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { DELETE_ARTICLE } from 'redux/features/article/articleSlice';
+import { deleteArticle } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
@@ -15,10 +15,10 @@ export const ModalDelete = ({ title }) => {
 
   const [open, setOpen] = useState(false);
 
-  const deleteArticle = async () => {
+  const handleDeleteArticle = async () => {
     await deleteDoc(doc(db, 'articles', articleId))
       .then(() => {
-        dispatch(DELETE_ARTICLE({ id: articleId }));
+        dispatch(deleteArticle({ id: articleId }));
         window.history.back();
         dispatch(SET_MODAL_PREVIEW(false));
         dispatch(SET_MODAL_EDITOR_EMPTY(false));
@@ -40,7 +40,7 @@ export const ModalDelete = ({ title }) => {
             </div>
             <div className={css.navigation}>
               <Button variant="text" onClick={() => setOpen(false)}>cancel</Button>
-              <Button variant="text" color="red" onClick={deleteArticle}>delete forever</Button>
+              <Button variant="text" color="red" onClick={handleDeleteArticle}>delete forever</Button>
             </div>
           </div>
         </div>

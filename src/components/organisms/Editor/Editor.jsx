@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { SET_NEW_ARTICLE, ADD_ARTICLE, UPDATE_ARTICLE } from 'redux/features/article/articleSlice';
+import { setNewArticle, addArticle, updateArticle, setContent } from 'redux/features/article/articleSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 
@@ -82,8 +82,8 @@ export const Editor = ({
             userId: user?.id
           })
             .then(() => {
-              dispatch(SET_NEW_ARTICLE(false));
-              dispatch(ADD_ARTICLE({
+              dispatch(setNewArticle(false));
+              dispatch(addArticle({
                 id: articleId,
                 title: title,
                 content: state,
@@ -99,7 +99,7 @@ export const Editor = ({
             content: state,
           })
             .then(() => {
-              dispatch(UPDATE_ARTICLE({ id: articleId, title: title, content: state }));
+              dispatch(updateArticle({ id: articleId, title: title, content: state }));
             })
             .catch((error) => console.log(error));
         }

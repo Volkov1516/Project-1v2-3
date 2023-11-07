@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { SET_COLOR, ADD_CATEGORY, REMOVE_CATEGORY } from 'redux/features/article/articleSlice';
+import { updateColor, addCategory, removeCategory } from 'redux/features/article/articleSlice';
 
 import { doc, updateDoc, setDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db } from 'firebase.js';
@@ -10,9 +10,9 @@ import css from './MetadataPlugin.module.css';
 export const MetadataPlugin = () => {
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state.user);
-  const { filteredArticles, articleIndex, articleId } = useSelector(state => state.article);
+  const { articleId, date } = useSelector(state => state.article);
 
-  let date = new Date();
+  let newDate = new Date();
 
   const [colorsMenu, setColorsMenu] = useState(false);
   const [categoriesMenu, setCategoriesMenu] = useState(false);
@@ -24,7 +24,7 @@ export const MetadataPlugin = () => {
       color: color
     })
       .then(() => {
-        dispatch(SET_COLOR({ id: articleId, color: color }));
+        dispatch(updateColor({ id: articleId, color: color }));
       })
       .catch((error) => console.log(error));
   };
@@ -41,7 +41,7 @@ export const MetadataPlugin = () => {
       }
     )
       .then(() => {
-        dispatch(ADD_CATEGORY({ id: articleId, category: id }));
+        dispatch(addCategory({ id: articleId, category: id }));
       })
       .catch((error) => console.log(error));
   };
@@ -53,7 +53,7 @@ export const MetadataPlugin = () => {
       categories: arrayRemove({ id })
     })
       .then(() => {
-        dispatch(REMOVE_CATEGORY({ id: articleId, category: id }));
+        dispatch(removeCategory({ id: articleId, category: id }));
       })
       .catch((error) => console.log(error));
   };
@@ -61,11 +61,11 @@ export const MetadataPlugin = () => {
   return (
     <div className={css.container}>
       <div className={css.date}>
-        {filteredArticles[articleIndex]?.date || date.toLocaleDateString()}
+        {date || newDate.toLocaleDateString()}
       </div>
-      <div className={`${css.color} ${css[filteredArticles[articleIndex]?.color]}`} onClick={() => setColorsMenu(!colorsMenu)} onMouseOver={() => setColorsMenu(true)} onMouseLeave={() => setColorsMenu(false)}>color</div>
+      <div className={css.color} onClick={() => setColorsMenu(!colorsMenu)} onMouseOver={() => setColorsMenu(true)} onMouseLeave={() => setColorsMenu(false)}>color</div>
       <div className={css.category} onClick={() => setCategoriesMenu(!categoriesMenu)} onMouseOver={() => setCategoriesMenu(true)} onMouseLeave={() => setCategoriesMenu(false)}>category</div>
-      {categories?.map(i => filteredArticles[articleIndex]?.categories?.map(j => {
+      {categories?.map(i => categories?.map(j => {
         return i.id === j.id && <div key={i.id} className={css.category} style={{ color: "#1971c2" }} onClick={() => handleRemoveCategory(i.id)}>#{i?.name}</div>
       }))}
       {colorsMenu && (
