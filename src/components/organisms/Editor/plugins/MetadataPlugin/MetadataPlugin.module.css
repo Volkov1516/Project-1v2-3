@@ -23,47 +23,6 @@
   cursor: pointer;
 }
 
-.color.white {
-  background-color: white;
-  color: #BFC7B4;
-}
-
-.color.black {
-  background-color: black;
-  color: white;
-}
-
-.color.red {
-  background-color: #e03131;
-  color: white;
-}
-
-.color.orange {
-  background-color: #fd7e14;
-  color: white;
-}
-
-.color.yellow {
-  background-color: #ffd43b;
-  color: white;
-}
-
-.color.green {
-  background-color: #2f9e44;
-  color: white;
-}
-
-.color.blue {
-  background-color: #1971c2;
-  color: white;
-}
-
-.color.purple {
-  background-color: #9c36b5;
-  color: white;
-}
-
-
 .colorsContainer {
   padding: 8px;
   position: absolute;

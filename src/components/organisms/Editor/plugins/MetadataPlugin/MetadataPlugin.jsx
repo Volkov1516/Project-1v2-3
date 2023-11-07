@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateColor, addCategory, removeCategory } from 'redux/features/article/articleSlice';
+import { updateColor, addCategory, removeCategory, setArticleCategories } from 'redux/features/article/articleSlice';
 
 import { doc, updateDoc, setDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { db } from 'firebase.js';
@@ -10,7 +10,7 @@ import css from './MetadataPlugin.module.css';
 export const MetadataPlugin = () => {
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state.user);
-  const { articleId, date } = useSelector(state => state.article);
+  const { articleId, date, articleCategories } = useSelector(state => state.article);
 
   let newDate = new Date();
 
@@ -42,6 +42,7 @@ export const MetadataPlugin = () => {
     )
       .then(() => {
         dispatch(addCategory({ id: articleId, category: id }));
+        dispatch(setArticleCategories([...articleCategories, id]));
       })
       .catch((error) => console.log(error));
   };
@@ -65,7 +66,7 @@ export const MetadataPlugin = () => {
       </div>
       <div className={css.color} onClick={() => setColorsMenu(!colorsMenu)} onMouseOver={() => setColorsMenu(true)} onMouseLeave={() => setColorsMenu(false)}>color</div>
       <div className={css.category} onClick={() => setCategoriesMenu(!categoriesMenu)} onMouseOver={() => setCategoriesMenu(true)} onMouseLeave={() => setCategoriesMenu(false)}>category</div>
-      {categories?.map(i => categories?.map(j => {
+      {categories?.map(i => articleCategories?.map(j => {
         return i.id === j.id && <div key={i.id} className={css.category} style={{ color: "#1971c2" }} onClick={() => handleRemoveCategory(i.id)}>#{i?.name}</div>
       }))}
       {colorsMenu && (

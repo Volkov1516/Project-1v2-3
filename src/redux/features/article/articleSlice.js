@@ -10,7 +10,7 @@ const initialState = {
   title: '',
   content: EMPTY_CONTENT,
   color: null,
-  categories: [],
+  articleCategories: [],
   date: null,
   archive: null,
   isArchived: false,
@@ -62,6 +62,9 @@ export const articleSlice = createSlice({
       state.articles = JSON.parse(JSON.stringify(newArticles));
       state.color = action.payload.color;
     },
+    setArticleCategories: (state, action) => {
+      state.articleCategories = action.payload;
+    },
     addCategory: (state, action) => {
       let newArticles = state.articles.map(i => {
         if (i.id === action.payload.id) {
@@ -69,7 +72,7 @@ export const articleSlice = createSlice({
             id: i?.id,
             title: i?.title,
             content: i?.content,
-            categories: [...i?.categories, { id: action.payload.category }],
+            categories: [...state.articleCategories, { id: action.payload.category }],
             color: i?.color,
             date: i?.date,
             archive: i?.archive,
@@ -82,7 +85,7 @@ export const articleSlice = createSlice({
         }
       });
 
-      state.articles = JSON.parse(JSON.stringify(newArticles));
+      state.articles = newArticles;
     },
     removeCategory: (state, action) => {
       let newArticles = state.articles.map(i => {
@@ -104,7 +107,7 @@ export const articleSlice = createSlice({
         }
       });
 
-      state.articles = JSON.parse(JSON.stringify(newArticles));
+      state.articles = newArticles;
     },
     setArticleArchive: (state, action) => {
       let newArticles = state.articles.map(i => {
@@ -185,7 +188,7 @@ export const articleSlice = createSlice({
       state.title = currentArticle?.title || 'Untitled';
       state.content = currentArticle?.content;
       state.color = currentArticle?.color;
-      state.categories = currentArticle?.categories;
+      state.articleCategories = currentArticle?.categories;
       state.date = currentArticle?.date;
       state.archive = currentArticle?.archive;
       state.isArchived = currentArticle?.archive;
@@ -200,7 +203,7 @@ export const articleSlice = createSlice({
       state.title = currentArticle?.title || 'Untitled';
       state.content = currentArticle?.content;
       state.color = currentArticle?.color;
-      state.categories = currentArticle?.categories;
+      state.articleCategories = currentArticle?.categories;
       state.date = currentArticle?.date;
       state.archive = currentArticle?.archive;
       state.isArchived = currentArticle?.archive;
@@ -219,6 +222,7 @@ export const {
   setArticleContent,
   setArticleColor,
   updateColor,
+  setArticleCategories,
   addCategory,
   removeCategory,
   setArticleArchive,
