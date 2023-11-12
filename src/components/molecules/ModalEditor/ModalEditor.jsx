@@ -55,7 +55,7 @@ export const ModalEditor = () => {
     <div id="modalEditor" className={css.container}>
       <div className={css.header}>
         <div className={css.left}>
-          <Button variant="text" onClick={handleClose}>close</Button>
+          <Button variant="text" color="blue" onClick={handleClose}>close</Button>
           {saving && (
             <div className={css.savingContainer}>
               <div className={css.savingSpinner}></div>
@@ -63,7 +63,7 @@ export const ModalEditor = () => {
           )}
         </div>
         <div className={css.right}>
-          <Button variant="text" onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</Button>
+          <Button variant="text" color="blue" onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</Button>
           <ModalDelete title={title || "Untitled"} />
         </div>
       </div>

@@ -8,11 +8,11 @@ import { doc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firest
 
 import Button from 'components/atoms/Button/Button';
 
-import css from './ModalCategory.module.css';
+import css from './EditCategories.module.css';
 import { Input } from 'components/atoms/Input/Input';
 import { CategoryInput } from './CategoryInput';
 
-export const ModalCategory = () => {
+export const EditCategories = ({ openElementSize }) => {
   const dispatch = useDispatch();
   const { user, categories } = useSelector(state => state.user);
 
@@ -79,7 +79,7 @@ export const ModalCategory = () => {
 
   return (
     <>
-      <div className={css.dropdownItem} onClick={() => setOpen(true)}>edit categories</div>
+      <Button variant="text" size={openElementSize} onClick={() => setOpen(true)}>edit categories</Button>
       {open && (
         <div className={css.container} onClick={() => setOpen(false)}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>

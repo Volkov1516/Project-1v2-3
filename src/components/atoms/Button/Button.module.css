@@ -13,6 +13,20 @@
 
 .text {
   background-color: transparent;
+  color: black;
+}
+
+.text.large {
+  padding: 0px 8px;
+  font-size: 40px;
+}
+
+.text:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.text.blue {
   color: #1971c2;
 }
 

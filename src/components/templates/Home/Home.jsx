@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Header } from 'components/organisms/Header/Header';
+import { Sidebar } from 'components/organisms/Sidebar/Sidebar';
 import { Content } from 'components/organisms/Content/Content';
 import { ModalEditor } from 'components/molecules/ModalEditor/ModalEditor';
 import { ModalPreview } from 'components/molecules/ModalPreview/ModalPreview';
@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <div onScroll={onMouseUp}>
-      <Header />
+      <Sidebar />
       <Content mouseTimer={mouseTimer} />
       {(modalEditorEmpty || modalEditorExisting) && <ModalEditor />}
       {modalPreview && <ModalPreview />}

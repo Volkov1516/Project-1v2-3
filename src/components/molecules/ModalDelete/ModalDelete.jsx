@@ -31,7 +31,7 @@ export const ModalDelete = ({ title }) => {
 
   return (
     <>
-      <Button variant="text" onClick={() => setOpen(true)}>delete</Button>
+      <Button variant="text" color="blue" onClick={() => setOpen(true)}>delete</Button>
       {open && (
         <div className={css.container} onClick={() => setOpen(false)}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>

@@ -127,11 +127,11 @@ export default function Auth() {
         {authType === "Log in"
           ? <>
             <span className={css.alternativeText}>Don't have an account?</span>
-            <Button variant="text" onClick={() => handleToggleAuth("Sing up")}>Create account</Button>
+            <Button variant="text" color="blue" onClick={() => handleToggleAuth("Sing up")}>Create account</Button>
           </>
           : <>
             <span className={css.alternativeText}>Already have an account?</span>
-            <Button variant="text" onClick={() => handleToggleAuth("Log in")}>Log in</Button>
+            <Button variant="text" color="blue" onClick={() => handleToggleAuth("Log in")}>Log in</Button>
           </>
         }
       </div>

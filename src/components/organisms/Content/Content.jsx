@@ -45,7 +45,7 @@ export const Content = ({ mouseTimer }) => {
   const onMouseUp = () => mouseTimer && window.clearTimeout(mouseTimer);
 
   return (
-    <div className={css.main} onScroll={onMouseUp}>
+    <main className={css.main} onScroll={onMouseUp}>
       {articles?.map((i, index) => filteredArticlesId.includes(i.id) && (
         <article
           key={i?.id}
@@ -59,6 +59,6 @@ export const Content = ({ mouseTimer }) => {
           {i?.title || 'Untitled'}
         </article>
       ))}
-    </div>
+    </main>
   );
 };

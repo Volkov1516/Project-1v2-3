@@ -45,7 +45,7 @@ export const App = () => {
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(SET_USER({ id: user?.uid }));
+        dispatch(SET_USER({ id: user?.uid, email: user?.email }));
         getArticles(user);
         getCategories(user);
         setLogged(true);

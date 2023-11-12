@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   row-gap: 2px;
-  padding: 53px 16px 200px;
+  padding: 8px 216px 200px;
   height: 100vh;
   overflow-y: auto;
 }
@@ -17,43 +17,52 @@ article {
   user-select: none;
 }
 
+article:nth-child(even) {
+  background-color: #e8eddf !important;
+}
+
+article:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 4px;
+}
+
 article.white {
   background-color: white;
   color: black;
 }
 
 article.black {
-  background-color: black;
+  background-color: black !important;
   color: white;
 }
 
 article.red {
-  background-color: #e03131;
+  background-color: #e03131 !important;
   color: white;
 }
 
 article.orange {
-  background-color: #fd7e14;
+  background-color: #fd7e14 !important;
   color: white;
 }
 
 article.yellow {
-  background-color: #ffd43b;
+  background-color: #ffd43b !important;
   color: white;
 }
 
 article.green {
-  background-color: #2f9e44;
+  background-color: #2f9e44 !important;
   color: white;
 }
 
 article.blue {
-  background-color: #1971c2;
+  background-color: #1971c2 !important;
   color: white;
 }
 
 article.purple {
-  background-color: #9c36b5;
+  background-color: #9c36b5 !important;
   color: white;
 }
 

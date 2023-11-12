@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import css from './ModalCategory.module.css';
+import css from './EditCategories.module.css';
 
 export const CategoryInput = ({ id, name, handleUpdateCategory }) => {
   const [inputValue, setInputValue] = useState(null);
