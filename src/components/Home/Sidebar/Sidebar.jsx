@@ -13,7 +13,7 @@ import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_AUTOFOCUS } from 'redux/features/moda
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
-import Button from 'components/atoms/Button/Button';
+import Button from 'components/Button/Button';
 import { EditCategories } from './EditCategories/EditCategories';
 import css from './Sidebar.module.css';
 

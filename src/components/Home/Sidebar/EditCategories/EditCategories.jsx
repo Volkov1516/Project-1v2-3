@@ -2,15 +2,11 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ADD_CATEGORY, DELETE_CATEGORY, UPDATE_CATEGORY } from 'redux/features/user/userSlice';
 import { v4 as uuidv4 } from 'uuid';
-
 import { db } from 'firebase.js';
 import { doc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
-
-import Button from 'components/atoms/Button/Button';
-
-import css from './EditCategories.module.css';
-import { Input } from 'components/atoms/Input/Input';
 import { CategoryInput } from './CategoryInput';
+import Button from 'components/Button/Button';
+import css from './EditCategories.module.css';
 
 export const EditCategories = ({ openElementSize }) => {
   const dispatch = useDispatch();
@@ -87,7 +83,7 @@ export const EditCategories = ({ openElementSize }) => {
               <Button variant="text" onClick={() => setOpen(false)}>close</Button>
             </div>
             <div className={css.inputContainer}>
-              <Input variant="contained" placeholder="New category" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+              <input className={css.input} variant="contained" placeholder="New category" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
               <Button variant="contained" onClick={createCategory}>add</Button>
             </div>
             {categories?.map(i => (

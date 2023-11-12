@@ -6,8 +6,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider
 } from 'firebase/auth';
-import Button from 'components/atoms/Button/Button';
-import { Input } from 'components/atoms/Input/Input';
+import Button from 'components/Button/Button';
 import css from './Auth.module.css';
 import logo from 'assets/logo.png';
 import google from 'assets/google.svg';
@@ -88,37 +87,38 @@ export default function Auth() {
         <div className={css.title}>{authType}</div>
         <form className={css.form} onSubmit={onSubmit}>
           <div className={css.fieldContainer}>
-            <Input
-              variant="contained"
+            <label className={css.label} htmlFor="email">Email</label>
+            <input
+              className={css.input}
               id="email"
               name="email"
               type="email"
-              label="Email"
               placeholder="Enter your email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onBlur={handleFocus}
-              dataFocussed={focussedEmail.toString()}
+              data-focussed={focussedEmail.toString()}
               error="Invalid email address"
             />
+            <span className={css.error}>Invalid email address</span>
           </div>
           <div className={css.fieldContainer}>
-            <Input
-              variant="contained"
+            <label className={css.label} htmlFor="password">Password</label>
+            <input
+              className={css.input}
               id="password"
               name="password"
               type="password"
-              label="Password"
               placeholder="Enter your password"
               pattern="[0-9a-zA-Z]{6,}"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onBlur={handleFocus}
-              dataFocussed={focussedPassword.toString()}
-              error="Password must contain minimum 6 characters"
+              data-focussed={focussedPassword.toString()}
             />
+            <span className={css.error}>Password must contain minimum 6 characters</span>
           </div>
           <Button type="submit" variant="contained">Continue with email</Button>
           <hr className={css.divider} />

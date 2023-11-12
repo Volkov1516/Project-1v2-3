@@ -5,7 +5,7 @@ import { incrementIndex, decrementIndex, setArticleArchive } from 'redux/feature
 import { SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from 'firebase.js';
-import Button from 'components/atoms/Button/Button';
+import Button from 'components/Button/Button';
 import { Editor } from 'components/Editor/Editor';
 import { ModalDelete } from 'components/ModalDelete/ModalDelete';
 import css from './ModalPreview.module.css';

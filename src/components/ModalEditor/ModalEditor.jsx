@@ -4,7 +4,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 import { setIsNewArticle, setArticleArchive } from 'redux/features/article/articleSlice';
 import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING, SET_MODAL_SCROLL, SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
-import Button from 'components/atoms/Button/Button';
+import Button from 'components/Button/Button';
 import { Title } from './Title/Title';
 import { Editor } from 'components/Editor/Editor';
 import { ModalDelete } from '../ModalDelete/ModalDelete';

@@ -7,7 +7,7 @@ import { db } from 'firebase.js';
 
 import css from './ModalDelete.module.css';
 
-import Button from 'components/atoms/Button/Button';
+import Button from 'components/Button/Button';
 
 export const ModalDelete = ({ title }) => {
   const dispatch = useDispatch();
