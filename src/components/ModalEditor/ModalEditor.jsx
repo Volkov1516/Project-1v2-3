@@ -6,7 +6,7 @@ import { setIsNewArticle, setArticleArchive } from 'redux/features/article/artic
 import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING, SET_MODAL_SCROLL, SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
 import Button from 'components/atoms/Button/Button';
 import { Title } from './Title/Title';
-import { Editor } from 'components/organisms/Editor/Editor';
+import { Editor } from 'components/Editor/Editor';
 import { ModalDelete } from '../ModalDelete/ModalDelete';
 import css from './ModalEditror.module.css';
 
