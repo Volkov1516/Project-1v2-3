@@ -5,10 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { db } from 'firebase.js';
 import { doc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { CategoryInput } from './CategoryInput';
-import Button from 'components/Button/Button';
 import css from './EditCategories.module.css';
 
-export const EditCategories = ({ openElementSize }) => {
+export const EditCategories = () => {
   const dispatch = useDispatch();
   const { user, categories } = useSelector(state => state.user);
 
@@ -75,21 +74,21 @@ export const EditCategories = ({ openElementSize }) => {
 
   return (
     <>
-      <Button variant="text" size={openElementSize} onClick={() => setOpen(true)}>edit categories</Button>
+      <button className={css.mainBtn} onClick={() => setOpen(true)}>edit categories</button>
       {open && (
         <div className={css.container} onClick={() => setOpen(false)}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
             <div className={css.header}>
-              <Button variant="text" onClick={() => setOpen(false)}>close</Button>
+              <button className={css.closeBtn} onClick={() => setOpen(false)}>close</button>
             </div>
             <div className={css.inputContainer}>
               <input className={css.input} variant="contained" placeholder="New category" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
-              <Button variant="contained" onClick={createCategory}>add</Button>
+              <button className={css.addBtn} onClick={createCategory}>add</button>
             </div>
             {categories?.map(i => (
               <div key={i.id} className={css.categoryGroup}>
                 <CategoryInput id={i.id} name={i.name} handleUpdateCategory={handleUpdateCategory} />
-                <Button variant="text" color="red" onClick={() => deleteCategory(i.id, i.name)}>delete</Button>
+                <button className={css.deleteBtn} onClick={() => deleteCategory(i.id, i.name)}>delete</button>
               </div>
             ))}
           </div>

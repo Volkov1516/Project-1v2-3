@@ -40,6 +40,27 @@
   display: flex;
 }
 
+.navigationBtn {
+  padding: 8px;
+  color: #FFFFFF;
+  background-color: black;
+}
+
+.closeBtn {
+  padding: 8px;
+  color: #1971c2;
+}
+
+.archiveBtn {
+  padding: 8px;
+  color: #1971c2;
+}
+
+.editBtn {
+  padding: 8px;
+  color: #1971c2;
+}
+
 .editor {
   overflow: auto;
   max-height: 100%;

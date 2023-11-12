@@ -4,9 +4,8 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 import { setIsNewArticle, setArticleArchive } from 'redux/features/article/articleSlice';
 import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING, SET_MODAL_SCROLL, SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
-import Button from 'components/Button/Button';
 import { Title } from './Title/Title';
-import { Editor } from 'components/Editor/Editor';
+import { Editor } from 'components/Home/Editor/Editor';
 import { ModalDelete } from '../ModalDelete/ModalDelete';
 import css from './ModalEditror.module.css';
 
@@ -55,7 +54,7 @@ export const ModalEditor = () => {
     <div id="modalEditor" className={css.container}>
       <div className={css.header}>
         <div className={css.left}>
-          <Button variant="text" color="blue" onClick={handleClose}>close</Button>
+          <button className={css.closeBtn} onClick={handleClose}>close</button>
           {saving && (
             <div className={css.savingContainer}>
               <div className={css.savingSpinner}></div>
@@ -63,7 +62,7 @@ export const ModalEditor = () => {
           )}
         </div>
         <div className={css.right}>
-          <Button variant="text" color="blue" onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</Button>
+          <button className={css.archiveBtn} onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</button>
           <ModalDelete title={title || "Untitled"} />
         </div>
       </div>

@@ -4,10 +4,7 @@ import { deleteArticle } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
-
 import css from './ModalDelete.module.css';
-
-import Button from 'components/Button/Button';
 
 export const ModalDelete = ({ title }) => {
   const dispatch = useDispatch();
@@ -31,7 +28,7 @@ export const ModalDelete = ({ title }) => {
 
   return (
     <>
-      <Button variant="text" color="blue" onClick={() => setOpen(true)}>delete</Button>
+      <button className={css.mainBtn} onClick={() => setOpen(true)}>delete</button>
       {open && (
         <div className={css.container} onClick={() => setOpen(false)}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
@@ -39,8 +36,8 @@ export const ModalDelete = ({ title }) => {
               Are you sure you want to delete <b>{title}</b> forever?
             </div>
             <div className={css.navigation}>
-              <Button variant="text" onClick={() => setOpen(false)}>cancel</Button>
-              <Button variant="text" color="red" onClick={handleDeleteArticle}>delete forever</Button>
+              <button className={css.cancelBtn} onClick={() => setOpen(false)}>cancel</button>
+              <button className={css.deleteBtn} onClick={handleDeleteArticle}>delete forever</button>
             </div>
           </div>
         </div>

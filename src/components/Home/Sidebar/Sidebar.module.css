@@ -11,7 +11,16 @@
   overflow-y: auto;
 }
 
-.create {
+.start {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.desktopCreateBtn {
+  display: flex;
+  align-items: flex-start;
   width: calc(100% - 32px);
   margin-left: 16px;
   font-size: 24px;
@@ -22,9 +31,69 @@
   cursor: pointer;
 }
 
-.create:hover {
+.desktopCreateBtn:hover {
   text-decoration: underline;
   text-decoration-thickness: 2px;
+}
+
+.desktopArticlesBtn {
+  padding: 8px 16px;
+}
+
+.desktopCategoryBtn {
+  padding: 8px 16px;
+  color: #1971c2;
+}
+
+.desktopArchiveBtn {
+  padding: 8px 16px;
+}
+
+.desktopSettingsBtn {
+  padding: 8px 16px;
+}
+
+.desktopUserBtn {
+  padding: 8px 16px;
+  color: #1971c2;
+}
+
+.mobileMobileBtn {
+  padding: 8px 16px;
+  color: #1971c2;
+}
+
+.mobileArticlesBtn {
+  padding: 8px 16px;
+  color: #1971c2;
+}
+
+.mobileCreateBtn {
+  font-size: 24px;
+  padding: 8px 16px;
+  color: #FFFFFF;
+  background-color: black;
+}
+
+.mobileAllArticlesBtn {
+  font-size: 40px;
+}
+
+.mobileCategoryBtn {
+  font-size: 40px;
+  color: #1971c2;
+}
+
+.mobileArchiveBtn {
+  font-size: 40px;
+}
+
+.mobileUserItemBtn {
+  font-size: 40px;
+}
+
+.mobileSignOutBtn {
+  color: #1971c2;
 }
 
 .containerMobile {

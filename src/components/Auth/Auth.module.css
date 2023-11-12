@@ -44,6 +44,27 @@
   flex-direction: column;
 }
 
+.submitBtn {
+  padding: 8px;
+  color: #FFFFFF;
+  background-color: black;
+}
+
+.googleBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  background-color: transparent;
+  outline: 1px solid black;
+  color: black;
+}
+
+.toggleBtn {
+  padding: 8px;
+  color: #1971c2;
+}
+
 .fieldContainer {
   display: flex;
   flex-direction: column;

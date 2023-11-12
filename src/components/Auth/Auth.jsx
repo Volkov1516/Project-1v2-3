@@ -6,7 +6,6 @@ import {
   signInWithPopup,
   GoogleAuthProvider
 } from 'firebase/auth';
-import Button from 'components/Button/Button';
 import css from './Auth.module.css';
 import logo from 'assets/logo.png';
 import google from 'assets/google.svg';
@@ -120,18 +119,18 @@ export default function Auth() {
             />
             <span className={css.error}>Password must contain minimum 6 characters</span>
           </div>
-          <Button type="submit" variant="contained">Continue with email</Button>
+          <button className={css.submitBtn} type="submit">Continue with email</button>
           <hr className={css.divider} />
-          <Button variant="outlined" onClick={handleGoogle}><img className={css.buttonImg} src={google} alt="google" />Continue with Google</Button>
+          <button className={css.googleBtn} onClick={handleGoogle}><img className={css.buttonImg} src={google} alt="google" />Continue with Google</button>
         </form>
         {authType === "Log in"
           ? <>
             <span className={css.alternativeText}>Don't have an account?</span>
-            <Button variant="text" color="blue" onClick={() => handleToggleAuth("Sing up")}>Create account</Button>
+            <button className={css.toggleBtn} onClick={() => handleToggleAuth("Sing up")}>Create account</button>
           </>
           : <>
             <span className={css.alternativeText}>Already have an account?</span>
-            <Button variant="text" color="blue" onClick={() => handleToggleAuth("Log in")}>Log in</Button>
+            <button className={css.toggleBtn} onClick={() => handleToggleAuth("Log in")}>Log in</button>
           </>
         }
       </div>

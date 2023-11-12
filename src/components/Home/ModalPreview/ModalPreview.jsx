@@ -5,9 +5,8 @@ import { incrementIndex, decrementIndex, setArticleArchive } from 'redux/feature
 import { SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from 'firebase.js';
-import Button from 'components/Button/Button';
-import { Editor } from 'components/Editor/Editor';
-import { ModalDelete } from 'components/ModalDelete/ModalDelete';
+import { Editor } from 'components/Home/Editor/Editor';
+import { ModalDelete } from 'components/Home/ModalDelete/ModalDelete';
 import css from './ModalPreview.module.css';
 
 export const ModalPreview = () => {
@@ -68,15 +67,15 @@ export const ModalPreview = () => {
         <div className={css.header}>
           <div className={css.left}>
             <div className={css.navigation}>
-              <Button variant="contained" onClick={prev}>prev</Button>
-              <Button variant="contained" onClick={next}>next</Button>
+              <button className={css.navigationBtn} onClick={prev}>prev</button>
+              <button className={css.navigationBtn} onClick={next}>next</button>
             </div>
-            <Button variant="text" color="blue" onClick={openModalEditorFromPreview}>edit</Button>
-            <Button variant="text" color="blue" onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</Button>
+            <button className={css.editBtn} onClick={openModalEditorFromPreview}>edit</button>
+            <button className={css.archiveBtn} onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</button>
             <ModalDelete title={title || "Untitled"} />
           </div>
           <div className={css.right}>
-            <Button variant="text" color="blue" onClick={close}>close</Button>
+            <button className={css.closeBtn} onClick={close}>close</button>
           </div>
         </div>
         <div id="modalPreview" className={css.editor}>

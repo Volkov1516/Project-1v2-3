@@ -34,6 +34,16 @@
   align-items: center;
 }
 
+.closeBtn {
+  padding: 8px;
+  color: #1971c2;
+}
+
+.archiveBtn {
+  padding: 8px;
+  color: #1971c2;
+}
+
 @keyframes spinner {
   0% {
     transform: rotate(0deg);

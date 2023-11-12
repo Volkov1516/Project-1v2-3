@@ -13,7 +13,6 @@ import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_AUTOFOCUS } from 'redux/features/moda
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
-import Button from 'components/Button/Button';
 import { EditCategories } from './EditCategories/EditCategories';
 import css from './Sidebar.module.css';
 
@@ -102,41 +101,41 @@ export const Sidebar = () => {
         ? (
           <aside className={css.container}>
             <div className={css.start}>
-              <div className={css.create} onClick={openModalEditor}>CREATE</div>
-              <Button variant="text" onClick={handleAll}>articles</Button>
+              <button className={css.desktopCreateBtn} onClick={openModalEditor}>CREATE</button>
+              <button className={css.desktopArticlesBtn} onClick={handleAll}>articles</button>
               {categories?.map(i => (
-                <Button variant="text" color="blue" key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</Button>
+                <button className={css.desktopCategoryBtn} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</button>
               ))}
               <EditCategories />
-              <Button variant="text" onClick={handleArchive}>archive</Button>
+              <button className={css.desktopArchiveBtn} onClick={handleArchive}>archive</button>
             </div>
             <div className={css.end}>
-              <Button variant="text">settings</Button>
-              <Button variant="text" color="blue">{user?.email}</Button>
+              <button className={css.desktopSettingsBtn}>settings</button>
+              <button className={css.desktopUserBtn} onClick={handleSignOut}>{user?.email}</button>
             </div>
           </aside>
         )
         : (
           <div className={css.containerMobile}>
-            <Button variant="text" color="blue" onClick={handleMenuDropdown}>menu</Button>
-            <Button variant="text" color="blue" onClick={handleCategoriesDropdown}>articles</Button>
-            <Button variant="contained" size="large" onClick={openModalEditor}>CREATE</Button>
+            <button className={css.mobileMobileBtn} onClick={handleMenuDropdown}>menu</button>
+            <button className={css.mobileArticlesBtn} onClick={handleCategoriesDropdown}>articles</button>
+            <button className={css.mobileCreateBtn} onClick={openModalEditor}>CREATE</button>
             {categoriesMenu && (
               <div className={css.categoriesDropdown}>
-                <Button variant="text" size="large" onClick={handleAll}>articles</Button>
+                <button className={css.mobileAllArticlesBtn} onClick={handleAll}>articles</button>
                 {categories?.map(i => (
-                  <Button variant="text" size="large" color="blue" key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</Button>
+                  <button className={css.mobileCategoryBtn} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</button>
                 ))}
-                <EditCategories openElementSize="large" />
-                <Button variant="text" size="large" onClick={handleArchive}>archive</Button>
+                <EditCategories />
+                <button className={css.mobileArchiveBtn} onClick={handleArchive}>archive</button>
               </div>
             )}
             {userMenu && (
               <div className={css.menuDropdown}>
-                <Button variant="text" size="large">dark theme</Button>
-                <Button variant="text" size="large">eye saver</Button>
-                <Button variant="text" size="large">striped list</Button>
-                <Button variant="text" size="large" color="blue" onClick={handleSignOut}>sign out</Button>
+                <button className={css.mobileUserItemBtn}>dark theme</button>
+                <button className={css.mobileUserItemBtn}>eye saver</button>
+                <button className={css.mobileUserItemBtn}>striped list</button>
+                <button className={`${css.mobileUserItemBtn} ${css.mobileSignOutBtn}`} onClick={handleSignOut}>sign out</button>
               </div>
             )}
           </div>
