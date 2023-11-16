@@ -12,7 +12,7 @@ import { ModalArticleSettings } from '../ModalArticleSettings/ModalArticleSettin
 export const ModalEditor = () => {
   const dispatch = useDispatch();
   const { tags } = useSelector(state => state.user);
-  const { articleTags, articleId, title, isArchived, date } = useSelector(state => state.article);
+  const { articleTags, articleId, isArchived, date } = useSelector(state => state.article);
   const { autofocus, scrollOffset } = useSelector(state => state.modal);
 
   let newDate = new Date();
@@ -31,21 +31,6 @@ export const ModalEditor = () => {
 
     dispatch(SET_MODAL_EDITOR_EMPTY(false));
     dispatch(SET_MODAL_EDITOR_EXISTING(false));
-  };
-
-  const handleArchive = async () => {
-    const articleRef = doc(db, 'articles', articleId);
-
-    await updateDoc(articleRef, { archive: !isArchived })
-      .then(() => {
-        dispatch(setArticleArchive({ id: articleId, archive: !isArchived }));
-        dispatch(SET_MODAL_EDITOR_EMPTY(false));
-        dispatch(SET_MODAL_EDITOR_EXISTING(false));
-        window.history.back();
-        dispatch(SET_MODAL_PREVIEW(false));
-        window.history.back();
-      })
-      .catch((error) => console.log(error));
   };
 
   useEffect(() => {

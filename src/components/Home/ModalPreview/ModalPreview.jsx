@@ -47,18 +47,6 @@ export const ModalPreview = () => {
     dispatch(incrementIndex());
   };
 
-  const handleArchive = async () => {
-    const articleRef = doc(db, 'articles', articleId);
-
-    await updateDoc(articleRef, { archive: !isArchived })
-      .then(() => {
-        dispatch(setArticleArchive({ id: articleId, archive: !isArchived }));
-        dispatch(SET_MODAL_PREVIEW(false));
-        window.history.back();
-      })
-      .catch((error) => console.log(error));
-  };
-
   const close = () => {
     window.history.back();
     dispatch(SET_MODAL_PREVIEW(false));
