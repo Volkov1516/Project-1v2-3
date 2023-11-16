@@ -82,6 +82,29 @@
   align-items: center;
 }
 
+.metadata {
+  display: flex;
+  flex-direction: row;
+  column-gap: 8px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0px auto;
+  padding: 8px 0px;
+  margin-bottom: 400px;
+}
+
+.date {
+  padding-right: 8px;
+  font-weight: 600;
+  color: #BFC7B4;
+  user-select: none;
+}
+
+.category {
+  font-weight: 600;
+  user-select: none;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

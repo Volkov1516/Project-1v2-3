@@ -12,7 +12,6 @@ import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 
-import { MetadataPlugin } from './plugins/MetadataPlugin/MetadataPlugin';
 import { RefreshStatePlugin } from './plugins/RefreshStatePlugin/RefreshStatePlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
@@ -113,7 +112,6 @@ export const Editor = ({
     <LexicalComposer initialConfig={initialConfig}>
       {!preview && <ToolbarBlockPlugin modalEditorContentRef={modalEditorContentRef} titleRef={titleRef} />}
       {!preview && <ToolbarTextPlugin modalEditorContentRef={modalEditorContentRef} />}
-      <MetadataPlugin />
       <div className={css.container} onContextMenu={handleContentMenu}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}

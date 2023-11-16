@@ -11,8 +11,11 @@ import css from './ModalPreview.module.css';
 
 export const ModalPreview = () => {
   const dispatch = useDispatch();
-  const { filteredArticlesId, articleId, articleIndex, title, color, isArchived } = useSelector(state => state.article);
+  const { tags } = useSelector(state => state.user);
+  const { articleTags, filteredArticlesId, articleId, articleIndex, title, color, date, isArchived } = useSelector(state => state.article);
   const { scrollOffset } = useSelector(state => state.modal);
+
+  let newDate = new Date();
 
   useEffect(() => {
     const modalPreviewElement = document?.getElementById('modalPreview');
@@ -71,6 +74,8 @@ export const ModalPreview = () => {
               <button className={css.navigationBtn} onClick={next}>next</button>
             </div>
             <button className={css.editBtn} onClick={openModalEditorFromPreview}>edit</button>
+            <button className={css.tagsBtn}>tags</button>
+            <button className={css.colorBtn}>color</button>
             <button className={css.archiveBtn} onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</button>
             <ModalDelete title={title || "Untitled"} />
           </div>
@@ -81,6 +86,14 @@ export const ModalPreview = () => {
         <div id="modalPreview" className={css.editor}>
           <div className={`${css.title} ${css[color]}`}>{title || "Untitled"}</div>
           <Editor preview={true} />
+          <div className={css.metadata}>
+            <div className={css.date}>
+              {date || newDate.toLocaleDateString()}
+            </div>
+            {tags?.map(i => articleTags?.map(j => {
+              return i.id === j.id && <div key={i.id} className={css.category} style={{ color: "#1971c2" }}>#{i?.name}</div>
+            }))}
+          </div>
         </div>
       </div>
     </div>

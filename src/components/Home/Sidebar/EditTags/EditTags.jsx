@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { ADD_CATEGORY, DELETE_CATEGORY, UPDATE_CATEGORY } from 'redux/features/user/userSlice';
+import { addTag, deleteTag, updateTag } from 'redux/features/user/userSlice';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from 'firebase.js';
 import { doc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
-import { CategoryInput } from './CategoryInput';
-import css from './EditCategories.module.css';
+import { TagInput } from './TagInput';
+import css from './EditTags.module.css';
 
-export const EditCategories = () => {
+export const EditTags = () => {
   const dispatch = useDispatch();
-  const { user, categories } = useSelector(state => state.user);
+  const { user, tags } = useSelector(state => state.user);
 
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -19,14 +19,14 @@ export const EditCategories = () => {
 
     const newId = uuidv4();
 
-    await setDoc(doc(db, 'categories', user?.id), {
-      categories: arrayUnion({
+    await setDoc(doc(db, 'tags', user?.id), {
+      tags: arrayUnion({
         id: newId,
         name: inputValue
       })
     }, { merge: true })
       .then(() => {
-        dispatch(ADD_CATEGORY({ id: newId, name: inputValue }));
+        dispatch(addTag({ id: newId, name: inputValue }));
       })
       .catch((error) => {
         console.log(error);
@@ -34,13 +34,13 @@ export const EditCategories = () => {
   };
 
   const deleteCategory = async (id, name) => {
-    const docRef = doc(db, 'categories', user?.id);
+    const docRef = doc(db, 'tags', user?.id);
 
     await updateDoc(docRef, {
-      categories: arrayRemove({ id, name })
+      tags: arrayRemove({ id, name })
     })
       .then(() => {
-        dispatch(DELETE_CATEGORY(id));
+        dispatch(deleteTag(id));
       })
       .catch((error) => {
         console.log(error);
@@ -50,9 +50,9 @@ export const EditCategories = () => {
   const handleUpdateCategory = async (id, name) => {
     if (!name) return;
 
-    let categoriesCopy = JSON.parse(JSON.stringify(categories));
+    let tagsCopy = JSON.parse(JSON.stringify(tags));
 
-    categoriesCopy.map((i) => {
+    tagsCopy.map((i) => {
       if (i.id === id) {
         return i.name = name;
       }
@@ -61,11 +61,11 @@ export const EditCategories = () => {
       }
     });
 
-    await setDoc(doc(db, 'categories', user?.id), {
-      categories: categoriesCopy
+    await setDoc(doc(db, 'tags', user?.id), {
+      tags: tagsCopy
     })
       .then(() => {
-        dispatch(UPDATE_CATEGORY(categoriesCopy));
+        dispatch(updateTag(tagsCopy));
       })
       .catch((error) => {
         console.log(error);
@@ -74,7 +74,7 @@ export const EditCategories = () => {
 
   return (
     <>
-      <button className={css.mainBtn} onClick={() => setOpen(true)}>edit categories</button>
+      <button className={css.mainBtn} onClick={() => setOpen(true)}>edit tags</button>
       {open && (
         <div className={css.container} onClick={() => setOpen(false)}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
@@ -85,9 +85,9 @@ export const EditCategories = () => {
               <input className={css.input} variant="contained" placeholder="New category" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
               <button className={css.addBtn} onClick={createCategory}>add</button>
             </div>
-            {categories?.map(i => (
+            {tags?.map(i => (
               <div key={i.id} className={css.categoryGroup}>
-                <CategoryInput id={i.id} name={i.name} handleUpdateCategory={handleUpdateCategory} />
+                <TagInput id={i.id} name={i.name} handleUpdateCategory={handleUpdateCategory} />
                 <button className={css.deleteBtn} onClick={() => deleteCategory(i.id, i.name)}>delete</button>
               </div>
             ))}

@@ -13,15 +13,15 @@ import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_AUTOFOCUS } from 'redux/features/moda
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
-import { EditCategories } from './EditCategories/EditCategories';
+import { EditTags } from './EditTags/EditTags';
 import css from './Sidebar.module.css';
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
-  const { categories, user } = useSelector(state => state.user);
+  const { tags, user } = useSelector(state => state.user);
   const { articles } = useSelector(state => state.article);
 
-  const [categoriesMenu, setCategoriesMenu] = useState(false);
+  const [tagsMenu, setTagsMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [displayWidth, setDisplayWidth] = useState(null);
 
@@ -73,7 +73,7 @@ export const Sidebar = () => {
     const unarchived = articles?.filter(i => !i?.archive);
     let newArr = [];
 
-    unarchived?.map(i => i?.categories?.map(j => {
+    unarchived?.map(i => i?.tags?.map(j => {
       if (j.id === id) {
         return newArr.push(i?.id);
       }
@@ -85,13 +85,13 @@ export const Sidebar = () => {
     dispatch(setFilteredArticlesId(newArr));
   };
 
-  const handleCategoriesDropdown = () => {
+  const handleTagsDropdown = () => {
     setUserMenu(false);
-    setCategoriesMenu(!categoriesMenu)
+    setTagsMenu(!tagsMenu)
   };
 
   const handleMenuDropdown = () => {
-    setCategoriesMenu(false);
+    setTagsMenu(false);
     setUserMenu(!userMenu);
   };
 
@@ -103,10 +103,10 @@ export const Sidebar = () => {
             <div className={css.start}>
               <button className={css.desktopCreateBtn} onClick={openModalEditor}>CREATE</button>
               <button className={css.desktopArticlesBtn} onClick={handleAll}>articles</button>
-              {categories?.map(i => (
+              {tags?.map(i => (
                 <button className={css.desktopCategoryBtn} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</button>
               ))}
-              <EditCategories />
+              <EditTags />
               <button className={css.desktopArchiveBtn} onClick={handleArchive}>archive</button>
             </div>
             <div className={css.end}>
@@ -118,15 +118,15 @@ export const Sidebar = () => {
         : (
           <div className={css.containerMobile}>
             <button className={css.mobileMobileBtn} onClick={handleMenuDropdown}>menu</button>
-            <button className={css.mobileArticlesBtn} onClick={handleCategoriesDropdown}>articles</button>
+            <button className={css.mobileArticlesBtn} onClick={handleTagsDropdown}>articles</button>
             <button className={css.mobileCreateBtn} onClick={openModalEditor}>CREATE</button>
-            {categoriesMenu && (
-              <div className={css.categoriesDropdown}>
+            {tagsMenu && (
+              <div className={css.tagsDropdown}>
                 <button className={css.mobileAllArticlesBtn} onClick={handleAll}>articles</button>
-                {categories?.map(i => (
+                {tags?.map(i => (
                   <button className={css.mobileCategoryBtn} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</button>
                 ))}
-                <EditCategories />
+                <EditTags />
                 <button className={css.mobileArchiveBtn} onClick={handleArchive}>archive</button>
               </div>
             )}

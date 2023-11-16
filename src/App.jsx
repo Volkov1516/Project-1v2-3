@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
-import { SET_USER, SET_CATEGORIES } from 'redux/features/user/userSlice';
+import { setUser, setTags } from 'redux/features/user/userSlice';
 import { setArticles, setFilteredArticlesId, setIsNewArticle } from 'redux/features/article/articleSlice';
 import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY, SET_MODAL_SCROLL } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
@@ -25,7 +25,7 @@ export const App = () => {
         id: doc?.id,
         title: doc?.data()?.title,
         content: doc?.data()?.content,
-        categories: doc?.data()?.categories,
+        tags: doc?.data()?.tags,
         color: doc?.data()?.color,
         date: doc?.data()?.date?.toDate().toLocaleDateString(),
         archive: doc?.data()?.archive,
@@ -36,18 +36,18 @@ export const App = () => {
       dispatch(setFilteredArticlesId(filteredArticlesId));
     };
 
-    const getCategories = async (user) => {
-      const docRef = doc(db, 'categories', user?.uid);
+    const getTags = async (user) => {
+      const docRef = doc(db, 'tags', user?.uid);
       const docSnap = await getDoc(docRef);
 
-      dispatch(SET_CATEGORIES(docSnap?.data()?.categories));
+      dispatch(setTags(docSnap?.data()?.tags));
     };
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(SET_USER({ id: user?.uid, email: user?.email }));
+        dispatch(setUser({ id: user?.uid, email: user?.email }));
         getArticles(user);
-        getCategories(user);
+        getTags(user);
         setLogged(true);
 
         window.history.pushState({}, '', '/');

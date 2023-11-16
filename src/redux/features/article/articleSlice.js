@@ -10,7 +10,7 @@ const initialState = {
   title: '',
   content: EMPTY_CONTENT,
   color: null,
-  articleCategories: [],
+  articleTags: [],
   date: null,
   archive: null,
   isArchived: false,
@@ -46,7 +46,7 @@ export const articleSlice = createSlice({
             id: i?.id,
             title: i?.title,
             content: i?.content,
-            categories: i?.categories,
+            tags: i?.tags,
             color: action.payload.color,
             date: i?.date,
             archive: i?.archive,
@@ -62,8 +62,8 @@ export const articleSlice = createSlice({
       state.articles = JSON.parse(JSON.stringify(newArticles));
       state.color = action.payload.color;
     },
-    setArticleCategories: (state, action) => {
-      state.articleCategories = action.payload;
+    setArticleTags: (state, action) => {
+      state.articleTags = action.payload;
     },
     addCategory: (state, action) => {
       let newArticles = state.articles.map(i => {
@@ -72,7 +72,7 @@ export const articleSlice = createSlice({
             id: i?.id,
             title: i?.title,
             content: i?.content,
-            categories: [...state.articleCategories, { id: action.payload.category }],
+            tags: [...state.articleTags, { id: action.payload.category }],
             color: i?.color,
             date: i?.date,
             archive: i?.archive,
@@ -94,7 +94,7 @@ export const articleSlice = createSlice({
             id: i?.id,
             title: i?.title,
             content: i?.content,
-            categories: i?.categories?.filter(i => i.id !== action.payload.category),
+            tags: i?.tags?.filter(i => i.id !== action.payload.category),
             color: i?.color,
             date: i?.date,
             archive: i?.archive,
@@ -116,7 +116,7 @@ export const articleSlice = createSlice({
             id: i?.id,
             title: i?.title,
             content: i?.content,
-            categories: i?.categories,
+            tags: i?.tags,
             color: i?.color,
             date: i?.date,
             archive: action.payload.archive,
@@ -149,7 +149,7 @@ export const articleSlice = createSlice({
             id: i?.id,
             title: action.payload.title,
             content: action.payload.content,
-            categories: i?.categories,
+            tags: i?.tags,
             color: i?.color,
             date: i?.date,
             archive: i?.archive,
@@ -188,7 +188,7 @@ export const articleSlice = createSlice({
       state.title = currentArticle?.title || 'Untitled';
       state.content = currentArticle?.content;
       state.color = currentArticle?.color;
-      state.articleCategories = currentArticle?.categories;
+      state.articleTags = currentArticle?.tags;
       state.date = currentArticle?.date;
       state.archive = currentArticle?.archive;
       state.isArchived = currentArticle?.archive;
@@ -203,7 +203,7 @@ export const articleSlice = createSlice({
       state.title = currentArticle?.title || 'Untitled';
       state.content = currentArticle?.content;
       state.color = currentArticle?.color;
-      state.articleCategories = currentArticle?.categories;
+      state.articleTags = currentArticle?.tags;
       state.date = currentArticle?.date;
       state.archive = currentArticle?.archive;
       state.isArchived = currentArticle?.archive;
@@ -222,7 +222,7 @@ export const {
   setArticleContent,
   setArticleColor,
   updateColor,
-  setArticleCategories,
+  setArticleTags,
   addCategory,
   removeCategory,
   setArticleArchive,

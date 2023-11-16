@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-import css from './EditCategories.module.css';
+import css from './EditTags.module.css';
 
-export const CategoryInput = ({ id, name, handleUpdateCategory }) => {
+export const TagInput = ({ id, name, handleUpdateCategory }) => {
   const [inputValue, setInputValue] = useState(null);
 
   return (
-    <div className={css.editCategoriesContainer}>
+    <div className={css.editTagsContainer}>
       <input
         className={css.categoryInput}
         value={inputValue !== null ? inputValue : name}

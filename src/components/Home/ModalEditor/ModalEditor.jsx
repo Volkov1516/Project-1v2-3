@@ -11,8 +11,11 @@ import css from './ModalEditror.module.css';
 
 export const ModalEditor = () => {
   const dispatch = useDispatch();
-  const { articleId, title, isArchived } = useSelector(state => state.article);
+  const { tags } = useSelector(state => state.user);
+  const { articleTags, articleId, title, isArchived, date } = useSelector(state => state.article);
   const { autofocus, scrollOffset } = useSelector(state => state.modal);
+
+  let newDate = new Date();
 
   const modalEditorContentRef = useRef(null);
   const titleRef = useRef(null);
@@ -21,7 +24,7 @@ export const ModalEditor = () => {
 
   const handleClose = () => {
     const modalEditorElement = document.getElementById('modalEditor');
-    dispatch(SET_MODAL_SCROLL(modalEditorElement.scrollTop));
+    dispatch(SET_MODAL_SCROLL(modalEditorElement?.scrollTop));
 
     dispatch(setIsNewArticle(false));
     window.history.back();
@@ -62,6 +65,8 @@ export const ModalEditor = () => {
           )}
         </div>
         <div className={css.right}>
+          <button className={css.archiveBtn}>tags</button>
+          <button className={css.archiveBtn}>color</button>
           <button className={css.archiveBtn} onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</button>
           <ModalDelete title={title || "Untitled"} />
         </div>
@@ -75,6 +80,14 @@ export const ModalEditor = () => {
           setSaving={setSaving}
           autofocus={autofocus}
         />
+        <div className={css.metadata}>
+          <div className={css.date}>
+            {date || newDate.toLocaleDateString()}
+          </div>
+          {tags?.map(i => articleTags?.map(j => {
+            return i.id === j.id && <div key={i.id} className={css.category} style={{ color: "#1971c2" }}>#{i?.name}</div>
+          }))}
+        </div>
       </div>
     </div>
   );
