@@ -56,14 +56,15 @@ export const ModalPreview = () => {
         <div className={css.header}>
           <div className={css.left}>
             <div className={css.navigation}>
-              <button className={css.navigationBtn} onClick={prev}>prev</button>
-              <button className={css.navigationBtn} onClick={next}>next</button>
+              <button className={css.navigationButton} onClick={prev}>prev</button>
+              <div className={css.navigationDivider} />
+              <button className={css.navigationButton} onClick={next}>next</button>
             </div>
-            <button className={css.editBtn} onClick={openModalEditorFromPreview}>edit</button>
+            <button className={css.editButton} onClick={openModalEditorFromPreview}>edit</button>
             <ModalArticleSettings />
           </div>
           <div className={css.right}>
-            <button className={css.closeBtn} style={{color: "black"}} onClick={close}>close</button>
+            <button className={css.closeButton} onClick={close}>close</button>
           </div>
         </div>
         <div id="modalPreview" className={css.editor}>

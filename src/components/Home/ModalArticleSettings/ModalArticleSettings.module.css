@@ -58,6 +58,13 @@
   color: #e03131; 
 }
 
+@media (hover: hover) {
+  .mainButton:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+}
+
 @media (max-width: 639px) {
   .content {
     height: 100vh;

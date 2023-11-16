@@ -86,7 +86,7 @@ export const ModalArticleSettings = () => {
 
   return (
     <>
-      <button className={css.mainBtn} onClick={() => setOpen(true)}>settings</button>
+      <button className={css.mainButton} onClick={() => setOpen(true)}>settings</button>
       {open && (
         <div className={css.container} onClick={() => setOpen(false)}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
