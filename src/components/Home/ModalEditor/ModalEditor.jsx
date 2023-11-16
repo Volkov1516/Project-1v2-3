@@ -1,9 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from 'firebase.js';
-import { setIsNewArticle, setArticleArchive } from 'redux/features/article/articleSlice';
-import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING, SET_MODAL_SCROLL, SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
+import { setIsNewArticle } from 'redux/features/article/articleSlice';
+import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING, SET_MODAL_SCROLL } from 'redux/features/modal/modalSlice';
 import { Title } from './Title/Title';
 import { Editor } from 'components/Home/Editor/Editor';
 import css from './ModalEditror.module.css';
@@ -12,7 +10,7 @@ import { ModalArticleSettings } from '../ModalArticleSettings/ModalArticleSettin
 export const ModalEditor = () => {
   const dispatch = useDispatch();
   const { tags } = useSelector(state => state.user);
-  const { articleTags, articleId, isArchived, date } = useSelector(state => state.article);
+  const { articleTags, date } = useSelector(state => state.article);
   const { autofocus, scrollOffset } = useSelector(state => state.modal);
 
   let newDate = new Date();
