@@ -65,7 +65,7 @@ export const articleSlice = createSlice({
     setArticleTags: (state, action) => {
       state.articleTags = action.payload;
     },
-    addCategory: (state, action) => {
+    addTag: (state, action) => {
       let newArticles = state.articles.map(i => {
         if (i.id === action.payload.id) {
           let newObj = {
@@ -223,7 +223,7 @@ export const {
   setArticleColor,
   updateColor,
   setArticleTags,
-  addCategory,
+  addTag,
   removeCategory,
   setArticleArchive,
   setIsArchived,

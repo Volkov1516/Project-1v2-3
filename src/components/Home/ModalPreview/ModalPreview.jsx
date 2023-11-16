@@ -6,8 +6,8 @@ import { SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from 'firebase.js';
 import { Editor } from 'components/Home/Editor/Editor';
-import { ModalDelete } from 'components/Home/ModalDelete/ModalDelete';
 import css from './ModalPreview.module.css';
+import { ModalArticleSettings } from '../ModalArticleSettings/ModalArticleSettings';
 
 export const ModalPreview = () => {
   const dispatch = useDispatch();
@@ -74,13 +74,10 @@ export const ModalPreview = () => {
               <button className={css.navigationBtn} onClick={next}>next</button>
             </div>
             <button className={css.editBtn} onClick={openModalEditorFromPreview}>edit</button>
-            <button className={css.tagsBtn}>tags</button>
-            <button className={css.colorBtn}>color</button>
-            <button className={css.archiveBtn} onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</button>
-            <ModalDelete title={title || "Untitled"} />
+            <ModalArticleSettings />
           </div>
           <div className={css.right}>
-            <button className={css.closeBtn} onClick={close}>close</button>
+            <button className={css.closeBtn} style={{color: "black"}} onClick={close}>close</button>
           </div>
         </div>
         <div id="modalPreview" className={css.editor}>

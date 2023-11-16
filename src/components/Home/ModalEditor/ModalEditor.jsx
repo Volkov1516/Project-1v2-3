@@ -6,8 +6,8 @@ import { setIsNewArticle, setArticleArchive } from 'redux/features/article/artic
 import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING, SET_MODAL_SCROLL, SET_MODAL_PREVIEW } from 'redux/features/modal/modalSlice';
 import { Title } from './Title/Title';
 import { Editor } from 'components/Home/Editor/Editor';
-import { ModalDelete } from '../ModalDelete/ModalDelete';
 import css from './ModalEditror.module.css';
+import { ModalArticleSettings } from '../ModalArticleSettings/ModalArticleSettings';
 
 export const ModalEditor = () => {
   const dispatch = useDispatch();
@@ -65,10 +65,7 @@ export const ModalEditor = () => {
           )}
         </div>
         <div className={css.right}>
-          <button className={css.archiveBtn}>tags</button>
-          <button className={css.archiveBtn}>color</button>
-          <button className={css.archiveBtn} onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</button>
-          <ModalDelete title={title || "Untitled"} />
+          <ModalArticleSettings />
         </div>
       </div>
       <div ref={modalEditorContentRef} className={css.content}>
