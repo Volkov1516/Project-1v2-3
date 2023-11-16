@@ -72,7 +72,11 @@
     flex-direction: column-reverse;
   }
 
-  button {
+  .section>button {
+    font-size: 40px;
+  }
+
+  .buttonWrapper>button {
     font-size: 40px;
   }
 

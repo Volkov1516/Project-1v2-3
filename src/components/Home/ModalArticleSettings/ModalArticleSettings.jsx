@@ -91,6 +91,9 @@ export const ModalArticleSettings = () => {
         <div className={css.container} onClick={() => setOpen(false)}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
             <div className={css.section}>
+              <button onClick={() => setOpen(false)}>close</button>
+            </div>
+            <div className={css.section}>
               <div className={css.buttonWrapper} onClick={() => setTagsList(!tagsList)}>
                 <button>tags</button>
                 <span className={css.tagsTrigger}></span>
