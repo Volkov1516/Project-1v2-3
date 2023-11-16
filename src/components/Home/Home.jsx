@@ -4,6 +4,8 @@ import { Content } from './Content/Content';
 import { ModalEditor } from 'components/Home/ModalEditor/ModalEditor';
 import { ModalPreview } from 'components/Home/ModalPreview/ModalPreview';
 
+import css from './Home.module.css';
+
 export default function Home() {
   const { modalEditorEmpty, modalEditorExisting, modalPreview } = useSelector(state => state.modal);
 
@@ -12,7 +14,7 @@ export default function Home() {
   const onMouseUp = () => mouseTimer && window.clearTimeout(mouseTimer);
 
   return (
-    <div onScroll={onMouseUp}>
+    <div className={css.container} onScroll={onMouseUp}>
       <Sidebar />
       <Content mouseTimer={mouseTimer} />
       {(modalEditorEmpty || modalEditorExisting) && <ModalEditor />}

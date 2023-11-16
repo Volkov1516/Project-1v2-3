@@ -1,14 +1,10 @@
-.container {
-  position: fixed;
-  left: 0;
+.largeContainer {
   width: 200px;
-  height: 100vh;
-  padding: 16px 0px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: #E8EDDF;
-  overflow-y: auto;
 }
 
 .start {
@@ -16,106 +12,81 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  row-gap: 16px;
 }
 
-.desktopCreateBtn {
-  display: flex;
-  align-items: flex-start;
-  width: calc(100% - 32px);
-  margin-left: 16px;
-  font-size: 24px;
-  font-weight: 600;
-  color: #FFFFFF;
-  background-color: black;
-  user-select: none;
-  cursor: pointer;
-}
-
-.desktopCreateBtn:hover {
+.start>button:hover {
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
 
-.desktopArticlesBtn {
-  padding: 8px 16px;
-}
-
-.desktopCategoryBtn {
-  padding: 8px 16px;
-  color: #1971c2;
-}
-
-.desktopArchiveBtn {
-  padding: 8px 16px;
-}
-
-.desktopSettingsBtn {
-  padding: 8px 16px;
-}
-
-.desktopUserBtn {
-  padding: 8px 16px;
-  color: #1971c2;
-}
-
-.mobileMobileBtn {
-  padding: 8px 16px;
-  color: #1971c2;
-}
-
-.mobileArticlesBtn {
-  padding: 8px 16px;
-  color: #1971c2;
-}
-
-.mobileCreateBtn {
-  font-size: 24px;
-  padding: 8px 16px;
-  color: #FFFFFF;
-  background-color: black;
-}
-
-.mobileAllArticlesBtn {
-  font-size: 40px;
-}
-
-.mobileCategoryBtn {
-  font-size: 40px;
-  color: #1971c2;
-}
-
-.mobileArchiveBtn {
-  font-size: 40px;
-}
-
-.mobileUserItemBtn {
-  font-size: 40px;
-}
-
-.mobileSignOutBtn {
-  color: #1971c2;
-}
-
-.containerMobile {
-  position: fixed;
-  bottom: 0%;
+.largeCreationButton {
   width: 100%;
-  padding: 8px 8px 16px;
+  padding: 2px 0px;
+  background-color: black;
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: left;
+  user-select: none;
+  cursor: pointer;
+}
+
+.largeCreationButton:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.tagButton {
+  color: #1971c2;
+}
+
+.end {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  row-gap: 16px;
+}
+
+.end>button:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.userButton {
+  color: #1971c2;
+}
+
+.smallContainer {
+  position: relative;
+  width: 100%;
+  padding: 8px 16px 16px;
+  display: flex;
   justify-content: space-between;
-  flex-wrap: nowrap;
+  align-items: center;
   background-color: #E8EDDF;
 }
 
-.tagsDropdown {
+.smallCreationButton {
+  padding: 8px 16px;
+  background-color: black;
+  color: white;
+  font-size: 24px;
+}
+
+.smallActiveTagButton {
+  margin-right: 16px;
+  color: #1971c2;
+}
+
+.settings {
   position: absolute;
   width: 100%;
   height: 100vh;
-  max-height: 100vh;
   left: 0;
   top: -100vh;
-  padding: 8px;
+  padding: 8px 16px;
   display: flex;
   flex-direction: column-reverse;
   justify-content: flex-start;
@@ -123,17 +94,10 @@
   background-color: #BFC7B4;
 }
 
-.menuDropdown {
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  max-height: 100vh;
-  left: 0;
-  top: -100vh;
-  padding: 8px;
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-start;
-  align-items: flex-end;
-  background-color: #BFC7B4;
+.settings>button {
+  font-size: 40px;
+}
+
+.smallSignOutButton {
+  color: #1971c2;
 }

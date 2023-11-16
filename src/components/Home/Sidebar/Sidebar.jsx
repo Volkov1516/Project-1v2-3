@@ -99,43 +99,43 @@ export const Sidebar = () => {
     <>
       {displayWidth > 639
         ? (
-          <aside className={css.container}>
+          <aside className={css.largeContainer}>
             <div className={css.start}>
-              <button className={css.desktopCreateBtn} onClick={openModalEditor}>CREATE</button>
-              <button className={css.desktopArticlesBtn} onClick={handleAll}>articles</button>
-              {tags?.map(i => (
-                <button className={css.desktopCategoryBtn} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</button>
-              ))}
+              <button className={css.largeCreationButton} onClick={openModalEditor}>CREATE</button>
+              <button onClick={handleAll}>articles</button>
+              {tags?.map(i => <button className={css.tagButton} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</button>)}
               <EditTags />
-              <button className={css.desktopArchiveBtn} onClick={handleArchive}>archive</button>
+              <button onClick={handleArchive}>archive</button>
             </div>
             <div className={css.end}>
-              <button className={css.desktopSettingsBtn}>settings</button>
-              <button className={css.desktopUserBtn} onClick={handleSignOut}>{user?.email}</button>
+              <button>settings</button>
+              <button className={css.userButton} onClick={handleSignOut}>{user?.email}</button>
             </div>
           </aside>
         )
         : (
-          <div className={css.containerMobile}>
-            <button className={css.mobileMobileBtn} onClick={handleMenuDropdown}>menu</button>
-            <button className={css.mobileArticlesBtn} onClick={handleTagsDropdown}>articles</button>
-            <button className={css.mobileCreateBtn} onClick={openModalEditor}>CREATE</button>
+          <div className={css.smallContainer}>
+            <div>
+              <button onClick={handleMenuDropdown}>menu</button>
+            </div>
+            <div>
+              <button className={css.smallActiveTagButton} onClick={handleTagsDropdown}>articles</button>
+              <button className={css.smallCreationButton} onClick={openModalEditor}>CREATE</button>
+            </div>
             {tagsMenu && (
-              <div className={css.tagsDropdown}>
-                <button className={css.mobileAllArticlesBtn} onClick={handleAll}>articles</button>
-                {tags?.map(i => (
-                  <button className={css.mobileCategoryBtn} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</button>
-                ))}
+              <div className={css.settings}>
+                <button onClick={handleAll}>articles</button>
+                {tags?.map(i => <button className={css.tagButton} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</button>)}
                 <EditTags />
-                <button className={css.mobileArchiveBtn} onClick={handleArchive}>archive</button>
+                <button onClick={handleArchive}>archive</button>
               </div>
             )}
             {userMenu && (
-              <div className={css.menuDropdown}>
-                <button className={css.mobileUserItemBtn}>dark theme</button>
-                <button className={css.mobileUserItemBtn}>eye saver</button>
-                <button className={css.mobileUserItemBtn}>striped list</button>
-                <button className={`${css.mobileUserItemBtn} ${css.mobileSignOutBtn}`} onClick={handleSignOut}>sign out</button>
+              <div className={css.settings}>
+                <button>dark theme</button>
+                <button>eye saver</button>
+                <button>striped list</button>
+                <button className={css.smallSignOutButton} onClick={handleSignOut}>sign out</button>
               </div>
             )}
           </div>
