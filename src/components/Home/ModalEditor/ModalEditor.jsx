@@ -13,8 +13,6 @@ export const ModalEditor = () => {
   const { articleTags, date } = useSelector(state => state.article);
   const { autofocus, scrollOffset } = useSelector(state => state.modal);
 
-  let newDate = new Date();
-
   const modalEditorContentRef = useRef(null);
   const titleRef = useRef(null);
 
@@ -61,9 +59,6 @@ export const ModalEditor = () => {
           autofocus={autofocus}
         />
         <div className={css.metadata}>
-          <div className={css.date}>
-            {date || newDate.toLocaleDateString()}
-          </div>
           {tags?.map(i => articleTags?.map(j => {
             return i.id === j.id && <div key={i.id} className={css.category} style={{ color: "#1971c2" }}>#{i?.name}</div>
           }))}

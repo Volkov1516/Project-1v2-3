@@ -13,8 +13,6 @@ export const ModalPreview = () => {
   const { articleTags, filteredArticlesId, articleIndex, title, color, date } = useSelector(state => state.article);
   const { scrollOffset } = useSelector(state => state.modal);
 
-  let newDate = new Date();
-
   const [displayWidth, setDisplayWidth] = useState(null);
 
   useEffect(() => {
@@ -77,9 +75,6 @@ export const ModalPreview = () => {
           <div className={`${css.title} ${css[color]}`}>{title || "Untitled"}</div>
           <Editor preview={true} />
           <div className={css.metadata}>
-            <div className={css.date}>
-              {date || newDate.toLocaleDateString()}
-            </div>
             {tags?.map(i => articleTags?.map(j => {
               return i.id === j.id && <div key={i.id} className={css.category} style={{ color: "#1971c2" }}>#{i?.name}</div>
             }))}

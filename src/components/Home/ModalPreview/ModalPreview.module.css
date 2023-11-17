@@ -136,13 +136,6 @@
   margin-bottom: 400px;
 }
 
-.date {
-  padding-right: 8px;
-  font-weight: 600;
-  color: #BFC7B4;
-  user-select: none;
-}
-
 .category {
   font-weight: 600;
   user-select: none;

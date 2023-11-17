@@ -18,9 +18,9 @@ article {
   user-select: none;
 }
 
-article:nth-child(even) {
+/* article:nth-child(even) {
   background-color: #e8eddf !important;
-}
+} */
 
 article:hover {
   text-decoration: underline;
