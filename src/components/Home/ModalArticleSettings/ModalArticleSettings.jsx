@@ -13,8 +13,6 @@ export const ModalArticleSettings = () => {
   const { articleId, isArchived, articleCategories } = useSelector(state => state.article);
 
   const [deletionDialog, setDeletionDialog] = useState(false);
-  const [colorsList, setColorsList] = useState(false);
-  const [tagsList, setTagsList] = useState(false);
 
   const handleOpen = () => {
     dispatch(setModalSettings(true));
@@ -80,6 +78,9 @@ export const ModalArticleSettings = () => {
         window.history.back();
       })
       .catch((error) => console.log(error));
+
+    dispatch(setModalSettings(false));
+    window.history.back();
   };
 
   const handleDeleteArticle = async () => {
@@ -93,8 +94,8 @@ export const ModalArticleSettings = () => {
       })
       .catch((error) => console.log(error));
 
-      dispatch(setModalSettings(false));
-      window.history.back();
+    dispatch(setModalSettings(false));
+    window.history.back();
   };
 
   return (
@@ -103,37 +104,27 @@ export const ModalArticleSettings = () => {
       {modalSettings && (
         <div className={css.container} onClick={handleClose}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
-            <div className={css.section}>
-              <button onClick={handleClose}>close</button>
+            <div className={css.header}>
+              <button className={css.closeButton} onClick={handleClose}>close</button>
             </div>
             <div className={css.section}>
-              <div className={css.buttonWrapper} onClick={() => setTagsList(!tagsList)}>
-                <button>tags</button>
-                <span className={css.tagsTrigger}></span>
+              <span className={css.sectionTitle}>tags</span>
+              <div className={css.tagsContainer}>
+                {tags?.map(i => <button className={css.tagItem} key={i.id} onClick={() => handleSetCategory(i?.id)}>#{i?.name}</button>)}
               </div>
-              {tagsList && (
-                <div className={css.tagsContainer}>
-                  {tags?.map(i => <div key={i.id} onClick={() => handleSetCategory(i?.id)}>#{i?.name}</div>)}
-                </div>
-              )}
             </div>
             <div className={css.section}>
-              <div className={css.buttonWrapper} onClick={() => setColorsList(!colorsList)}>
-                <button>color</button>
-                <span className={css.colorTrigger}></span>
+              <span className={css.sectionTitle}>colors</span>
+              <div className={css.colorsContainer}>
+                <button className={css.colorItem} onClick={() => handleColor("white")} style={{ backgroundColor: "white", color: "black" }}>white</button>
+                <button className={css.colorItem} onClick={() => handleColor("black")} style={{ backgroundColor: "black" }}>black</button>
+                <button className={css.colorItem} onClick={() => handleColor("red")} style={{ backgroundColor: "#e03131" }}>red</button>
+                <button className={css.colorItem} onClick={() => handleColor("orange")} style={{ backgroundColor: "#fd7e14" }}>orange</button>
+                <button className={css.colorItem} onClick={() => handleColor("yellow")} style={{ backgroundColor: "#ffd43b" }}>yellow</button>
+                <button className={css.colorItem} onClick={() => handleColor("green")} style={{ backgroundColor: "#2f9e44" }}>green</button>
+                <button className={css.colorItem} onClick={() => handleColor("blue")} style={{ backgroundColor: "#1971c2" }}>blue</button>
+                <button className={css.colorItem} onClick={() => handleColor("purple")} style={{ backgroundColor: "#9c36b5" }}>purple</button>
               </div>
-              {colorsList && (
-                <div className={css.colorsContainer}>
-                  <div onClick={() => handleColor("white")} style={{ backgroundColor: "white", color: "black" }}>white</div>
-                  <div onClick={() => handleColor("black")} style={{ backgroundColor: "black", color: "white" }}>black</div>
-                  <div onClick={() => handleColor("red")} style={{ backgroundColor: "#e03131" }}>red</div>
-                  <div onClick={() => handleColor("orange")} style={{ backgroundColor: "#fd7e14" }}>orange</div>
-                  <div onClick={() => handleColor("yellow")} style={{ backgroundColor: "#ffd43b" }}>yellow</div>
-                  <div onClick={() => handleColor("green")} style={{ backgroundColor: "#2f9e44" }}>green</div>
-                  <div onClick={() => handleColor("blue")} style={{ backgroundColor: "#1971c2" }}>blue</div>
-                  <div onClick={() => handleColor("purple")} style={{ backgroundColor: "#9c36b5" }}>purple</div>
-                </div>
-              )}
             </div>
             <div className={css.section}>
               <button onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</button>
@@ -141,8 +132,8 @@ export const ModalArticleSettings = () => {
             <div className={css.section}>
               <button className={css.deleteBtn} onClick={() => setDeletionDialog(!deletionDialog)}>delete</button>
               {deletionDialog && (
-                <div>
-                  <button onClick={() => setDeletionDialog(false)}>cancel</button>
+                <div className={css.deletionDialog}>
+                  <button className={css.cancelDeleteBtn} onClick={() => setDeletionDialog(false)}>cancel</button>
                   <button className={css.deleteBtn} onClick={handleDeleteArticle}>delete forever</button>
                 </div>
               )}
