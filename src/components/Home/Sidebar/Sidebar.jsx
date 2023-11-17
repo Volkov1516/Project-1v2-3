@@ -116,7 +116,7 @@ export const Sidebar = () => {
         : (
           <div className={css.smallContainer}>
             <div>
-              <button onClick={handleMenuDropdown}>menu</button>
+              <button onClick={handleMenuDropdown}>settings</button>
             </div>
             <div>
               <button className={css.smallActiveTagButton} onClick={handleTagsDropdown}>articles</button>

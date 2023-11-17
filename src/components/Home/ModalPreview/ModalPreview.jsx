@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { SET_MODAL_EDITOR_EXISTING, SET_MODAL_AUTOFOCUS, SET_MODAL_SCROLL } from 'redux/features/modal/modalSlice';
 import { incrementIndex, decrementIndex } from 'redux/features/article/articleSlice';
@@ -14,6 +14,12 @@ export const ModalPreview = () => {
   const { scrollOffset } = useSelector(state => state.modal);
 
   let newDate = new Date();
+
+  const [displayWidth, setDisplayWidth] = useState(null);
+
+  useEffect(() => {
+    setDisplayWidth(window.visualViewport.width);
+  }, []);
 
   useEffect(() => {
     const modalPreviewElement = document?.getElementById('modalPreview');
@@ -61,10 +67,10 @@ export const ModalPreview = () => {
               <button className={css.navigationButton} onClick={next}>next</button>
             </div>
             <button className={css.editButton} onClick={openModalEditorFromPreview}>edit</button>
-            <ModalArticleSettings />
+            {displayWidth > 639 && <ModalArticleSettings />}
           </div>
           <div className={css.right}>
-            <button className={css.closeButton} onClick={close}>close</button>
+            {displayWidth > 639 ? <button className={css.closeButton} onClick={close}>close</button> : <ModalArticleSettings />}
           </div>
         </div>
         <div id="modalPreview" className={css.editor}>

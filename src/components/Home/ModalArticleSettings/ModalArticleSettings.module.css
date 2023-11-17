@@ -72,6 +72,7 @@
     background-color: #BFC7B4;
     flex-direction: column-reverse;
     align-items: flex-end;
+    row-gap: 0;
   }
 
   .section {

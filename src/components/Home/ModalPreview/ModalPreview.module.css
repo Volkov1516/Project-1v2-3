@@ -194,6 +194,7 @@
 
   .left {
     flex-direction: row-reverse;
+    column-gap: 20px;
   }
 
   .navigationButton {
