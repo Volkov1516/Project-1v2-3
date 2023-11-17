@@ -16,10 +16,7 @@
   background-color: #E8EDDF;
   text-align: center;
   font-size: 16px;
-}
-
-.container>button:hover {
-  background-color: #BFC7B4;
+  font-weight: 500;
 }
 
 .container>button:focus {
@@ -45,10 +42,7 @@
   border: none;
   background-color: #E8EDDF;
   font-size: 18px;
-}
-
-.dropdown>button:hover {
-  background-color: #BFC7B4;
+  font-weight: 500;
 }
 
 .dropdown>button:focus {
@@ -99,6 +93,16 @@
   background-color: #BFC7B4 !important;
 }
 
+@media (hover: hover) {
+  .container>button:hover {
+    background-color: #BFC7B4;
+  }
+
+  .dropdown>button:hover {
+    background-color: #BFC7B4;
+  }
+}
+
 @media (max-width: 639px) {
   .container {
     overflow: auto;
@@ -111,10 +115,6 @@
     min-width: 50px;
     min-height: 50px;
     font-size: 18px;
-  }
-
-  .container>button:hover {
-    background-color: transparent;
   }
 
   .dropdown {
