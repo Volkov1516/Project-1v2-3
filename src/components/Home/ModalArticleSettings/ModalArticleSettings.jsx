@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateColor, deleteArticle, setArticleArchive, addTag, setArticleTags } from 'redux/features/article/articleSlice';
-import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING } from 'redux/features/modal/modalSlice';
+import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING, setModalSettings } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 import css from './ModalArticleSettings.module.css';
@@ -9,12 +9,25 @@ import css from './ModalArticleSettings.module.css';
 export const ModalArticleSettings = () => {
   const dispatch = useDispatch();
   const { tags } = useSelector(state => state.user);
+  const { modalSettings } = useSelector(state => state.modal);
   const { articleId, isArchived, articleCategories } = useSelector(state => state.article);
 
   const [open, setOpen] = useState(false);
   const [deletionDialog, setDeletionDialog] = useState(false);
   const [colorsList, setColorsList] = useState(false);
   const [tagsList, setTagsList] = useState(false);
+
+  const handleOpen = () => {
+    dispatch(setModalSettings(true));
+
+    window.history.pushState({ modalSettings: 'opened' }, '', '#settings');
+  };
+
+  const handleClose = () => {
+    dispatch(setModalSettings(false));
+
+    window.history.back();
+  };
 
   const handleSetCategory = async (id) => {
     await setDoc(doc(db, 'articles', articleId),
@@ -86,12 +99,12 @@ export const ModalArticleSettings = () => {
 
   return (
     <>
-      <button className={css.mainButton} onClick={() => setOpen(true)}>settings</button>
-      {open && (
-        <div className={css.container} onClick={() => setOpen(false)}>
+      <button className={css.mainButton} onClick={handleOpen}>settings</button>
+      {modalSettings && (
+        <div className={css.container} onClick={handleClose}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
             <div className={css.section}>
-              <button onClick={() => setOpen(false)}>close</button>
+              <button onClick={handleClose}>close</button>
             </div>
             <div className={css.section}>
               <div className={css.buttonWrapper} onClick={() => setTagsList(!tagsList)}>

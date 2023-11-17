@@ -5,7 +5,8 @@ const initialState = {
   modalEditorExisting: false,
   modalPreview: false,
   autofocus: false,
-  scrollOffset: 0
+  scrollOffset: 0,
+  modalSettings: false
 };
 
 export const modalSlice = createSlice({
@@ -27,8 +28,11 @@ export const modalSlice = createSlice({
     SET_MODAL_SCROLL: (state, action) => {
       state.scrollOffset = action.payload;
     },
+    setModalSettings: (state, action) => {
+      state.modalSettings = action.payload;
+    },
   }
 });
 
-export const { SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING, SET_MODAL_PREVIEW, SET_MODAL_AUTOFOCUS, SET_MODAL_SCROLL } = modalSlice.actions;
+export const { SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING, SET_MODAL_PREVIEW, SET_MODAL_AUTOFOCUS, SET_MODAL_SCROLL, setModalSettings } = modalSlice.actions;
 export default modalSlice.reducer;

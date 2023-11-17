@@ -87,7 +87,7 @@ export const Sidebar = () => {
 
   const handleTagsDropdown = () => {
     setUserMenu(false);
-    setTagsMenu(!tagsMenu)
+    setTagsMenu(!tagsMenu);
   };
 
   const handleMenuDropdown = () => {

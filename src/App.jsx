@@ -2,7 +2,7 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser, setTags } from 'redux/features/user/userSlice';
 import { setArticles, setFilteredArticlesId, setIsNewArticle } from 'redux/features/article/articleSlice';
-import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY, SET_MODAL_SCROLL } from 'redux/features/modal/modalSlice';
+import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY, SET_MODAL_SCROLL, setModalSettings } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, collection, query, where, orderBy, getDocs, getDoc } from 'firebase/firestore';
@@ -85,6 +85,13 @@ export const App = () => {
       else {
         dispatch(setIsNewArticle(false));
         dispatch(SET_MODAL_EDITOR_EMPTY(false));
+      }
+
+      if (e.state && e.state.modalSettings === 'opened') {
+        dispatch(setModalSettings(true));
+      }
+      else {
+        dispatch(setModalSettings(false));
       }
     };
 
