@@ -33,7 +33,7 @@ export const ModalEditor = () => {
 
   useEffect(() => {
     const modalEditorElement = document?.getElementById('modalEditor');
-    modalEditorElement?.scrollTo({ top: scrollOffset, behavior: 'smooth' });
+    modalEditorElement?.scrollTo({ top: scrollOffset, behavior: 'instant' });
   }, [scrollOffset]);
 
   return (

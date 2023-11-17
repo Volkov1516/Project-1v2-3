@@ -8,15 +8,15 @@
   z-index: 2;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
 .content {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  width: 732px;
-  height: 90%;
+  height: 600px;
+  width: 742px;
+  margin-top: 40px;
   background-color: white;
 }
 
@@ -72,15 +72,14 @@
   color: #1971c2;
 }
 
-
 .editor {
+  padding: 0px 16px;
   overflow: auto;
   max-height: 100%;
   user-select: none !important;
 }
 
 .title {
-  margin-left: 8px;
   text-transform: uppercase;
   font-size: 40px;
   font-weight: 800;
@@ -203,7 +202,7 @@
   }
 
   .editor {
-    padding: 37px 8px 8px;
+    padding: 29px 8px 8px;
   }
 
   .title {

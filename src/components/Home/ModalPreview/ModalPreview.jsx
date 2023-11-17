@@ -23,7 +23,7 @@ export const ModalPreview = () => {
 
   useEffect(() => {
     const modalPreviewElement = document?.getElementById('modalPreview');
-    modalPreviewElement?.scrollTo({ top: scrollOffset, behavior: 'smooth' });
+    modalPreviewElement?.scrollTo({ top: scrollOffset, behavior: 'instant' });
   }, [scrollOffset]);
 
   const openModalEditorFromPreview = () => {
@@ -39,7 +39,7 @@ export const ModalPreview = () => {
     if (articleIndex === 0) return;
 
     const modalPreviewElement = document.getElementById('modalPreview');
-    modalPreviewElement.scrollTo({ top: 0, behavior: 'smooth' });
+    modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
     dispatch(decrementIndex());
   };
 
@@ -47,7 +47,7 @@ export const ModalPreview = () => {
     if (articleIndex === filteredArticlesId?.length - 1) return;
 
     const modalPreviewElement = document.getElementById('modalPreview');
-    modalPreviewElement.scrollTo({ top: 0, behavior: 'smooth' });
+    modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
     dispatch(incrementIndex());
   };
 
