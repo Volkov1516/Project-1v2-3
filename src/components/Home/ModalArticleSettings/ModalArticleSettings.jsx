@@ -6,7 +6,7 @@ import { doc, deleteDoc, updateDoc, arrayUnion, setDoc } from 'firebase/firestor
 import { db } from 'firebase.js';
 import css from './ModalArticleSettings.module.css';
 
-export const ModalArticleSettings = () => {
+export const ModalArticleSettings = ({color}) => {
   const dispatch = useDispatch();
   const { tags } = useSelector(state => state.user);
   const { modalSettings } = useSelector(state => state.modal);
@@ -100,7 +100,7 @@ export const ModalArticleSettings = () => {
 
   return (
     <>
-      <button className={css.mainButton} onClick={handleOpen}>settings</button>
+      <button className={`${css.mainButton} ${css[color]}`} onClick={handleOpen}>settings</button>
       {modalSettings && (
         <div className={css.container} onClick={handleClose}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>

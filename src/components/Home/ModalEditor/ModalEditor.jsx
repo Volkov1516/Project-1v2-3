@@ -48,7 +48,7 @@ export const ModalEditor = () => {
           )}
         </div>
         <div className={css.right}>
-          <ModalArticleSettings />
+          <ModalArticleSettings color="blue" />
         </div>
       </div>
       <div ref={modalEditorContentRef} className={css.content}>

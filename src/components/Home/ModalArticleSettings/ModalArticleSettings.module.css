@@ -21,6 +21,11 @@
   width: 300px;
 }
 
+.blue {
+  padding: 8px 16px;
+  color: #1971c2;
+}
+
 .header {
   display: flex;
   justify-content: flex-end;
