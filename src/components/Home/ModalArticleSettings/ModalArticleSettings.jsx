@@ -12,7 +12,6 @@ export const ModalArticleSettings = () => {
   const { modalSettings } = useSelector(state => state.modal);
   const { articleId, isArchived, articleCategories } = useSelector(state => state.article);
 
-  const [open, setOpen] = useState(false);
   const [deletionDialog, setDeletionDialog] = useState(false);
   const [colorsList, setColorsList] = useState(false);
   const [tagsList, setTagsList] = useState(false);
@@ -94,7 +93,8 @@ export const ModalArticleSettings = () => {
       })
       .catch((error) => console.log(error));
 
-    setOpen(false);
+      dispatch(setModalSettings(false));
+      window.history.back();
   };
 
   return (
