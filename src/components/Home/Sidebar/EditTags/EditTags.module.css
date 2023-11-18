@@ -69,6 +69,7 @@
   font-size: 16px;
   color: gray;
   background-color: #e8eddf !important;
+  text-transform: lowercase;
 }
 
 .categoryGroup {

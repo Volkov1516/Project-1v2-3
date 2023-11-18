@@ -142,7 +142,7 @@ export const Sidebar = () => {
         : (
           <div className={css.smallContainer}>
             <button className={`${css.smallSettingsButton} ${activeMenu && css.smallSettingsButtonActive}`} onClick={handleMenuDropdown}>settings</button>
-            <div>
+            <div  className={css.smallLeft}>
               <button className={`${css.smallActiveTagButton} ${activeTagButton && css.smallActiveTagButtonActive}`} onClick={handleTagsDropdown}>{activeButtonText}</button>
               <button className={css.smallCreationButton} onClick={openModalEditor}>CREATE</button>
             </div>
