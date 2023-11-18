@@ -142,9 +142,8 @@
 .tagsMenu {
   position: absolute;
   width: 100vw;
-  height: calc(100vh - 80px);
-  /* top: calc(-100vh + 72px); */
-  bottom: 80px;
+  height: 100vh;
+  top: -100vh;
   left: 0;
   padding: 16px;
   display: flex;
