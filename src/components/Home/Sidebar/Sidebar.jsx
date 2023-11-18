@@ -26,6 +26,8 @@ export const Sidebar = () => {
   const [displayWidth, setDisplayWidth] = useState(null);
   const [activeButtonId, setActiveButtonId] = useState('articles');
   const [activeButtonText, setActiveButtonText] = useState('articles');
+  const [activeTagButton, setActiveTagButton] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(false);
 
   useEffect(() => {
     setDisplayWidth(window.visualViewport.width);
@@ -65,6 +67,7 @@ export const Sidebar = () => {
     setActiveButtonId('articles');
     setActiveButtonText('articles');
     setTagsMenu(false);
+    setActiveTagButton(!activeTagButton);
   };
 
   const handleArchive = () => {
@@ -75,6 +78,7 @@ export const Sidebar = () => {
     setActiveButtonId('archive');
     setActiveButtonText('archive');
     setTagsMenu(false);
+    setActiveTagButton(!activeTagButton);
   };
 
   const setFilteredByCategory = (id, name) => {
@@ -92,18 +96,23 @@ export const Sidebar = () => {
 
     dispatch(setFilteredArticlesId(newArr));
     setActiveButtonId(id);
-    setActiveButtonText(name);
+    setActiveButtonText(`#${name}`);
     setTagsMenu(false);
+    setActiveTagButton(!activeTagButton);
   };
 
   const handleTagsDropdown = () => {
     setUserMenu(false);
     setTagsMenu(!tagsMenu);
+    setActiveTagButton(!activeTagButton);
+    setActiveMenu(false);
   };
 
   const handleMenuDropdown = () => {
     setTagsMenu(false);
     setUserMenu(!userMenu);
+    setActiveTagButton(false);
+    setActiveMenu(!activeMenu);
   };
 
   return (
@@ -132,17 +141,15 @@ export const Sidebar = () => {
         )
         : (
           <div className={css.smallContainer}>
+            <button className={`${css.smallSettingsButton} ${activeMenu && css.smallSettingsButtonActive}`} onClick={handleMenuDropdown}>settings</button>
             <div>
-              <button onClick={handleMenuDropdown}>settings</button>
-            </div>
-            <div>
-              <button className={css.smallActiveTagButton} onClick={handleTagsDropdown}>{activeButtonText}</button>
+              <button className={`${css.smallActiveTagButton} ${activeTagButton && css.smallActiveTagButtonActive}`} onClick={handleTagsDropdown}>{activeButtonText}</button>
               <button className={css.smallCreationButton} onClick={openModalEditor}>CREATE</button>
             </div>
             {tagsMenu && (
-              <div className={css.settings}>
+              <div className={css.tagsMenu}>
+                <EditTags />
                 <div className={css.smallTagsContainer}>
-                  <EditTags />
                   <button id="archive" className={`${css.archiveButton} ${activeButtonId === 'archive' && css.activeArchiveButton}`} onClick={handleArchive}>archive</button>
                   {tags?.map(i => <button id={i?.id} className={`${css.tagButton} ${activeButtonId === i?.id && css.activeTagButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id, i?.name)}>#{i?.name}</button>)}
                   <button id="articles" className={`${css.tagButton} ${activeButtonId === 'articles' && css.activeTagButton}`} onClick={handleAll}>articles</button>

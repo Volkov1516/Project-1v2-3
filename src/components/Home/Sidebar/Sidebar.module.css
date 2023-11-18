@@ -1,12 +1,11 @@
 .largeContainer {
-  width: 240px;
-  min-width: 240px;
+  width: 250px;
+  min-width: 250px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: #E8EDDF;
-  border-right: 1px solid #BFC7B4;
 }
 
 .start {
@@ -17,16 +16,11 @@
   row-gap: 16px;
 }
 
-/* .start>button:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-} */
-
 .largeCreationButton {
   width: 100%;
-  padding: 2px 0px;
+  padding: 4px 0;
   background-color: black;
-  color: #FFFFFF;
+  color: white;
   font-size: 24px;
   font-weight: 600;
   text-align: left;
@@ -47,29 +41,44 @@
 }
 
 .tagButton {
-  padding: 2px 8px;
-  border: 1px solid black;
-  border-radius: 16px;
-  color: black;
+  padding: 4px 12px;
+  border-radius: 1em;
+  background-color: #BFC7B4;
   font-weight: 500;
 }
 
+.tagButton:hover {
+  background-color: #a1a89aee;
+}
+
 .activeTagButton {
+  background-color: black !important;
+  color: white !important;
+}
+
+.activeTagButton:hover {
   background-color: black;
-  color: white;
 }
 
 .archiveButton {
-  padding: 2px 8px;
-  border: 1px solid #e03131;
-  border-radius: 16px;
+  padding: 4px 12px;
+  border-radius: 1em;
+  background-color: #BFC7B4;
   color: #e03131;
   font-weight: 500;
 }
 
+.archiveButton:hover {
+  background-color: #a1a89aee;
+}
+
 .activeArchiveButton {
+  background-color: #e03131 !important;
+  color: white !important;
+}
+
+.activeArchiveButton:hover {
   background-color: #e03131;
-  color: white;
 }
 
 .end {
@@ -92,7 +101,7 @@
 .smallContainer {
   position: relative;
   width: 100%;
-  padding: 8px 16px 16px;
+  padding: 8px 8px 16px 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -107,8 +116,51 @@
 }
 
 .smallActiveTagButton {
-  margin-right: 16px;
+  margin-right: 8px;
+  padding: 8px 16px;
   color: #1971c2;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.smallActiveTagButtonActive {
+  border-radius: 1em;
+  background-color: #BFC7B4;
+}
+
+.smallSettingsButton {
+  padding: 8px 16px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.smallSettingsButtonActive {
+  border-radius: 1em;
+  background-color: #BFC7B4;
+}
+
+.tagsMenu {
+  position: absolute;
+  width: 100vw;
+  height: calc(100vh - 72px);
+  top: calc(-100vh + 72px);
+  left: 0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  row-gap: 16px;
+  background-color: #BFC7B4;
+}
+
+.smallTagsContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  direction: ltr;
 }
 
 .settings {
@@ -131,30 +183,26 @@
   height: fit-content;
 }
 
-.smallTagsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: flex-end;
-}
-
-.smallTagsContainer>button {
-  font-size: 24px;
-  padding: 8px 16px;
-  border-radius: 1em;
-  font-weight: 500;
-  height: fit-content;
-}
-
 .smallSignOutButton {
   color: #e03131;
 }
 
 @media (max-width: 639px) {
   .tagButton {
-    border: 2px solid black;
+    padding: 8px 16px;
+    border-radius: 1em;
+    background-color: #a1a89aee;
+    color: black;
+    font-size: 24px;
+    font-weight: 500;
   }
+  
   .archiveButton {
-    border: 2px solid #e03131;
+    padding: 8px 16px;
+    border-radius: 1em;
+    background-color: #a1a89aee;
+    color: #e03131;
+    font-size: 24px;
+    font-weight: 500;
   }
 }

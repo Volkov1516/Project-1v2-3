@@ -20,12 +20,13 @@
 }
 
 .mainBtn {
+  padding: 4px 12px;
+  border-radius: 1em;
   font-weight: 500;
 }
 
 .mainBtn:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
+  background-color: #BFC7B4;
 }
 
 .closeBtn {
@@ -88,6 +89,12 @@
 }
 
 @media (max-width: 639px) {
+  .mainBtn {
+    font-size: 40px;
+    font-weight: 600;
+    color: #1971c2;
+  }
+
   .dropdownItem {
     font-size: 40px;
     font-weight: 600;
