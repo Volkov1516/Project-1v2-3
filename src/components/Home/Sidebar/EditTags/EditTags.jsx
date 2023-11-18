@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addTag, deleteTag, updateTag } from 'redux/features/user/userSlice';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,6 +13,11 @@ export const EditTags = () => {
 
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [displayWidth, setDisplayWidth] = useState(null);
+
+  useEffect(() => {
+    setDisplayWidth(window.visualViewport.width);
+  }, []);
 
   const createCategory = async () => {
     if (!inputValue) return;
@@ -74,7 +79,7 @@ export const EditTags = () => {
 
   return (
     <>
-      <button className={css.mainBtn} onClick={() => setOpen(true)}>edit</button>
+      <button className={css.mainBtn} onClick={() => setOpen(true)}>{displayWidth > 639 ? 'edit' : 'edit tags'}</button>
       {open && (
         <div className={css.container} onClick={() => setOpen(false)}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>

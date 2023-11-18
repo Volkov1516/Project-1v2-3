@@ -142,16 +142,22 @@
 .tagsMenu {
   position: absolute;
   width: 100vw;
-  height: 100vh;
-  top: -100vh;
+  height: calc(100vh - 80px);
+  bottom: 80px;
   left: 0;
   padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
-  row-gap: 16px;
   background-color: #BFC7B4;
+}
+
+.divider {
+  width: 100%;
+  height: 2px;
+  margin: 4px 0 16px;
+  background-color: #a1a89aee;
 }
 
 .smallTagsContainer {

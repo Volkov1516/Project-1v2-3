@@ -149,6 +149,7 @@ export const Sidebar = () => {
             {tagsMenu && (
               <div className={css.tagsMenu}>
                 <EditTags />
+                <div className={css.divider} />
                 <div className={css.smallTagsContainer}>
                   <button id="archive" className={`${css.archiveButton} ${activeButtonId === 'archive' && css.activeArchiveButton}`} onClick={handleArchive}>archive</button>
                   {tags?.map(i => <button id={i?.id} className={`${css.tagButton} ${activeButtonId === i?.id && css.activeTagButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id, i?.name)}>#{i?.name}</button>)}
