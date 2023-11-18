@@ -19,6 +19,7 @@
   background-color: white;
   padding: 16px;
   width: 300px;
+  background-color: #BFC7B4;
 }
 
 .blue {
@@ -52,13 +53,14 @@
   margin-top: 8px;
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 8px;
 }
 
 .tagItem {
-  padding: 4px 8px;
-  border: 1px solid #1971c2;
-  color: #1971c2;
+  padding: 2px 8px;
+  border: 1px solid black;
+  border-radius: 16px;
+  color: black;
   font-weight: 400;
 }
 
@@ -74,12 +76,15 @@
 .colorsContainer {
   margin-top: 8px;
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 4px;
 }
 
 .colorItem {
-  padding: 4px 8px;
+  /* padding: 4px 8px; */
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   color: white;
   font-weight: 400;
 }
@@ -126,16 +131,6 @@
   .deletionDialog>button:hover {
     text-decoration: underline;
     text-decoration-thickness: 2px;
-  }
-
-  .colorItem:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-  }
-
-  .tagItem:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
   }
 }
 

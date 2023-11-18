@@ -24,6 +24,8 @@ export const Sidebar = () => {
   const [tagsMenu, setTagsMenu] = useState(false);
   const [userMenu, setUserMenu] = useState(false);
   const [displayWidth, setDisplayWidth] = useState(null);
+  const [activeButtonId, setActiveButtonId] = useState('articles');
+  const [activeButtonText, setActiveButtonText] = useState('articles');
 
   useEffect(() => {
     setDisplayWidth(window.visualViewport.width);
@@ -60,6 +62,9 @@ export const Sidebar = () => {
     articles?.forEach(i => !i?.archive && filteredArticlesId.push(i?.id));
 
     dispatch(setFilteredArticlesId(filteredArticlesId));
+    setActiveButtonId('articles');
+    setActiveButtonText('articles');
+    setTagsMenu(false);
   };
 
   const handleArchive = () => {
@@ -67,9 +72,12 @@ export const Sidebar = () => {
     articles?.forEach(i => i?.archive && filteredArticlesId.push(i?.id));
 
     dispatch(setFilteredArticlesId(filteredArticlesId));
+    setActiveButtonId('archive');
+    setActiveButtonText('archive');
+    setTagsMenu(false);
   };
 
-  const setFilteredByCategory = (id) => {
+  const setFilteredByCategory = (id, name) => {
     const unarchived = articles?.filter(i => !i?.archive);
     let newArr = [];
 
@@ -83,6 +91,9 @@ export const Sidebar = () => {
     }));
 
     dispatch(setFilteredArticlesId(newArr));
+    setActiveButtonId(id);
+    setActiveButtonText(name);
+    setTagsMenu(false);
   };
 
   const handleTagsDropdown = () => {
@@ -102,10 +113,16 @@ export const Sidebar = () => {
           <aside className={css.largeContainer}>
             <div className={css.start}>
               <button className={css.largeCreationButton} onClick={openModalEditor}>CREATE</button>
-              <button onClick={handleAll}>articles</button>
-              {tags?.map(i => <button className={css.tagButton} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</button>)}
-              <EditTags />
-              <button onClick={handleArchive}>archive</button>
+              <div className={css.tagsContainer}>
+                <button id="articles" className={`${css.tagButton} ${activeButtonId === 'articles' && css.activeTagButton}`} onClick={handleAll}>articles</button>
+                {tags?.map(i => (
+                  <button id={i?.id} className={`${css.tagButton} ${activeButtonId === i?.id && css.activeTagButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>
+                    #{i?.name}
+                  </button>
+                ))}
+                <button id="archive" className={`${css.archiveButton} ${activeButtonId === 'archive' && css.activeArchiveButton}`} onClick={handleArchive}>archive</button>
+                <EditTags />
+              </div>
             </div>
             <div className={css.end}>
               <button>settings</button>
@@ -119,15 +136,17 @@ export const Sidebar = () => {
               <button onClick={handleMenuDropdown}>settings</button>
             </div>
             <div>
-              <button className={css.smallActiveTagButton} onClick={handleTagsDropdown}>articles</button>
+              <button className={css.smallActiveTagButton} onClick={handleTagsDropdown}>{activeButtonText}</button>
               <button className={css.smallCreationButton} onClick={openModalEditor}>CREATE</button>
             </div>
             {tagsMenu && (
               <div className={css.settings}>
-                <button onClick={handleAll}>articles</button>
-                {tags?.map(i => <button className={css.tagButton} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>#{i?.name}</button>)}
-                <EditTags />
-                <button onClick={handleArchive}>archive</button>
+                <div className={css.smallTagsContainer}>
+                  <EditTags />
+                  <button id="archive" className={`${css.archiveButton} ${activeButtonId === 'archive' && css.activeArchiveButton}`} onClick={handleArchive}>archive</button>
+                  {tags?.map(i => <button id={i?.id} className={`${css.tagButton} ${activeButtonId === i?.id && css.activeTagButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id, i?.name)}>#{i?.name}</button>)}
+                  <button id="articles" className={`${css.tagButton} ${activeButtonId === 'articles' && css.activeTagButton}`} onClick={handleAll}>articles</button>
+                </div>
               </div>
             )}
             {userMenu && (

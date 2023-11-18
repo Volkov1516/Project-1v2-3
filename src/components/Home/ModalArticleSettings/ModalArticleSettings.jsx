@@ -108,24 +108,24 @@ export const ModalArticleSettings = ({color}) => {
               <button className={css.closeButton} onClick={handleClose}>close</button>
             </div>
             <div className={css.section}>
-              <span className={css.sectionTitle}>tags</span>
               <div className={css.tagsContainer}>
                 {tags?.map(i => <button className={css.tagItem} key={i.id} onClick={() => handleSetCategory(i?.id)}>#{i?.name}</button>)}
               </div>
             </div>
+            <hr />
             <div className={css.section}>
-              <span className={css.sectionTitle}>colors</span>
               <div className={css.colorsContainer}>
-                <button className={css.colorItem} onClick={() => handleColor("white")} style={{ backgroundColor: "white", color: "black" }}>white</button>
-                <button className={css.colorItem} onClick={() => handleColor("black")} style={{ backgroundColor: "black" }}>black</button>
-                <button className={css.colorItem} onClick={() => handleColor("red")} style={{ backgroundColor: "#e03131" }}>red</button>
-                <button className={css.colorItem} onClick={() => handleColor("orange")} style={{ backgroundColor: "#fd7e14" }}>orange</button>
-                <button className={css.colorItem} onClick={() => handleColor("yellow")} style={{ backgroundColor: "#ffd43b" }}>yellow</button>
-                <button className={css.colorItem} onClick={() => handleColor("green")} style={{ backgroundColor: "#2f9e44" }}>green</button>
-                <button className={css.colorItem} onClick={() => handleColor("blue")} style={{ backgroundColor: "#1971c2" }}>blue</button>
-                <button className={css.colorItem} onClick={() => handleColor("purple")} style={{ backgroundColor: "#9c36b5" }}>purple</button>
+                <button className={css.colorItem} onClick={() => handleColor("white")} style={{ backgroundColor: "white" }}></button>
+                <button className={css.colorItem} onClick={() => handleColor("black")} style={{ backgroundColor: "black" }}></button>
+                <button className={css.colorItem} onClick={() => handleColor("red")} style={{ backgroundColor: "#e03131" }}></button>
+                <button className={css.colorItem} onClick={() => handleColor("orange")} style={{ backgroundColor: "#fd7e14" }}></button>
+                <button className={css.colorItem} onClick={() => handleColor("yellow")} style={{ backgroundColor: "#ffd43b" }}></button>
+                <button className={css.colorItem} onClick={() => handleColor("green")} style={{ backgroundColor: "#2f9e44" }}></button>
+                <button className={css.colorItem} onClick={() => handleColor("blue")} style={{ backgroundColor: "#1971c2" }}></button>
+                <button className={css.colorItem} onClick={() => handleColor("purple")} style={{ backgroundColor: "#9c36b5" }}></button>
               </div>
             </div>
+            <hr />
             <div className={css.section}>
               <button onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</button>
             </div>

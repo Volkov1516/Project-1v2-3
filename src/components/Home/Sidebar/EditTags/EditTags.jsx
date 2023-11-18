@@ -74,7 +74,7 @@ export const EditTags = () => {
 
   return (
     <>
-      <button className={css.mainBtn} onClick={() => setOpen(true)}>edit tags</button>
+      <button className={css.mainBtn} onClick={() => setOpen(true)}>edit</button>
       {open && (
         <div className={css.container} onClick={() => setOpen(false)}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>

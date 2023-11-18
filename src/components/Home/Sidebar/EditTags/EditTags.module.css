@@ -19,6 +19,15 @@
   background-color: white;
 }
 
+.mainBtn {
+  font-weight: 500;
+}
+
+.mainBtn:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
 .closeBtn {
   padding: 8px;
   color: #1971c2;
@@ -73,15 +82,15 @@
   outline: none;
   border: none;
   background-color: #e8eddf !important;
-  color: #1971c2; 
+  color: #1971c2;
   padding-left: 8px;
   font-size: 16px;
 }
 
 @media (max-width: 639px) {
   .mainBtn {
-    font-size: 40px;
-    padding: 8px;
+    /* font-size: 40px; */
+    /* padding: 8px; */
   }
 
   .dropdownItem {

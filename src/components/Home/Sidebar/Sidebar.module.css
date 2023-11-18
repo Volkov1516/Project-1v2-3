@@ -1,11 +1,12 @@
 .largeContainer {
-  width: 200px;
-  min-width: 200px;
+  width: 240px;
+  min-width: 240px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: #E8EDDF;
+  border-right: 1px solid #BFC7B4;
 }
 
 .start {
@@ -16,10 +17,10 @@
   row-gap: 16px;
 }
 
-.start>button:hover {
+/* .start>button:hover {
   text-decoration: underline;
   text-decoration-thickness: 2px;
-}
+} */
 
 .largeCreationButton {
   width: 100%;
@@ -38,9 +39,40 @@
   text-decoration-thickness: 2px;
 }
 
-.tagButton {
-  color: #1971c2;
+.tagsContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
+
+.tagButton {
+  padding: 2px 8px;
+  border: 1px solid black;
+  border-radius: 16px;
+  color: black;
+  font-weight: 500;
+}
+
+.activeTagButton {
+  background-color: black;
+  color: white;
+}
+
+.archiveButton {
+  padding: 2px 8px;
+  border: 1px solid #e03131;
+  border-radius: 16px;
+  color: #e03131;
+  font-weight: 500;
+}
+
+.activeArchiveButton {
+  background-color: #e03131;
+  color: white;
+}
+
+
 
 .end {
   display: flex;
@@ -92,11 +124,28 @@
   flex-direction: column-reverse;
   justify-content: flex-start;
   align-items: flex-end;
+  flex-wrap: wrap;
   background-color: #BFC7B4;
 }
 
 .settings>button {
   font-size: 40px;
+  height: fit-content;
+}
+
+.smallTagsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.smallTagsContainer>button {
+  font-size: 24px;
+  padding: 8px 16px;
+  border-radius: 1em;
+  font-weight: 400;
+  height: fit-content;
 }
 
 .smallSignOutButton {
