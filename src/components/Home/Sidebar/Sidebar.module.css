@@ -72,8 +72,6 @@
   color: white;
 }
 
-
-
 .end {
   display: flex;
   flex-direction: column;
@@ -144,10 +142,19 @@
   font-size: 24px;
   padding: 8px 16px;
   border-radius: 1em;
-  font-weight: 400;
+  font-weight: 500;
   height: fit-content;
 }
 
 .smallSignOutButton {
   color: #e03131;
+}
+
+@media (max-width: 639px) {
+  .tagButton {
+    border: 2px solid black;
+  }
+  .archiveButton {
+    border: 2px solid #e03131;
+  }
 }

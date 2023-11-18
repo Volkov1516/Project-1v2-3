@@ -88,11 +88,6 @@
 }
 
 @media (max-width: 639px) {
-  .mainBtn {
-    /* font-size: 40px; */
-    /* padding: 8px; */
-  }
-
   .dropdownItem {
     font-size: 40px;
     font-weight: 600;
