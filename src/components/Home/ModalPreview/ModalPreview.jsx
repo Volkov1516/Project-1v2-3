@@ -10,7 +10,7 @@ import { ModalArticleSettings } from '../ModalArticleSettings/ModalArticleSettin
 export const ModalPreview = () => {
   const dispatch = useDispatch();
   const { tags } = useSelector(state => state.user);
-  const { articleTags, filteredArticlesId, articleIndex, title, color, date } = useSelector(state => state.article);
+  const { articleTags, filteredArticlesId, articleIndex, title, color } = useSelector(state => state.article);
   const { scrollOffset } = useSelector(state => state.modal);
 
   const [displayWidth, setDisplayWidth] = useState(null);

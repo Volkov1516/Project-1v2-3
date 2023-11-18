@@ -10,7 +10,7 @@ import { ModalArticleSettings } from '../ModalArticleSettings/ModalArticleSettin
 export const ModalEditor = () => {
   const dispatch = useDispatch();
   const { tags } = useSelector(state => state.user);
-  const { articleTags, date } = useSelector(state => state.article);
+  const { articleTags } = useSelector(state => state.article);
   const { autofocus, scrollOffset } = useSelector(state => state.modal);
 
   const modalEditorContentRef = useRef(null);
