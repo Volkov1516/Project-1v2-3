@@ -50,6 +50,19 @@
   background-color: black;
 }
 
+.forgotPasswordButton {
+  width: fit-content;
+  padding: 4px 0 0;
+  margin: 0 auto;
+  color: gray;
+  font-weight: 400;
+}
+
+.forgotPasswordButton:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
 .googleBtn {
   display: flex;
   justify-content: center;
@@ -117,6 +130,53 @@
   color: #e03131;
 }
 
+.forgotPasswordContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.resetForm {
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+  flex-wrap: nowrap;
+}
+
+.resetInput {
+  padding: 8px 16px;
+}
+
+.resetButton {
+  min-width: fit-content;
+  padding: 8px 16px;
+  background-color: black;
+  color: white;
+}
+
+.resetButton:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
+.resetMessage {
+  margin-top: 16px;
+  color: gray;
+}
+
+.resetBackButton {
+  margin-top: 16px;
+  color: #1971c2;
+}
+
+.resetBackButton:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
 @media (max-width: 639px) {
   .label {
     font-size: 16px;
@@ -124,6 +184,18 @@
 
   .input {
     padding: 12px 8px;
+  }
+
+  .submitBtn {
+    padding: 12px 8px;
+  }
+
+  .googleBtn {
+    padding: 12px 8px;
+  }
+
+  .resetButton {
+    padding: 12px 16px;
   }
 }
 
