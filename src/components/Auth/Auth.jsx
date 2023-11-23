@@ -7,7 +7,9 @@ import {
   GoogleAuthProvider,
   sendPasswordResetEmail
 } from 'firebase/auth';
+
 import css from './Auth.module.css';
+
 import logo from 'assets/logo.png';
 import google from 'assets/google.svg';
 
@@ -73,13 +75,9 @@ export default function Auth() {
     await signInWithPopup(auth, provider)
       .catch((error) => {
         const errorCode = error.code;
-          const normalizedMessage = errorCode?.slice(5).split('-').join(' ');
-          const firstLetterToUpperCase = normalizedMessage.charAt(0).toUpperCase() + normalizedMessage.slice(1);
-          setErrorMessage(firstLetterToUpperCase);
-
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.log(email, credential);
+        const normalizedMessage = errorCode?.slice(5).split('-').join(' ');
+        const firstLetterToUpperCase = normalizedMessage.charAt(0).toUpperCase() + normalizedMessage.slice(1);
+        setErrorMessage(firstLetterToUpperCase);
       });
   };
 
@@ -88,13 +86,24 @@ export default function Auth() {
 
     await sendPasswordResetEmail(auth, resetEmail)
       .then(() => setResetMessage(true))
-      .catch(error => console.log(error));
+      .catch(error => {
+        const errorCode = error.code;
+        const normalizedMessage = errorCode?.slice(5).split('-').join(' ');
+        const firstLetterToUpperCase = normalizedMessage.charAt(0).toUpperCase() + normalizedMessage.slice(1);
+        setErrorMessage(firstLetterToUpperCase);
+      });
+  };
+
+  const handleOpenReset = () => {
+    setErrorMessage(null);
+    setReset(true);
   };
 
   const handleCloseReset = () => {
     setResetEmail('');
     setResetMessage(false);
     setReset(false);
+    setErrorMessage(null);
   };
 
   return (
@@ -146,7 +155,7 @@ export default function Auth() {
                 <span className={css.error}>Password must contain minimum 6 characters</span>
               </div>
               <button className={css.submitBtn} type="submit">Continue with email</button>
-              {authType === "Log in" && <button className={css.forgotPasswordButton} onClick={() => setReset(true)}>Forgot password</button>}
+              {authType === "Log in" && <button className={css.forgotPasswordButton} onClick={handleOpenReset}>Forgot password</button>}
               <hr className={css.divider} />
               <button className={css.googleBtn} onClick={handleGoogle}><img className={css.buttonImg} src={google} alt="google" />Continue with Google</button>
             </form>
@@ -166,6 +175,7 @@ export default function Auth() {
         (
           <div className={css.forgotPasswordContainer}>
             <div className={css.title}>Reset Password</div>
+            <div className={css.errorContainer}>{errorMessage}</div>
             <div className={css.resetForm}>
               <input className={css.input} type="email" placeholder="Enter your email" value={resetEmail} onChange={(e) => setResetEmail(e.target.value)} />
               <button className={css.resetButton} onClick={handleResetPassword}>Send email</button>
