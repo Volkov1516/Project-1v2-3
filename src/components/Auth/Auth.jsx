@@ -20,6 +20,7 @@ export default function Auth() {
   const [reset, setReset] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
   const [resetMessage, setResetMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleFocus = (e) => {
     switch (e.target.name) {
@@ -40,6 +41,7 @@ export default function Auth() {
     setFocussedEmail(false);
     setFocussedPassword(false);
     setAuthType(type);
+    setErrorMessage(null);
   };
 
   const onSubmit = async (e) => {
@@ -49,16 +51,18 @@ export default function Auth() {
       await createUserWithEmailAndPassword(auth, email, password)
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
+          const normalizedMessage = errorCode?.slice(5).split('-').join(' ');
+          const firstLetterToUpperCase = normalizedMessage.charAt(0).toUpperCase() + normalizedMessage.slice(1);
+          setErrorMessage(firstLetterToUpperCase);
         });
     }
     else if (authType === 'Log in') {
       signInWithEmailAndPassword(auth, email, password)
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
+          const normalizedMessage = errorCode?.slice(5).split('-').join(' ');
+          const firstLetterToUpperCase = normalizedMessage.charAt(0).toUpperCase() + normalizedMessage.slice(1);
+          setErrorMessage(firstLetterToUpperCase);
         });
     }
   };
@@ -69,8 +73,9 @@ export default function Auth() {
     await signInWithPopup(auth, provider)
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+          const normalizedMessage = errorCode?.slice(5).split('-').join(' ');
+          const firstLetterToUpperCase = normalizedMessage.charAt(0).toUpperCase() + normalizedMessage.slice(1);
+          setErrorMessage(firstLetterToUpperCase);
 
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
@@ -104,6 +109,7 @@ export default function Auth() {
         (
           <div className={css.content}>
             <div className={css.title}>{authType}</div>
+            <div className={css.errorContainer}>{errorMessage}</div>
             <form className={css.form} onSubmit={onSubmit}>
               <div className={css.fieldContainer}>
                 <label className={css.label} htmlFor="email">Email</label>
