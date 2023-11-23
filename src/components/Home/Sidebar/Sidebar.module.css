@@ -105,6 +105,12 @@
   font-weight: 600;
 }
 
+.toggleGroupText {
+  color: gray;
+  cursor: default;
+  user-select: none;
+}
+
 .switch {
   --button-width: 48px;
   --button-height: 24px;

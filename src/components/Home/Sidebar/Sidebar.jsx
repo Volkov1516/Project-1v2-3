@@ -135,28 +135,28 @@ export const Sidebar = () => {
             </div>
             <div className={css.end}>
               <div className={css.toggleGroup}>
-                <span>dark theme</span>
+                <span className={css.toggleGroupText}>dark theme</span>
                 <label className={css.switch}>
                   <input type="checkbox" />
                   <span className={css.slider}></span>
                 </label>
               </div>
               <div className={css.toggleGroup}>
-                <span>eye saving</span>
+                <span className={css.toggleGroupText}>eye saving</span>
                 <label className={css.switch}>
                   <input type="checkbox" />
                   <span className={css.slider}></span>
                 </label>
               </div>
               <div className={css.toggleGroup}>
-                <span>column view</span>
+                <span className={css.toggleGroupText}>column view</span>
                 <label className={css.switch}>
                   <input type="checkbox" />
                   <span className={css.slider}></span>
                 </label>
               </div>
               <div className={css.toggleGroup}>
-                <span>striped list</span>
+                <span className={css.toggleGroupText}>striped list</span>
                 <label className={css.switch}>
                   <input type="checkbox" />
                   <span className={css.slider}></span>
