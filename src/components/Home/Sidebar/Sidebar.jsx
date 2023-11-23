@@ -134,7 +134,34 @@ export const Sidebar = () => {
               </div>
             </div>
             <div className={css.end}>
-              <button>settings</button>
+              <div className={css.toggleGroup}>
+                <span>dark theme</span>
+                <label className={css.switch}>
+                  <input type="checkbox" />
+                  <span className={css.slider}></span>
+                </label>
+              </div>
+              <div className={css.toggleGroup}>
+                <span>eye saving</span>
+                <label className={css.switch}>
+                  <input type="checkbox" />
+                  <span className={css.slider}></span>
+                </label>
+              </div>
+              <div className={css.toggleGroup}>
+                <span>column view</span>
+                <label className={css.switch}>
+                  <input type="checkbox" />
+                  <span className={css.slider}></span>
+                </label>
+              </div>
+              <div className={css.toggleGroup}>
+                <span>striped list</span>
+                <label className={css.switch}>
+                  <input type="checkbox" />
+                  <span className={css.slider}></span>
+                </label>
+              </div>
               <button className={css.userButton} onClick={handleSignOut}>{user?.email}</button>
             </div>
           </aside>
@@ -142,7 +169,7 @@ export const Sidebar = () => {
         : (
           <div className={css.smallContainer}>
             <button className={`${css.smallSettingsButton} ${activeMenu && css.smallSettingsButtonActive}`} onClick={handleMenuDropdown}>settings</button>
-            <div  className={css.smallLeft}>
+            <div className={css.smallLeft}>
               <button className={`${css.smallActiveTagButton} ${activeTagButton && css.smallActiveTagButtonActive}`} onClick={handleTagsDropdown}>{activeButtonText}</button>
               <button className={css.smallCreationButton} onClick={openModalEditor}>CREATE</button>
             </div>
@@ -159,9 +186,35 @@ export const Sidebar = () => {
             )}
             {userMenu && (
               <div className={css.settings}>
-                <button>dark theme</button>
-                <button>eye saver</button>
-                <button>striped list</button>
+                <div className={css.toggleGroup}>
+                  <span>dark theme</span>
+                  <label className={css.switch}>
+                    <input type="checkbox" />
+                    <span className={css.slider}></span>
+                  </label>
+                </div>
+                <div className={css.toggleGroup}>
+                  <span>eye saving</span>
+                  <label className={css.switch}>
+                    <input type="checkbox" />
+                    <span className={css.slider}></span>
+                  </label>
+                </div>
+                <div className={css.toggleGroup}>
+                  <span>column view</span>
+                  <label className={css.switch}>
+                    <input type="checkbox" />
+                    <span className={css.slider}></span>
+                  </label>
+                </div>
+                <div className={css.toggleGroup}>
+                  <span>striped list</span>
+                  <label className={css.switch}>
+                    <input type="checkbox" />
+                    <span className={css.slider}></span>
+                  </label>
+                </div>
+                <div className={css.divider} />
                 <button className={css.smallSignOutButton} onClick={handleSignOut}>sign out</button>
               </div>
             )}

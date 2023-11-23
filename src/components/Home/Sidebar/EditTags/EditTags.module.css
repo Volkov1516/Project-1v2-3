@@ -91,6 +91,8 @@
 
 @media (max-width: 639px) {
   .mainBtn {
+    padding: 0px;
+    margin-bottom: 12px;
     font-size: 40px;
     font-weight: 600;
     color: #1971c2;
