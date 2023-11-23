@@ -162,7 +162,8 @@ export const Sidebar = () => {
                   <span className={css.slider}></span>
                 </label>
               </div>
-              <button className={css.userButton} onClick={handleSignOut}>{user?.email}</button>
+              <button className={css.userButton}>{user?.email}</button>
+              <button className={css.smallSignOutButton} onClick={handleSignOut}>sign out</button>
             </div>
           </aside>
         )
@@ -201,13 +202,6 @@ export const Sidebar = () => {
                   </label>
                 </div>
                 <div className={css.toggleGroup}>
-                  <span>column view</span>
-                  <label className={css.switch}>
-                    <input type="checkbox" />
-                    <span className={css.slider}></span>
-                  </label>
-                </div>
-                <div className={css.toggleGroup}>
                   <span>striped list</span>
                   <label className={css.switch}>
                     <input type="checkbox" />
@@ -215,6 +209,7 @@ export const Sidebar = () => {
                   </label>
                 </div>
                 <div className={css.divider} />
+                <button className={css.userButton}>{user?.email}</button>
                 <button className={css.smallSignOutButton} onClick={handleSignOut}>sign out</button>
               </div>
             )}

@@ -117,9 +117,9 @@
   cursor: pointer;
   display: flex;
   align-items: center;
- }
- 
- .slider {
+}
+
+.slider {
   display: inline-block;
   width: var(--button-width);
   height: var(--button-height);
@@ -127,9 +127,9 @@
   border-radius: calc(var(--button-height) / 2);
   position: relative;
   /* transition: 0.3s all ease-in-out; */
- }
- 
- .slider::after {
+}
+
+.slider::after {
   content: "";
   display: inline-block;
   width: var(--toggle-diameter);
@@ -141,36 +141,42 @@
   transform: translateX(var(--button-toggle-offset));
   box-shadow: var(--toggle-shadow-offset) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
   /* transition: 0.3s all ease-in-out; */
- }
- 
- .switch input[type="checkbox"]:checked + .slider {
-  background-color: var(--color-green);
- }
- 
- .switch input[type="checkbox"]:checked + .slider::after {
-  transform: translateX(calc(var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset)));
-  box-shadow: calc(var(--toggle-shadow-offset) * -1) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
- }
- 
- .switch input[type="checkbox"] {
-  display: none;
- }
- 
- .switch input[type="checkbox"]:active + .slider::after {
-  width: var(--toggle-wider);
- }
- 
- .switch input[type="checkbox"]:checked:active + .slider::after {
-  transform: translateX(calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)));
- }
-
-.end>button:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
 }
 
+.switch input[type="checkbox"]:checked+.slider {
+  background-color: var(--color-green);
+}
+
+.switch input[type="checkbox"]:checked+.slider::after {
+  transform: translateX(calc(var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset)));
+  box-shadow: calc(var(--toggle-shadow-offset) * -1) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+}
+
+.switch input[type="checkbox"] {
+  display: none;
+}
+
+.switch input[type="checkbox"]:active+.slider::after {
+  width: var(--toggle-wider);
+}
+
+.switch input[type="checkbox"]:checked:active+.slider::after {
+  transform: translateX(calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)));
+}
+
+/* .end>button:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+} */
+
 .userButton {
-  color: #1971c2;
+  font-size: 18px;
+  color: gray;
+  cursor: default !important;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .smallContainer {
@@ -276,10 +282,23 @@
 }
 
 .smallSignOutButton {
+  border-radius: 1em;
+  font-size: 18px;
   color: #e03131;
 }
 
+.smallSignOutButton:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
 @media (max-width: 639px) {
+  .userButton {
+    font-size: 24px !important;
+    margin-bottom: 12px;
+
+  }
+
   .tagButton {
     padding: 8px 16px;
     border-radius: 1em;
@@ -288,7 +307,7 @@
     font-size: 24px;
     font-weight: 500;
   }
-  
+
   .archiveButton {
     padding: 8px 16px;
     border-radius: 1em;
@@ -318,5 +337,5 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-   }
+  }
 }
