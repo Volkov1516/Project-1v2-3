@@ -20,7 +20,7 @@
 }
 
 .content {
-  margin-top: 40px;
+  margin-top: calc(5vh + 3px);
   position: relative;
   flex: 1;
   width: 100%;
