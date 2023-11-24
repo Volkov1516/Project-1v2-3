@@ -64,7 +64,7 @@ export const ModalPreview = () => {
               <div className={css.navigationCountBuble}>{`${articleIndex + 1}`}/{filteredArticlesId?.length}</div>
               <div className={css.arrowWrapper} onClick={next}><div className={css.longArrowRight} /></div>
             </div>
-            <button className={css.editButton} onClick={openModalEditorFromPreview}>write</button>
+            {displayWidth > 639 && <button className={css.editButton} onClick={openModalEditorFromPreview}>write</button>}
             {displayWidth > 639 && <ModalArticleSettings />}
           </div>
           <div className={css.right}>
