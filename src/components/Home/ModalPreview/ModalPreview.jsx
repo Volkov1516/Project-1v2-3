@@ -60,15 +60,15 @@ export const ModalPreview = () => {
         <div className={css.header}>
           <div className={css.left}>
             <div className={css.navigation}>
-              <button className={css.navigationButton} onClick={prev}>prev</button>
-              <div className={css.navigationDivider} />
-              <button className={css.navigationButton} onClick={next}>next</button>
+              <div className={css.arrowWrapper} onClick={prev}><div className={css.longArrowLeft} /></div>
+              <div className={css.navigationCountBuble}>{`${articleIndex + 1}`}/{filteredArticlesId?.length}</div>
+              <div className={css.arrowWrapper} onClick={next}><div className={css.longArrowRight} /></div>
             </div>
-            <button className={css.editButton} onClick={openModalEditorFromPreview}>edit</button>
+            <button className={css.editButton} onClick={openModalEditorFromPreview}>write</button>
             {displayWidth > 639 && <ModalArticleSettings />}
           </div>
           <div className={css.right}>
-            {displayWidth > 639 ? <button className={css.closeButton} onClick={close}>close</button> : <ModalArticleSettings />}
+            {displayWidth > 639 ? <button className={css.closeButton} onClick={close}>close</button> : <button className={css.editButton} onClick={openModalEditorFromPreview}>write</button>}
           </div>
         </div>
         <div id="modalPreview" className={css.editor}>

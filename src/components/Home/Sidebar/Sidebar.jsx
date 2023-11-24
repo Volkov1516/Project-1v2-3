@@ -121,7 +121,7 @@ export const Sidebar = () => {
         ? (
           <aside className={css.largeContainer}>
             <div className={css.start}>
-              <button className={css.largeCreationButton} onClick={openModalEditor}>CREATE</button>
+              <button className={css.largeCreationButton} onClick={openModalEditor}>WRITE</button>
               <div className={css.tagsContainer}>
                 <button id="articles" className={`${css.tagButton} ${activeButtonId === 'articles' && css.activeTagButton}`} onClick={handleAll}>articles</button>
                 {tags?.map(i => (
@@ -172,7 +172,7 @@ export const Sidebar = () => {
             <button className={`${css.smallSettingsButton} ${activeMenu && css.smallSettingsButtonActive}`} onClick={handleMenuDropdown}>settings</button>
             <div className={css.smallLeft}>
               <button className={`${css.smallActiveTagButton} ${activeTagButton && css.smallActiveTagButtonActive}`} onClick={handleTagsDropdown}>{activeButtonText}</button>
-              <button className={css.smallCreationButton} onClick={openModalEditor}>CREATE</button>
+              <button className={css.smallCreationButton} onClick={openModalEditor}>WRITE</button>
             </div>
             {tagsMenu && (
               <div className={css.tagsMenu}>
