@@ -72,6 +72,12 @@ export const ModalPreview = () => {
           </div>
         </div>
         <div id="modalPreview" className={css.editor}>
+          {displayWidth < 639 && (
+            <div className={css.headerEditor}>
+              <button className={css.closeBtnEditor} onClick={close}>close</button>
+              <ModalArticleSettings color="blue" />
+            </div>
+          )}
           <div className={`${css.title} ${css[color]}`}>{title || "Untitled"}</div>
           <Editor preview={true} />
           <div className={css.metadata}>
