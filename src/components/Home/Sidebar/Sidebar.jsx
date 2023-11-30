@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setFilteredArticlesId,
@@ -21,17 +21,12 @@ export const Sidebar = () => {
   const { tags, user } = useSelector(state => state.user);
   const { articles } = useSelector(state => state.article);
 
-  const [tagsMenu, setTagsMenu] = useState(false);
-  const [userMenu, setUserMenu] = useState(false);
-  const [displayWidth, setDisplayWidth] = useState(null);
+  // const [tagsMenu, setTagsMenu] = useState(false);
+  // const [userMenu, setUserMenu] = useState(false);
   const [activeButtonId, setActiveButtonId] = useState('articles');
-  const [activeButtonText, setActiveButtonText] = useState('articles');
+  // const [activeButtonText, setActiveButtonText] = useState('articles');
   const [activeTagButton, setActiveTagButton] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(false);
-
-  useEffect(() => {
-    setDisplayWidth(window.visualViewport.width);
-  }, []);
+  // const [activeMenu, setActiveMenu] = useState(false);
 
   const openModalEditor = () => {
     const newId = uuidv4();
@@ -64,8 +59,8 @@ export const Sidebar = () => {
 
     dispatch(setFilteredArticlesId(filteredArticlesId));
     setActiveButtonId('articles');
-    setActiveButtonText('articles');
-    setTagsMenu(false);
+    // setActiveButtonText('articles');
+    // setTagsMenu(false);
     setActiveTagButton(!activeTagButton);
   };
 
@@ -75,8 +70,8 @@ export const Sidebar = () => {
 
     dispatch(setFilteredArticlesId(filteredArticlesId));
     setActiveButtonId('archive');
-    setActiveButtonText('archive');
-    setTagsMenu(false);
+    // setActiveButtonText('archive');
+    // setTagsMenu(false);
     setActiveTagButton(!activeTagButton);
   };
 
@@ -95,126 +90,91 @@ export const Sidebar = () => {
 
     dispatch(setFilteredArticlesId(newArr));
     setActiveButtonId(id);
-    setActiveButtonText(`#${name}`);
-    setTagsMenu(false);
+    // setActiveButtonText(`#${name}`);
+    // setTagsMenu(false);
     setActiveTagButton(!activeTagButton);
   };
 
-  const handleTagsDropdown = () => {
-    setUserMenu(false);
-    setTagsMenu(!tagsMenu);
-    setActiveTagButton(!activeTagButton);
-    setActiveMenu(false);
+  // const handleTagsDropdown = () => {
+  //   setUserMenu(false);
+  //   setTagsMenu(!tagsMenu);
+  //   setActiveTagButton(!activeTagButton);
+  //   setActiveMenu(false);
+  // };
+
+  // const handleMenuDropdown = () => {
+  //   setTagsMenu(false);
+  //   setUserMenu(!userMenu);
+  //   setActiveTagButton(false);
+  //   setActiveMenu(!activeMenu);
+  // };
+
+  const tagsComponent = () => {
+    return (
+      <div className={css.tagsContainer}>
+        <button id="articles" className={`${css.tagButton} ${activeButtonId === 'articles' && css.activeTagButton}`} onClick={handleAll}>articles</button>
+        {tags?.map(i => (
+          <button id={i?.id} className={`${css.tagButton} ${activeButtonId === i?.id && css.activeTagButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>
+            #{i?.name}
+          </button>
+        ))}
+        <button id="archive" className={`${css.archiveButton} ${activeButtonId === 'archive' && css.activeArchiveButton}`} onClick={handleArchive}>archive</button>
+        <EditTags />
+      </div>
+    );
   };
 
-  const handleMenuDropdown = () => {
-    setTagsMenu(false);
-    setUserMenu(!userMenu);
-    setActiveTagButton(false);
-    setActiveMenu(!activeMenu);
+  const settingsComponent = () => {
+    return (
+      <div>
+        <div className={css.toggleGroup}>
+          <span className={css.toggleGroupText}>dark theme</span>
+          <label className={css.switch}>
+            <input type="checkbox" />
+            <span className={css.slider}></span>
+          </label>
+        </div>
+        <div className={css.toggleGroup}>
+          <span className={css.toggleGroupText}>eye saving</span>
+          <label className={css.switch}>
+            <input type="checkbox" />
+            <span className={css.slider}></span>
+          </label>
+        </div>
+        <div className={css.toggleGroup}>
+          <span className={css.toggleGroupText}>column view</span>
+          <label className={css.switch}>
+            <input type="checkbox" />
+            <span className={css.slider}></span>
+          </label>
+        </div>
+        <div className={css.toggleGroup}>
+          <span className={css.toggleGroupText}>striped list</span>
+          <label className={css.switch}>
+            <input type="checkbox" />
+            <span className={css.slider}></span>
+          </label>
+        </div>
+        <button className={css.userButton}>{user?.email}</button>
+        <button className={css.smallSignOutButton} onClick={handleSignOut}>sign out</button>
+      </div>
+    );
   };
 
   return (
-    <>
-      {displayWidth > 639
-        ? (
-          <aside className={css.largeContainer}>
-            <div className={css.start}>
-              <button className={css.largeCreationButton} onClick={openModalEditor}>WRITE</button>
-              <div className={css.tagsContainer}>
-                <button id="articles" className={`${css.tagButton} ${activeButtonId === 'articles' && css.activeTagButton}`} onClick={handleAll}>articles</button>
-                {tags?.map(i => (
-                  <button id={i?.id} className={`${css.tagButton} ${activeButtonId === i?.id && css.activeTagButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>
-                    #{i?.name}
-                  </button>
-                ))}
-                <button id="archive" className={`${css.archiveButton} ${activeButtonId === 'archive' && css.activeArchiveButton}`} onClick={handleArchive}>archive</button>
-                <EditTags />
-              </div>
-            </div>
-            <div className={css.end}>
-              <div className={css.toggleGroup}>
-                <span className={css.toggleGroupText}>dark theme</span>
-                <label className={css.switch}>
-                  <input type="checkbox" />
-                  <span className={css.slider}></span>
-                </label>
-              </div>
-              <div className={css.toggleGroup}>
-                <span className={css.toggleGroupText}>eye saving</span>
-                <label className={css.switch}>
-                  <input type="checkbox" />
-                  <span className={css.slider}></span>
-                </label>
-              </div>
-              <div className={css.toggleGroup}>
-                <span className={css.toggleGroupText}>column view</span>
-                <label className={css.switch}>
-                  <input type="checkbox" />
-                  <span className={css.slider}></span>
-                </label>
-              </div>
-              <div className={css.toggleGroup}>
-                <span className={css.toggleGroupText}>striped list</span>
-                <label className={css.switch}>
-                  <input type="checkbox" />
-                  <span className={css.slider}></span>
-                </label>
-              </div>
-              <button className={css.userButton}>{user?.email}</button>
-              <button className={css.smallSignOutButton} onClick={handleSignOut}>sign out</button>
-            </div>
-          </aside>
-        )
-        : (
-          <div className={css.smallContainer}>
-            <button className={`${css.smallSettingsButton} ${activeMenu && css.smallSettingsButtonActive}`} onClick={handleMenuDropdown}>settings</button>
-            <div className={css.smallLeft}>
-              <button className={`${css.smallActiveTagButton} ${activeTagButton && css.smallActiveTagButtonActive}`} onClick={handleTagsDropdown}>{activeButtonText}</button>
-              <button className={css.smallCreationButton} onClick={openModalEditor}>WRITE</button>
-            </div>
-            {tagsMenu && (
-              <div className={css.tagsMenu}>
-                <EditTags />
-                <div className={css.divider} />
-                <div className={css.smallTagsContainer}>
-                  <button id="archive" className={`${css.archiveButton} ${activeButtonId === 'archive' && css.activeArchiveButton}`} onClick={handleArchive}>archive</button>
-                  {tags?.map(i => <button id={i?.id} className={`${css.tagButton} ${activeButtonId === i?.id && css.activeTagButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id, i?.name)}>#{i?.name}</button>)}
-                  <button id="articles" className={`${css.tagButton} ${activeButtonId === 'articles' && css.activeTagButton}`} onClick={handleAll}>articles</button>
-                </div>
-              </div>
-            )}
-            {userMenu && (
-              <div className={css.settings}>
-                <div className={css.toggleGroup}>
-                  <span>dark theme</span>
-                  <label className={css.switch}>
-                    <input type="checkbox" />
-                    <span className={css.slider}></span>
-                  </label>
-                </div>
-                <div className={css.toggleGroup}>
-                  <span>eye saving</span>
-                  <label className={css.switch}>
-                    <input type="checkbox" />
-                    <span className={css.slider}></span>
-                  </label>
-                </div>
-                <div className={css.toggleGroup}>
-                  <span>striped list</span>
-                  <label className={css.switch}>
-                    <input type="checkbox" />
-                    <span className={css.slider}></span>
-                  </label>
-                </div>
-                <div className={css.divider} />
-                <button className={css.userButton}>{user?.email}</button>
-                <button className={css.smallSignOutButton} onClick={handleSignOut}>sign out</button>
-              </div>
-            )}
-          </div>
-        )
-      }
-    </>
+    <aside className={css.container}>
+      <div className={css.start}>
+        <button className={css.createButton} onClick={openModalEditor}>CREATE</button>
+        <div className={css.categoriesWrapper}>
+          {tagsComponent()}
+        </div>
+      </div>
+
+      <div className={css.end}>
+        <div className={css.settingsWrapper}>
+          {settingsComponent()}
+        </div>
+      </div>
+    </aside>
   );
 };

@@ -6,6 +6,14 @@
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
+:root {
+  --white: #FFFFFF;
+  --gray100: #EEEEEE;
+  --gray1500: #222222;
+  --gray1600: #111111;
+  --black: #000000;
+}
+
 button {
   outline: none;
   border: none;
