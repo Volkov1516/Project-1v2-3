@@ -164,6 +164,7 @@ export const Sidebar = () => {
   return (
     <aside className={css.container}>
       <div className={css.start}>
+        <div className={css.menuButtonSmall}>articles</div>
         <button className={css.createButton} onClick={openModalEditor}>CREATE</button>
         <div className={css.categoriesWrapper}>{tagsComponent()}</div>
       </div>
