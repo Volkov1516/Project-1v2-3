@@ -7,6 +7,7 @@ import css from './Title.module.css';
 export const Title = forwardRef(function MyTitle(props, ref) {
   const dispatch = useDispatch();
   const { title, color } = useSelector(state => state.article);
+  const { editorModalStatus } = useSelector(state => state.modal);
 
   useEffect(() => {
     if (ref?.current) {
@@ -22,13 +23,14 @@ export const Title = forwardRef(function MyTitle(props, ref) {
   return (
     <textarea
       ref={ref}
-      className={css[color]}
+      className={`${css[color]} ${css[editorModalStatus]}`}
       rows={1}
       spellCheck={false}
       placeholder="Title"
       value={title}
       onChange={onTitleChange}
       onKeyDown={handleEnter}
+      readOnly={editorModalStatus === "preview"}
     />
   );
 });

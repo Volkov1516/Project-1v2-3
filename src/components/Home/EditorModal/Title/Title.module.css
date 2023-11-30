@@ -57,6 +57,11 @@ textarea.purple {
   color: white;
 }
 
+.preview {
+  cursor: default;
+  user-select: none !important;
+}
+
 @media (max-width: 639px) {
   textarea {
     padding-left: 0;

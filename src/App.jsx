@@ -1,8 +1,8 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser, setTags } from 'redux/features/user/userSlice';
-import { setArticles, setFilteredArticlesId, setIsNewArticle } from 'redux/features/article/articleSlice';
-import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_EDITOR_EMPTY, SET_MODAL_SCROLL, setModalSettings } from 'redux/features/modal/modalSlice';
+import { setArticles, setFilteredArticlesId } from 'redux/features/article/articleSlice';
+import { setModalSettings, setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, collection, query, where, orderBy, getDocs, getDoc } from 'firebase/firestore';
@@ -59,45 +59,29 @@ export const App = () => {
     return () => unsubscribe();
   }, [dispatch]);
 
+  console.log(window.location.origin)
+
   useEffect(() => {
-    const handlePopState = (e) => {
-      if (e.state && e.state.modalPreview === 'opened') {
-        dispatch(SET_MODAL_PREVIEW(true));
+    const handleHashChange = (e) => {
+      if(e.newURL === `${window.location.origin}/`) {
+        dispatch(setEditorModalStatus(false));
       }
-      else {
-        dispatch(SET_MODAL_PREVIEW(false));
-      }
-
-      if (e.state && e.state.modalEditor === 'opened') {
-        dispatch(SET_MODAL_EDITOR_EXISTING(true));
-      }
-      else {
-        dispatch(setIsNewArticle(false));
-        dispatch(SET_MODAL_EDITOR_EXISTING(false));
-
-        const modalEditorElement = document.getElementById('modalEditor');
-        dispatch(SET_MODAL_SCROLL(modalEditorElement?.scrollTop));
-      }
-
-      if (e.state && e.state.modalEditorEmpty === 'opened') {
-        dispatch(SET_MODAL_EDITOR_EMPTY(true));
-      }
-      else {
-        dispatch(setIsNewArticle(false));
-        dispatch(SET_MODAL_EDITOR_EMPTY(false));
-      }
-
-      if (e.state && e.state.modalSettings === 'opened') {
-        dispatch(setModalSettings(true));
-      }
-      else {
+      else if(e.newURL === `${window.location.origin}/#editor`) {
         dispatch(setModalSettings(false));
+        dispatch(setEditorModalStatus('edit'));
+      }
+      else if(e.newURL === `${window.location.origin}/#preview`) {
+        dispatch(setModalSettings(false));
+        dispatch(setEditorModalStatus('preview'));
+      }
+      else if(e.newURL === `${window.location.origin}/#settings`) {
+        dispatch(setModalSettings(true));
       }
     };
 
-    window.addEventListener('popstate', handlePopState);
+    window.addEventListener('hashchange', handleHashChange);
 
-    return () => window.removeEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handleHashChange);
   }, [dispatch]);
 
   return logged

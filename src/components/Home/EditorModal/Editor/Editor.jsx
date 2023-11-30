@@ -24,17 +24,17 @@ import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { MainTheme } from './themes/MainTheme';
 
 import css from './Editor.module.css';
+import { SetEditablePlugin } from './plugins/SetEditablePlugin/SetEditablePlugin';
 
 export const Editor = ({
-  modalEditorContentRef,
+  editorRef,
   titleRef,
   saving,
   setSaving,
-  preview = false,
-  autofocus = true
 }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
+  const { editorModalStatus } = useSelector(state => state.modal);
   const { articleId, content, title, isNewArticle } = useSelector(state => state.article);
 
   let editorStateAutoSaveTimeout;
@@ -42,7 +42,6 @@ export const Editor = ({
   const initialConfig = {
     namespace: 'Editor',
     editorState: content,
-    editable: !preview,
     theme: MainTheme,
     nodes: [
       HeadingNode,
@@ -110,19 +109,20 @@ export const Editor = ({
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      {!preview && <ToolbarBlockPlugin modalEditorContentRef={modalEditorContentRef} titleRef={titleRef} />}
-      {!preview && <ToolbarTextPlugin modalEditorContentRef={modalEditorContentRef} />}
+      {(editorModalStatus === "edit" || "editFP" || "editFC") && <ToolbarBlockPlugin modalEditorContentRef={editorRef} titleRef={titleRef} />}
+      {(editorModalStatus === "edit" || "editFP" || "editFC") && <ToolbarTextPlugin modalEditorContentRef={editorRef} />}
       <div className={css.container} onContextMenu={handleContentMenu}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           ErrorBoundary={LexicalErrorBoundary}
         />
-        {preview && <RefreshStatePlugin />}
-        {!preview && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
-        {!preview && autofocus && <AutoFocusPlugin />}
+        {editorModalStatus !== "preview" && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
+        {editorModalStatus === "edit" && <AutoFocusPlugin />}
+        {editorModalStatus === "preview" && <RefreshStatePlugin />}
         <ListPlugin />
         <CheckListPlugin />
         <HorizontalRulePlugin />
+        <SetEditablePlugin />
       </div>
     </LexicalComposer>
   );

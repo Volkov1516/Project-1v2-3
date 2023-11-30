@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setArticleId, setArticleIndex, setArticleTitle, setArticleContent, setArticleColor, setIsArchived, setArticleTags } from 'redux/features/article/articleSlice';
-import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EXISTING, SET_MODAL_AUTOFOCUS } from 'redux/features/modal/modalSlice';
+import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 
 import css from './Content.module.css';
 
@@ -16,10 +16,9 @@ export const Content = ({ mouseTimer }) => {
     dispatch(setArticleTags(tags));
     dispatch(setIsArchived(archive));
     dispatch(setArticleIndex(index));
-    dispatch(SET_MODAL_AUTOFOCUS(false));
-    dispatch(SET_MODAL_EDITOR_EXISTING(true));
+    dispatch(setEditorModalStatus('editFC'));
 
-    window.history.pushState({ modalEditor: 'opened' }, '', '#editor');
+    window.history.pushState({}, '', '#editor');
   };
 
   const onMouseDown = (id, content, title, index, color, archive, tags) => {
@@ -35,10 +34,9 @@ export const Content = ({ mouseTimer }) => {
       dispatch(setArticleTags(tags));
       dispatch(setIsArchived(archive));
       dispatch(setArticleIndex(index));
-      dispatch(SET_MODAL_AUTOFOCUS(false));
-      dispatch(SET_MODAL_PREVIEW(true));
+      dispatch(setEditorModalStatus('preview'));
 
-      window.history.pushState({ modalPreview: 'opened' }, '', '#preview');
+      window.history.pushState({}, '', '#preview');
     }, 500);
   };
 

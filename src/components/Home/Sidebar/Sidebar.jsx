@@ -9,7 +9,7 @@ import {
   setArticleIndex,
   setIsNewArticle
 } from 'redux/features/article/articleSlice';
-import { SET_MODAL_EDITOR_EMPTY, SET_MODAL_AUTOFOCUS } from 'redux/features/modal/modalSlice';
+import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
@@ -43,10 +43,9 @@ export const Sidebar = () => {
     dispatch(setArticleColor(null));
     dispatch(setArticleIndex(null));
     dispatch(setIsNewArticle(true));
-    dispatch(SET_MODAL_AUTOFOCUS(true));
-    dispatch(SET_MODAL_EDITOR_EMPTY(true));
+    dispatch(setEditorModalStatus('edit'));
 
-    window.history.pushState({ modalEditorEmpty: 'opened' }, '', '#editor');
+    window.history.pushState({}, '', '#editor');
   };
 
   const handleSignOut = () => {

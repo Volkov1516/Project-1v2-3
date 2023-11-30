@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateColor, deleteArticle, setArticleArchive, addTag, setArticleTags } from 'redux/features/article/articleSlice';
-import { SET_MODAL_PREVIEW, SET_MODAL_EDITOR_EMPTY, SET_MODAL_EDITOR_EXISTING, setModalSettings } from 'redux/features/modal/modalSlice';
+import { setModalSettings } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 import css from './ModalArticleSettings.module.css';
@@ -17,7 +17,7 @@ export const ModalArticleSettings = ({color}) => {
   const handleOpen = () => {
     dispatch(setModalSettings(true));
 
-    window.history.pushState({ modalSettings: 'opened' }, '', '#settings');
+    window.history.pushState({}, '', '#settings');
   };
 
   const handleClose = () => {
@@ -74,7 +74,6 @@ export const ModalArticleSettings = ({color}) => {
     await updateDoc(articleRef, { archive: !isArchived })
       .then(() => {
         dispatch(setArticleArchive({ id: articleId, archive: !isArchived }));
-        dispatch(SET_MODAL_PREVIEW(false));
         window.history.back();
       })
       .catch((error) => console.log(error));
@@ -88,9 +87,6 @@ export const ModalArticleSettings = ({color}) => {
       .then(() => {
         dispatch(deleteArticle({ id: articleId }));
         window.history.back();
-        dispatch(SET_MODAL_PREVIEW(false));
-        dispatch(SET_MODAL_EDITOR_EMPTY(false));
-        dispatch(SET_MODAL_EDITOR_EXISTING(false));
       })
       .catch((error) => console.log(error));
 
