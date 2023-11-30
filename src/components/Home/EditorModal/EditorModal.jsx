@@ -34,6 +34,8 @@ export const EditorModal = () => {
         dispatch(setEditorModalStatus(false));
         window.history.pushState({}, '', '/');
         break;
+      default:
+        return;
     }
   };
 
