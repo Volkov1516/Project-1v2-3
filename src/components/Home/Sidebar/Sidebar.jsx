@@ -165,15 +165,12 @@ export const Sidebar = () => {
     <aside className={css.container}>
       <div className={css.start}>
         <button className={css.createButton} onClick={openModalEditor}>CREATE</button>
-        <div className={css.categoriesWrapper}>
-          {tagsComponent()}
-        </div>
+        <div className={css.categoriesWrapper}>{tagsComponent()}</div>
       </div>
 
       <div className={css.end}>
-        <div className={css.settingsWrapper}>
-          {settingsComponent()}
-        </div>
+        <div className={css.settingsWrapper}>{settingsComponent()}</div>
+        <div className={css.menuButtonSmall}>menu</div>
       </div>
     </aside>
   );
