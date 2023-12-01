@@ -133,7 +133,7 @@
   --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
   --toggle-shadow-offset: 0px;
   --toggle-wider: 1em;
-  --color-grey: #cccccc;
+  --color-grey: #DDDDDD;
   --color-green: black;
   cursor: pointer;
   display: flex;
