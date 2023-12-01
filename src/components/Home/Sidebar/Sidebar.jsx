@@ -24,11 +24,9 @@ export const Sidebar = () => {
   const { articles } = useSelector(state => state.article);
 
   const [activeButtonId, setActiveButtonId] = useState('articles');
-  const [activeTagButton, setActiveTagButton] = useState(false);
   const [mainMenu, setMainMenu] = useState(false);
   const [categoriesMenu, setCategoriesMenu] = useState(false);
-  // const [activeButtonText, setActiveButtonText] = useState('articles');
-  // const [activeMenu, setActiveMenu] = useState(false);
+  const [activeCategoryText, setActiveCategoryText] = useState('articles');
 
   const openModalEditor = () => {
     const newId = uuidv4();
@@ -45,25 +43,14 @@ export const Sidebar = () => {
     window.history.pushState({}, '', '#editor');
   };
 
-  const handleSignOut = () => {
-    signOut(auth).then(() => {
-      console.log('Signed out successfully');
-    }).catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
-  };
-
   const handleAll = () => {
     const filteredArticlesId = [];
     articles?.forEach(i => !i?.archive && filteredArticlesId.push(i?.id));
 
     dispatch(setFilteredArticlesId(filteredArticlesId));
     setActiveButtonId('articles');
-    // setActiveButtonText('articles');
-    // setTagsMenu(false);
-    setActiveTagButton(!activeTagButton);
+    setActiveCategoryText('articles');
+    setCategoriesMenu(false);
   };
 
   const handleArchive = () => {
@@ -72,16 +59,15 @@ export const Sidebar = () => {
 
     dispatch(setFilteredArticlesId(filteredArticlesId));
     setActiveButtonId('archive');
-    // setActiveButtonText('archive');
-    // setTagsMenu(false);
-    setActiveTagButton(!activeTagButton);
+    setActiveCategoryText('archive');
+    setCategoriesMenu(false);
   };
 
   const setFilteredByCategory = (id, name) => {
     const unarchived = articles?.filter(i => !i?.archive);
     let newArr = [];
 
-    unarchived?.map(i => i?.tags?.map(j => {
+    unarchived?.map(i => i?.categories?.map(j => {
       if (j.id === id) {
         return newArr.push(i?.id);
       }
@@ -92,9 +78,8 @@ export const Sidebar = () => {
 
     dispatch(setFilteredArticlesId(newArr));
     setActiveButtonId(id);
-    // setActiveButtonText(`#${name}`);
-    // setTagsMenu(false);
-    setActiveTagButton(!activeTagButton);
+    setActiveCategoryText(name);
+    setCategoriesMenu(false);
   };
 
   const handleMainMenu = () => {
@@ -107,12 +92,14 @@ export const Sidebar = () => {
     setCategoriesMenu(!categoriesMenu);
   };
 
+  const handleSignOut = () => signOut(auth);
+
   const categoriesComponent = () => {
     return (
       <div className={css.categoriesContainer}>
         <div id="articles" className={`${css.categoryButton} ${activeButtonId === "articles" && css.activeCategoryButton}`} onClick={handleAll}>articles</div>
         {categories?.map(i => (
-          <div id={i?.id} className={`${css.categoryButton} ${activeButtonId === i?.id && css.activeCategoryButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>
+          <div id={i?.id} className={`${css.categoryButton} ${activeButtonId === i?.id && css.activeCategoryButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id, i?.name)}>
             {i?.name}
           </div>
         ))}
@@ -162,7 +149,7 @@ export const Sidebar = () => {
   return (
     <aside className={css.container}>
       <div className={css.start}>
-        <div className={css.menuButtonSmall} onClick={handleCategoriesMenu}>articles</div>
+        <div className={css.menuButtonSmall} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
         <div className={css.createButton} onClick={openModalEditor}>CREATE</div>
         <div className={css.categoriesWrapper}>{categoriesComponent()}</div>
       </div>
