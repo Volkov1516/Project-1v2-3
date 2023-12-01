@@ -149,13 +149,13 @@ export const Sidebar = () => {
   return (
     <aside className={css.container}>
       <div className={css.start}>
-        <div className={css.menuButtonSmall} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
+        <div className={css.categoriesButtonSmall} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
         <div className={css.createButton} onClick={openModalEditor}>CREATE</div>
         <div className={css.categoriesWrapper}>{categoriesComponent()}</div>
       </div>
       <div className={css.end}>
         <div className={css.menuWrapper}>{menuComponent()}</div>
-        <div className={css.categoriesButtonSmall} onClick={handleMainMenu}>menu</div>
+        <div className={css.menuButtonSmall} onClick={handleMainMenu}>menu</div>
       </div>
       {mainMenu && <div className={css.menuWrapperSmall}>{menuComponent()}</div>}
       {categoriesMenu && <div className={css.categoriesWrapperSmall}>{categoriesComponent()}</div>}
