@@ -122,4 +122,26 @@
   }
 }
 
-@media (max-width: 639px) {}
+@media (max-width: 639px) {
+  .openButton {
+    width: fit-content;
+    font-size: 36px;
+  }
+
+  .container {
+    padding: 16px;
+  }
+
+  .content {
+    width: 100%;
+    height: 100%;
+  }
+
+  .creationInput {
+    width: 100%;
+  }
+
+  .categoryInput {
+    width: 100%;
+  }
+}

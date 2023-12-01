@@ -154,7 +154,7 @@ export const Sidebar = () => {
         <div className={css.categoriesWrapper}>{categoriesComponent()}</div>
       </div>
       <div className={css.end}>
-        <div className={css.settingsWrapper}>{menuComponent()}</div>
+        <div className={css.menuWrapper}>{menuComponent()}</div>
         <div className={css.categoriesButtonSmall} onClick={handleMainMenu}>menu</div>
       </div>
       {mainMenu && <div className={css.menuWrapperSmall}>{menuComponent()}</div>}

@@ -130,14 +130,6 @@
     align-items: center;
   }
 
-  .categoriesWrapper {
-    display: none;
-  }
-
-  .settingsWrapper {
-    display: none;
-  }
-
   .createButton {
     padding: 12px 16px;
   }
@@ -149,57 +141,32 @@
   .categoriesButtonSmall {
     display: block;
   }
+
+  .categoryButton {
+    width: fit-content;
+    padding: 4px 16px;
+    font-size: 36px;
+  }
+
+  .categoriesWrapper {
+    display: none;
+  }
+
+  .categoriesContainer {
+    height: 100%;
+    padding: 16px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
+
+  .menuWrapper {
+    display: none;
+  }
 }
 
 
-
-
-
-
-.tagButton {
-  padding: 4px 12px;
-  border-radius: 1em;
-  background-color: #BFC7B4;
-  font-weight: 500;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.tagButton:hover {
-  background-color: #a1a89aee;
-}
-
-.activeTagButton {
-  background-color: black !important;
-  color: white !important;
-}
-
-.activeTagButton:hover {
-  background-color: black;
-}
-
-.archiveButton {
-  padding: 4px 12px;
-  border-radius: 1em;
-  background-color: #BFC7B4;
-  color: #e03131;
-  font-weight: 500;
-}
-
-.archiveButton:hover {
-  background-color: #a1a89aee;
-}
-
-.activeArchiveButton {
-  background-color: #e03131 !important;
-  color: white !important;
-}
-
-.activeArchiveButton:hover {
-  background-color: #e03131;
-}
 
 
 
