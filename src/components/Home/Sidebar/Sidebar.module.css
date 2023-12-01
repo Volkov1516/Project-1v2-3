@@ -78,9 +78,34 @@
   user-select: none;
 }
 
+.categoryButton:active,
 .menuButtonSmall:active,
 .categoriesButtonSmall:active {
   background-color: var(--gray200);
+}
+
+.menuWrapper {
+  min-width: 100%;
+  width: 100%;
+}
+
+.menuContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggleGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.toggleGroupText {
+  color: var(--gray1000);
+  font-weight: 400;
+  cursor: default;
+  user-select: none;
 }
 
 .menuWrapperSmall {
@@ -101,13 +126,91 @@
   right: 0;
 }
 
+.switch {
+  --button-width: 44px;
+  --button-height: 22px;
+  --toggle-diameter: 18px;
+  --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
+  --toggle-shadow-offset: 0px;
+  --toggle-wider: 1em;
+  --color-grey: #cccccc;
+  --color-green: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.slider {
+  display: inline-block;
+  width: var(--button-width);
+  height: var(--button-height);
+  background-color: var(--color-grey);
+  border-radius: calc(var(--button-height) / 2);
+  position: relative;
+  transition: 0.1s all ease-in-out;
+}
+
+.slider::after {
+  content: "";
+  display: inline-block;
+  width: var(--toggle-diameter);
+  height: var(--toggle-diameter);
+  background-color: #fff;
+  border-radius: calc(var(--toggle-diameter) / 2);
+  position: absolute;
+  top: var(--button-toggle-offset);
+  transform: translateX(var(--button-toggle-offset));
+  box-shadow: var(--toggle-shadow-offset) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+  transition: 0.1s all ease-in-out;
+}
+
+.switch input[type="checkbox"]:checked+.slider {
+  background-color: var(--color-green);
+}
+
+.switch input[type="checkbox"]:checked+.slider::after {
+  transform: translateX(calc(var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset)));
+  box-shadow: calc(var(--toggle-shadow-offset) * -1) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+}
+
+.switch input[type="checkbox"] {
+  display: none;
+}
+
+.switch input[type="checkbox"]:active+.slider::after {
+  width: var(--toggle-wider);
+}
+
+.switch input[type="checkbox"]:checked:active+.slider::after {
+  transform: translateX(calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)));
+}
+
+.userButton {
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px 16px;
+  border-radius: 1em;
+  font-weight: 600;
+  text-transform: lowercase;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.userButton:active {
+  background-color: var(--gray200);
+}
+
 @media (hover: hover) {
   .createButton:hover {
     background-color: var(--gray1500);
   }
 
   .menuButtonSmall:hover,
-  .categoryButton:hover {
+  .categoryButton:hover,
+  .userButton:hover {
     background-color: var(--gray200);
   }
 }
@@ -171,7 +274,7 @@
   .categoryButton {
     width: fit-content;
     max-width: 340px;
-    padding: 4px 16px;
+    padding: 0px 16px;
     font-size: 36px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -182,142 +285,55 @@
   .menuWrapper {
     display: none;
   }
-}
 
+  .menuContainer {
+    height: 100%;
+    padding: 16px;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    align-items: flex-end;
+    overflow: auto;
+  }
 
+  .toggleGroup {
+    width: 100%;
+    margin-bottom: 0;
+  }
 
+  .toggleGroupText {
+    color: var(--gray1000);
+    font-size: 36px;
+    font-weight: 600;
+    cursor: default;
+    user-select: none;
+  }
 
+  .switch {
+    --button-width: 72px;
+    --button-height: 36px;
+    --toggle-diameter: 30px;
+    --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
+    --toggle-shadow-offset: 0px;
+    --toggle-wider: 1em;
+    --color-grey: #cccccc;
+    --color-green: black;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
 
-.toggleGroup {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.toggleGroup span {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.toggleGroupText {
-  color: gray;
-  cursor: default;
-  user-select: none;
-}
-
-.switch {
-  --button-width: 48px;
-  --button-height: 24px;
-  --toggle-diameter: 20px;
-  --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
-  --toggle-shadow-offset: 10px;
-  --toggle-wider: 3em;
-  --color-grey: #cccccc;
-  --color-green: black;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.slider {
-  display: inline-block;
-  width: var(--button-width);
-  height: var(--button-height);
-  background-color: var(--color-grey);
-  border-radius: calc(var(--button-height) / 2);
-  position: relative;
-  /* transition: 0.3s all ease-in-out; */
-}
-
-.slider::after {
-  content: "";
-  display: inline-block;
-  width: var(--toggle-diameter);
-  height: var(--toggle-diameter);
-  background-color: #fff;
-  border-radius: calc(var(--toggle-diameter) / 2);
-  position: absolute;
-  top: var(--button-toggle-offset);
-  transform: translateX(var(--button-toggle-offset));
-  box-shadow: var(--toggle-shadow-offset) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
-  /* transition: 0.3s all ease-in-out; */
-}
-
-.switch input[type="checkbox"]:checked+.slider {
-  background-color: var(--color-green);
-}
-
-.switch input[type="checkbox"]:checked+.slider::after {
-  transform: translateX(calc(var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset)));
-  box-shadow: calc(var(--toggle-shadow-offset) * -1) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
-}
-
-.switch input[type="checkbox"] {
-  display: none;
-}
-
-.switch input[type="checkbox"]:active+.slider::after {
-  width: var(--toggle-wider);
-}
-
-.switch input[type="checkbox"]:checked:active+.slider::after {
-  transform: translateX(calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)));
-}
-
-/* .end>button:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-} */
-
-.userButton {
-  font-size: 18px;
-  color: gray;
-  cursor: default !important;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.tagsMenu {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  left: 0;
-  top: -100vh;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
-  background-color: #BFC7B4;
-  overflow: auto;
-}
-
-.divider {
-  width: 100%;
-  height: 2px;
-  margin: 4px 0 16px;
-  background-color: #a1a89aee;
-}
-
-.settings {
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  left: 0;
-  top: -100vh;
-  padding: 8px 16px;
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-start;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  background-color: #BFC7B4;
-}
-
-.settings>button {
-  font-size: 40px;
-  height: fit-content;
+  .userButton {
+    width: fit-content;
+    max-width: 340px;
+    padding: 0;
+    margin: 0;
+    font-size: 36px;
+    font-weight: 600;
+    cursor: default;
+    user-select: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: end;
+  }
 }

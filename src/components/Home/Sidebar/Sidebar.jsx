@@ -111,23 +111,9 @@ export const Sidebar = () => {
 
   const menuComponent = () => {
     return (
-      <div>
+      <div className={css.menuContainer}>
         <div className={css.toggleGroup}>
           <span className={css.toggleGroupText}>dark theme</span>
-          <label className={css.switch}>
-            <input type="checkbox" />
-            <span className={css.slider}></span>
-          </label>
-        </div>
-        <div className={css.toggleGroup}>
-          <span className={css.toggleGroupText}>eye saving</span>
-          <label className={css.switch}>
-            <input type="checkbox" />
-            <span className={css.slider}></span>
-          </label>
-        </div>
-        <div className={css.toggleGroup}>
-          <span className={css.toggleGroupText}>column view</span>
           <label className={css.switch}>
             <input type="checkbox" />
             <span className={css.slider}></span>
@@ -140,8 +126,14 @@ export const Sidebar = () => {
             <span className={css.slider}></span>
           </label>
         </div>
-        <button className={css.userButton}>{user?.email}</button>
-        <button className={css.smallSignOutButton} onClick={handleSignOut}>sign out</button>
+        <div className={css.toggleGroup}>
+          <span className={css.toggleGroupText}>column view</span>
+          <label className={css.switch}>
+            <input type="checkbox" />
+            <span className={css.slider}></span>
+          </label>
+        </div>
+        <div className={css.userButton} onClick={handleSignOut}>{user?.email}</div>
       </div>
     );
   };
