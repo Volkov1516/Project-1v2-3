@@ -244,12 +244,14 @@
   }
 
   .menuButtonSmall {
+    padding: 16px;
     display: block;
   }
 
   .categoriesButtonSmall {
     width: 100%;
     max-width: 140px;
+    padding: 16px;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
