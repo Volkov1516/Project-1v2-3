@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   user: null,
-  tags: []
+  categories: []
 };
 
 export const userSlice = createSlice({
@@ -12,21 +12,32 @@ export const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
-    setTags: (state, action) => {
-      state.tags = action.payload;
+    setCategories: (state, action) => {
+      state.categories = action.payload;
     },
-    addTag: (state, action) => {
-      state.tags.push(action.payload);
+    addCategory: (state, action) => {
+      if (state.categories) {
+        state.categories.push(action.payload);
+      }
+      else {
+        state.categories = [action.payload];
+      }
     },
-    updateTag: (state, action) => {
-      state.tags = action.payload;
+    updateCategory: (state, action) => {
+      state.categories = action.payload;
     },
-    deleteTag: (state, action) => {
-      let newTags = state.tags.filter(i => i.id !== action.payload);
-      state.tags = newTags;
+    deleteCategory: (state, action) => {
+      let newTags = state.categories.filter(i => i.id !== action.payload);
+      state.categories = newTags;
     },
   }
 });
 
-export const { setUser, setTags, addTag, updateTag, deleteTag } = userSlice.actions;
+export const {
+  setUser,
+  setCategories,
+  addCategory,
+  updateCategory,
+  deleteCategory
+} = userSlice.actions;
 export default userSlice.reducer;

@@ -13,19 +13,21 @@ import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
-import { EditTags } from './EditTags/EditTags';
+
 import css from './Sidebar.module.css';
+
+import { EditCategoriesModal } from './EditCategoriesModal/EditCategoriesModal';
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
-  const { tags, user } = useSelector(state => state.user);
+  const { user, categories } = useSelector(state => state.user);
   const { articles } = useSelector(state => state.article);
 
-  // const [tagsMenu, setTagsMenu] = useState(false);
-  // const [userMenu, setUserMenu] = useState(false);
   const [activeButtonId, setActiveButtonId] = useState('articles');
-  // const [activeButtonText, setActiveButtonText] = useState('articles');
   const [activeTagButton, setActiveTagButton] = useState(false);
+  const [mainMenu, setMainMenu] = useState(false);
+  const [categoriesMenu, setCategoriesMenu] = useState(false);
+  // const [activeButtonText, setActiveButtonText] = useState('articles');
   // const [activeMenu, setActiveMenu] = useState(false);
 
   const openModalEditor = () => {
@@ -95,36 +97,32 @@ export const Sidebar = () => {
     setActiveTagButton(!activeTagButton);
   };
 
-  // const handleTagsDropdown = () => {
-  //   setUserMenu(false);
-  //   setTagsMenu(!tagsMenu);
-  //   setActiveTagButton(!activeTagButton);
-  //   setActiveMenu(false);
-  // };
+  const handleMainMenu = () => {
+    setCategoriesMenu(false);
+    setMainMenu(!mainMenu);
+  };
 
-  // const handleMenuDropdown = () => {
-  //   setTagsMenu(false);
-  //   setUserMenu(!userMenu);
-  //   setActiveTagButton(false);
-  //   setActiveMenu(!activeMenu);
-  // };
+  const handleCategoriesMenu = () => {
+    setMainMenu(false);
+    setCategoriesMenu(!categoriesMenu);
+  };
 
-  const tagsComponent = () => {
+  const categoriesComponent = () => {
     return (
-      <div className={css.tagsContainer}>
-        <button id="articles" className={`${css.tagButton} ${activeButtonId === 'articles' && css.activeTagButton}`} onClick={handleAll}>articles</button>
-        {tags?.map(i => (
-          <button id={i?.id} className={`${css.tagButton} ${activeButtonId === i?.id && css.activeTagButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>
-            #{i?.name}
-          </button>
+      <div className={css.categoriesContainer}>
+        <div id="articles" className={`${css.categoryButton} ${activeButtonId === "articles" && css.activeCategoryButton}`} onClick={handleAll}>articles</div>
+        {categories?.map(i => (
+          <div id={i?.id} className={`${css.categoryButton} ${activeButtonId === i?.id && css.activeCategoryButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id)}>
+            {i?.name}
+          </div>
         ))}
-        <button id="archive" className={`${css.archiveButton} ${activeButtonId === 'archive' && css.activeArchiveButton}`} onClick={handleArchive}>archive</button>
-        <EditTags />
+        <div id="archive" className={`${css.categoryButton} ${activeButtonId === "archive" && css.activeCategoryButton}`} onClick={handleArchive}>archive</div>
+        <EditCategoriesModal />
       </div>
     );
   };
 
-  const settingsComponent = () => {
+  const menuComponent = () => {
     return (
       <div>
         <div className={css.toggleGroup}>
@@ -164,15 +162,16 @@ export const Sidebar = () => {
   return (
     <aside className={css.container}>
       <div className={css.start}>
-        <div className={css.menuButtonSmall}>articles</div>
-        <button className={css.createButton} onClick={openModalEditor}>CREATE</button>
-        <div className={css.categoriesWrapper}>{tagsComponent()}</div>
+        <div className={css.menuButtonSmall} onClick={handleCategoriesMenu}>articles</div>
+        <div className={css.createButton} onClick={openModalEditor}>CREATE</div>
+        <div className={css.categoriesWrapper}>{categoriesComponent()}</div>
       </div>
-
       <div className={css.end}>
-        <div className={css.settingsWrapper}>{settingsComponent()}</div>
-        <div className={css.menuButtonSmall}>menu</div>
+        <div className={css.settingsWrapper}>{menuComponent()}</div>
+        <div className={css.categoriesButtonSmall} onClick={handleMainMenu}>menu</div>
       </div>
+      {mainMenu && <div className={css.menuWrapperSmall}>{menuComponent()}</div>}
+      {categoriesMenu && <div className={css.categoriesWrapperSmall}>{categoriesComponent()}</div>}
     </aside>
   );
 };

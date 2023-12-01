@@ -1,0 +1,125 @@
+.openButton {
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+.container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.content {
+  padding: 16px;
+  background-color: var(--white);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.title {
+  color: var(--gray1000);
+  font-weight: 600;
+  user-select: none;
+}
+
+.closeButton {
+  padding: 4px 12px;
+  border-radius: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+.openButton:active, .closeButton:active {
+  background-color: var(--gray200);
+}
+
+.creationGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 8px;
+  margin-bottom: 16px;
+}
+
+.creationInput {
+  width: 220px;
+  padding: 8px;
+  border: none;
+  outline: none;
+  background-color: var(--gray100);
+  color: var(--black);
+  font-size: 16px;
+  text-transform: lowercase;
+}
+
+.creationButton {
+  padding: 8px 12px;
+  background-color: var(--black);
+  color: var(--white);
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+.creationButton:active {
+  background-color: var(--gray1500);
+}
+
+.creationButton:disabled {
+  cursor: not-allowed;
+}
+
+.categoryGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 8px;
+  margin-bottom: 8px;
+}
+
+.categoryInput {
+  padding: 8px;
+  outline: none;
+  border: none;
+  background-color: var(--gray100);
+  font-size: 16px;
+}
+
+.deleteButton {
+  padding: 4px 12px;
+  border-radius: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+@media (hover: hover) {
+  .openButton:hover,
+  .closeButton:hover,
+  .deleteButton:hover {
+    background-color: var(--gray200);
+  }
+
+  .creationButton:hover {
+    background-color: var(--gray1500);
+  }
+}
+
+@media (max-width: 639px) {}

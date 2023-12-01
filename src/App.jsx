@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUser, setTags } from 'redux/features/user/userSlice';
+import { setUser, setCategories } from 'redux/features/user/userSlice';
 import { setArticles, setFilteredArticlesId } from 'redux/features/article/articleSlice';
 import { setModalSettings, setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
@@ -25,7 +25,7 @@ export const App = () => {
         id: doc?.id,
         title: doc?.data()?.title,
         content: doc?.data()?.content,
-        tags: doc?.data()?.tags,
+        categories: doc?.data()?.categories,
         color: doc?.data()?.color,
         date: doc?.data()?.date?.toDate().toLocaleDateString(),
         archive: doc?.data()?.archive,
@@ -36,18 +36,18 @@ export const App = () => {
       dispatch(setFilteredArticlesId(filteredArticlesId));
     };
 
-    const getTags = async (user) => {
-      const docRef = doc(db, 'tags', user?.uid);
+    const getCategories = async (user) => {
+      const docRef = doc(db, 'categories', user?.uid);
       const docSnap = await getDoc(docRef);
 
-      dispatch(setTags(docSnap?.data()?.tags));
+      dispatch(setCategories(docSnap?.data()?.categories));
     };
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(setUser({ id: user?.uid, email: user?.email }));
         getArticles(user);
-        getTags(user);
+        getCategories(user);
         setLogged(true);
 
         window.history.pushState({}, '', '/');
@@ -58,8 +58,6 @@ export const App = () => {
 
     return () => unsubscribe();
   }, [dispatch]);
-
-  console.log(window.location.origin)
 
   useEffect(() => {
     const handleHashChange = (e) => {
