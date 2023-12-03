@@ -270,13 +270,14 @@
     flex-direction: column-reverse;
     justify-content: flex-start;
     align-items: flex-end;
+    row-gap: 8px;
     overflow: auto;
   }
 
   .categoryButton {
     width: fit-content;
     max-width: 340px;
-    padding: 0px 16px;
+    padding: 4px 16px;
     font-size: 36px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -295,6 +296,7 @@
     flex-direction: column-reverse;
     justify-content: flex-start;
     align-items: flex-end;
+    row-gap: 8px;
     overflow: auto;
   }
 
@@ -304,7 +306,7 @@
   }
 
   .toggleGroupText {
-    color: var(--gray1000);
+    color: var(--black);
     font-size: 36px;
     font-weight: 600;
     cursor: default;
@@ -330,12 +332,15 @@
     max-width: 340px;
     padding: 0;
     margin: 0;
-    font-size: 36px;
+    border-radius: 0;
+    color: var(--gray1000);
+    font-size: 24px;
     font-weight: 600;
     cursor: default;
     user-select: none;
     text-overflow: ellipsis;
     white-space: nowrap;
     text-align: end;
+    flex: 1;
   }
 }

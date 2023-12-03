@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { incrementIndex, decrementIndex } from 'redux/features/article/articleSlice';
@@ -15,6 +15,8 @@ export const EditorModal = () => {
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
+
+  const [saving, setSaving] = useState(false);
 
   const close = () => {
     switch (editorModalStatus) {
@@ -80,7 +82,7 @@ export const EditorModal = () => {
                       <div className={css.arrowRight} />
                     </div>
                   </div>
-                  <button className={css.navigationWriteButton} onClick={openEditorFromPreview}>write</button>
+                  <button className={css.navigationWriteButton} onClick={openEditorFromPreview}>edit</button>
                   <ModalArticleSettings />
                 </div>
                 <div className={css.navigationEnd}>
@@ -104,7 +106,7 @@ export const EditorModal = () => {
 
             <div id="editorModal" ref={editorRef} className={css.editor}>
               <Title ref={titleRef} />
-              <Editor editorRef={editorRef} titleRef={titleRef} />
+              <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
             </div>
 
           </div>
