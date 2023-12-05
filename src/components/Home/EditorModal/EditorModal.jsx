@@ -1,12 +1,13 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { incrementIndex, decrementIndex } from 'redux/features/article/articleSlice';
 
 import css from './EditorModal.module.css';
-import { ModalArticleSettings } from './ModalArticleSettings/ModalArticleSettings';
-import { Editor } from './Editor/Editor';
+
 import { Title } from './Title/Title';
+import { Editor } from './Editor/Editor';
+import { ModalArticleSettings } from './ModalArticleSettings/ModalArticleSettings';
 
 export const EditorModal = () => {
   const dispatch = useDispatch();
@@ -63,55 +64,46 @@ export const EditorModal = () => {
     window.history.pushState({}, '', '#editor');
   }
 
-  return (
-    <>
-      {editorModalStatus && (
-        <div className={`${css.container}`} onClick={close}>
-          <div className={`${css.content} ${css[editorModalStatus]}`} onClick={(e) => e.stopPropagation()}>
+  return editorModalStatus && (
+    <div className={css.container} onClick={close}>
+      <div className={css[editorModalStatus]} onClick={(e) => e.stopPropagation()}>
 
-
-            {(editorModalStatus === "preview") && (
-              <div className={css.navigation}>
-                <div className={css.navigationStart}>
-                  <div className={css.navigationControlls}>
-                    <div className={css.arrowWrapper} onClick={prev}>
-                      <div className={css.arrowLeft} />
-                    </div>
-                    <div className={css.navigationCountBubble}>{`${articleIndex + 1}`}/{filteredArticlesId?.length}</div>
-                    <div className={css.arrowWrapper} onClick={next}>
-                      <div className={css.arrowRight} />
-                    </div>
-                  </div>
-                  <button className={css.navigationWriteButton} onClick={openEditorFromPreview}>edit</button>
-                  <ModalArticleSettings />
+        {(editorModalStatus === "preview") && (
+          <div className={css.navigation}>
+            <div className={css.navigationStart}>
+              <div className={css.navigationControlls}>
+                <div className={css.arrowWrapper} onClick={prev}>
+                  <div className={css.arrowLeft} />
                 </div>
-                <div className={css.navigationEnd}>
-                  <div className={css.navigationCloseButton} onClick={close}>close</div>
+                <div className={css.navigationCountBubble}>{`${articleIndex + 1}`}/{filteredArticlesId?.length}</div>
+                <div className={css.arrowWrapper} onClick={next}>
+                  <div className={css.arrowRight} />
                 </div>
               </div>
-            )}
-
-
-            {editorModalStatus !== "preview" && (
-              <div className={css.header}>
-                <div className={css.headerStart}>
-                  <div className={css.headerCloseButton} onClick={close}>close</div>
-                </div>
-                <div className={css.headerEnd}>
-                  <ModalArticleSettings color="blue" />
-                </div>
+              <button className={css.navigationWriteButton} onClick={openEditorFromPreview}>edit</button>
+              <div className={css.navigationSettingsWrapper}>
+                <ModalArticleSettings />
               </div>
-            )}
-
-
-            <div id="editorModal" ref={editorRef} className={css.editor}>
-              <Title ref={titleRef} />
-              <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
             </div>
-
+            <div className={css.navigationEnd}>
+              <div className={css.navigationCloseButton} onClick={close}>close</div>
+            </div>
           </div>
+        )}
+
+        <div id="editorModal" ref={editorRef} className={css.editor}>
+          <div className={css.header}>
+            <div className={css.headerStart}>
+              <div className={css.headerCloseButton} onClick={close}>close</div>
+            </div>
+            <div className={css.headerEnd}>
+              <ModalArticleSettings color="blue" />
+            </div>
+          </div>
+          <Title ref={titleRef} />
+          <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
         </div>
-      )}
-    </>
+      </div>
+    </div>
   );
 };
