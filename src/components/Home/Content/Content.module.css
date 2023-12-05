@@ -19,7 +19,7 @@ article {
 }
 
 .stripedList:nth-child(even) {
-  background-color: var(--gray100) !important;
+  background-color: var(--gray100);
 }
 
 article:active {
