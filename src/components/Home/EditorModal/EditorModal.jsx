@@ -80,7 +80,7 @@ export const EditorModal = () => {
                   <div className={css.arrowRight} />
                 </div>
               </div>
-              <button className={css.navigationWriteButton} onClick={openEditorFromPreview}>edit</button>
+              <button className={css.navigationEditButton} onClick={openEditorFromPreview}>edit</button>
               <div className={css.navigationSettingsWrapper}>
                 <ModalArticleSettings />
               </div>
