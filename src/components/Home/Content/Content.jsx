@@ -43,7 +43,7 @@ export const Content = ({ mouseTimer }) => {
   const onMouseUp = () => mouseTimer && window.clearTimeout(mouseTimer);
 
   return (
-    <main className={css.main} onScroll={onMouseUp}>
+    <main className={css.container} onScroll={onMouseUp}>
       {articles?.map((i, index) => filteredArticlesId.includes(i.id) && (
         <article
           key={i?.id}
