@@ -18,9 +18,9 @@ article {
   user-select: none;
 }
 
-/* article:nth-child(even) {
-  background-color: #e8eddf !important;
-} */
+.stripedList:nth-child(even) {
+  background-color: var(--gray100) !important;
+}
 
 article:hover {
   text-decoration: underline;
@@ -70,5 +70,9 @@ article.purple {
 @media (max-width: 639px) {
   .container {
     padding: 60vh 16px 40vh;
+  }
+
+  article {
+    font-weight: 800;
   }
 }

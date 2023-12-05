@@ -7,6 +7,7 @@ import css from './Content.module.css';
 export const Content = ({ mouseTimer }) => {
   const dispatch = useDispatch();
   const { articles, filteredArticlesId } = useSelector(state => state.article);
+  const { stripedList } = useSelector(state => state.user);
 
   const openModalEditor = (id, content, title, index, color, archive, tags) => {
     dispatch(setArticleId(id));
@@ -52,7 +53,7 @@ export const Content = ({ mouseTimer }) => {
           onMouseUp={onMouseUp}
           onTouchStart={() => onMouseDown(i?.id, i?.content, i?.title, index, i?.color, i?.archive, i?.tags)}
           onTouchEnd={onMouseUp}
-          className={css[i?.color]}
+          className={`${css[i?.color]} ${stripedList && css.stripedList}`}
         >
           {i?.title || 'Untitled'}
         </article>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setFilteredArticlesId,
@@ -10,6 +10,7 @@ import {
   setIsNewArticle
 } from 'redux/features/article/articleSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
+import { setStripedList } from 'redux/features/user/userSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 import css from './Sidebar.module.css';
@@ -19,7 +20,7 @@ import { UserSettingsModal } from './UserSettingsModal/UserSettingsModal';
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
-  const { categories } = useSelector(state => state.user);
+  const { categories, stripedList } = useSelector(state => state.user);
   const { articles } = useSelector(state => state.article);
 
   const [activeButtonId, setActiveButtonId] = useState('articles');
@@ -28,6 +29,17 @@ export const Sidebar = () => {
   const [activeCategoryText, setActiveCategoryText] = useState('articles');
   const [activeMainMenuButton, setActiveMainMenuButton] = useState(false);
   const [activeCategoriesMenuButton, setActiveCategoriesMenuButton] = useState(false);
+
+  useEffect(() => {
+    const a = localStorage.getItem('stripedList');
+
+    if (a === 'true') {
+      dispatch(setStripedList(true));
+    }
+    else {
+      dispatch(setStripedList(false));
+    }
+  }, [])
 
   const openModalEditor = () => {
     const newId = uuidv4();
@@ -112,27 +124,18 @@ export const Sidebar = () => {
     );
   };
 
+  const handleStripedList = (e) => {
+    dispatch(setStripedList(e.target.checked));
+    localStorage.setItem('stripedList', e.target.checked);
+  };
+
   const menuComponent = () => {
     return (
       <div className={css.menuContainer}>
         <div className={css.toggleGroup}>
-          <span className={css.toggleGroupText}>dark theme</span>
-          <label className={css.switch}>
-            <input type="checkbox" />
-            <span className={css.slider}></span>
-          </label>
-        </div>
-        <div className={css.toggleGroup}>
           <span className={css.toggleGroupText}>striped list</span>
           <label className={css.switch}>
-            <input type="checkbox" />
-            <span className={css.slider}></span>
-          </label>
-        </div>
-        <div className={css.toggleGroup}>
-          <span className={css.toggleGroupText}>column view</span>
-          <label className={css.switch}>
-            <input type="checkbox" />
+            <input type="checkbox" checked={stripedList} onChange={handleStripedList} />
             <span className={css.slider}></span>
           </label>
         </div>
