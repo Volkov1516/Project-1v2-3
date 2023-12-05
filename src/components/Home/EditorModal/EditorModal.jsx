@@ -100,7 +100,9 @@ export const EditorModal = () => {
               <ModalArticleSettings color="blue" />
             </div>
           </div>
-          <Title ref={titleRef} />
+          <div className={css.titleWrapper}>
+            <Title ref={titleRef} />
+          </div>
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
         </div>
       </div>

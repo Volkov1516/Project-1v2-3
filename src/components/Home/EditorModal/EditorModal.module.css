@@ -135,6 +135,15 @@
   cursor: pointer;
 }
 
+.titleWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.editor {
+  padding-bottom: 500px !important;
+}
+
 @media (hover: hover) {
   .navigationEditButton:hover,
   .navigationCloseButton:hover,

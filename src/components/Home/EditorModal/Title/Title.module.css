@@ -1,8 +1,6 @@
 textarea {
-  margin:  0 auto;
-  padding-left: 10px;
   width: 100%;
-  max-width: 720px;
+  max-width: 700px;
   display: block;
   outline: none;
   border: none;
@@ -60,10 +58,4 @@ textarea.purple {
 .preview {
   cursor: default;
   user-select: none !important;
-}
-
-@media (max-width: 639px) {
-  textarea {
-    padding-left: 0;
-  }
 }
