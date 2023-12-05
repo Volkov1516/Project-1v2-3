@@ -128,6 +128,13 @@
   transform: rotate(135deg);
 }
 
+.headerCloseButton {
+  color: #1971C2;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
 @media (hover: hover) {
   .navigationEditButton:hover,
   .navigationCloseButton:hover,
@@ -188,6 +195,16 @@
     display: none;
   }
 
+  .navigationEditButton {
+    padding: 16px;
+    border-radius: 1em;
+  }
+
+  .navigationEditButton:active {
+    background-color: var(--gray200);
+    text-decoration: none;
+  }
+
   .arrowWrapper {
     padding: 20px 20px;
   }
@@ -201,33 +218,3 @@
     user-select: none;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.headerCloseButton {
-  color: #1971C2;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-
-
