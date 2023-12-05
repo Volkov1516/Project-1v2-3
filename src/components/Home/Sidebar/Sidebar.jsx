@@ -26,6 +26,8 @@ export const Sidebar = () => {
   const [mainMenu, setMainMenu] = useState(false);
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [activeCategoryText, setActiveCategoryText] = useState('articles');
+  const [activeMainMenuButton, setActiveMainMenuButton] = useState(false);
+  const [activeCategoriesMenuButton, setActiveCategoriesMenuButton] = useState(false);
 
   const openModalEditor = () => {
     const newId = uuidv4();
@@ -84,11 +86,15 @@ export const Sidebar = () => {
   const handleMainMenu = () => {
     setCategoriesMenu(false);
     setMainMenu(!mainMenu);
+    setActiveCategoriesMenuButton(false);
+    setActiveMainMenuButton(!activeMainMenuButton);
   };
 
   const handleCategoriesMenu = () => {
     setMainMenu(false);
     setCategoriesMenu(!categoriesMenu);
+    setActiveMainMenuButton(false);
+    setActiveCategoriesMenuButton(!activeCategoriesMenuButton);
   };
 
   const categoriesComponent = () => {
@@ -138,13 +144,13 @@ export const Sidebar = () => {
   return (
     <aside className={css.container}>
       <div className={css.start}>
-        <div className={css.categoriesButtonSmall} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
+        <div className={`${css.categoriesButtonSmall} ${activeCategoriesMenuButton && css.activeCategoriesMenuButton}`} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
         <div className={css.createButton} onClick={openModalEditor}>CREATE</div>
         <div className={css.categoriesWrapper}>{categoriesComponent()}</div>
       </div>
       <div className={css.end}>
         <div className={css.menuWrapper}>{menuComponent()}</div>
-        <div className={css.menuButtonSmall} onClick={handleMainMenu}>menu</div>
+        <div className={`${css.menuButtonSmall} ${activeMainMenuButton && css.activeMainMenuButton}`} onClick={handleMainMenu}>menu</div>
       </div>
       {mainMenu && <div className={css.menuWrapperSmall}>{menuComponent()}</div>}
       {categoriesMenu && <div className={css.categoriesWrapperSmall}>{categoriesComponent()}</div>}

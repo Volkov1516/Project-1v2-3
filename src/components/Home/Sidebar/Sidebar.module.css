@@ -204,6 +204,14 @@
   background-color: var(--gray200);
 }
 
+.activeCategoriesMenuButton {
+  background-color: var(--gray200) !important;
+}
+
+.activeMainMenuButton {
+  background-color: var(--gray200) !important;
+}
+
 @media (hover: hover) {
   .createButton:hover {
     background-color: var(--gray1500);
