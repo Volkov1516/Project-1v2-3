@@ -64,6 +64,7 @@ export const Sidebar = () => {
     setActiveButtonId('articles');
     setActiveCategoryText('articles');
     setCategoriesMenu(false);
+    setActiveCategoriesMenuButton(false);
   };
 
   const handleArchive = () => {
@@ -74,6 +75,7 @@ export const Sidebar = () => {
     setActiveButtonId('archive');
     setActiveCategoryText('archive');
     setCategoriesMenu(false);
+    setActiveCategoriesMenuButton(false);
   };
 
   const setFilteredByCategory = (id, name) => {
@@ -93,6 +95,7 @@ export const Sidebar = () => {
     setActiveButtonId(id);
     setActiveCategoryText(name);
     setCategoriesMenu(false);
+    setActiveCategoriesMenuButton(false);
   };
 
   const handleMainMenu = () => {
