@@ -75,12 +75,11 @@
   .container {
     height: 100%;
     width: 100%;
-    /* padding: 8px; */
   }
 
   .preview {
-    height: calc(100% - 16px);
-    margin: 8px;
+    height: calc(100% - 40px);
+    margin: 8px 8px 32px;
     flex-direction: column-reverse;
   }
 
@@ -88,7 +87,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 8px 16px;
+    padding: 8px 0px 16px;
   }
 
   .edit, .editFP, .editFC {
