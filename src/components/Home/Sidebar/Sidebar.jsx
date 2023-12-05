@@ -39,7 +39,7 @@ export const Sidebar = () => {
     else {
       dispatch(setStripedList(false));
     }
-  }, [])
+  }, [dispatch]);
 
   const openModalEditor = () => {
     const newId = uuidv4();
