@@ -27,6 +27,7 @@
   max-height: 100%;
   user-select: none !important;
   scroll-behavior: smooth;
+  padding-bottom: 500px;
 }
 
 .preview>.editor>.header {
@@ -46,6 +47,7 @@
   max-height: 100%;
   user-select: none !important;
   scroll-behavior: smooth;
+  padding-bottom: calc(500px + 5vh);
 }
 
 .edit>.editor>.header, .editFP>.editor>.header, .editFC>.editor>.header {
@@ -140,10 +142,6 @@
   justify-content: center;
 }
 
-.editor {
-  padding-bottom: 500px !important;
-}
-
 @media (hover: hover) {
   .navigationEditButton:hover,
   .navigationCloseButton:hover,
@@ -178,6 +176,10 @@
 
   .edit, .editFP, .editFC {
     padding: 0px 16px;
+  }
+
+  .edit>.editor, .editFP>.editor, .editFC>.editor {
+    padding-bottom: 577px;
   }
 
   .edit>.editor>.header, .editFP>.editor>.header, .editFC>.editor>.header {
