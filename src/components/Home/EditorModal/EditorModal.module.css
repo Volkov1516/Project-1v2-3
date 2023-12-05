@@ -54,6 +54,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 5vh;
 }
 
 .navigation {
@@ -96,6 +97,7 @@
 
   .edit>.editor>.header, .editFP>.editor>.header, .editFC>.editor>.header {
     padding: 16px 0px;
+    margin-bottom: 0;
   }
 
   .navigation {
@@ -140,10 +142,11 @@
 }
 
 .navigationCountBubble {
-  padding: 2px 8px;
-  border-radius: 1em;
-  background-color: #E8EDDF;
-  font-weight: 600;
+  padding: 8px 12px;
+  /* background-color: #E8EDDF; */
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  color: var(--white);
   cursor: default;
   user-select: none;
 }
@@ -174,7 +177,6 @@
 }
 
 .navigationWriteButton {
-  color: #1971C2;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
