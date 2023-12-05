@@ -67,6 +67,20 @@ article.purple {
   color: white;
 }
 
+.emptyContainer {
+  width: 100%;
+  height: 100%;
+  padding-top: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--gray200);
+  font-size: 40px;
+  font-weight: 700;
+  text-transform: uppercase;
+  user-select: none;
+}
+
 @media (hover: hover) {
   article:hover {
     text-decoration: underline;
@@ -80,6 +94,11 @@ article.purple {
   }
 
   article {
+    font-weight: 800;
+  }
+
+  .emptyContainer {
+    padding-top: 0;
     font-weight: 800;
   }
 }

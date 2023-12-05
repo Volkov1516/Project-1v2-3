@@ -58,6 +58,11 @@ export const Content = ({ mouseTimer }) => {
           {i?.title || 'Untitled'}
         </article>
       ))}
+      {filteredArticlesId?.length < 1 && (
+        <div className={css.emptyContainer}>
+            no articles
+        </div>
+      )}
     </main>
   );
 };
