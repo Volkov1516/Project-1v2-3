@@ -10,17 +10,16 @@ import {
   setIsNewArticle
 } from 'redux/features/article/articleSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
-import { auth } from 'firebase.js';
-import { signOut } from 'firebase/auth';
 import { v4 as uuidv4 } from 'uuid';
 
 import css from './Sidebar.module.css';
 
 import { EditCategoriesModal } from './EditCategoriesModal/EditCategoriesModal';
+import { UserSettingsModal } from './UserSettingsModal/UserSettingsModal';
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
-  const { user, categories } = useSelector(state => state.user);
+  const { categories } = useSelector(state => state.user);
   const { articles } = useSelector(state => state.article);
 
   const [activeButtonId, setActiveButtonId] = useState('articles');
@@ -92,8 +91,6 @@ export const Sidebar = () => {
     setCategoriesMenu(!categoriesMenu);
   };
 
-  const handleSignOut = () => signOut(auth);
-
   const categoriesComponent = () => {
     return (
       <div className={css.categoriesContainer}>
@@ -133,7 +130,7 @@ export const Sidebar = () => {
             <span className={css.slider}></span>
           </label>
         </div>
-        <div className={css.userButton} onClick={handleSignOut}>{user?.email}</div>
+        <UserSettingsModal />
       </div>
     );
   };

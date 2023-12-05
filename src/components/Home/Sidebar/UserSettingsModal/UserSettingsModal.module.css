@@ -1,10 +1,19 @@
 .openButton {
   width: 100%;
+  margin-top: 8px;
   padding: 8px 16px;
   border-radius: 1em;
   font-weight: 600;
+  text-transform: lowercase;
   cursor: pointer;
   user-select: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.openButton:active {
+  background-color: var(--gray200);
 }
 
 .container {
@@ -45,102 +54,67 @@
   user-select: none;
 }
 
-.openButton:active {
-  background-color: var(--gray200);
-}
-
 .closeButton:active {
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
 
-.creationGroup {
+.group {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   column-gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 32px;
 }
 
-.creationInput {
-  width: 220px;
-  padding: 8px;
-  border: none;
-  outline: none;
-  background-color: var(--gray100);
-  color: var(--black);
-  font-size: 16px;
-  text-transform: lowercase;
+.emailLabel {
+  color: var(--gray1000);
+  font-weight: 600;
+  user-select: none;
 }
 
-.creationButton {
-  padding: 8px 12px;
-  background-color: var(--black);
-  color: var(--white);
+.signOutButton {
+  width: fit-content;
+  color: red;
   font-weight: 600;
   cursor: pointer;
   user-select: none;
 }
 
-.creationButton:active {
-  background-color: var(--gray1500);
-}
-
-.creationButton:disabled {
-  cursor: not-allowed;
-}
-
-.categoryGroup {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  column-gap: 8px;
-  margin-bottom: 8px;
-}
-
-.categoryInput {
-  padding: 8px;
-  outline: none;
-  border: none;
-  background-color: var(--gray100);
-  font-size: 16px;
-  text-transform: lowercase;
-}
-
-.deleteButton {
-  padding: 8px 12px;
-  border-radius: 1em;
-  font-weight: 600;
-  cursor: pointer;
-  user-select: none;
-}
-
-.deleteButton:active {
-  background-color: var(--gray200);
+.signOutButton:active {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 
 @media (hover: hover) {
-
-  .openButton:hover,
-  .deleteButton:hover {
+  .openButton:hover {
     background-color: var(--gray200);
   }
 
-  .closeButton:hover {
+  .closeButton:hover, .signOutButton:hover {
     text-decoration: underline;
     text-decoration-thickness: 2px;
-  }
-
-  .creationButton:hover {
-    background-color: var(--gray1500);
   }
 }
 
 @media (max-width: 639px) {
   .openButton {
     width: fit-content;
-    padding: 4px 16px;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
     font-size: 36px;
+    font-weight: 600;
+    cursor: default;
+    user-select: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    align-self: flex-start;
+  }
+
+  .openButton:active {
+    background-color: transparent;
+    text-decoration: underline;
+    text-decoration-thickness: 4px;
   }
 
   .container {
@@ -154,19 +128,5 @@
 
   .header {
     margin-bottom: 32px;
-  }
-
-  .creationInput {
-    width: 100%;
-    padding: 16px;
-  }
-
-  .categoryInput {
-    width: 100%;
-    padding: 16px;
-  }
-
-  .creationButton {
-    padding: 16px;
   }
 }
