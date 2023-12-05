@@ -22,7 +22,7 @@ article {
   background-color: var(--gray100) !important;
 }
 
-article:hover {
+article:active {
   text-decoration: underline;
   text-decoration-thickness: 4px;
 }
@@ -65,6 +65,13 @@ article.blue {
 article.purple {
   background-color: #9c36b5 !important;
   color: white;
+}
+
+@media (hover: hover) {
+  article:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 4px;
+  }
 }
 
 @media (max-width: 639px) {
