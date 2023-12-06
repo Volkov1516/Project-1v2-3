@@ -207,14 +207,19 @@
     height: 60px;
   }
 
-  /* .content {
-    height: 100vh;
-    width: 100vw;
-    background-color: #BFC7B4;
-    flex-direction: column-reverse;
-    align-items: flex-end;
-    row-gap: 0;
-  } */
+  .color.active {
+    border: 2px solid var(--gray100);
+    outline: 2px solid var(--black);
+  }
+
+  .color:active {
+    border: 2px solid var(--gray100);
+    outline: 2px solid var(--black);
+  }
+
+
+
+
 
   .section {
     display: flex;
