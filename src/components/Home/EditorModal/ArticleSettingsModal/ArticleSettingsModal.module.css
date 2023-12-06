@@ -1,36 +1,120 @@
+.openButton,
+.closeButton {
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+.openButton.blue {
+  color: #1971c2;
+}
+
+.openButton:active,
+.closeButton:active {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
 .container {
   height: 100vh;
   width: 100vw;
   position: fixed;
   left: 0;
   top: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 3;
 }
 
 .content {
+  width: 320px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  row-gap: 16px;
   overflow: auto;
-  background-color: white;
-  padding: 16px;
-  width: 300px;
-  background-color: #BFC7B4;
-}
-
-.blue {
-  /* padding: 8px 16px; */
-  color: #1971c2;
+  background-color: var(--white);
 }
 
 .header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
+
+.title {
+  color: var(--gray1000);
+  font-weight: 600;
+  user-select: none;
+}
+
+.colorsContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 16px 8px;
+  border-radius: 1em;
+  background-color: var(--gray100);
+}
+
+.color {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-weight: 400;
+  cursor: pointer;
+  user-select: none;
+}
+
+.color:active {
+  border: 1px solid var(--gray100);
+  outline: 1px solid var(--black);
+}
+
+.color.active {
+  border: 1px solid var(--gray100);
+  outline: 1px solid var(--black);
+}
+
+@media (hover: hover) {
+
+  .openButton:hover,
+  .closeButton:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  .color:hover {
+    border: 1px solid var(--gray100);
+    outline: 1px solid var(--black);
+  }
+
+  /* .section>button:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  .header>button:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+
+  .deletionDialog>button:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  } */
+}
+
+
+
+
+
+
+
+
 
 .buttonWrapper {
   display: flex;
@@ -73,21 +157,9 @@
   cursor: pointer;
 }
 
-.colorsContainer {
-  margin-top: 8px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
 
-.colorItem {
-  /* padding: 4px 8px; */
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  color: white;
-  font-weight: 400;
-}
+
+
 
 .deletionDialog {
   width: 100%;
@@ -112,37 +184,37 @@
   user-select: none;
 }
 
-@media (hover: hover) {
-  .mainButton:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-  }
 
-  .section>button:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-  }
-
-  .header>button:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-  }
-
-  .deletionDialog>button:hover {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-  }
-}
 
 @media (max-width: 639px) {
+  .container {
+    padding: 16px;
+  }
+
   .content {
+    width: 100%;
+    height: 100%;
+  }
+
+  .colorsContainer {
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .color {
+    width: 60px;
+    height: 60px;
+  }
+
+  /* .content {
     height: 100vh;
     width: 100vw;
     background-color: #BFC7B4;
     flex-direction: column-reverse;
     align-items: flex-end;
     row-gap: 0;
-  }
+  } */
 
   .section {
     display: flex;
@@ -173,23 +245,18 @@
     color: #1971c2;
   }
 
-  .colorTrigger {
+  /* .colorTrigger {
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-top: 0px solid black;
     border-bottom: 8px solid black;
     padding-top: 8px;
-  }
+  } */
 
-  .colorsContainer {
-    justify-content: flex-end;
-    font-weight: 600;
-  }
-
-  .colorItem {
+  /* .colorItem {
     font-size: 24px;
     font-weight: 400;
-  }
+  } */
 
   .tagItem {
     font-size: 24px;
@@ -204,9 +271,9 @@
     font-size: 24px;
   }
 
-  .closeButton {
+  /* .closeButton {
     font-size: 40px;
-  }
+  } */
 
   .sectionTitle {
     font-size: 40px;

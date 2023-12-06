@@ -7,7 +7,7 @@ import css from './EditorModal.module.css';
 
 import { Title } from './Title/Title';
 import { Editor } from './Editor/Editor';
-import { ModalArticleSettings } from './ModalArticleSettings/ModalArticleSettings';
+import { ArticleSettingsModal } from './ArticleSettingsModal/ArticleSettingsModal';
 
 export const EditorModal = () => {
   const dispatch = useDispatch();
@@ -82,7 +82,7 @@ export const EditorModal = () => {
               </div>
               <button className={css.navigationEditButton} onClick={openEditorFromPreview}>edit</button>
               <div className={css.navigationSettingsWrapper}>
-                <ModalArticleSettings />
+                <ArticleSettingsModal />
               </div>
             </div>
             <div className={css.navigationEnd}>
@@ -97,7 +97,7 @@ export const EditorModal = () => {
               <div className={css.headerCloseButton} onClick={close}>close</div>
             </div>
             <div className={css.headerEnd}>
-              <ModalArticleSettings color="blue" />
+              <ArticleSettingsModal openButtonColor="blue" />
             </div>
           </div>
           <div className={css.titleWrapper}>

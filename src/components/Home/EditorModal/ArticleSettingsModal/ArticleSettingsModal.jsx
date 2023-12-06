@@ -4,13 +4,14 @@ import { updateColor, deleteArticle, setArticleArchive, addTag, setArticleTags }
 import { setModalSettings } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
-import css from './ModalArticleSettings.module.css';
 
-export const ModalArticleSettings = ({color}) => {
+import css from './ArticleSettingsModal.module.css';
+
+export const ArticleSettingsModal = ({ openButtonColor }) => {
   const dispatch = useDispatch();
-  const { tags } = useSelector(state => state.user);
+  const { categories } = useSelector(state => state.user);
   const { modalSettings } = useSelector(state => state.modal);
-  const { articleId, isArchived, articleCategories } = useSelector(state => state.article);
+  const { articleId, isArchived, articleCategories, color } = useSelector(state => state.article);
 
   const [deletionDialog, setDeletionDialog] = useState(false);
 
@@ -96,32 +97,39 @@ export const ModalArticleSettings = ({color}) => {
 
   return (
     <>
-      <button className={`${css.mainButton} ${css[color]}`} onClick={handleOpen}>settings</button>
+      <div className={`${css.openButton} ${css[openButtonColor]}`} onClick={handleOpen}>settings</div>
       {modalSettings && (
         <div className={css.container} onClick={handleClose}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
             <div className={css.header}>
-              <button className={css.closeButton} onClick={handleClose}>close</button>
+              <span className={css.title}>article settings</span>
+              <div className={css.closeButton} onClick={handleClose}>close</div>
             </div>
-            <div className={css.section}>
-              <div className={css.tagsContainer}>
-                {tags?.map(i => <button className={css.tagItem} key={i.id} onClick={() => handleSetCategory(i?.id)}>#{i?.name}</button>)}
-              </div>
+
+            <div className={css.colorsContainer}>
+              <div className={`${css.color} ${color === "white" && css.active}`} onClick={() => handleColor("white")} style={{ backgroundColor: "white" }}></div>
+              <div className={`${css.color} ${color === "black" && css.active}`} onClick={() => handleColor("black")} style={{ backgroundColor: "black" }}></div>
+              <div className={`${css.color} ${color === "red" && css.active}`} onClick={() => handleColor("red")} style={{ backgroundColor: "#e03131" }}></div>
+              <div className={`${css.color} ${color === "orange" && css.active}`} onClick={() => handleColor("orange")} style={{ backgroundColor: "#fd7e14" }}></div>
+              <div className={`${css.color} ${color === "yellow" && css.active}`} onClick={() => handleColor("yellow")} style={{ backgroundColor: "#ffd43b" }}></div>
+              <div className={`${css.color} ${color === "green" && css.active}`} onClick={() => handleColor("green")} style={{ backgroundColor: "#2f9e44" }}></div>
+              <div className={`${css.color} ${color === "blue" && css.active}`} onClick={() => handleColor("blue")} style={{ backgroundColor: "#1971c2" }}></div>
+              <div className={`${css.color} ${color === "purple" && css.active}`} onClick={() => handleColor("purple")} style={{ backgroundColor: "#9c36b5" }}></div>
             </div>
-            <hr />
-            <div className={css.section}>
-              <div className={css.colorsContainer}>
-                <button className={css.colorItem} onClick={() => handleColor("white")} style={{ backgroundColor: "white" }}></button>
-                <button className={css.colorItem} onClick={() => handleColor("black")} style={{ backgroundColor: "black" }}></button>
-                <button className={css.colorItem} onClick={() => handleColor("red")} style={{ backgroundColor: "#e03131" }}></button>
-                <button className={css.colorItem} onClick={() => handleColor("orange")} style={{ backgroundColor: "#fd7e14" }}></button>
-                <button className={css.colorItem} onClick={() => handleColor("yellow")} style={{ backgroundColor: "#ffd43b" }}></button>
-                <button className={css.colorItem} onClick={() => handleColor("green")} style={{ backgroundColor: "#2f9e44" }}></button>
-                <button className={css.colorItem} onClick={() => handleColor("blue")} style={{ backgroundColor: "#1971c2" }}></button>
-                <button className={css.colorItem} onClick={() => handleColor("purple")} style={{ backgroundColor: "#9c36b5" }}></button>
-              </div>
+
+
+
+            <div className={css.categoriesContainer}>
+              {categories?.map(i => (
+                <div key={i.id} className={css.category} onClick={() => handleSetCategory(i?.id)}>
+                  {i?.name}
+                </div>
+              ))}
             </div>
-            <hr />
+
+
+
+            
             <div className={css.section}>
               <button onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</button>
             </div>
