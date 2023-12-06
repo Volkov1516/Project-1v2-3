@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setArticleId, setArticleIndex, setArticleTitle, setArticleContent, setArticleColor, setIsArchived, setArticleTags } from 'redux/features/article/articleSlice';
+import { setArticleId, setArticleIndex, setArticleTitle, setArticleContent, setArticleColor, setIsArchived, setArticleCategories } from 'redux/features/article/articleSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 
 import css from './Content.module.css';
@@ -9,12 +9,12 @@ export const Content = ({ mouseTimer }) => {
   const { articles, filteredArticlesId } = useSelector(state => state.article);
   const { stripedList } = useSelector(state => state.user);
 
-  const openModalEditor = (id, content, title, index, color, archive, tags) => {
+  const openModalEditor = (id, content, title, index, color, archive, categories) => {
     dispatch(setArticleId(id));
     dispatch(setArticleTitle(title));
     dispatch(setArticleContent(content));
     dispatch(setArticleColor(color));
-    dispatch(setArticleTags(tags));
+    dispatch(setArticleCategories(categories));
     dispatch(setIsArchived(archive));
     dispatch(setArticleIndex(index));
     dispatch(setEditorModalStatus('editFC'));
@@ -22,7 +22,7 @@ export const Content = ({ mouseTimer }) => {
     window.history.pushState({}, '', '#editor');
   };
 
-  const onMouseDown = (id, content, title, index, color, archive, tags) => {
+  const onMouseDown = (id, content, title, index, color, archive, categories) => {
     onMouseUp();
 
     mouseTimer = window.setTimeout(() => {
@@ -32,7 +32,7 @@ export const Content = ({ mouseTimer }) => {
       dispatch(setArticleTitle(title));
       dispatch(setArticleContent(content));
       dispatch(setArticleColor(color));
-      dispatch(setArticleTags(tags));
+      dispatch(setArticleCategories(categories));
       dispatch(setIsArchived(archive));
       dispatch(setArticleIndex(index));
       dispatch(setEditorModalStatus('preview'));
@@ -48,10 +48,10 @@ export const Content = ({ mouseTimer }) => {
       {articles?.map((i, index) => filteredArticlesId.includes(i.id) && (
         <article
           key={i?.id}
-          onClick={() => openModalEditor(i?.id, i?.content, i?.title, index, i?.color, i?.archive, i?.tags)}
-          onMouseDown={() => onMouseDown(i?.id, i?.content, i?.title, index, i?.color, i?.archive, i?.tags)}
+          onClick={() => openModalEditor(i?.id, i?.content, i?.title, index, i?.color, i?.archive, i?.categories)}
+          onMouseDown={() => onMouseDown(i?.id, i?.content, i?.title, index, i?.color, i?.archive, i?.categories)}
           onMouseUp={onMouseUp}
-          onTouchStart={() => onMouseDown(i?.id, i?.content, i?.title, index, i?.color, i?.archive, i?.tags)}
+          onTouchStart={() => onMouseDown(i?.id, i?.content, i?.title, index, i?.color, i?.archive, i?.categories)}
           onTouchEnd={onMouseUp}
           className={`${css[i?.color]} ${stripedList && css.stripedList}`}
         >

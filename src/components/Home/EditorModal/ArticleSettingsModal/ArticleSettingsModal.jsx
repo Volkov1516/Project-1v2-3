@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateColor, deleteArticle, setArticleArchive, addTag, setArticleTags } from 'redux/features/article/articleSlice';
+import { updateColor, deleteArticle, setArticleArchive, addTag, setArticleCategories } from 'redux/features/article/articleSlice';
 import { setModalSettings } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
@@ -41,7 +41,7 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
     )
       .then(() => {
         dispatch(addTag({ id: articleId, category: id }));
-        dispatch(setArticleTags([...articleCategories, id]));
+        dispatch(setArticleCategories([...articleCategories, id]));
       })
       .catch((error) => console.log(error));
   };

@@ -11,8 +11,9 @@ import { ArticleSettingsModal } from './ArticleSettingsModal/ArticleSettingsModa
 
 export const EditorModal = () => {
   const dispatch = useDispatch();
+  const { categories } = useSelector(state => state.user);
   const { editorModalStatus } = useSelector(state => state.modal);
-  const { filteredArticlesId, articleIndex } = useSelector(state => state.article);
+  const { filteredArticlesId, articleIndex, articleCategories } = useSelector(state => state.article);
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
@@ -104,6 +105,17 @@ export const EditorModal = () => {
             <Title ref={titleRef} />
           </div>
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
+          <div className={css.categoriesContainer}>
+            {categories.map(i => {
+              for (let j in articleCategories) {
+                if (articleCategories[j].id === i.id) {
+                  return <div key={i.id} className={css.category}>
+                    {i?.name}
+                  </div>
+                }
+              }
+            })}
+          </div>
         </div>
       </div>
     </div>

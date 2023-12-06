@@ -10,7 +10,7 @@ const initialState = {
   title: '',
   content: EMPTY_CONTENT,
   color: null,
-  articleTags: [],
+  articleCategories: [],
   date: null,
   archive: null,
   isArchived: false,
@@ -62,8 +62,8 @@ export const articleSlice = createSlice({
       state.articles = JSON.parse(JSON.stringify(newArticles));
       state.color = action.payload.color;
     },
-    setArticleTags: (state, action) => {
-      state.articleTags = action.payload;
+    setArticleCategories: (state, action) => {
+      state.articleCategories = action.payload;
     },
     addTag: (state, action) => {
       let newArticles = state.articles.map(i => {
@@ -72,7 +72,7 @@ export const articleSlice = createSlice({
             id: i?.id,
             title: i?.title,
             content: i?.content,
-            tags: [...state.articleTags, { id: action.payload.category }],
+            tags: [...state.articleCategories, { id: action.payload.category }],
             color: i?.color,
             date: i?.date,
             archive: i?.archive,
@@ -188,7 +188,7 @@ export const articleSlice = createSlice({
       state.title = currentArticle?.title || 'Untitled';
       state.content = currentArticle?.content;
       state.color = currentArticle?.color;
-      state.articleTags = currentArticle?.tags;
+      state.articleCategories = currentArticle?.categories;
       state.date = currentArticle?.date;
       state.archive = currentArticle?.archive;
       state.isArchived = currentArticle?.archive;
@@ -203,7 +203,7 @@ export const articleSlice = createSlice({
       state.title = currentArticle?.title || 'Untitled';
       state.content = currentArticle?.content;
       state.color = currentArticle?.color;
-      state.articleTags = currentArticle?.tags;
+      state.articleCategories = currentArticle?.categories;
       state.date = currentArticle?.date;
       state.archive = currentArticle?.archive;
       state.isArchived = currentArticle?.archive;
@@ -222,7 +222,7 @@ export const {
   setArticleContent,
   setArticleColor,
   updateColor,
-  setArticleTags,
+  setArticleCategories,
   addTag,
   removeCategory,
   setArticleArchive,
