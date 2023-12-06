@@ -233,6 +233,14 @@
   .deletionContent {
     width: 100%;
   }
+
+  .input {
+    padding: 16px;
+  }
+
+  .deleteForeverButton {
+    padding: 16px;
+  }
 }
 
 

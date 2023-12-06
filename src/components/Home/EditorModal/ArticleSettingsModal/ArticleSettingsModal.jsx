@@ -106,7 +106,6 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
               <span className={css.title}>article settings</span>
               <div className={css.closeButton} onClick={handleClose}>close</div>
             </div>
-
             <div className={css.colorsContainer}>
               <div className={`${css.color} ${color === "white" && css.active}`} onClick={() => handleColor("white")} style={{ backgroundColor: "white" }}></div>
               <div className={`${css.color} ${color === "black" && css.active}`} onClick={() => handleColor("black")} style={{ backgroundColor: "black" }}></div>
@@ -117,7 +116,6 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
               <div className={`${css.color} ${color === "blue" && css.active}`} onClick={() => handleColor("blue")} style={{ backgroundColor: "#1971c2" }}></div>
               <div className={`${css.color} ${color === "purple" && css.active}`} onClick={() => handleColor("purple")} style={{ backgroundColor: "#9c36b5" }}></div>
             </div>
-
             <div className={css.categoriesContainer}>
               {categories?.map(i => (
                 <div key={i.id} className={css.category} onClick={() => handleSetCategory(i?.id)}>
@@ -125,12 +123,7 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
                 </div>
               ))}
             </div>
-
             <div className={css.archiveButton} onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</div>
-
-
-
-
             <div className={css.deleteButton} onClick={() => setDeletionDialog(!deletionDialog)}>delete</div>
             {deletionDialog && (
               <div className={css.deletionContainer} onClick={() => setDeletionDialog(false)}>
