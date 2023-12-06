@@ -106,14 +106,10 @@ export const EditorModal = () => {
           </div>
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
           <div className={css.categoriesContainer}>
-            {categories.map(function (i) {
-              for (let j in articleCategories) {
-                if (articleCategories[j].id === i.id) {
-                  return <div key={i.id} className={css.category}>
-                    {i?.name}
-                  </div>
-                }
-              }
+            {articleCategories?.map(i => {
+              return <div key={i.id} className={css.category}>
+                {i?.id}
+              </div>
             })}
           </div>
         </div>

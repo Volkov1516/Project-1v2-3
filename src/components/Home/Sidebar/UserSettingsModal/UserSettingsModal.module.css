@@ -103,7 +103,7 @@
     padding: 0;
     margin: 0;
     border-radius: 0;
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 600;
     cursor: default;
     user-select: none;
@@ -132,7 +132,7 @@
   }
 
   .signOutButton {
-    font-size: 36px;
+    font-size: 32px;
   }
   
   .signOutButton:active {

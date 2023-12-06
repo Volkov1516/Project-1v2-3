@@ -28,11 +28,12 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
     window.history.back();
   };
 
-  const handleSetCategory = async (id) => {
+  const handleSetCategory = async (id, name) => {
     await setDoc(doc(db, 'articles', articleId),
       {
         categories: arrayUnion({
           id,
+          name
         })
       },
       {
@@ -118,7 +119,7 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
             </div>
             <div className={css.categoriesContainer}>
               {categories?.map(i => (
-                <label key={i.id} className={css.categoryText} onClick={() => handleSetCategory(i?.id)}>
+                <label key={i.id} className={css.categoryText} onClick={() => handleSetCategory(i?.id, i?.name)}>
                   {i?.name}
                   <input className={css.categoryCheckbox} type="checkbox" />
                 </label>
