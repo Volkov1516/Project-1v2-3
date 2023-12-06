@@ -9,32 +9,32 @@ export const Content = ({ mouseTimer }) => {
   const { articles, filteredArticlesId } = useSelector(state => state.article);
   const { stripedList } = useSelector(state => state.user);
 
-  const openModalEditor = (id, content, title, index, color, archive, categories) => {
+  const openModalEditor = (index, id, title, content, color, categories, archive) => {
+    dispatch(setArticleIndex(index));
     dispatch(setArticleId(id));
     dispatch(setArticleTitle(title));
     dispatch(setArticleContent(content));
     dispatch(setArticleColor(color));
     dispatch(setArticleCategories(categories));
     dispatch(setIsArchived(archive));
-    dispatch(setArticleIndex(index));
     dispatch(setEditorModalStatus('editFC'));
 
     window.history.pushState({}, '', '#editor');
   };
 
-  const onMouseDown = (id, content, title, index, color, archive, categories) => {
+  const onMouseDown = (index, id, title, content, color, categories, archive) => {
     onMouseUp();
 
     mouseTimer = window.setTimeout(() => {
       window.navigator.vibrate(100);
 
+      dispatch(setArticleIndex(index));
       dispatch(setArticleId(id));
       dispatch(setArticleTitle(title));
       dispatch(setArticleContent(content));
       dispatch(setArticleColor(color));
       dispatch(setArticleCategories(categories));
       dispatch(setIsArchived(archive));
-      dispatch(setArticleIndex(index));
       dispatch(setEditorModalStatus('preview'));
 
       window.history.pushState({}, '', '#preview');
@@ -48,10 +48,10 @@ export const Content = ({ mouseTimer }) => {
       {articles?.map((i, index) => filteredArticlesId.includes(i.id) && (
         <article
           key={i?.id}
-          onClick={() => openModalEditor(i?.id, i?.content, i?.title, index, i?.color, i?.archive, i?.categories)}
-          onMouseDown={() => onMouseDown(i?.id, i?.content, i?.title, index, i?.color, i?.archive, i?.categories)}
+          onClick={() => openModalEditor(index, i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
+          onMouseDown={() => onMouseDown(index, i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
           onMouseUp={onMouseUp}
-          onTouchStart={() => onMouseDown(i?.id, i?.content, i?.title, index, i?.color, i?.archive, i?.categories)}
+          onTouchStart={() => onMouseDown(index, i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
           onTouchEnd={onMouseUp}
           className={`${css[i?.color]} ${stripedList && css.stripedList}`}
         >
@@ -60,7 +60,7 @@ export const Content = ({ mouseTimer }) => {
       ))}
       {filteredArticlesId?.length < 1 && (
         <div className={css.emptyContainer}>
-            no articles
+          no articles
         </div>
       )}
     </main>

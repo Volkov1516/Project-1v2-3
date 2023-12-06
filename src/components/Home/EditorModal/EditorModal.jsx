@@ -105,11 +105,11 @@ export const EditorModal = () => {
           </div>
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
           <div className={css.categoriesContainer}>
-            {articleCategories?.map(i => {
-              return <div key={i.id} className={css.category}>
-                {i?.id}
+            {articleCategories?.map(i => (
+              <div key={i?.id} className={css.category}>
+                {i?.name}
               </div>
-            })}
+            ))}
           </div>
         </div>
       </div>

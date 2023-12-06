@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { CLEAR_EDITOR_COMMAND } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
 export const RefreshStatePlugin = () => {
-  const dispatch = useDispatch();
   const { articleIndex, content } = useSelector(state => state.article);
 
   const [editor] = useLexicalComposerContext();
@@ -21,7 +20,7 @@ export const RefreshStatePlugin = () => {
         });
       }
     });
-  }, [dispatch, articleIndex, content, editor]);
+  }, [articleIndex, content, editor]);
 
   return null;
 };

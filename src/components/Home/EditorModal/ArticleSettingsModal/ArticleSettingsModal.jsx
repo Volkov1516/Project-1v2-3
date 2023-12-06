@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateColor, deleteArticle, setArticleArchive, addTag, setArticleCategories } from 'redux/features/article/articleSlice';
+import { updateColor, deleteArticle, setArticleArchive, addArticleCategories } from 'redux/features/article/articleSlice';
 import { setModalSettings } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
@@ -11,7 +11,7 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state.user);
   const { modalSettings } = useSelector(state => state.modal);
-  const { articleId, isArchived, articleCategories, title, color } = useSelector(state => state.article);
+  const { articleId, isArchived, title, color } = useSelector(state => state.article);
 
   const [deletionDialog, setDeletionDialog] = useState(false);
   const [deletionInputValue, setDeltionInputValue] = useState('');
@@ -28,22 +28,9 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
     window.history.back();
   };
 
-  const handleSetCategory = async (id, name) => {
-    await setDoc(doc(db, 'articles', articleId),
-      {
-        categories: arrayUnion({
-          id,
-          name
-        })
-      },
-      {
-        merge: true
-      }
-    )
-      .then(() => {
-        dispatch(addTag({ id: articleId, category: id }));
-        dispatch(setArticleCategories([...articleCategories, id]));
-      })
+  const handleAddCategory = async (id, name) => {
+    await setDoc(doc(db, 'articles', articleId), { categories: arrayUnion({ id, name }) }, { merge: true })
+      .then(() => dispatch(addArticleCategories({ id: articleId, categoryId: id, categoryName: name })))
       .catch((error) => console.log(error));
   };
 
@@ -119,7 +106,7 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
             </div>
             <div className={css.categoriesContainer}>
               {categories?.map(i => (
-                <label key={i.id} className={css.categoryText} onClick={() => handleSetCategory(i?.id, i?.name)}>
+                <label key={i.id} className={css.categoryText} onClick={() => handleAddCategory(i?.id, i?.name)}>
                   {i?.name}
                   <input className={css.categoryCheckbox} type="checkbox" />
                 </label>

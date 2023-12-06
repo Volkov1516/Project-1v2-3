@@ -28,8 +28,8 @@ export const userSlice = createSlice({
       state.categories = action.payload;
     },
     deleteCategory: (state, action) => {
-      let newTags = state.categories.filter(i => i.id !== action.payload);
-      state.categories = newTags;
+      let newCategories = state.categories.filter(i => i.id !== action.payload);
+      state.categories = newCategories;
     },
     setStripedList: (state, action) => {
       state.stripedList = action.payload;
