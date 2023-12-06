@@ -63,7 +63,7 @@
   display: flex;
   justify-content: space-between;
   column-gap: 8px;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
 }
 
 .emailLabel {
@@ -74,6 +74,7 @@
 
 .signOutButton {
   width: fit-content;
+  margin-bottom: 16px;
   color: red;
   font-weight: 600;
   cursor: pointer;
@@ -127,6 +128,14 @@
   }
 
   .header {
-    margin-bottom: 32px;
+    margin-bottom: 16px;
+  }
+
+  .signOutButton {
+    font-size: 36px;
+  }
+  
+  .signOutButton:active {
+    text-decoration-thickness: 4px;
   }
 }

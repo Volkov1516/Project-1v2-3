@@ -129,19 +129,16 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
 
 
 
-            
-            <div className={css.section}>
-              <button onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</button>
-            </div>
-            <div className={css.section}>
-              <button className={css.deleteBtn} onClick={() => setDeletionDialog(!deletionDialog)}>delete</button>
-              {deletionDialog && (
-                <div className={css.deletionDialog}>
-                  <button className={css.cancelDeleteBtn} onClick={() => setDeletionDialog(false)}>cancel</button>
-                  <button className={css.deleteBtn} onClick={handleDeleteArticle}>delete forever</button>
-                </div>
-              )}
-            </div>
+
+            <div className={css.archiveButton} onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</div>
+
+            <div className={css.deleteButton} onClick={() => setDeletionDialog(!deletionDialog)}>delete</div>
+            {deletionDialog && (
+              <div className={css.deletionDialog}>
+                <button className={css.cancelDeleteBtn} onClick={() => setDeletionDialog(false)}>cancel</button>
+                <button className={css.deleteBtn} onClick={handleDeleteArticle}>delete forever</button>
+              </div>
+            )}
           </div>
         </div>
       )}

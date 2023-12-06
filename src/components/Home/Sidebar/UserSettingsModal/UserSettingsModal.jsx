@@ -23,10 +23,10 @@ export const UserSettingsModal = () => {
               <button className={css.closeButton} onClick={() => setOpen(false)}>close</button>
             </div>
             <div className={css.group}>
-              <span className={css.emailLabel}>Email:</span>
+              <span className={css.emailLabel}>email:</span>
               <span className={css.email}>{user?.email}</span>
             </div>
-            <div className={css.signOutButton} onClick={handleSignOut}>Sing Out</div>
+            <div className={css.signOutButton} onClick={handleSignOut}>sing out</div>
           </div>
         </div>
       )}

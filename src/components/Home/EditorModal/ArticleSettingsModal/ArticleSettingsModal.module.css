@@ -1,5 +1,7 @@
 .openButton,
-.closeButton {
+.closeButton,
+.archiveButton,
+.deleteButton {
   font-weight: 600;
   cursor: pointer;
   user-select: none;
@@ -10,7 +12,9 @@
 }
 
 .openButton:active,
-.closeButton:active {
+.closeButton:active,
+.archiveButton:active,
+.deleteButton:active {
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
@@ -79,10 +83,21 @@
   outline: 1px solid var(--black);
 }
 
+.archiveButton {
+  margin-bottom: 16px;
+}
+
+.deleteButton {
+  margin-bottom: 16px;
+  color: #e03131;
+}
+
 @media (hover: hover) {
 
   .openButton:hover,
-  .closeButton:hover {
+  .closeButton:hover,
+  .archiveButton:hover,
+  .deleteButton:hover {
     text-decoration: underline;
     text-decoration-thickness: 2px;
   }
@@ -106,6 +121,102 @@
     text-decoration: underline;
     text-decoration-thickness: 2px;
   } */
+}
+
+@media (max-width: 639px) {
+  .container {
+    padding: 16px;
+  }
+
+  .content {
+    width: 100%;
+    height: 100%;
+  }
+
+  .colorsContainer {
+    justify-content: center;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .color {
+    width: 60px;
+    height: 60px;
+  }
+
+  .color.active {
+    border: 2px solid var(--gray100);
+    outline: 2px solid var(--black);
+  }
+
+  .color:active {
+    border: 2px solid var(--gray100);
+    outline: 2px solid var(--black);
+  }
+
+  .archiveButton, .deleteButton {
+    font-size: 36px;
+  }
+
+  .archiveButton:active, .deleteButton:active {
+    text-decoration-thickness: 4px;
+  }
+
+
+
+
+
+
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  .section>button {
+    font-size: 40px;
+  }
+
+  .buttonWrapper>button {
+    font-size: 40px;
+  }
+
+  .tagsTrigger {
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 0px solid black;
+    border-bottom: 8px solid black;
+    padding-top: 8px;
+  }
+
+  .tagsContainer {
+    gap: 8px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1971c2;
+  }
+
+  .tagItem {
+    font-size: 24px;
+    font-weight: 400;
+  }
+
+  .deletionDialog {
+    flex-direction: row-reverse;
+  }
+
+  .deletionDialog>button {
+    font-size: 24px;
+  }
+
+  .sectionTitle {
+    font-size: 40px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
 }
 
 
@@ -186,105 +297,3 @@
 
 
 
-@media (max-width: 639px) {
-  .container {
-    padding: 16px;
-  }
-
-  .content {
-    width: 100%;
-    height: 100%;
-  }
-
-  .colorsContainer {
-    justify-content: center;
-    gap: 12px;
-    padding: 16px;
-  }
-
-  .color {
-    width: 60px;
-    height: 60px;
-  }
-
-  .color.active {
-    border: 2px solid var(--gray100);
-    outline: 2px solid var(--black);
-  }
-
-  .color:active {
-    border: 2px solid var(--gray100);
-    outline: 2px solid var(--black);
-  }
-
-
-
-
-
-  .section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-
-  .section>button {
-    font-size: 40px;
-  }
-
-  .buttonWrapper>button {
-    font-size: 40px;
-  }
-
-  .tagsTrigger {
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 0px solid black;
-    border-bottom: 8px solid black;
-    padding-top: 8px;
-  }
-
-  .tagsContainer {
-    gap: 8px;
-    font-size: 24px;
-    font-weight: 600;
-    color: #1971c2;
-  }
-
-  /* .colorTrigger {
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 0px solid black;
-    border-bottom: 8px solid black;
-    padding-top: 8px;
-  } */
-
-  /* .colorItem {
-    font-size: 24px;
-    font-weight: 400;
-  } */
-
-  .tagItem {
-    font-size: 24px;
-    font-weight: 400;
-  }
-
-  .deletionDialog {
-    flex-direction: row-reverse;
-  }
-
-  .deletionDialog>button {
-    font-size: 24px;
-  }
-
-  /* .closeButton {
-    font-size: 40px;
-  } */
-
-  .sectionTitle {
-    font-size: 40px;
-  }
-
-  ::-webkit-scrollbar {
-    width: 0px;
-  }
-}
