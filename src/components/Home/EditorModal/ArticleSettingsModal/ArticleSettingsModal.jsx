@@ -11,9 +11,10 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state.user);
   const { modalSettings } = useSelector(state => state.modal);
-  const { articleId, isArchived, articleCategories, color } = useSelector(state => state.article);
+  const { articleId, isArchived, articleCategories, title, color } = useSelector(state => state.article);
 
   const [deletionDialog, setDeletionDialog] = useState(false);
+  const [deletionInputValue, setDeltionInputValue] = useState('');
 
   const handleOpen = () => {
     dispatch(setModalSettings(true));
@@ -117,8 +118,6 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
               <div className={`${css.color} ${color === "purple" && css.active}`} onClick={() => handleColor("purple")} style={{ backgroundColor: "#9c36b5" }}></div>
             </div>
 
-
-
             <div className={css.categoriesContainer}>
               {categories?.map(i => (
                 <div key={i.id} className={css.category} onClick={() => handleSetCategory(i?.id)}>
@@ -127,16 +126,22 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
               ))}
             </div>
 
-
-
-
             <div className={css.archiveButton} onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</div>
+
+
+
 
             <div className={css.deleteButton} onClick={() => setDeletionDialog(!deletionDialog)}>delete</div>
             {deletionDialog && (
-              <div className={css.deletionDialog}>
-                <button className={css.cancelDeleteBtn} onClick={() => setDeletionDialog(false)}>cancel</button>
-                <button className={css.deleteBtn} onClick={handleDeleteArticle}>delete forever</button>
+              <div className={css.deletionContainer} onClick={() => setDeletionDialog(false)}>
+                <div className={css.deletionContent} onClick={(e) => e.stopPropagation()}>
+                  <div className={css.deletionHeader}>
+                    <div className={css.deletionCloseButton} onClick={() => setDeletionDialog(false)}>close</div>
+                  </div>
+                  <span className={css.message}>type <b className={css.deletionTitle}>{title}</b> to proceed deletion</span>
+                  <input className={css.input} type="text" placeholder="type here..." value={deletionInputValue} onChange={(e) => setDeltionInputValue(e.target.value)} />
+                  <button disabled={deletionInputValue !== title} className={css.deleteForeverButton} onClick={handleDeleteArticle}>delete forever</button>
+                </div>
               </div>
             )}
           </div>
