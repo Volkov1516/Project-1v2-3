@@ -85,6 +85,31 @@
   outline: 1px solid var(--black);
 }
 
+.categoriesContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 1em;
+  background-color: var(--gray100);
+}
+
+.categoryText {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--gray1000);
+  font-weight: 600;
+  user-select: none;
+}
+
+.categoryCheckbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
 .archiveButton {
   margin-bottom: 16px;
 }
@@ -216,6 +241,15 @@
   .color:active {
     border: 2px solid var(--gray100);
     outline: 2px solid var(--black);
+  }
+
+  .categoryText {
+    font-size: 36px;
+  }
+
+  .categoryCheckbox {
+    width: 30px;
+    height: 30px;
   }
 
   .archiveButton, .deleteButton {

@@ -118,9 +118,10 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
             </div>
             <div className={css.categoriesContainer}>
               {categories?.map(i => (
-                <div key={i.id} className={css.category} onClick={() => handleSetCategory(i?.id)}>
+                <label key={i.id} className={css.categoryText} onClick={() => handleSetCategory(i?.id)}>
                   {i?.name}
-                </div>
+                  <input className={css.categoryCheckbox} type="checkbox" />
+                </label>
               ))}
             </div>
             <div className={css.archiveButton} onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</div>
