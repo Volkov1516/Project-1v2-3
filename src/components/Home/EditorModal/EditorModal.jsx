@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
-import { incrementIndex, decrementIndex } from 'redux/features/article/articleSlice';
+import { incrementIndex, decrementIndex, setArticleCategories } from 'redux/features/article/articleSlice';
 
 import css from './EditorModal.module.css';
 
@@ -20,6 +20,8 @@ export const EditorModal = () => {
   const [saving, setSaving] = useState(false);
 
   const close = () => {
+    dispatch(setArticleCategories([]));
+    
     switch (editorModalStatus) {
       case 'edit':
         dispatch(setEditorModalStatus(false));

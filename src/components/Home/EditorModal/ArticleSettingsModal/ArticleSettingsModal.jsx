@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateColor, deleteArticle, setArticleArchive, addArticleCategories } from 'redux/features/article/articleSlice';
+import { updateColor, deleteArticle, setArticleArchive, addArticleCategories, removeCategory } from 'redux/features/article/articleSlice';
 import { setModalSettings } from 'redux/features/modal/modalSlice';
-import { doc, deleteDoc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
+import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 
 import css from './ArticleSettingsModal.module.css';
@@ -11,10 +11,17 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state.user);
   const { modalSettings } = useSelector(state => state.modal);
-  const { articleId, isArchived, title, color } = useSelector(state => state.article);
+  const { articleId, isArchived, title, color, articleCategories } = useSelector(state => state.article);
 
   const [deletionDialog, setDeletionDialog] = useState(false);
   const [deletionInputValue, setDeltionInputValue] = useState('');
+  const [checkboxState, setCheckboxState] = useState(null);
+
+  useEffect(() => {
+    const initialState = {};
+    categories?.forEach(i => initialState[i.id] = articleCategories?.some(j => j?.id === i?.id));
+    setCheckboxState(initialState);
+  }, [articleId, articleCategories, categories]);
 
   const handleOpen = () => {
     dispatch(setModalSettings(true));
@@ -28,23 +35,26 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
     window.history.back();
   };
 
-  const handleAddCategory = async (id, name) => {
-    await setDoc(doc(db, 'articles', articleId), { categories: arrayUnion({ id, name }) }, { merge: true })
-      .then(() => dispatch(addArticleCategories({ id: articleId, categoryId: id, categoryName: name })))
-      .catch((error) => console.log(error));
+  const handleCategory = async (e, id, name) => {
+    if (e.target.checked) {
+      await setDoc(doc(db, 'articles', articleId), { categories: arrayUnion({ id, name }) }, { merge: true })
+        .then(() => {
+          setCheckboxState(prevState => ({ ...prevState, [id]: !prevState[id] }));
+          dispatch(addArticleCategories({ id: articleId, categoryId: id, categoryName: name }));
+        })
+        .catch((error) => console.log(error));
+    }
+    else {
+      const docRef = doc(db, 'articles', articleId);
+
+      await updateDoc(docRef, { categories: arrayRemove({ id, name }) })
+        .then(() => {
+          setCheckboxState(prevState => ({ ...prevState, [id]: !prevState[id] }));
+          dispatch(removeCategory({ id: articleId, categoryId: id }));
+        })
+        .catch((error) => console.log(error));
+    }
   };
-
-  // const handleRemoveCategory = async (id) => {
-  //   const docRef = doc(db, 'articles', articleId);
-
-  //   await updateDoc(docRef, {
-  //     categories: arrayRemove({ id })
-  //   })
-  //     .then(() => {
-  //       dispatch(removeCategory({ id: articleId, category: id }));
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
 
   const handleColor = async (color) => {
     const articleRef = doc(db, 'articles', articleId);
@@ -106,9 +116,9 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
             </div>
             <div className={css.categoriesContainer}>
               {categories?.map(i => (
-                <label key={i.id} className={css.categoryText} onClick={() => handleAddCategory(i?.id, i?.name)}>
+                <label key={i.id} className={css.categoryText}>
                   {i?.name}
-                  <input className={css.categoryCheckbox} type="checkbox" />
+                  <input className={css.categoryCheckbox} type="checkbox" checked={checkboxState[i.id]} onChange={(e) => handleCategory(e, i?.id, i?.name)} />
                 </label>
               ))}
             </div>

@@ -104,7 +104,7 @@ export const articleSlice = createSlice({
             id: i?.id,
             title: i?.title,
             content: i?.content,
-            tags: i?.tags?.filter(i => i.id !== action.payload.category),
+            categories: i?.categories?.filter(i => i.id !== action.payload.categoryId),
             color: i?.color,
             date: i?.date,
             archive: i?.archive,
@@ -118,6 +118,7 @@ export const articleSlice = createSlice({
       });
 
       state.articles = newArticles;
+      state.articleCategories = state.articleCategories?.filter(i => i.id !== action.payload.categoryId);
     },
     setArticleArchive: (state, action) => {
       let newArticles = state.articles.map(i => {
