@@ -2,9 +2,8 @@
   position: absolute;
   display: flex;
   overflow-x: auto;
-  border: 1px solid #BFC7B4;
   border-radius: 4px;
-  background-color: #E8EDDF;
+  background-color: var(--gray200);
 }
 
 .container>button {
@@ -13,14 +12,14 @@
   height: 36px;
   border: none;
   outline: none;
-  background-color: #E8EDDF;
+  background-color: var(--gray200);
   text-align: center;
   font-size: 16px;
   font-weight: 500;
 }
 
 .container>button:focus {
-  background-color: #BFC7B4;
+  background-color: var(--gray400);
 }
 
 .dropdown {
@@ -28,10 +27,9 @@
   justify-content: space-around;
   align-items: center;
   position: absolute;
-  width: 326px;
-  border: 1px solid #BFC7B4;
+  width: 324px;
   border-radius: 4px 4px 0px 0px;
-  background-color: #E8EDDF;
+  background-color: var(--gray200);
 }
 
 .dropdown>button {
@@ -40,13 +38,13 @@
   height: 36px;
   outline: none;
   border: none;
-  background-color: #E8EDDF;
+  background-color: var(--gray200);
   font-size: 18px;
   font-weight: 500;
 }
 
 .dropdown>button:focus {
-  background-color: #BFC7B4;
+  background-color: var(--gray400);
 }
 
 .bold {
@@ -90,16 +88,16 @@
 }
 
 .active {
-  background-color: #BFC7B4 !important;
+  background-color: var(--gray400) !important;
 }
 
 @media (hover: hover) {
   .container>button:hover {
-    background-color: #BFC7B4;
+    background-color: var(--gray400);
   }
 
   .dropdown>button:hover {
-    background-color: #BFC7B4;
+    background-color: var(--gray400);
   }
 }
 
