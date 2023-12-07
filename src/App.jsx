@@ -61,9 +61,8 @@ export const App = () => {
 
   useEffect(() => {
     const handleHashChange = (e) => {
-      dispatch(setArticleCategories([]));
-
       if (e.newURL === `${window.location.origin}/`) {
+        dispatch(setArticleCategories([]));
         dispatch(setEditorModalStatus(false));
       }
       else if (e.newURL === `${window.location.origin}/#editor`) {
