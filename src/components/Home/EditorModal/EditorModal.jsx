@@ -94,6 +94,8 @@ export const EditorModal = () => {
         )}
 
         <div id="editorModal" ref={editorRef} className={css.editor}>
+
+          {/** После устранения header стало намного лучше! Но, подёргивания остались. */}
           {/* <div className={css.header}>
             <div className={css.headerStart}>
               <div className={css.headerCloseButton} onClick={close}>close</div>
@@ -106,13 +108,13 @@ export const EditorModal = () => {
             <Title ref={titleRef} />
           </div>
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
-          <div className={css.categoriesContainer}>
+          {/* <div className={css.categoriesContainer}>
             {articleCategories?.map(i => (
               <div key={i?.id} className={css.category}>
                 {i?.name}
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
