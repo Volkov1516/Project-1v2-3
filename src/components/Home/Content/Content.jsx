@@ -9,8 +9,14 @@ export const Content = ({ mouseTimer }) => {
   const { articles, filteredArticlesId } = useSelector(state => state.article);
   const { stripedList } = useSelector(state => state.user);
 
-  const openModalEditor = (index, id, title, content, color, categories, archive) => {
-    dispatch(setArticleIndex(index));
+  const openModalEditor = (id, title, content, color, categories, archive) => {
+
+    for (const [index, value] of filteredArticlesId?.entries()) {
+      if (id === value) {
+        dispatch(setArticleIndex(index));
+      }
+    }
+
     dispatch(setArticleId(id));
     dispatch(setArticleTitle(title));
     dispatch(setArticleContent(content));
@@ -50,13 +56,13 @@ export const Content = ({ mouseTimer }) => {
 
   return (
     <main className={css.container} onScroll={onMouseUp}>
-      {articles?.map((i, index) => filteredArticlesId.includes(i.id) && (
+      {articles?.map((i) => filteredArticlesId.includes(i.id) && (
         <article
           key={i?.id}
           onClick={() => openModalEditor(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
           onMouseDown={() => onMouseDown(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
           onMouseUp={onMouseUp}
-          onTouchStart={() => onMouseDown(index, i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
+          onTouchStart={() => onMouseDown(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
           onTouchEnd={onMouseUp}
           className={`${css[i?.color]} ${stripedList && css.stripedList}`}
         >
