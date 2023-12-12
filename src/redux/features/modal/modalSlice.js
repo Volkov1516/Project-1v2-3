@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  editorModalStatus: false,
+  editorModalStatus: null,
   modalSettings: false,
   scrollOffset: 0,
 };

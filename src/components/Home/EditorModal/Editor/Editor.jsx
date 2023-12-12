@@ -97,7 +97,11 @@ export const Editor = ({
             content: state,
           })
             .then(() => {
-              dispatch(updateArticle({ id: articleId, title: title, content: state }));
+              dispatch(updateArticle({
+                id: articleId,
+                title: title,
+                content: state
+              }));
             })
             .catch((error) => console.log(error));
         }
@@ -109,8 +113,8 @@ export const Editor = ({
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      {(editorModalStatus === "edit" || "editFP" || "editFC") && <ToolbarBlockPlugin modalEditorContentRef={editorRef} titleRef={titleRef} />}
-      {(editorModalStatus === "edit" || "editFP" || "editFC") && <ToolbarTextPlugin modalEditorContentRef={editorRef} />}
+      {(editorModalStatus !== "preview") && <ToolbarBlockPlugin modalEditorContentRef={editorRef} titleRef={titleRef} />}
+      {(editorModalStatus !== "preview") && <ToolbarTextPlugin modalEditorContentRef={editorRef} />}
       <div className={css.container} onContextMenu={handleContentMenu}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}

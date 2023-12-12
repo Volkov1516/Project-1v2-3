@@ -1,7 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser, setCategories } from 'redux/features/user/userSlice';
-import { setArticles, setFilteredArticlesId, setArticleCategories } from 'redux/features/article/articleSlice';
+import { setArticles, setFilteredArticlesId } from 'redux/features/article/articleSlice';
 import { setModalSettings, setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -62,7 +62,6 @@ export const App = () => {
   useEffect(() => {
     const handleHashChange = (e) => {
       if (e.newURL === `${window.location.origin}/`) {
-        dispatch(setArticleCategories([]));
         dispatch(setEditorModalStatus(false));
       }
       else if (e.newURL === `${window.location.origin}/#editor`) {

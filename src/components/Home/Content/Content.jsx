@@ -1,5 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setArticleId, setArticleIndex, setArticleTitle, setArticleContent, setArticleColor, setIsArchived, setArticleCategories } from 'redux/features/article/articleSlice';
+import {
+  setIsNewArticle,
+  setArticleIndex,
+  setArticleId,
+  setArticleTitle,
+  setArticleContent,
+  setArticleColor,
+  setIsArchived,
+  setArticleCategories
+} from 'redux/features/article/articleSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 
 import css from './Content.module.css';
@@ -17,6 +26,7 @@ export const Content = ({ mouseTimer }) => {
       }
     }
 
+    dispatch(setIsNewArticle(false));
     dispatch(setArticleId(id));
     dispatch(setArticleTitle(title));
     dispatch(setArticleContent(content));
@@ -40,6 +50,7 @@ export const Content = ({ mouseTimer }) => {
         }
       }
 
+      dispatch(setIsNewArticle(false));
       dispatch(setArticleId(id));
       dispatch(setArticleTitle(title));
       dispatch(setArticleContent(content));

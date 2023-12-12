@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setFilteredArticlesId,
+  setIsNewArticle,
   setArticleId,
   setArticleTitle,
   setArticleContent,
   setArticleColor,
-  setArticleIndex,
-  setIsNewArticle
+  setArticleCategories
 } from 'redux/features/article/articleSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { setStripedList } from 'redux/features/user/userSlice';
@@ -31,9 +31,9 @@ export const Sidebar = () => {
   const [activeCategoriesMenuButton, setActiveCategoriesMenuButton] = useState(false);
 
   useEffect(() => {
-    const a = localStorage.getItem('stripedList');
+    const isStriped = localStorage.getItem('stripedList');
 
-    if (a === 'true') {
+    if (isStriped === 'true') {
       dispatch(setStripedList(true));
     }
     else {
@@ -42,15 +42,12 @@ export const Sidebar = () => {
   }, [dispatch]);
 
   const openModalEditor = () => {
-    const newId = uuidv4();
-    const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
-
-    dispatch(setArticleId(newId));
-    dispatch(setArticleTitle(''));
-    dispatch(setArticleContent(EMPTY_CONTENT));
-    dispatch(setArticleColor(null));
-    dispatch(setArticleIndex(null));
     dispatch(setIsNewArticle(true));
+    dispatch(setArticleId(uuidv4()));
+    dispatch(setArticleTitle(''));
+    dispatch(setArticleContent('{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'));
+    dispatch(setArticleColor(null));
+    dispatch(setArticleCategories([]));
     dispatch(setEditorModalStatus('edit'));
 
     window.history.pushState({}, '', '#editor');
