@@ -34,14 +34,18 @@
   display: none;
 }
 
-.edit, .editFP, .editFC {
+.edit,
+.editFP,
+.editFC {
   height: 100%;
   width: 100%;
   background-color: white;
   overflow: hidden;
 }
 
-.edit>.editor, .editFP>.editor, .editFC>.editor {
+.edit>.editor,
+.editFP>.editor,
+.editFC>.editor {
   position: relative;
   overflow: auto;
   max-height: 100%;
@@ -50,7 +54,9 @@
   padding-bottom: calc(500px + 5vh);
 }
 
-.edit>.editor>.header, .editFP>.editor>.header, .editFC>.editor>.header {
+.edit>.editor>.header,
+.editFP>.editor>.header,
+.editFC>.editor>.header {
   width: 100%;
   padding: 16px;
   display: flex;
@@ -60,6 +66,15 @@
 }
 
 .navigation {
+  display: none;
+  /* padding: 8px 16px;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--gray100); */
+}
+
+.preview>.navigation {
   padding: 8px 16px;
   display: flex !important;
   justify-content: space-between;
@@ -74,13 +89,15 @@
   column-gap: 16px;
 }
 
-.navigationEditButton, .navigationCloseButton {
+.navigationEditButton,
+.navigationCloseButton {
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
 }
 
-.navigationEditButton:active, .navigationCloseButton:active {
+.navigationEditButton:active,
+.navigationCloseButton:active {
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
@@ -162,6 +179,7 @@
 }
 
 @media (hover: hover) {
+
   .navigationEditButton:hover,
   .navigationCloseButton:hover,
   .headerCloseButton:hover {
@@ -193,15 +211,21 @@
     padding: 8px 0px 16px;
   }
 
-  .edit, .editFP, .editFC {
+  .edit,
+  .editFP,
+  .editFC {
     padding: 0px 16px;
   }
 
-  .edit>.editor, .editFP>.editor, .editFC>.editor {
+  .edit>.editor,
+  .editFP>.editor,
+  .editFC>.editor {
     padding-bottom: 577px;
   }
 
-  .edit>.editor>.header, .editFP>.editor>.header, .editFC>.editor>.header {
+  .edit>.editor>.header,
+  .editFP>.editor>.header,
+  .editFC>.editor>.header {
     padding: 16px 0px;
     margin-bottom: 0;
   }
