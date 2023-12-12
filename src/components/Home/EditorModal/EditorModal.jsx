@@ -12,7 +12,8 @@ import { ArticleSettingsModal } from './ArticleSettingsModal/ArticleSettingsModa
 export const EditorModal = () => {
   const dispatch = useDispatch();
   const { editorModalStatus } = useSelector(state => state.modal);
-  const { filteredArticlesId, articleIndex, articleCategories } = useSelector(state => state.article);
+  // const { filteredArticlesId, articleIndex, articleCategories } = useSelector(state => state.article);
+  const { filteredArticlesId, articleIndex } = useSelector(state => state.article);
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
