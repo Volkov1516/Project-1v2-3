@@ -12,8 +12,7 @@ import { ArticleSettingsModal } from './ArticleSettingsModal/ArticleSettingsModa
 export const EditorModal = () => {
   const dispatch = useDispatch();
   const { editorModalStatus } = useSelector(state => state.modal);
-  // const { filteredArticlesId, articleIndex, articleCategories } = useSelector(state => state.article);
-  const { filteredArticlesId, articleIndex } = useSelector(state => state.article);
+  const { filteredArticlesId, articleIndex, articleCategories } = useSelector(state => state.article);
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
@@ -71,7 +70,7 @@ export const EditorModal = () => {
     <div className={css.container} onClick={close}>
       <div className={css[editorModalStatus]} onClick={(e) => e.stopPropagation()}>
 
-        {(editorModalStatus === "preview") && (
+        {/* {(editorModalStatus === "preview") && ( */}
           <div className={css.navigation}>
             <div className={css.navigationStart}>
               <div className={css.navigationControlls}>
@@ -92,30 +91,32 @@ export const EditorModal = () => {
               <div className={css.navigationCloseButton} onClick={close}>close</div>
             </div>
           </div>
-        )}
+        {/* )} */}
 
         <div id="editorModal" ref={editorRef} className={css.editor}>
 
           {/** После устранения header стало намного лучше! Но, подёргивания остались. */}
-          {/* <div className={css.header}>
+          <div className={css.header}>
             <div className={css.headerStart}>
               <div className={css.headerCloseButton} onClick={close}>close</div>
             </div>
             <div className={css.headerEnd}>
               <ArticleSettingsModal openButtonColor="blue" />
             </div>
-          </div> */}
+          </div>
           <div className={css.titleWrapper}>
             <Title ref={titleRef} />
           </div>
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
-          {/* <div className={css.categoriesContainer}>
+
+          {/** После устранения categories ничего не изменилось! */}
+          <div className={css.categoriesContainer}>
             {articleCategories?.map(i => (
               <div key={i?.id} className={css.category}>
                 {i?.name}
               </div>
             ))}
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
