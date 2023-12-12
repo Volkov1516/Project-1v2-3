@@ -90,15 +90,17 @@ article.purple {
 
 @media (max-width: 639px) {
   .container {
-    padding: 60vh 16px 40vh;
+    padding: 60vh 16px 40vh 0px;
   }
 
   article {
-    font-weight: 800;
+    padding-left: 16px;
+    font-weight: 700;
+    border-radius: 0 1em 1em 0;
   }
 
   .emptyContainer {
     padding-top: 0;
-    font-weight: 800;
+    font-weight: 700;
   }
 }
