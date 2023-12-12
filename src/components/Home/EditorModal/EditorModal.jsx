@@ -21,7 +21,7 @@ export const EditorModal = () => {
 
   const close = () => {
     dispatch(setArticleCategories([]));
-    
+
     switch (editorModalStatus) {
       case 'edit':
         dispatch(setEditorModalStatus(false));
@@ -67,35 +67,29 @@ export const EditorModal = () => {
   }
 
   return editorModalStatus && (
-    <div className={css.container} onClick={close}>
+    <div className={css.container} onClick={close} key={articleIndex}>
       <div className={css[editorModalStatus]} onClick={(e) => e.stopPropagation()}>
-
-        {/* {(editorModalStatus === "preview") && ( */}
-          <div className={css.navigation}>
-            <div className={css.navigationStart}>
-              <div className={css.navigationControlls}>
-                <div className={css.arrowWrapper} onClick={prev}>
-                  <div className={css.arrowLeft} />
-                </div>
-                <div className={css.navigationCountBubble}>{`${articleIndex + 1}`}/{filteredArticlesId?.length}</div>
-                <div className={css.arrowWrapper} onClick={next}>
-                  <div className={css.arrowRight} />
-                </div>
+        <div className={css.navigation}>
+          <div className={css.navigationStart}>
+            <div className={css.navigationControlls}>
+              <div className={css.arrowWrapper} onClick={prev}>
+                <div className={css.arrowLeft} />
               </div>
-              <button className={css.navigationEditButton} onClick={openEditorFromPreview}>edit</button>
-              <div className={css.navigationSettingsWrapper}>
-                <ArticleSettingsModal />
+              <div className={css.navigationCountBubble}>{`${articleIndex + 1}`}/{filteredArticlesId?.length}</div>
+              <div className={css.arrowWrapper} onClick={next}>
+                <div className={css.arrowRight} />
               </div>
             </div>
-            <div className={css.navigationEnd}>
-              <div className={css.navigationCloseButton} onClick={close}>close</div>
+            <button className={css.navigationEditButton} onClick={openEditorFromPreview}>edit</button>
+            <div className={css.navigationSettingsWrapper}>
+              <ArticleSettingsModal />
             </div>
           </div>
-        {/* )} */}
-
+          <div className={css.navigationEnd}>
+            <div className={css.navigationCloseButton} onClick={close}>close</div>
+          </div>
+        </div>
         <div id="editorModal" ref={editorRef} className={css.editor}>
-
-          {/** После устранения header стало намного лучше! Но, подёргивания остались. */}
           <div className={css.header}>
             <div className={css.headerStart}>
               <div className={css.headerCloseButton} onClick={close}>close</div>
@@ -108,8 +102,6 @@ export const EditorModal = () => {
             <Title ref={titleRef} />
           </div>
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
-
-          {/** После устранения categories ничего не изменилось! */}
           <div className={css.categoriesContainer}>
             {articleCategories?.map(i => (
               <div key={i?.id} className={css.category}>
