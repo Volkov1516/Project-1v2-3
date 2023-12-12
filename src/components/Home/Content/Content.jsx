@@ -22,13 +22,18 @@ export const Content = ({ mouseTimer }) => {
     window.history.pushState({}, '', '#editor');
   };
 
-  const onMouseDown = (index, id, title, content, color, categories, archive) => {
+  const onMouseDown = (id, title, content, color, categories, archive) => {
     onMouseUp();
 
     mouseTimer = window.setTimeout(() => {
       window.navigator.vibrate(100);
 
-      dispatch(setArticleIndex(index));
+      for (const [index, value] of filteredArticlesId?.entries()) {
+        if (id === value) {
+          dispatch(setArticleIndex(index));
+        }
+      }
+
       dispatch(setArticleId(id));
       dispatch(setArticleTitle(title));
       dispatch(setArticleContent(content));
@@ -48,8 +53,8 @@ export const Content = ({ mouseTimer }) => {
       {articles?.map((i, index) => filteredArticlesId.includes(i.id) && (
         <article
           key={i?.id}
-          onClick={() => openModalEditor(index, i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
-          onMouseDown={() => onMouseDown(index, i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
+          onClick={() => openModalEditor(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
+          onMouseDown={() => onMouseDown(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
           onMouseUp={onMouseUp}
           onTouchStart={() => onMouseDown(index, i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
           onTouchEnd={onMouseUp}
