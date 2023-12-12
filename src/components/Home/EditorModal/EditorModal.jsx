@@ -94,14 +94,14 @@ export const EditorModal = () => {
         )}
 
         <div id="editorModal" ref={editorRef} className={css.editor}>
-          <div className={css.header}>
+          {/* <div className={css.header}>
             <div className={css.headerStart}>
               <div className={css.headerCloseButton} onClick={close}>close</div>
             </div>
             <div className={css.headerEnd}>
               <ArticleSettingsModal openButtonColor="blue" />
             </div>
-          </div>
+          </div> */}
           <div className={css.titleWrapper}>
             <Title ref={titleRef} />
           </div>
