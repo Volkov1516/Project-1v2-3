@@ -11,9 +11,9 @@
 article {
   width: 100%;
   max-width: 700px;
-  /* text-transform: uppercase; */
+  text-transform: uppercase;
   font-size: 40px;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
   user-select: none;
 }
@@ -76,7 +76,8 @@ article.purple {
   align-items: center;
   color: var(--gray200);
   font-size: 40px;
-  font-weight: 700;
+  /* font-weight: 700; */
+  font-weight: 800;
   text-transform: uppercase;
   user-select: none;
 }
@@ -90,13 +91,14 @@ article.purple {
 
 @media (max-width: 639px) {
   .container {
-    padding: 60vh 16px 40vh 0px;
+    /* padding: 60vh 16px 40vh 0px; */
+    padding: 60vh 16px 40vh;
   }
 
   article {
-    padding-left: 16px;
-    font-weight: 700;
-    border-radius: 0 1em 1em 0;
+    /* padding-left: 16px; */
+    /* font-weight: 700; */
+    /* border-radius: 0 1em 1em 0; */
   }
 
   .emptyContainer {

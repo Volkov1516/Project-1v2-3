@@ -4,9 +4,9 @@ textarea {
   display: block;
   outline: none;
   border: none;
-  /* text-transform: uppercase; */
+  text-transform: uppercase;
   font-size: 40px;
-  font-weight: 700;
+  font-weight: 800;
   resize: none;
   overflow: auto;
 }
