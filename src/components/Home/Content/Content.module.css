@@ -18,10 +18,6 @@ article {
   user-select: none;
 }
 
-.stripedList:nth-child(even) {
-  background-color: var(--gray100);
-}
-
 article:active {
   text-decoration: underline;
   text-decoration-thickness: 4px;

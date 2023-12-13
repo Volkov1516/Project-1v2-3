@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   user: null,
   categories: [],
-  stripedList: false
 };
 
 export const userSlice = createSlice({
@@ -30,10 +29,7 @@ export const userSlice = createSlice({
     deleteCategory: (state, action) => {
       let newCategories = state.categories.filter(i => i.id !== action.payload);
       state.categories = newCategories;
-    },
-    setStripedList: (state, action) => {
-      state.stripedList = action.payload;
-    },
+    }
   }
 });
 
@@ -42,7 +38,6 @@ export const {
   setCategories,
   addCategory,
   updateCategory,
-  deleteCategory,
-  setStripedList
+  deleteCategory
 } = userSlice.actions;
 export default userSlice.reducer;

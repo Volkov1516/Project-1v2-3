@@ -10,7 +10,6 @@ import {
   setArticleCategories
 } from 'redux/features/article/articleSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
-import { setStripedList } from 'redux/features/user/userSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 import css from './Sidebar.module.css';
@@ -20,7 +19,7 @@ import { UserSettingsModal } from './UserSettingsModal/UserSettingsModal';
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
-  const { categories, stripedList } = useSelector(state => state.user);
+  const { categories } = useSelector(state => state.user);
   const { articles } = useSelector(state => state.article);
 
   const [activeButtonId, setActiveButtonId] = useState('articles');
@@ -29,17 +28,6 @@ export const Sidebar = () => {
   const [activeCategoryText, setActiveCategoryText] = useState('articles');
   const [activeMainMenuButton, setActiveMainMenuButton] = useState(false);
   const [activeCategoriesMenuButton, setActiveCategoriesMenuButton] = useState(false);
-
-  useEffect(() => {
-    const isStriped = localStorage.getItem('stripedList');
-
-    if (isStriped === 'true') {
-      dispatch(setStripedList(true));
-    }
-    else {
-      dispatch(setStripedList(false));
-    }
-  }, [dispatch]);
 
   const openModalEditor = () => {
     dispatch(setIsNewArticle(true));
@@ -124,21 +112,16 @@ export const Sidebar = () => {
     );
   };
 
-  const handleStripedList = (e) => {
-    dispatch(setStripedList(e.target.checked));
-    localStorage.setItem('stripedList', e.target.checked);
-  };
-
   const menuComponent = () => {
     return (
       <div className={css.menuContainer}>
-        <div className={css.toggleGroup}>
+        {/* <div className={css.toggleGroup}>
           <span className={css.toggleGroupText}>striped list</span>
           <label className={css.switch}>
             <input type="checkbox" checked={stripedList} onChange={handleStripedList} />
             <span className={css.slider}></span>
           </label>
-        </div>
+        </div> */}
         <UserSettingsModal />
       </div>
     );
