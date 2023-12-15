@@ -62,6 +62,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #1971C2;
 }
 
 .activeCategoryButton {
@@ -76,6 +77,7 @@
   font-weight: 600;
   cursor: pointer;
   user-select: none;
+  color: #1971C2;
 }
 
 .categoryButton:active,
