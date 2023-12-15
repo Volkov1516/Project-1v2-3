@@ -16,7 +16,7 @@ textarea::placeholder {
 }
 
 textarea.white {
-  background-color: white;
+  background-color: transparent;
   color: black;
 }
 

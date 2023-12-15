@@ -24,7 +24,7 @@ article:not(:last-child) {
 
 article:active {
   text-decoration: underline;
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 3px;
 }
 
 article.white {
@@ -84,7 +84,7 @@ article.purple {
 @media (hover: hover) {
   article:hover {
     text-decoration: underline;
-    text-decoration-thickness: 2px;
+    text-decoration-thickness: 3px;
   }
 }
 
