@@ -156,6 +156,11 @@
   cursor: pointer;
 }
 
+.headerCloseButton:active {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
 .titleWrapper {
   display: flex;
   justify-content: center;
