@@ -6,7 +6,9 @@ import { setModalSettings, setEditorModalStatus } from 'redux/features/modal/mod
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, collection, query, where, orderBy, getDocs, getDoc } from 'firebase/firestore';
+
 import { Loading } from 'components/Loading/Loading';
+
 const LazyAuthComponent = lazy(() => import('components/Auth/Auth'));
 const LazyHomeComponent = lazy(() => import('components/Home/Home'));
 

@@ -80,7 +80,7 @@
   justify-content: space-between;
   align-items: center;
   /* background-color: var(--gray100); */
-  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .navigationStart {
@@ -205,6 +205,10 @@
     margin: 8px;
     flex-direction: column-reverse;
     /* border-radius: 1em; */
+  }
+
+  .preview>.navigation {
+    border-top: 1px solid black;
   }
 
   .preview>.editor>.header {
