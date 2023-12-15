@@ -17,6 +17,10 @@ article {
   user-select: none;
 }
 
+article:not(:last-child) {
+  border-bottom: 1px solid black;
+}
+
 article:active {
   text-decoration: underline;
   text-decoration-thickness: 4px;
