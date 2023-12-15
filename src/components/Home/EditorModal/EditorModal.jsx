@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, lazy, Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { incrementIndex, decrementIndex } from 'redux/features/article/articleSlice';
@@ -7,9 +7,10 @@ import css from './EditorModal.module.css';
 
 import { Title } from './Title/Title';
 import { Editor } from './Editor/Editor';
-import { ArticleSettingsModal } from './ArticleSettingsModal/ArticleSettingsModal';
+// import { ArticleSettingsModal } from './ArticleSettingsModal/ArticleSettingsModal';
+const LazyArticleSettingsModal = lazy(() => import('./ArticleSettingsModal/ArticleSettingsModal'));
 
-export const EditorModal = () => {
+export default function EditorModal() {
   const dispatch = useDispatch();
   const { editorModalStatus } = useSelector(state => state.modal);
   const { filteredArticlesId, articleIndex, articleCategories } = useSelector(state => state.article);
@@ -80,7 +81,9 @@ export const EditorModal = () => {
             </div>
             <button className={css.navigationEditButton} onClick={openEditorFromPreview}>edit</button>
             <div className={css.navigationSettingsWrapper}>
-              <ArticleSettingsModal />
+              <Suspense>
+                <LazyArticleSettingsModal />
+              </Suspense>
             </div>
           </div>
           <div className={css.navigationEnd}>
@@ -93,7 +96,9 @@ export const EditorModal = () => {
               <div className={css.headerCloseButton} onClick={close}>close</div>
             </div>
             <div className={css.headerEnd}>
-              <ArticleSettingsModal openButtonColor="blue" />
+              <Suspense>
+                <LazyArticleSettingsModal />
+              </Suspense>
             </div>
           </div>
           <div className={css.titleWrapper}>

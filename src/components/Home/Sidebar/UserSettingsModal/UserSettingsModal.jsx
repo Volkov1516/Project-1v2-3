@@ -5,7 +5,7 @@ import { signOut } from 'firebase/auth';
 
 import css from './UserSettingsModal.module.css';
 
-export const UserSettingsModal = () => {
+export default function UserSettingsModal() {
   const { user } = useSelector(state => state.user);
 
   const [open, setOpen] = useState(false);

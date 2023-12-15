@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setFilteredArticlesId,
@@ -14,8 +14,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 import css from './Sidebar.module.css';
 
-import { EditCategoriesModal } from './EditCategoriesModal/EditCategoriesModal';
-import { UserSettingsModal } from './UserSettingsModal/UserSettingsModal';
+// import { EditCategoriesModal } from './EditCategoriesModal/EditCategoriesModal';
+// import { UserSettingsModal } from './UserSettingsModal/UserSettingsModal';
+
+const LazyEditCategoriesModal = lazy(() => import('./EditCategoriesModal/EditCategoriesModal'));
+const LazyUserSettingsModal = lazy(() => import('./UserSettingsModal/UserSettingsModal'));
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
@@ -107,7 +110,9 @@ export const Sidebar = () => {
           </div>
         ))}
         <div id="archive" className={`${css.categoryButton} ${activeButtonId === "archive" && css.activeCategoryButton}`} onClick={handleArchive}>archive</div>
-        <EditCategoriesModal />
+        <Suspense>
+          <LazyEditCategoriesModal />
+        </Suspense>
       </div>
     );
   };
@@ -122,7 +127,9 @@ export const Sidebar = () => {
             <span className={css.slider}></span>
           </label>
         </div> */}
-        <UserSettingsModal />
+        <Suspense>
+          <LazyUserSettingsModal />
+        </Suspense>
       </div>
     );
   };

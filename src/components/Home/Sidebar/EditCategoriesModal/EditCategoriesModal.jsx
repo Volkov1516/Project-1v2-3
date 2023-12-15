@@ -9,7 +9,7 @@ import css from './EditCategoriesModal.module.css';
 
 import { Input } from './Input';
 
-export const EditCategoriesModal = () => {
+export default function EditCategoriesModal() {
   const dispatch = useDispatch();
   const { user, categories } = useSelector(state => state.user);
 

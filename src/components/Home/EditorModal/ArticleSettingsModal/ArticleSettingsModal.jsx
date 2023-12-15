@@ -7,11 +7,13 @@ import { db } from 'firebase.js';
 
 import css from './ArticleSettingsModal.module.css';
 
-export const ArticleSettingsModal = ({ openButtonColor }) => {
+export default function ArticleSettingsModal() {
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state.user);
   const { modalSettings } = useSelector(state => state.modal);
   const { articleId, isArchived, title, color, articleCategories } = useSelector(state => state.article);
+
+  console.log('test');
 
   const [deletionDialog, setDeletionDialog] = useState(false);
   const [deletionInputValue, setDeltionInputValue] = useState('');
@@ -96,7 +98,7 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
 
   return (
     <>
-      <div className={`${css.openButton} ${css[openButtonColor]}`} onClick={handleOpen}>settings</div>
+      <div className={css.openButton} onClick={handleOpen}>settings</div>
       {modalSettings && (
         <div className={css.container} onClick={handleClose}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
@@ -132,7 +134,7 @@ export const ArticleSettingsModal = ({ openButtonColor }) => {
                   </div>
                   <span className={css.message}>type <b className={css.deletionTitle}>{title}</b> to proceed deletion</span>
                   <input className={css.input} type="text" placeholder="type here..." value={deletionInputValue} onChange={(e) => setDeltionInputValue(e.target.value)} />
-                  <button disabled={deletionInputValue !== title} className={css.deleteForeverButton} onClick={handleDeleteArticle}>delete forever</button>
+                  <button disabled={deletionInputValue.toLowerCase().trim() !== title.toLowerCase().trim()} className={css.deleteForeverButton} onClick={handleDeleteArticle}>delete forever</button>
                 </div>
               </div>
             )}
