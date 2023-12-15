@@ -84,7 +84,7 @@ article.purple {
 @media (hover: hover) {
   article:hover {
     text-decoration: underline;
-    text-decoration-thickness: 4px;
+    text-decoration-thickness: 2px;
   }
 }
 
