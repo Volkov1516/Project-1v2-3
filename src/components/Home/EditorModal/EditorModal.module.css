@@ -75,11 +75,12 @@
 }
 
 .preview>.navigation {
-  padding: 8px 16px;
+  padding: 8px;
   display: flex !important;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--gray100);
+  /* background-color: var(--gray100); */
+  border-top: 1px solid black;
 }
 
 .navigationStart {
