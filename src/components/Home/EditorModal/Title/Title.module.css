@@ -6,9 +6,10 @@ textarea {
   border: none;
   text-transform: uppercase;
   font-size: 40px;
-  font-weight: 600;
+  font-weight: 700;
   resize: none;
   overflow: auto;
+  line-height: 1em;
 }
 
 textarea::placeholder {
