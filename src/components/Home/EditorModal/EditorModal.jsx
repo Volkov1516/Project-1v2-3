@@ -7,13 +7,12 @@ import css from './EditorModal.module.css';
 
 import { Title } from './Title/Title';
 import { Editor } from './Editor/Editor';
-// import { ArticleSettingsModal } from './ArticleSettingsModal/ArticleSettingsModal';
 const LazyArticleSettingsModal = lazy(() => import('./ArticleSettingsModal/ArticleSettingsModal'));
 
 export default function EditorModal() {
   const dispatch = useDispatch();
   const { editorModalStatus } = useSelector(state => state.modal);
-  const { filteredArticlesId, articleIndex, articleCategories } = useSelector(state => state.article);
+  const { filteredArticlesId, articleIndex, articleCategories, isNewArticle } = useSelector(state => state.article);
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
@@ -96,9 +95,11 @@ export default function EditorModal() {
               <div className={css.headerCloseButton} onClick={close}>close</div>
             </div>
             <div className={css.headerEnd}>
-              <Suspense>
-                <LazyArticleSettingsModal />
-              </Suspense>
+              {!isNewArticle && (
+                <Suspense>
+                  <LazyArticleSettingsModal />
+                </Suspense>
+              )}
             </div>
           </div>
           <div className={css.titleWrapper}>
