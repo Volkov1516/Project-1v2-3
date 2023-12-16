@@ -18,6 +18,7 @@ textarea::placeholder {
 }
 
 textarea.white {
+  background-color: transparent;
   color: black;
 }
 

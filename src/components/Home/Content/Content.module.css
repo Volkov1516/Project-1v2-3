@@ -33,7 +33,8 @@ article:active {
 }
 
 article.white {
-  background-color: white;
+  /* background-color: white; */
+  background-color: transparent;
   color: black;
 }
 
