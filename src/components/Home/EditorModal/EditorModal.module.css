@@ -8,6 +8,7 @@
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
+  user-select: none !important;
 }
 
 .preview {
@@ -20,6 +21,7 @@
   /* background-color: var(--gray100); */
   background-color: #FDF7E4;
   overflow: hidden;
+  user-select: none !important;
 }
 
 .preview>.editor {
