@@ -19,6 +19,10 @@ article {
   line-height: 1em;
 }
 
+.dot {
+  color: #1971c2;
+}
+
 /* article:not(:last-child) {
   border-bottom: 1px solid black;
   padding: 8px 0px;

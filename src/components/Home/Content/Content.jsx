@@ -76,7 +76,9 @@ export const Content = ({ mouseTimer }) => {
           onTouchEnd={onMouseUp}
           className={css[i?.color]}
         >
+          {/* <span style={{color: '#1971c2'}}>_</span> */}
           {i?.title || 'Untitled'}
+          <span className={css.dot}>.</span>
         </article>
       ))}
       {filteredArticlesId?.length < 1 && (
