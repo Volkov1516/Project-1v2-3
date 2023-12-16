@@ -46,7 +46,7 @@ article.red {
   /* background-color: #e03131 !important;
   color: white; */
   color: #e03131;
-  font-weight: 800;
+  /* font-weight: 800; */
 }
 
 article.orange {
@@ -68,7 +68,7 @@ article.blue {
   /* background-color: #1971c2 !important;
   color: white; */
   color: #1971c2;
-  font-weight: 800;
+  /* font-weight: 800; */
 }
 
 article.purple {
