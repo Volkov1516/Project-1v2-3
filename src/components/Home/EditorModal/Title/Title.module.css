@@ -10,6 +10,7 @@ textarea {
   resize: none;
   overflow: auto;
   line-height: 1em;
+  background-color: transparent;
 }
 
 textarea::placeholder {
@@ -17,7 +18,6 @@ textarea::placeholder {
 }
 
 textarea.white {
-  background-color: transparent;
   color: black;
 }
 
@@ -27,8 +27,10 @@ textarea.black {
 }
 
 textarea.red {
-  background-color: #e03131;
-  color: white;
+  /* background-color: #e03131;
+  color: white; */
+  color: #e03131;
+  font-weight: 800;
 }
 
 textarea.orange {
@@ -47,8 +49,10 @@ textarea.green {
 }
 
 textarea.blue {
-  background-color: #1971c2;
-  color: white;
+  /* background-color: #1971c2;
+  color: white; */
+  color: #1971c2;
+  font-weight: 800;
 }
 
 textarea.purple {

@@ -43,8 +43,10 @@ article.black {
 }
 
 article.red {
-  background-color: #e03131 !important;
-  color: white;
+  /* background-color: #e03131 !important;
+  color: white; */
+  color: #e03131;
+  font-weight: 800;
 }
 
 article.orange {
@@ -63,8 +65,10 @@ article.green {
 }
 
 article.blue {
-  background-color: #1971c2 !important;
-  color: white;
+  /* background-color: #1971c2 !important;
+  color: white; */
+  color: #1971c2;
+  font-weight: 800;
 }
 
 article.purple {
