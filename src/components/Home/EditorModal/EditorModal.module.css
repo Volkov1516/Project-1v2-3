@@ -268,12 +268,6 @@
 
   .navigationEditButton {
     padding: 16px;
-    border-radius: 1em;
-  }
-
-  .navigationEditButton:active {
-    background-color: var(--gray200);
-    text-decoration: none;
   }
 
   .arrowWrapper {
