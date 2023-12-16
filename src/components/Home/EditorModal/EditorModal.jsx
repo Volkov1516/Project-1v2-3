@@ -103,7 +103,7 @@ export default function EditorModal() {
             </div>
           </div>
           <div className={css.titleWrapper}>
-            <Title ref={titleRef} />
+            <Title ref={titleRef} saving={saving} setSaving={setSaving}/>
           </div>
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
           <div className={css.categoriesContainer}>

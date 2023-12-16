@@ -35,7 +35,7 @@ export const Editor = ({
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.user);
   const { editorModalStatus } = useSelector(state => state.modal);
-  const { articleId, content, title, isNewArticle } = useSelector(state => state.article);
+  const { articleId, content, isNewArticle } = useSelector(state => state.article);
 
   let editorStateAutoSaveTimeout;
 
@@ -74,7 +74,7 @@ export const Editor = ({
 
         if (isNewArticle) {
           await setDoc(doc(db, 'articles', articleId), {
-            title: title,
+            // title: title,
             content: state,
             date: Timestamp.fromDate(new Date()),
             userId: user?.id
@@ -83,7 +83,7 @@ export const Editor = ({
               dispatch(setIsNewArticle(false));
               dispatch(addArticle({
                 id: articleId,
-                title: title,
+                // title: title,
                 content: state,
                 date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
                 userId: user?.id
@@ -93,13 +93,13 @@ export const Editor = ({
         }
         else {
           await updateDoc(doc(db, 'articles', articleId), {
-            title: title,
+            // title: title,
             content: state,
           })
             .then(() => {
               dispatch(updateArticle({
                 id: articleId,
-                title: title,
+                // title: title,
                 content: state
               }));
             })

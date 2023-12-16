@@ -158,8 +158,8 @@ export const articleSlice = createSlice({
         if (i.id === action.payload.id) {
           let newObj = {
             id: i?.id,
-            title: action.payload.title,
-            content: action.payload.content,
+            title: action?.payload?.title ? action?.payload?.title : i?.title,
+            content: action?.payload?.content ? action?.payload?.content : i?.content,
             categories: i?.categories,
             color: i?.color,
             date: i?.date,
@@ -174,8 +174,16 @@ export const articleSlice = createSlice({
       });
 
       state.articles = JSON.parse(JSON.stringify(newArticles));
-      state.title = action.payload.title;
-      state.content = action.payload.content;
+
+      if(action?.payload?.title) {
+        state.title = action?.payload?.title;
+      }
+
+      if(action?.payload?.content) {
+        state.content = action?.payload?.content;
+      }
+      // state.title = action?.payload?.title;
+      // state.content = action?.payload?.content;
     },
     deleteArticle: (state, action) => {
       let newArticles = state.articles.filter(i => i?.id !== action.payload.id);
