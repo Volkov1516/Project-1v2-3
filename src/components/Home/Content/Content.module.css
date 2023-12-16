@@ -3,8 +3,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  row-gap: 8px;
-  padding: 16px 16px 40vh;
+  /* row-gap: 8px; */
+  padding: 8px 16px 40vh;
   overflow: auto;
 }
 
@@ -13,7 +13,7 @@ article {
   max-width: 700px;
   text-transform: uppercase;
   font-size: 40px;
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
   user-select: none;
   line-height: 1em;
@@ -23,14 +23,14 @@ article {
   color: #1971c2;
 }
 
-/* article:not(:last-child) {
+article:not(:last-child) {
   border-bottom: 1px solid black;
   padding: 8px 0px;
 }
 
 article:last-child {
   padding: 8px 0px 0px;
-} */
+}
 
 article:active {
   text-decoration: underline;
@@ -91,7 +91,7 @@ article.purple {
   align-items: center;
   color: var(--gray200);
   font-size: 40px;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
   user-select: none;
 }
