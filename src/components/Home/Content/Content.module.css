@@ -11,7 +11,7 @@
 article {
   width: 100%;
   max-width: 700px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-size: 40px;
   font-weight: 700;
   cursor: pointer;
@@ -92,7 +92,7 @@ article.purple {
   color: var(--gray200);
   font-size: 40px;
   font-weight: 700;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   user-select: none;
 }
 

@@ -4,7 +4,7 @@ textarea {
   display: block;
   outline: none;
   border: none;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-size: 40px;
   font-weight: 700;
   resize: none;
