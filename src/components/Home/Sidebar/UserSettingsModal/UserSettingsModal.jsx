@@ -8,7 +8,7 @@ import css from './UserSettingsModal.module.css';
 export default function UserSettingsModal() {
   const dispatch = useDispatch();
   const { modalGlobalSettings } = useSelector(state => state.modal);
-  const { user } = useSelector(state => state.user);
+  const { email } = useSelector(state => state.user);
 
   const handleSignOut = () => signOut(auth);
 
@@ -34,7 +34,7 @@ export default function UserSettingsModal() {
             </div>
             <div className={css.group}>
               <span className={css.emailLabel}>email:</span>
-              <span className={css.email}>{user?.email}</span>
+              <span className={css.email}>{email}</span>
             </div>
             <div className={css.signOutButton} onClick={handleSignOut}>sing out</div>
           </div>

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addCategory, updateCategory, deleteCategory } from 'redux/features/user/userSlice';
+import { addUserCategory, updateUserCategory, deleteUserCategory } from 'redux/features/user/userSlice';
 import { setModalCategories } from 'redux/features/modal/modalSlice';
 import { db } from 'firebase.js';
-import { doc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
+import { doc, setDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
 import css from './EditCategoriesModal.module.css';
@@ -13,45 +13,36 @@ import { Input } from './Input';
 export default function EditCategoriesModal() {
   const dispatch = useDispatch();
   const { modalCategories } = useSelector(state => state.modal);
-  const { user, categories } = useSelector(state => state.user);
+  const { userId, userCategories } = useSelector(state => state.user);
 
   const [inputValue, setInputValue] = useState('');
 
   const handleOpen = () => {
     dispatch(setModalCategories(true));
 
-    window.history.pushState({modal: 'categories'}, '', '#categories');
+    window.history.pushState({ modal: 'categories' }, '', '#categories');
   };
 
   const handleClose = () => {
     window.history.back();
   }
 
-  const handleAddCategory = async () => {
+  const handleAddUserCategory = async () => {
     if (!inputValue) return;
 
     const newId = uuidv4();
 
-    await setDoc(doc(db, 'categories', user?.id), {
-      categories: arrayUnion({
-        id: newId,
-        name: inputValue
-      })
-    }, { merge: true })
-      .then(() => {
-        dispatch(addCategory({ id: newId, name: inputValue }));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await setDoc(doc(db, 'users', userId), { categories: arrayUnion({ id: newId, name: inputValue }) }, { merge: true })
+      .then(() => dispatch(addUserCategory({ id: newId, name: inputValue })))
+      .catch(error => console.log(error));
 
     setInputValue('');
   };
 
-  const handleUpdateCategory = async (id, name) => {
-    if (!name) return;
+  const handleUpdateUserCategory = async (id, name) => {
+    if (!id || !name) return;
 
-    let categoriesCopy = JSON.parse(JSON.stringify(categories));
+    let categoriesCopy = JSON.parse(JSON.stringify(userCategories));
 
     categoriesCopy.map((i) => {
       if (i.id === id) {
@@ -62,29 +53,17 @@ export default function EditCategoriesModal() {
       }
     });
 
-    await setDoc(doc(db, 'categories', user?.id), {
-      categories: categoriesCopy
-    })
-      .then(() => {
-        dispatch(updateCategory(categoriesCopy));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await updateDoc(doc(db, 'users', userId), { categories: categoriesCopy })
+      .then(() => dispatch(updateUserCategory(categoriesCopy)))
+      .catch(error => console.log(error));
   };
 
-  const handleDeleteCategory = async (id, name) => {
-    const docRef = doc(db, 'categories', user?.id);
+  const handleDeleteUserCategory = async (id, name) => {
+    if (!id || !name) return;
 
-    await updateDoc(docRef, {
-      categories: arrayRemove({ id, name })
-    })
-      .then(() => {
-        dispatch(deleteCategory(id));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    await updateDoc(doc(db, 'users', userId), { categories: arrayRemove({ id, name }) })
+      .then(() => dispatch(deleteUserCategory(id)))
+      .catch(error => console.log(error));
   };
 
   return (
@@ -99,12 +78,12 @@ export default function EditCategoriesModal() {
             </div>
             <div className={css.creationGroup}>
               <input className={css.creationInput} placeholder="new category..." value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
-              <button disabled={!inputValue} className={css.creationButton} onClick={handleAddCategory}>ok</button>
+              <button disabled={!inputValue} className={css.creationButton} onClick={handleAddUserCategory}>ok</button>
             </div>
-            {categories?.map(i => (
+            {userCategories?.map(i => (
               <div key={i.id} className={css.categoryGroup}>
-                <Input id={i.id} name={i.name} handleUpdateCategory={handleUpdateCategory} />
-                <div className={css.deleteButton} onClick={() => handleDeleteCategory(i.id, i.name)}>delete</div>
+                <Input id={i.id} name={i.name} handleUpdateUserCategory={handleUpdateUserCategory} />
+                <div className={css.deleteButton} onClick={() => handleDeleteUserCategory(i.id, i.name)}>delete</div>
               </div>
             ))}
           </div>

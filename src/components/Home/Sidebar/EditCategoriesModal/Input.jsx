@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import css from './EditCategoriesModal.module.css';
 
-export const Input = ({ id, name, handleUpdateCategory }) => {
+export const Input = ({ id, name, handleUpdateUserCategory }) => {
   const [inputValue, setInputValue] = useState(null);
 
   return (
@@ -10,7 +10,7 @@ export const Input = ({ id, name, handleUpdateCategory }) => {
       className={css.categoryInput}
       value={inputValue !== null ? inputValue : name}
       onChange={(e) => setInputValue(e.target.value)}
-      onBlur={() => handleUpdateCategory(id, inputValue)}
+      onBlur={() => handleUpdateUserCategory(id, inputValue)}
     />
   );
 };

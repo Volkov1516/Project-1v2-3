@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  user: null,
-  categories: [],
+  userId: null,
+  email: null,
+  userCategories: [],
 };
 
 export const userSlice = createSlice({
@@ -10,34 +11,32 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.user = action.payload;
+      state.userId = action.payload.id;
+      state.email = action.payload.email;
+      state.userCategories = action.payload.categories;
     },
-    setCategories: (state, action) => {
-      state.categories = action.payload;
-    },
-    addCategory: (state, action) => {
-      if (state.categories) {
-        state.categories.push(action.payload);
+    addUserCategory: (state, action) => {
+      if (state.userCategories) {
+        state.userCategories.push(action.payload);
       }
       else {
-        state.categories = [action.payload];
+        state.userCategories = [action.payload];
       }
     },
-    updateCategory: (state, action) => {
-      state.categories = action.payload;
+    updateUserCategory: (state, action) => {
+      state.userCategories = action.payload;
     },
-    deleteCategory: (state, action) => {
-      let newCategories = state.categories.filter(i => i.id !== action.payload);
-      state.categories = newCategories;
+    deleteUserCategory: (state, action) => {
+      let newCategories = state.userCategories.filter(i => i.id !== action.payload);
+      state.userCategories = newCategories;
     }
   }
 });
 
 export const {
   setUser,
-  setCategories,
-  addCategory,
-  updateCategory,
-  deleteCategory
+  addUserCategory,
+  updateUserCategory,
+  deleteUserCategory
 } = userSlice.actions;
 export default userSlice.reducer;

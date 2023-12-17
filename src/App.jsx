@@ -1,11 +1,11 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
-import { setUser, setCategories } from 'redux/features/user/userSlice';
+import { setUser } from 'redux/features/user/userSlice';
 import { setArticles, setFilteredArticlesId } from 'redux/features/article/articleSlice';
 import { setModalSettings, setModalGlobalSettings, setEditorModalStatus, setModalCategories, setModalDeleteArticle } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, collection, query, where, orderBy, getDocs, getDoc } from 'firebase/firestore';
+import { doc, getDoc, getDocs, collection, query, where, orderBy } from 'firebase/firestore';
 
 import { Loading } from 'components/Loading/Loading';
 
@@ -38,18 +38,17 @@ export const App = () => {
       dispatch(setFilteredArticlesId(filteredArticlesId));
     };
 
-    const getCategories = async (user) => {
-      const docRef = doc(db, 'categories', user?.uid);
+    const getUser = async (id, email) => {
+      const docRef = doc(db, 'users', id);
       const docSnap = await getDoc(docRef);
 
-      dispatch(setCategories(docSnap?.data()?.categories));
+      dispatch(setUser({ id, email, categories: docSnap?.data()?.categories }));
     };
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(setUser({ id: user?.uid, email: user?.email }));
+        getUser(user?.uid, user?.email);
         getArticles(user);
-        getCategories(user);
         setLogged(true);
 
         window.history.pushState({}, '', '/');

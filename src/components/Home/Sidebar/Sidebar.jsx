@@ -22,7 +22,7 @@ const LazyUserSettingsModal = lazy(() => import('./UserSettingsModal/UserSetting
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
-  const { categories } = useSelector(state => state.user);
+  const { userCategories } = useSelector(state => state.user);
   const { articles } = useSelector(state => state.article);
 
   const [activeButtonId, setActiveButtonId] = useState('articles');
@@ -104,7 +104,7 @@ export const Sidebar = () => {
     return (
       <div className={css.categoriesContainer}>
         <div id="articles" className={`${css.categoryButton} ${activeButtonId === "articles" && css.activeCategoryButton}`} onClick={handleAll}>articles</div>
-        {categories?.map(i => (
+        {userCategories?.map(i => (
           <div id={i?.id} className={`${css.categoryButton} ${activeButtonId === i?.id && css.activeCategoryButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id, i?.name)}>
             {i?.name}
           </div>

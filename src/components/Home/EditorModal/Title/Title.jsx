@@ -8,7 +8,7 @@ import css from './Title.module.css';
 
 export const Title = forwardRef(function MyTitle(props, ref) {
   const dispatch = useDispatch();
-  const { user } = useSelector(state => state.user);
+  const { userId } = useSelector(state => state.user);
   const { articleId, title, color, isNewArticle } = useSelector(state => state.article);
   const { editorModalStatus } = useSelector(state => state.modal);
 
@@ -31,7 +31,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
         title: title,
         // content: state,
         date: Timestamp.fromDate(new Date()),
-        userId: user?.id
+        userId: userId
       })
         .then(() => {
           dispatch(setIsNewArticle(false));
@@ -40,7 +40,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
             title: title,
             // content: state,
             date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
-            userId: user?.id
+            userId: userId
           }));
         })
         .catch((error) => console.log(error));

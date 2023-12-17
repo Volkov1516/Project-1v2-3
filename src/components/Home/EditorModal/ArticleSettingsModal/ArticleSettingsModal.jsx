@@ -9,7 +9,7 @@ import css from './ArticleSettingsModal.module.css';
 
 export default function ArticleSettingsModal() {
   const dispatch = useDispatch();
-  const { categories } = useSelector(state => state.user);
+  const { userCategories } = useSelector(state => state.user);
   const { modalSettings, modalDeleteArticle } = useSelector(state => state.modal);
   const { articleId, isArchived, title, color, articleCategories } = useSelector(state => state.article);
 
@@ -18,9 +18,9 @@ export default function ArticleSettingsModal() {
 
   useEffect(() => {
     const initialState = {};
-    categories?.forEach(i => initialState[i.id] = articleCategories?.some(j => j?.id === i?.id));
+    userCategories?.forEach(i => initialState[i.id] = articleCategories?.some(j => j?.id === i?.id));
     setCheckboxState(initialState);
-  }, [articleId, articleCategories, categories]);
+  }, [articleId, articleCategories, userCategories]);
 
   const handleOpen = () => {
     dispatch(setModalSettings(true));
@@ -122,7 +122,7 @@ export default function ArticleSettingsModal() {
               <div className={`${css.color} ${color === "purple" && css.active}`} onClick={() => handleColor("purple")} style={{ backgroundColor: "#9c36b5" }}></div>
             </div>
             <div className={css.categoriesContainer}>
-              {categories?.map(i => (
+              {userCategories?.map(i => (
                 <label key={i.id} className={css.categoryText}>
                   {i?.name}
                   <input className={css.categoryCheckbox} type="checkbox" checked={checkboxState[i.id]} onChange={(e) => handleCategory(e, i?.id, i?.name)} />

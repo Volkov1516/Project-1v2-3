@@ -33,7 +33,7 @@ export const Editor = ({
   setSaving,
 }) => {
   const dispatch = useDispatch();
-  const { user } = useSelector(state => state.user);
+  const { userId } = useSelector(state => state.user);
   const { editorModalStatus } = useSelector(state => state.modal);
   const { articleId, content, isNewArticle } = useSelector(state => state.article);
 
@@ -77,7 +77,7 @@ export const Editor = ({
             // title: title,
             content: state,
             date: Timestamp.fromDate(new Date()),
-            userId: user?.id
+            userId: userId
           })
             .then(() => {
               dispatch(setIsNewArticle(false));
@@ -86,7 +86,7 @@ export const Editor = ({
                 // title: title,
                 content: state,
                 date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
-                userId: user?.id
+                userId: userId
               }));
             })
             .catch((error) => console.log(error));
