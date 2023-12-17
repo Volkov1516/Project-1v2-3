@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateColor, deleteArticle, setArticleArchive, addArticleCategories, removeCategory } from 'redux/features/article/articleSlice';
-import { setModalSettings } from 'redux/features/modal/modalSlice';
+import { setModalSettings, setModalDeleteArticle } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 
@@ -10,10 +10,9 @@ import css from './ArticleSettingsModal.module.css';
 export default function ArticleSettingsModal() {
   const dispatch = useDispatch();
   const { categories } = useSelector(state => state.user);
-  const { modalSettings } = useSelector(state => state.modal);
+  const { modalSettings, modalDeleteArticle } = useSelector(state => state.modal);
   const { articleId, isArchived, title, color, articleCategories } = useSelector(state => state.article);
 
-  const [deletionDialog, setDeletionDialog] = useState(false);
   const [deletionInputValue, setDeltionInputValue] = useState('');
   const [checkboxState, setCheckboxState] = useState(null);
 
@@ -30,8 +29,16 @@ export default function ArticleSettingsModal() {
   };
 
   const handleClose = () => {
-    // dispatch(setModalSettings(false));
+    window.history.back();
+  };
 
+  const handleOpenDeletion = () => {
+    dispatch(setModalDeleteArticle(true));
+
+    window.history.pushState({modal: 'deleteArticle'}, '', '#delete');
+  };
+
+  const handleCloseDeletion = () => {
     window.history.back();
   };
 
@@ -123,12 +130,12 @@ export default function ArticleSettingsModal() {
               ))}
             </div>
             <div className={css.archiveButton} onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</div>
-            <div className={css.deleteButton} onClick={() => setDeletionDialog(!deletionDialog)}>delete</div>
-            {deletionDialog && (
-              <div className={css.deletionContainer} onClick={() => setDeletionDialog(false)}>
+            <div className={css.deleteButton} onClick={handleOpenDeletion}>delete</div>
+            {modalDeleteArticle && (
+              <div className={css.deletionContainer} onClick={handleCloseDeletion}>
                 <div className={css.deletionContent} onClick={(e) => e.stopPropagation()}>
                   <div className={css.deletionHeader}>
-                    <div className={css.deletionCloseButton} onClick={() => setDeletionDialog(false)}>close</div>
+                    <div className={css.deletionCloseButton} onClick={handleCloseDeletion}>close</div>
                   </div>
                   <span className={css.message}>type <b className={css.deletionTitle}>{title}</b> to proceed deletion</span>
                   <input className={css.input} type="text" placeholder="type here..." value={deletionInputValue} onChange={(e) => setDeltionInputValue(e.target.value)} />

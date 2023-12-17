@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addCategory, updateCategory, deleteCategory } from 'redux/features/user/userSlice';
+import { setModalCategories } from 'redux/features/modal/modalSlice';
 import { db } from 'firebase.js';
 import { doc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,10 +12,20 @@ import { Input } from './Input';
 
 export default function EditCategoriesModal() {
   const dispatch = useDispatch();
+  const { modalCategories } = useSelector(state => state.modal);
   const { user, categories } = useSelector(state => state.user);
 
-  const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
+
+  const handleOpen = () => {
+    dispatch(setModalCategories(true));
+
+    window.history.pushState({modal: 'categories'}, '', '#categories');
+  };
+
+  const handleClose = () => {
+    window.history.back();
+  }
 
   const handleAddCategory = async () => {
     if (!inputValue) return;
@@ -78,13 +89,13 @@ export default function EditCategoriesModal() {
 
   return (
     <>
-      <div className={css.openButton} onClick={() => setOpen(true)}>edit categories</div>
-      {open && (
-        <div className={css.container} onClick={() => setOpen(false)}>
+      <div className={css.openButton} onClick={handleOpen}>edit categories</div>
+      {modalCategories && (
+        <div className={css.container} onClick={handleClose}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
             <div className={css.header}>
               <span className={css.title}>edit categories</span>
-              <button className={css.closeButton} onClick={() => setOpen(false)}>close</button>
+              <button className={css.closeButton} onClick={handleClose}>close</button>
             </div>
             <div className={css.creationGroup}>
               <input className={css.creationInput} placeholder="new category..." value={inputValue} onChange={(e) => setInputValue(e.target.value)} />

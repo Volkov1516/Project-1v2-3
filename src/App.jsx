@@ -2,7 +2,7 @@ import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser, setCategories } from 'redux/features/user/userSlice';
 import { setArticles, setFilteredArticlesId } from 'redux/features/article/articleSlice';
-import { setModalSettings, setEditorModalStatus } from 'redux/features/modal/modalSlice';
+import { setModalSettings, setModalGlobalSettings, setEditorModalStatus, setModalCategories, setModalDeleteArticle } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, collection, query, where, orderBy, getDocs, getDoc } from 'firebase/firestore';
@@ -65,25 +65,37 @@ export const App = () => {
     const handlePopState = (e) => {
       if (e.state && !e.state.modal) {
         dispatch(setEditorModalStatus(false));
+        dispatch(setModalGlobalSettings(false));
+        dispatch(setModalCategories(false));
       }
-      else if(e.state && e.state.modal === 'new') {
+      else if (e.state && e.state.modal === 'new') {
         dispatch(setEditorModalStatus('edit'));
         dispatch(setModalSettings(false));
       }
-      else if(e.state && e.state.modal === 'editFC') {
+      else if (e.state && e.state.modal === 'editFC') {
         dispatch(setEditorModalStatus('editFC'));
         dispatch(setModalSettings(false));
       }
-      else if(e.state && e.state.modal === 'preview') {
+      else if (e.state && e.state.modal === 'preview') {
         dispatch(setEditorModalStatus('preview'));
         dispatch(setModalSettings(false));
       }
-      else if(e.state && e.state.modal === 'editFP') {
+      else if (e.state && e.state.modal === 'editFP') {
         dispatch(setEditorModalStatus('editFP'));
         dispatch(setModalSettings(false));
       }
-      else if(e.state && e.state.modal === 'articleSettings') {
+      else if (e.state && e.state.modal === 'articleSettings') {
         dispatch(setModalSettings(true));
+        dispatch(setModalDeleteArticle(false));
+      }
+      else if (e.state && e.state.modal === 'deleteArticle') {
+        dispatch(setModalDeleteArticle(true));
+      }
+      else if (e.state && e.state.modal === 'globalSettings') {
+        dispatch(setModalGlobalSettings(true));
+      }
+      else if (e.state && e.state.modal === 'categories') {
+        dispatch(setModalCategories(true));
       }
     };
 
