@@ -41,7 +41,7 @@ export const Sidebar = () => {
     dispatch(setArticleCategories([]));
     dispatch(setEditorModalStatus('edit'));
 
-    window.history.pushState({}, '', '#editor');
+    window.history.pushState({ modal: 'new' }, '', '#editor');
   };
 
   const handleAll = () => {

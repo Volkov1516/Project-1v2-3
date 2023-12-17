@@ -20,26 +20,31 @@ export default function EditorModal() {
   const [saving, setSaving] = useState(false);
 
   const close = () => {
-    switch (editorModalStatus) {
-      case 'edit':
-        dispatch(setEditorModalStatus(false));
-        window.history.pushState({}, '', '/');
-        break;
-      case 'editFC':
-        dispatch(setEditorModalStatus(false));
-        window.history.pushState({}, '', '/');
-        break;
-      case 'editFP':
-        dispatch(setEditorModalStatus('preview'));
-        window.history.pushState({}, '', '#preview');
-        break;
-      case 'preview':
-        dispatch(setEditorModalStatus(false));
-        window.history.pushState({}, '', '/');
-        break;
-      default:
-        return;
-    }
+
+    window.history.back();
+
+
+    // switch (editorModalStatus) {
+    //   case 'edit':
+    //     // dispatch(setEditorModalStatus(false));
+    //     // window.history.pushState({}, '', '/');
+    //     window.history.back();
+    //     break;
+    //   // case 'editFC':
+    //   //   dispatch(setEditorModalStatus(false));
+    //   //   window.history.pushState({}, '', '/');
+    //   //   break;
+    //   // case 'editFP':
+    //   //   dispatch(setEditorModalStatus('preview'));
+    //   //   window.history.pushState({}, '', '#preview');
+    //   //   break;
+    //   // case 'preview':
+    //   //   dispatch(setEditorModalStatus(false));
+    //   //   window.history.pushState({}, '', '/');
+    //   //   break;
+    //   default:
+    //     return;
+    // }
   };
 
   const prev = () => {
@@ -61,7 +66,7 @@ export default function EditorModal() {
   const openEditorFromPreview = () => {
     dispatch(setEditorModalStatus('editFP'));
 
-    window.history.pushState({}, '', '#editor');
+    window.history.pushState({modal: 'editFP'}, '', '#editor');
   }
 
   return editorModalStatus && (

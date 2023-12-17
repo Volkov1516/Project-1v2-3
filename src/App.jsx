@@ -62,26 +62,35 @@ export const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const handleHashChange = (e) => {
-      if (e.newURL === `${window.location.origin}/`) {
+    const handlePopState = (e) => {
+      if (e.state && !e.state.modal) {
         dispatch(setEditorModalStatus(false));
       }
-      else if (e.newURL === `${window.location.origin}/#editor`) {
-        dispatch(setModalSettings(false));
+      else if(e.state && e.state.modal === 'new') {
         dispatch(setEditorModalStatus('edit'));
-      }
-      else if (e.newURL === `${window.location.origin}/#preview`) {
         dispatch(setModalSettings(false));
-        dispatch(setEditorModalStatus('preview'));
       }
-      else if (e.newURL === `${window.location.origin}/#settings`) {
+      else if(e.state && e.state.modal === 'editFC') {
+        dispatch(setEditorModalStatus('editFC'));
+        dispatch(setModalSettings(false));
+      }
+      else if(e.state && e.state.modal === 'preview') {
+        dispatch(setEditorModalStatus('preview'));
+        dispatch(setModalSettings(false));
+      }
+      else if(e.state && e.state.modal === 'editFP') {
+        dispatch(setEditorModalStatus('editFP'));
+        dispatch(setModalSettings(false));
+      }
+      else if(e.state && e.state.modal === 'articleSettings') {
         dispatch(setModalSettings(true));
       }
     };
 
-    window.addEventListener('hashchange', handleHashChange);
+    // popstate - событие, которое срабатывает, когда изменяется история браузера. Например, через кнопки "назад" и "вперед"
+    window.addEventListener('popstate', handlePopState);
 
-    return () => window.removeEventListener('popstate', handleHashChange);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, [dispatch]);
 
   return logged

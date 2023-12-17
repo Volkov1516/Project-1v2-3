@@ -13,8 +13,6 @@ export default function ArticleSettingsModal() {
   const { modalSettings } = useSelector(state => state.modal);
   const { articleId, isArchived, title, color, articleCategories } = useSelector(state => state.article);
 
-  console.log('test');
-
   const [deletionDialog, setDeletionDialog] = useState(false);
   const [deletionInputValue, setDeltionInputValue] = useState('');
   const [checkboxState, setCheckboxState] = useState(null);
@@ -28,11 +26,11 @@ export default function ArticleSettingsModal() {
   const handleOpen = () => {
     dispatch(setModalSettings(true));
 
-    window.history.pushState({}, '', '#settings');
+    window.history.pushState({modal: 'articleSettings'}, '', '#settings');
   };
 
   const handleClose = () => {
-    dispatch(setModalSettings(false));
+    // dispatch(setModalSettings(false));
 
     window.history.back();
   };

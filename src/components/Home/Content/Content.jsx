@@ -34,7 +34,7 @@ export const Content = ({ mouseTimer }) => {
     dispatch(setIsArchived(archive));
     dispatch(setEditorModalStatus('editFC'));
 
-    window.history.pushState({}, '', '#editor');
+    window.history.pushState({modal: 'editFC'}, '', '#editor');
   };
 
   const onMouseDown = (id, title, content, color, categories, archive) => {
@@ -58,7 +58,7 @@ export const Content = ({ mouseTimer }) => {
       dispatch(setIsArchived(archive));
       dispatch(setEditorModalStatus('preview'));
 
-      window.history.pushState({}, '', '#preview');
+      window.history.pushState({modal: 'preview'}, '', '#preview');
     }, 500);
   };
 
