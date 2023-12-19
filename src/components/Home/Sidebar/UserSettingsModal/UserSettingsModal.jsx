@@ -1,4 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from 'redux/features/user/userSlice';
+import {
+  setArticles,
+  setFilteredArticlesId,
+  setArticleId,
+  setArticleTitle,
+  setArticleContent,
+  setArticleCategories
+} from 'redux/features/article/articleSlice';
 import { setModalGlobalSettings } from 'redux/features/modal/modalSlice';
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
@@ -10,12 +19,25 @@ export default function UserSettingsModal() {
   const { modalGlobalSettings } = useSelector(state => state.modal);
   const { email } = useSelector(state => state.user);
 
-  const handleSignOut = () => signOut(auth);
+  const handleSignOut = async () => {
+    await signOut(auth)
+      .then(() => {
+        dispatch(setUser({ id: null, email: null, categories: null }));
+        dispatch(setArticles(null));
+        dispatch(setArticleId(null));
+        dispatch(setArticleTitle(null));
+        dispatch(setArticleContent(null));
+        dispatch(setFilteredArticlesId(null));
+        dispatch(setArticleCategories(null));
+        dispatch(setModalGlobalSettings(false));
+      })
+      .catch(error => console.log(error));
+  };
 
   const handleOpen = () => {
     dispatch(setModalGlobalSettings(true));
 
-    window.history.pushState({modal: 'globalSettings'}, '', '#settings');
+    window.history.pushState({ modal: 'globalSettings' }, '', '#settings');
   };
 
   const handleClose = () => {

@@ -11,9 +11,9 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.userId = action.payload.id;
-      state.email = action.payload.email;
-      state.userCategories = action.payload.categories;
+      state.userId = action.payload?.id;
+      state.email = action.payload?.email;
+      state.userCategories = action.payload?.categories;
     },
     addUserCategory: (state, action) => {
       if (state.userCategories) {
