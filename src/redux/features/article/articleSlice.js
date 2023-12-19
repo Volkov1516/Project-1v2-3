@@ -5,8 +5,11 @@ const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"for
 const initialState = {
   documents: [],
   filteredDocumentsId: [],
-  articleIndex: null,
-  articleId: null,
+  isNewDocument: false,
+  documentIndex: null,
+  documentId: null,
+
+
   title: '',
   content: EMPTY_CONTENT,
   color: null,
@@ -14,7 +17,6 @@ const initialState = {
   date: null,
   archive: null,
   isArchived: false,
-  isNewArticle: false,
 };
 
 export const articleSlice = createSlice({
@@ -27,12 +29,17 @@ export const articleSlice = createSlice({
     setFilteredDocumentsId: (state, action) => {
       state.filteredDocumentsId = action.payload;
     },
-    setArticleIndex: (state, action) => {
-      state.articleIndex = action.payload;
+    setIsNewDocument: (state, action) => {
+      state.isNewDocument = action.payload;
     },
-    setArticleId: (state, action) => {
-      state.articleId = action.payload;
+    setDocumentIndex: (state, action) => {
+      state.documentIndex = action.payload;
     },
+    setDocumentleId: (state, action) => {
+      state.documentId = action.payload;
+    },
+
+
     setArticleTitle: (state, action) => {
       state.title = action.payload;
     },
@@ -42,6 +49,14 @@ export const articleSlice = createSlice({
     setArticleColor: (state, action) => {
       state.color = action.payload;
     },
+    setArticleCategories: (state, action) => {
+      state.articleCategories = action.payload;
+    },
+    setIsArchived: (state, action) => {
+      state.isArchived = action.payload;
+    },
+
+
     updateColor: (state, action) => {
       let newArticles = state.documents.map(i => {
         if (i.id === action.payload.id) {
@@ -64,9 +79,6 @@ export const articleSlice = createSlice({
 
       state.documents = JSON.parse(JSON.stringify(newArticles));
       state.color = action.payload.color;
-    },
-    setArticleCategories: (state, action) => {
-      state.articleCategories = action.payload;
     },
     addArticleCategories: (state, action) => {
       let newArticles = state.documents.map(i => {
@@ -146,9 +158,6 @@ export const articleSlice = createSlice({
       state.filteredDocumentsId = newFilteredId;
       state.isArchived = !state.isArchived;
     },
-    setIsArchived: (state, action) => {
-      state.isArchived = action.payload;
-    },
     addArticle: (state, action) => {
       state.documents.unshift(action.payload);
       state.filteredDocumentsId.unshift(action.payload.id);
@@ -175,11 +184,11 @@ export const articleSlice = createSlice({
 
       state.documents = JSON.parse(JSON.stringify(newArticles));
 
-      if(action?.payload?.title) {
+      if (action?.payload?.title) {
         state.title = action?.payload?.title;
       }
 
-      if(action?.payload?.content) {
+      if (action?.payload?.content) {
         state.content = action?.payload?.content;
       }
       // state.title = action?.payload?.title;
@@ -192,16 +201,14 @@ export const articleSlice = createSlice({
       let newFiltered = state.filteredDocumentsId.filter(i => i !== action.payload.id);
       state.filteredDocumentsId = newFiltered;
     },
-    setIsNewArticle: (state, action) => {
-      state.isNewArticle = action.payload;
-    },
+
 
     incrementIndex: (state) => {
-      state.articleIndex += 1;
-      const currentID = state.filteredDocumentsId[state.articleIndex];
+      state.documentIndex += 1;
+      const currentID = state.filteredDocumentsId[state.documentIndex];
       const currentArticle = state.documents?.find(i => i.id === currentID);
 
-      state.articleId = currentArticle?.id;
+      state.documentId = currentArticle?.id;
       state.title = currentArticle?.title || 'Untitled';
       state.content = currentArticle?.content;
       state.color = currentArticle?.color;
@@ -211,12 +218,12 @@ export const articleSlice = createSlice({
       state.isArchived = currentArticle?.archive;
     },
     decrementIndex: (state) => {
-      state.articleIndex -= 1;
+      state.documentIndex -= 1;
 
-      const currentID = state.filteredDocumentsId[state.articleIndex];
+      const currentID = state.filteredDocumentsId[state.documentIndex];
       const currentArticle = state.documents?.find(i => i.id === currentID);
 
-      state.articleId = currentArticle?.id;
+      state.documentId = currentArticle?.id;
       state.title = currentArticle?.title || 'Untitled';
       state.content = currentArticle?.content;
       state.color = currentArticle?.color;
@@ -231,8 +238,11 @@ export const articleSlice = createSlice({
 export const {
   setDocuments,
   setFilteredDocumentsId,
-  setArticleIndex,
-  setArticleId,
+  setIsNewDocument,
+  setDocumentIndex,
+  setDocumentleId,
+
+
   setArticleTitle,
   setArticleContent,
   setArticleColor,
@@ -245,7 +255,6 @@ export const {
   addArticle,
   updateArticle,
   deleteArticle,
-  setIsNewArticle,
   incrementIndex,
   decrementIndex,
 } = articleSlice.actions;

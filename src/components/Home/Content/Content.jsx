@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  setIsNewArticle,
-  setArticleIndex,
-  setArticleId,
+  setIsNewDocument,
+  setDocumentIndex,
+  setDocumentleId,
   setArticleTitle,
   setArticleContent,
   setArticleColor,
@@ -21,12 +21,12 @@ export const Content = ({ mouseTimer }) => {
 
     for (const [index, value] of filteredDocumentsId?.entries()) {
       if (id === value) {
-        dispatch(setArticleIndex(index));
+        dispatch(setDocumentIndex(index));
       }
     }
 
-    dispatch(setIsNewArticle(false));
-    dispatch(setArticleId(id));
+    dispatch(setIsNewDocument(false));
+    dispatch(setDocumentleId(id));
     dispatch(setArticleTitle(title));
     dispatch(setArticleContent(content));
     dispatch(setArticleColor(color));
@@ -45,12 +45,12 @@ export const Content = ({ mouseTimer }) => {
 
       for (const [index, value] of filteredDocumentsId?.entries()) {
         if (id === value) {
-          dispatch(setArticleIndex(index));
+          dispatch(setDocumentIndex(index));
         }
       }
 
-      dispatch(setIsNewArticle(false));
-      dispatch(setArticleId(id));
+      dispatch(setIsNewDocument(false));
+      dispatch(setDocumentleId(id));
       dispatch(setArticleTitle(title));
       dispatch(setArticleContent(content));
       dispatch(setArticleColor(color));

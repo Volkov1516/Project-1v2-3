@@ -3,7 +3,7 @@ import { setUser } from 'redux/features/user/userSlice';
 import {
   setDocuments,
   setFilteredDocumentsId,
-  setArticleId,
+  setDocumentleId,
   setArticleTitle,
   setArticleContent,
   setArticleCategories
@@ -24,7 +24,7 @@ export default function UserSettingsModal() {
       .then(() => {
         dispatch(setUser({ id: null, email: null, categories: null }));
         dispatch(setDocuments(null));
-        dispatch(setArticleId(null));
+        dispatch(setDocumentleId(null));
         dispatch(setArticleTitle(null));
         dispatch(setArticleContent(null));
         dispatch(setFilteredDocumentsId(null));

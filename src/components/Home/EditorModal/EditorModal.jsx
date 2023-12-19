@@ -12,7 +12,7 @@ const LazyArticleSettingsModal = lazy(() => import('./ArticleSettingsModal/Artic
 export default function EditorModal() {
   const dispatch = useDispatch();
   const { editorModalStatus } = useSelector(state => state.modal);
-  const { filteredDocumentsId, articleIndex, articleCategories, isNewArticle } = useSelector(state => state.article);
+  const { filteredDocumentsId, isNewDocument, documentIndex, articleCategories } = useSelector(state => state.article);
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
@@ -48,7 +48,7 @@ export default function EditorModal() {
   };
 
   const prev = () => {
-    if (articleIndex === 0) return;
+    if (documentIndex === 0) return;
 
     const modalPreviewElement = document.getElementById('editorModal');
     modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
@@ -56,7 +56,7 @@ export default function EditorModal() {
   };
 
   const next = () => {
-    if (articleIndex === filteredDocumentsId?.length - 1) return;
+    if (documentIndex === filteredDocumentsId?.length - 1) return;
 
     const modalPreviewElement = document.getElementById('editorModal');
     modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
@@ -70,7 +70,7 @@ export default function EditorModal() {
   }
 
   return editorModalStatus && (
-    <div className={css.container} onClick={close} key={articleIndex}>
+    <div className={css.container} onClick={close} key={documentIndex}>
       <div className={css[editorModalStatus]} onClick={(e) => e.stopPropagation()}>
         <div className={css.navigation}>
           <div className={css.navigationStart}>
@@ -78,7 +78,7 @@ export default function EditorModal() {
               <div className={css.arrowWrapper} onClick={prev}>
                 <div className={css.arrowLeft} />
               </div>
-              <div className={css.navigationCountBubble}>{`${articleIndex + 1}`}/{filteredDocumentsId?.length}</div>
+              <div className={css.navigationCountBubble}>{`${documentIndex + 1}`}/{filteredDocumentsId?.length}</div>
               <div className={css.arrowWrapper} onClick={next}>
                 <div className={css.arrowRight} />
               </div>
@@ -100,7 +100,7 @@ export default function EditorModal() {
               <div className={css.headerCloseButton} onClick={close}>close</div>
             </div>
             <div className={css.headerEnd}>
-              {!isNewArticle && (
+              {!isNewDocument && (
                 <Suspense>
                   <LazyArticleSettingsModal />
                 </Suspense>

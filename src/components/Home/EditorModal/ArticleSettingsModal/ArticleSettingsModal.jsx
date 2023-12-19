@@ -11,7 +11,7 @@ export default function ArticleSettingsModal() {
   const dispatch = useDispatch();
   const { userCategories } = useSelector(state => state.user);
   const { modalSettings, modalDeleteArticle } = useSelector(state => state.modal);
-  const { articleId, isArchived, title, color, articleCategories } = useSelector(state => state.article);
+  const { documentId, isArchived, title, color, articleCategories } = useSelector(state => state.article);
 
   const [deletionInputValue, setDeltionInputValue] = useState('');
   const [checkboxState, setCheckboxState] = useState(null);
@@ -20,7 +20,7 @@ export default function ArticleSettingsModal() {
     const initialState = {};
     userCategories?.forEach(i => initialState[i.id] = articleCategories?.some(j => j?.id === i?.id));
     setCheckboxState(initialState);
-  }, [articleId, articleCategories, userCategories]);
+  }, [documentId, articleCategories, userCategories]);
 
   const handleOpen = () => {
     dispatch(setModalSettings(true));
@@ -44,43 +44,43 @@ export default function ArticleSettingsModal() {
 
   const handleCategory = async (e, id, name) => {
     if (e.target.checked) {
-      await setDoc(doc(db, 'articles', articleId), { categories: arrayUnion({ id, name }) }, { merge: true })
+      await setDoc(doc(db, 'articles', documentId), { categories: arrayUnion({ id, name }) }, { merge: true })
         .then(() => {
           setCheckboxState(prevState => ({ ...prevState, [id]: !prevState[id] }));
-          dispatch(addArticleCategories({ id: articleId, categoryId: id, categoryName: name }));
+          dispatch(addArticleCategories({ id: documentId, categoryId: id, categoryName: name }));
         })
         .catch((error) => console.log(error));
     }
     else {
-      const docRef = doc(db, 'articles', articleId);
+      const docRef = doc(db, 'articles', documentId);
 
       await updateDoc(docRef, { categories: arrayRemove({ id, name }) })
         .then(() => {
           setCheckboxState(prevState => ({ ...prevState, [id]: !prevState[id] }));
-          dispatch(removeCategory({ id: articleId, categoryId: id }));
+          dispatch(removeCategory({ id: documentId, categoryId: id }));
         })
         .catch((error) => console.log(error));
     }
   };
 
   const handleColor = async (color) => {
-    const articleRef = doc(db, 'articles', articleId);
+    const articleRef = doc(db, 'articles', documentId);
 
     await updateDoc(articleRef, {
       color: color
     })
       .then(() => {
-        dispatch(updateColor({ id: articleId, color: color }));
+        dispatch(updateColor({ id: documentId, color: color }));
       })
       .catch((error) => console.log(error));
   };
 
   const handleArchive = async () => {
-    const articleRef = doc(db, 'articles', articleId);
+    const articleRef = doc(db, 'articles', documentId);
 
     await updateDoc(articleRef, { archive: !isArchived })
       .then(() => {
-        dispatch(setArticleArchive({ id: articleId, archive: !isArchived }));
+        dispatch(setArticleArchive({ id: documentId, archive: !isArchived }));
         window.history.back();
       })
       .catch((error) => console.log(error));
@@ -90,9 +90,9 @@ export default function ArticleSettingsModal() {
   };
 
   const handleDeleteArticle = async () => {
-    await deleteDoc(doc(db, 'articles', articleId))
+    await deleteDoc(doc(db, 'articles', documentId))
       .then(() => {
-        dispatch(deleteArticle({ id: articleId }));
+        dispatch(deleteArticle({ id: documentId }));
         window.history.back();
       })
       .catch((error) => console.log(error));

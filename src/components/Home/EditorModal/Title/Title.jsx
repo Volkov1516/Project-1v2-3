@@ -1,6 +1,6 @@
 import { useEffect, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsNewArticle, addArticle, setArticleTitle, updateArticle } from 'redux/features/article/articleSlice';
+import { setIsNewDocument, addArticle, setArticleTitle, updateArticle } from 'redux/features/article/articleSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 
@@ -9,7 +9,7 @@ import css from './Title.module.css';
 export const Title = forwardRef(function MyTitle(props, ref) {
   const dispatch = useDispatch();
   const { userId } = useSelector(state => state.user);
-  const { articleId, title, color, isNewArticle } = useSelector(state => state.article);
+  const { isNewDocument, documentId, title, color } = useSelector(state => state.article);
   const { editorModalStatus } = useSelector(state => state.modal);
 
   const { saving } = props;
@@ -26,38 +26,27 @@ export const Title = forwardRef(function MyTitle(props, ref) {
   };
 
   const onTitleBlur = async () => {
-    if(isNewArticle && !saving) {
-      await setDoc(doc(db, 'articles', articleId), {
+    if(isNewDocument && !saving) {
+      await setDoc(doc(db, 'articles', documentId), {
         title: title,
-        // content: state,
         date: Timestamp.fromDate(new Date()),
         userId: userId
       })
         .then(() => {
-          dispatch(setIsNewArticle(false));
+          dispatch(setIsNewDocument(false));
           dispatch(addArticle({
-            id: articleId,
+            id: documentId,
             title: title,
-            // content: state,
             date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
             userId: userId
           }));
         })
-        .catch((error) => console.log(error));
+        .catch(error => console.log(error));
     }
     else {
-      await updateDoc(doc(db, 'articles', articleId), {
-        title: title,
-        // content: state,
-      })
-        .then(() => {
-          dispatch(updateArticle({
-            id: articleId,
-            title: title,
-            // content: state
-          }));
-        })
-        .catch((error) => console.log(error));
+      await updateDoc(doc(db, 'articles', documentId), { title: title })
+        .then(() =>  dispatch(updateArticle({ id: documentId, title: title })))
+        .catch(error => console.log(error));
     }
   }
 

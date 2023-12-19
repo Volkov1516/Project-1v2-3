@@ -2,8 +2,8 @@ import { useState, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setFilteredDocumentsId,
-  setIsNewArticle,
-  setArticleId,
+  setIsNewDocument,
+  setDocumentleId,
   setArticleTitle,
   setArticleContent,
   setArticleColor,
@@ -33,8 +33,8 @@ export const Sidebar = () => {
   const [activeCategoriesMenuButton, setActiveCategoriesMenuButton] = useState(false);
 
   const openModalEditor = () => {
-    dispatch(setIsNewArticle(true));
-    dispatch(setArticleId(uuidv4()));
+    dispatch(setIsNewDocument(true));
+    dispatch(setDocumentleId(uuidv4()));
     dispatch(setArticleTitle(''));
     dispatch(setArticleContent('{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'));
     dispatch(setArticleColor(null));

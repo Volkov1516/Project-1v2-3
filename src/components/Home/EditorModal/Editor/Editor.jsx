@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsNewArticle, addArticle, updateArticle } from 'redux/features/article/articleSlice';
+import { setIsNewDocument, addArticle, updateArticle } from 'redux/features/article/articleSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 
@@ -35,7 +35,7 @@ export const Editor = ({
   const dispatch = useDispatch();
   const { userId } = useSelector(state => state.user);
   const { editorModalStatus } = useSelector(state => state.modal);
-  const { articleId, content, isNewArticle } = useSelector(state => state.article);
+  const { isNewDocument, documentId, content } = useSelector(state => state.article);
 
   let editorStateAutoSaveTimeout;
 
@@ -72,38 +72,27 @@ export const Editor = ({
       editorStateAutoSaveTimeout = setTimeout(async () => {
         setSaving(true);
 
-        if (isNewArticle) {
-          await setDoc(doc(db, 'articles', articleId), {
-            // title: title,
+        if (isNewDocument) {
+          await setDoc(doc(db, 'articles', documentId), {
             content: state,
             date: Timestamp.fromDate(new Date()),
             userId: userId
           })
             .then(() => {
-              dispatch(setIsNewArticle(false));
+              dispatch(setIsNewDocument(false));
               dispatch(addArticle({
-                id: articleId,
-                // title: title,
+                id: documentId,
                 content: state,
                 date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
                 userId: userId
               }));
             })
-            .catch((error) => console.log(error));
+            .catch(error => console.log(error));
         }
         else {
-          await updateDoc(doc(db, 'articles', articleId), {
-            // title: title,
-            content: state,
-          })
-            .then(() => {
-              dispatch(updateArticle({
-                id: articleId,
-                // title: title,
-                content: state
-              }));
-            })
-            .catch((error) => console.log(error));
+          await updateDoc(doc(db, 'articles', documentId), { content: state })
+            .then(() => dispatch(updateArticle({ id: documentId, content: state })))
+            .catch(error => console.log(error));
         }
 
         setSaving(false);
