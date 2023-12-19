@@ -1,7 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'redux/features/user/userSlice';
-import { setArticles, setFilteredArticlesId } from 'redux/features/article/articleSlice';
+import { setDocuments, setFilteredDocumentsId } from 'redux/features/article/articleSlice';
 import { setModalSettings, setModalGlobalSettings, setEditorModalStatus, setModalCategories, setModalDeleteArticle } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -17,27 +17,6 @@ export const App = () => {
   const [logged, setLogged] = useState(true);
 
   useEffect(() => {
-    const getArticles = async (user) => {
-      const articles = [];
-      const filteredArticlesId = [];
-
-      const q = query(collection(db, 'articles'), where('userId', '==', user?.uid), orderBy('date', 'desc'));
-      const querySnapshot = await getDocs(q);
-      querySnapshot?.forEach((doc) => articles.push({
-        id: doc?.id,
-        title: doc?.data()?.title,
-        content: doc?.data()?.content,
-        categories: doc?.data()?.categories,
-        color: doc?.data()?.color,
-        date: doc?.data()?.date?.toDate().toLocaleDateString(),
-        archive: doc?.data()?.archive,
-      }));
-      articles?.forEach(i => !i?.archive && filteredArticlesId.push(i?.id));
-
-      dispatch(setArticles(JSON.parse(JSON.stringify(articles))));
-      dispatch(setFilteredArticlesId(filteredArticlesId));
-    };
-
     const getUser = async (id, email) => {
       const docRef = doc(db, 'users', id);
       const docSnap = await getDoc(docRef);
@@ -45,12 +24,22 @@ export const App = () => {
       dispatch(setUser({ id, email, categories: docSnap?.data()?.categories }));
     };
 
+    const getDocuments = async (id) => {
+      const q = query(collection(db, 'articles'), where('userId', '==', id), orderBy('date', 'desc'));
+      const querySnapshot = await getDocs(q);
+      const documents = querySnapshot.docs.map(i => ({ id: i?.id, ...i.data() }));
+      dispatch(setDocuments(JSON.parse(JSON.stringify(documents))));
+
+      const filteredDocumentsId = [];
+      documents?.forEach(i => !i?.archive && filteredDocumentsId.push(i?.id));
+      dispatch(setFilteredDocumentsId(filteredDocumentsId));
+    };
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         getUser(user?.uid, user?.email);
-        getArticles(user);
+        getDocuments(user?.uid);
         setLogged(true);
-
         window.history.pushState({}, '', '/');
       } else {
         setLogged(false);

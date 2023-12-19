@@ -12,7 +12,7 @@ const LazyArticleSettingsModal = lazy(() => import('./ArticleSettingsModal/Artic
 export default function EditorModal() {
   const dispatch = useDispatch();
   const { editorModalStatus } = useSelector(state => state.modal);
-  const { filteredArticlesId, articleIndex, articleCategories, isNewArticle } = useSelector(state => state.article);
+  const { filteredDocumentsId, articleIndex, articleCategories, isNewArticle } = useSelector(state => state.article);
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
@@ -56,7 +56,7 @@ export default function EditorModal() {
   };
 
   const next = () => {
-    if (articleIndex === filteredArticlesId?.length - 1) return;
+    if (articleIndex === filteredDocumentsId?.length - 1) return;
 
     const modalPreviewElement = document.getElementById('editorModal');
     modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
@@ -78,7 +78,7 @@ export default function EditorModal() {
               <div className={css.arrowWrapper} onClick={prev}>
                 <div className={css.arrowLeft} />
               </div>
-              <div className={css.navigationCountBubble}>{`${articleIndex + 1}`}/{filteredArticlesId?.length}</div>
+              <div className={css.navigationCountBubble}>{`${articleIndex + 1}`}/{filteredDocumentsId?.length}</div>
               <div className={css.arrowWrapper} onClick={next}>
                 <div className={css.arrowRight} />
               </div>

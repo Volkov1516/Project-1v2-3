@@ -15,11 +15,11 @@ import css from './Content.module.css';
 
 export const Content = ({ mouseTimer }) => {
   const dispatch = useDispatch();
-  const { articles, filteredArticlesId } = useSelector(state => state.article);
+  const { documents, filteredDocumentsId } = useSelector(state => state.article);
 
   const openModalEditor = (id, title, content, color, categories, archive) => {
 
-    for (const [index, value] of filteredArticlesId?.entries()) {
+    for (const [index, value] of filteredDocumentsId?.entries()) {
       if (id === value) {
         dispatch(setArticleIndex(index));
       }
@@ -43,7 +43,7 @@ export const Content = ({ mouseTimer }) => {
     mouseTimer = window.setTimeout(() => {
       window.navigator.vibrate(100);
 
-      for (const [index, value] of filteredArticlesId?.entries()) {
+      for (const [index, value] of filteredDocumentsId?.entries()) {
         if (id === value) {
           dispatch(setArticleIndex(index));
         }
@@ -66,7 +66,7 @@ export const Content = ({ mouseTimer }) => {
 
   return (
     <main className={css.container} onScroll={onMouseUp}>
-      {articles?.map((i) => filteredArticlesId.includes(i.id) && (
+      {documents?.map((i) => filteredDocumentsId.includes(i.id) && (
         <article
           key={i?.id}
           onClick={() => openModalEditor(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
@@ -80,9 +80,9 @@ export const Content = ({ mouseTimer }) => {
           {/* <span className={css.dot}>.</span> */}
         </article>
       ))}
-      {filteredArticlesId?.length < 1 && (
+      {filteredDocumentsId?.length < 1 && (
         <div className={css.emptyContainer}>
-          no articles
+          no documents
         </div>
       )}
     </main>

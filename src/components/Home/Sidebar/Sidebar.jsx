@@ -1,7 +1,7 @@
 import { useState, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  setFilteredArticlesId,
+  setFilteredDocumentsId,
   setIsNewArticle,
   setArticleId,
   setArticleTitle,
@@ -23,7 +23,7 @@ const LazyUserSettingsModal = lazy(() => import('./UserSettingsModal/UserSetting
 export const Sidebar = () => {
   const dispatch = useDispatch();
   const { userCategories } = useSelector(state => state.user);
-  const { articles } = useSelector(state => state.article);
+  const { documents } = useSelector(state => state.article);
 
   const [activeButtonId, setActiveButtonId] = useState('articles');
   const [mainMenu, setMainMenu] = useState(false);
@@ -45,10 +45,10 @@ export const Sidebar = () => {
   };
 
   const handleAll = () => {
-    const filteredArticlesId = [];
-    articles?.forEach(i => !i?.archive && filteredArticlesId.push(i?.id));
+    const filteredDocumentsId = [];
+    documents?.forEach(i => !i?.archive && filteredDocumentsId.push(i?.id));
 
-    dispatch(setFilteredArticlesId(filteredArticlesId));
+    dispatch(setFilteredDocumentsId(filteredDocumentsId));
     setActiveButtonId('articles');
     setActiveCategoryText('articles');
     setCategoriesMenu(false);
@@ -56,10 +56,10 @@ export const Sidebar = () => {
   };
 
   const handleArchive = () => {
-    const filteredArticlesId = [];
-    articles?.forEach(i => i?.archive && filteredArticlesId.push(i?.id));
+    const filteredDocumentsId = [];
+    documents?.forEach(i => i?.archive && filteredDocumentsId.push(i?.id));
 
-    dispatch(setFilteredArticlesId(filteredArticlesId));
+    dispatch(setFilteredDocumentsId(filteredDocumentsId));
     setActiveButtonId('archive');
     setActiveCategoryText('archive');
     setCategoriesMenu(false);
@@ -67,7 +67,7 @@ export const Sidebar = () => {
   };
 
   const setFilteredByCategory = (id, name) => {
-    const unarchived = articles?.filter(i => !i?.archive);
+    const unarchived = documents?.filter(i => !i?.archive);
     let newArr = [];
 
     unarchived?.map(i => i?.categories?.map(j => {
@@ -79,7 +79,7 @@ export const Sidebar = () => {
       }
     }));
 
-    dispatch(setFilteredArticlesId(newArr));
+    dispatch(setFilteredDocumentsId(newArr));
     setActiveButtonId(id);
     setActiveCategoryText(name);
     setCategoriesMenu(false);

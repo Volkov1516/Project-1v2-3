@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from 'redux/features/user/userSlice';
 import {
-  setArticles,
-  setFilteredArticlesId,
+  setDocuments,
+  setFilteredDocumentsId,
   setArticleId,
   setArticleTitle,
   setArticleContent,
@@ -23,11 +23,11 @@ export default function UserSettingsModal() {
     await signOut(auth)
       .then(() => {
         dispatch(setUser({ id: null, email: null, categories: null }));
-        dispatch(setArticles(null));
+        dispatch(setDocuments(null));
         dispatch(setArticleId(null));
         dispatch(setArticleTitle(null));
         dispatch(setArticleContent(null));
-        dispatch(setFilteredArticlesId(null));
+        dispatch(setFilteredDocumentsId(null));
         dispatch(setArticleCategories(null));
         dispatch(setModalGlobalSettings(false));
       })
