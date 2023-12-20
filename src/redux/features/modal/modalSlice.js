@@ -6,7 +6,6 @@ const initialState = {
   modalGlobalSettings: false,
   modalCategories: false,
   modalDeleteArticle: false,
-  scrollOffset: 0,
 };
 
 export const modalSlice = createSlice({
@@ -27,10 +26,7 @@ export const modalSlice = createSlice({
     },
     setModalDeleteArticle: (state, action) => {
       state.modalDeleteArticle = action.payload;
-    },
-    SET_MODAL_SCROLL: (state, action) => {
-      state.scrollOffset = action.payload;
-    },
+    }
   }
 });
 
@@ -40,6 +36,5 @@ export const {
   setModalGlobalSettings,
   setModalCategories,
   setModalDeleteArticle,
-  SET_MODAL_SCROLL,
 } = modalSlice.actions;
 export default modalSlice.reducer;
