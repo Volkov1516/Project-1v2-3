@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsNewDocument, addArticle, updateArticle } from 'redux/features/article/articleSlice';
+import { setIsNewDocument, createDocument, updateArticle } from 'redux/features/article/articleSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 
@@ -80,7 +80,7 @@ export const Editor = ({
           })
             .then(() => {
               dispatch(setIsNewDocument(false));
-              dispatch(addArticle({
+              dispatch(createDocument({
                 id: documentId,
                 content: state,
                 date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateColor, deleteArticle, setArticleArchive, addArticleCategories, removeCategory } from 'redux/features/article/articleSlice';
+import { updateColor, deleteDocument, setArticleArchive, addArticleCategories, removeCategory } from 'redux/features/article/articleSlice';
 import { setModalSettings, setModalDeleteArticle } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
@@ -92,7 +92,7 @@ export default function ArticleSettingsModal() {
   const handleDeleteArticle = async () => {
     await deleteDoc(doc(db, 'articles', documentId))
       .then(() => {
-        dispatch(deleteArticle({ id: documentId }));
+        dispatch(deleteDocument({ id: documentId }));
         window.history.back();
       })
       .catch((error) => console.log(error));

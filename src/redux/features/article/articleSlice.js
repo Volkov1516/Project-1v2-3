@@ -40,6 +40,17 @@ export const articleSlice = createSlice({
       state.documentCategories = action.payload?.categories;
       state.archive = action.payload?.archive;
     },
+    createDocument: (state, action) => {
+      state.documents.unshift(action.payload);
+      state.filteredDocumentsId.unshift(action.payload.id);
+    },
+    deleteDocument: (state, action) => {
+      let newDocuments = state.documents.filter(i => i?.id !== action.payload.id);
+      state.documents = newDocuments;
+
+      let newFiltered = state.filteredDocumentsId.filter(i => i !== action.payload.id);
+      state.filteredDocumentsId = newFiltered;
+    },
 
 
 
@@ -161,10 +172,7 @@ export const articleSlice = createSlice({
       state.filteredDocumentsId = newFilteredId;
       state.archive = !state.archive;
     },
-    addArticle: (state, action) => {
-      state.documents.unshift(action.payload);
-      state.filteredDocumentsId.unshift(action.payload.id);
-    },
+    
     updateArticle: (state, action) => {
       let newArticles = state.documents.map(i => {
         if (i.id === action.payload.id) {
@@ -197,13 +205,6 @@ export const articleSlice = createSlice({
       // state.title = action?.payload?.title;
       // state.content = action?.payload?.content;
     },
-    deleteArticle: (state, action) => {
-      let newArticles = state.documents.filter(i => i?.id !== action.payload.id);
-      state.documents = newArticles;
-
-      let newFiltered = state.filteredDocumentsId.filter(i => i !== action.payload.id);
-      state.filteredDocumentsId = newFiltered;
-    },
   }
 });
 
@@ -213,15 +214,14 @@ export const {
   setIsNewDocument,
   setDocumentTitle,
   setCurrentDocument,
-
+  createDocument,
+  deleteDocument,
   updateDocumentIndex,
 
+  updateArticle,
   updateColor,
   addArticleCategories,
   removeCategory,
   setArticleArchive,
-  addArticle,
-  updateArticle,
-  deleteArticle,
 } = articleSlice.actions;
 export default articleSlice.reducer;

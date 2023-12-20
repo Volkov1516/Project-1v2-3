@@ -1,6 +1,6 @@
 import { useEffect, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsNewDocument, addArticle, setDocumentTitle, updateArticle } from 'redux/features/article/articleSlice';
+import { setIsNewDocument, createDocument, setDocumentTitle, updateArticle } from 'redux/features/article/articleSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 
@@ -32,7 +32,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
       })
         .then(() => {
           dispatch(setIsNewDocument(false));
-          dispatch(addArticle({
+          dispatch(createDocument({
             id: documentId,
             title: title,
             date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
