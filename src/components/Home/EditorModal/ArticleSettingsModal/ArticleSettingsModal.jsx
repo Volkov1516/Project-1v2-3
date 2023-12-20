@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateDocumentColor, deleteDocument, updateDocumentArchive, updateDocumentCategory, updateDocuments } from 'redux/features/article/articleSlice';
+import { updateDocument, deleteDocument } from 'redux/features/article/articleSlice';
 import { setModalSettings, setModalDeleteArticle } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
@@ -54,8 +54,7 @@ export default function ArticleSettingsModal() {
             newDocumentCategories = [{ id, name }];
           }
 
-          dispatch(updateDocumentCategory(newDocumentCategories));
-          dispatch(updateDocuments({ id: documentId, key: 'categories', value: newDocumentCategories }));
+          dispatch(updateDocument({ id: documentId, key: 'categories', value: newDocumentCategories }));
           setCheckboxState(prevState => ({ ...prevState, [id]: !prevState[id] }));
         })
         .catch((error) => console.log(error));
@@ -67,8 +66,7 @@ export default function ArticleSettingsModal() {
         .then(() => {
           let newDocumentCategories = documentCategories?.filter(i => i.id !== id);
 
-          dispatch(updateDocumentCategory(newDocumentCategories));
-          dispatch(updateDocuments({ id: documentId, key: 'categories', value: newDocumentCategories }));
+          dispatch(updateDocument({ id: documentId, key: 'categories', value: newDocumentCategories }));
           setCheckboxState(prevState => ({ ...prevState, [id]: !prevState[id] }));
         })
         .catch((error) => console.log(error));
@@ -81,10 +79,7 @@ export default function ArticleSettingsModal() {
     await updateDoc(articleRef, {
       color: color
     })
-      .then(() => {
-        dispatch(updateDocumentColor(color));
-        dispatch(updateDocuments({ id: documentId, key: 'color', value: color }));
-      })
+      .then(() => dispatch(updateDocument({ id: documentId, key: 'color', value: color })))
       .catch((error) => console.log(error));
   };
 
@@ -93,8 +88,7 @@ export default function ArticleSettingsModal() {
 
     await updateDoc(articleRef, { archive: !archive })
       .then(() => {
-        dispatch(updateDocumentArchive(documentId));
-        dispatch(updateDocuments({ id: documentId, key: 'archive', value: !archive }));
+        dispatch(updateDocument({ id: documentId, key: 'archive', value: !archive }));
         window.history.back();
       })
       .catch((error) => console.log(error));

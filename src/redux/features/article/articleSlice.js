@@ -41,32 +41,7 @@ export const articleSlice = createSlice({
       state.documents.unshift(action.payload);
       state.filteredDocumentsId.unshift(action.payload.id);
     },
-    deleteDocument: (state, action) => {
-      let newDocuments = state.documents.filter(i => i?.id !== action.payload.id);
-      state.documents = newDocuments;
-
-      let newFiltered = state.filteredDocumentsId.filter(i => i !== action.payload.id);
-      state.filteredDocumentsId = newFiltered;
-    },
-    updateDocumentTitle: (state, action) => {
-      state.title = action.payload;
-    },
-    updateDocumentContent: (state, action) => {
-      state.content = action.payload;
-    },
-    updateDocumentColor: (state, action) => {
-      state.color = action.payload;
-    },
-    updateDocumentArchive: (state, action) => {
-      let newFilteredId = state.filteredDocumentsId.filter(i => i !== action.payload);
-
-      state.filteredDocumentsId = newFilteredId;
-      state.archive = !state.archive;
-    },
-    updateDocumentCategory: (state, action) => {
-      state.documentCategories = action.payload;
-    },
-    updateDocuments: (state, action) => {
+    updateDocument: (state, action) => {
       let newDocuments = state.documents.map(i => {
         if (i.id === action.payload.id) {
           return ({ ...i, [action.payload.key]: action.payload.value });
@@ -76,6 +51,23 @@ export const articleSlice = createSlice({
       });
 
       state.documents = JSON.parse(JSON.stringify(newDocuments));
+      state[action.payload.key] = action.payload.value;
+
+      if(action.payload.key === 'categories') {
+        state.documentCategories = action.payload.value
+      }
+
+      if (action.payload.key === 'archive') {
+        let newFilteredId = state.filteredDocumentsId.filter(i => i !== action.payload.id);
+        state.filteredDocumentsId = newFilteredId;
+      }
+    },
+    deleteDocument: (state, action) => {
+      let newDocuments = state.documents.filter(i => i?.id !== action.payload.id);
+      state.documents = newDocuments;
+
+      let newFiltered = state.filteredDocumentsId.filter(i => i !== action.payload.id);
+      state.filteredDocumentsId = newFiltered;
     },
     updateDocumentIndex: (state, action) => {
       const currentDocumentId = state.filteredDocumentsId[action.payload];
@@ -100,13 +92,8 @@ export const {
   setIsNewDocument,
   setCurrentDocument,
   createDocument,
+  updateDocument,
   deleteDocument,
-  updateDocumentTitle,
-  updateDocumentContent,
-  updateDocumentColor,
-  updateDocumentCategory,
-  updateDocumentArchive,
-  updateDocuments,
   updateDocumentIndex,
 } = articleSlice.actions;
 export default articleSlice.reducer;
