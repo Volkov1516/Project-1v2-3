@@ -57,11 +57,22 @@ export const articleSlice = createSlice({
         }
       });
 
-      console.log(JSON.parse(JSON.stringify(newDocuments)));
       state.documents = JSON.parse(JSON.stringify(newDocuments));
     },
     updateDocumentTitle: (state, action) => {
       state.title = action.payload;
+    },
+    updateDocumentContent: (state, action) => {
+      state.content = action.payload;
+    },
+    updateDocumentColor: (state, action) => {
+      state.color = action.payload;
+    },
+    updateDocumentArchive: (state, action) => {
+      let newFilteredId = state.filteredDocumentsId.filter(i => i !== action.payload);
+
+      state.filteredDocumentsId = newFilteredId;
+      state.archive = !state.archive;
     },
 
 
@@ -79,32 +90,6 @@ export const articleSlice = createSlice({
       state.date = currentDocument?.date;
       state.archive = currentDocument?.archive;
       state.archive = currentDocument?.archive;
-    },
-
-
-
-    updateColor: (state, action) => {
-      let newArticles = state.documents.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: i?.title,
-            content: i?.content,
-            categories: i?.categories,
-            color: action.payload.color,
-            date: i?.date,
-            archive: i?.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.documents = JSON.parse(JSON.stringify(newArticles));
-      state.color = action.payload.color;
     },
     addArticleCategories: (state, action) => {
       let newArticles = state.documents.map(i => {
@@ -157,63 +142,7 @@ export const articleSlice = createSlice({
 
       state.documents = newArticles;
       state.documentCategories = state.documentCategories?.filter(i => i.id !== action.payload.categoryId);
-    },
-    setArticleArchive: (state, action) => {
-      let newArticles = state.documents.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: i?.title,
-            content: i?.content,
-            categories: i?.categories,
-            color: i?.color,
-            date: i?.date,
-            archive: action.payload.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      let newFilteredId = state.filteredDocumentsId.filter(i => i !== action.payload.id);
-
-      state.documents = JSON.parse(JSON.stringify(newArticles));
-      state.filteredDocumentsId = newFilteredId;
-      state.archive = !state.archive;
-    },
-    updateArticle: (state, action) => {
-      let newArticles = state.documents.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: action?.payload?.title ? action?.payload?.title : i?.title,
-            content: action?.payload?.content ? action?.payload?.content : i?.content,
-            categories: i?.categories,
-            color: i?.color,
-            date: i?.date,
-            archive: i?.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.documents = JSON.parse(JSON.stringify(newArticles));
-
-      if (action?.payload?.title) {
-        state.title = action?.payload?.title;
-      }
-
-      if (action?.payload?.content) {
-        state.content = action?.payload?.content;
-      }
-    },
+    }
   }
 });
 
@@ -226,12 +155,12 @@ export const {
   deleteDocument,
   updateDocuments,
   updateDocumentTitle,
+  updateDocumentContent,
+  updateDocumentColor,
+  updateDocumentArchive,
   updateDocumentIndex,
 
-  updateArticle,
-  updateColor,
   addArticleCategories,
   removeCategory,
-  setArticleArchive,
 } = articleSlice.actions;
 export default articleSlice.reducer;

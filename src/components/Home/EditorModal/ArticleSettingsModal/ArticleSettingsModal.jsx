@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateColor, deleteDocument, setArticleArchive, addArticleCategories, removeCategory } from 'redux/features/article/articleSlice';
+import { updateDocumentColor, deleteDocument, updateDocumentArchive, addArticleCategories, removeCategory, updateDocuments } from 'redux/features/article/articleSlice';
 import { setModalSettings, setModalDeleteArticle } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
@@ -70,7 +70,8 @@ export default function ArticleSettingsModal() {
       color: color
     })
       .then(() => {
-        dispatch(updateColor({ id: documentId, color: color }));
+        dispatch(updateDocumentColor(color));
+        dispatch(updateDocuments({ id: documentId, key: 'color', value: color }));
       })
       .catch((error) => console.log(error));
   };
@@ -80,7 +81,8 @@ export default function ArticleSettingsModal() {
 
     await updateDoc(articleRef, { archive: !archive })
       .then(() => {
-        dispatch(setArticleArchive({ id: documentId, archive: !archive }));
+        dispatch(updateDocumentArchive(documentId));
+        dispatch(updateDocuments({ id: documentId, key: 'archive', value: !archive }));
         window.history.back();
       })
       .catch((error) => console.log(error));

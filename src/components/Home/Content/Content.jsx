@@ -58,8 +58,6 @@ export const Content = ({ mouseTimer }) => {
       }));
       dispatch(setEditorModalStatus('preview'));
 
-      dispatch(updateDocuments({id, key: 'title', value: '!!!NEW TITLE!!!'}));
-
       window.history.pushState({ modal: 'preview' }, '', '#preview');
     }, 500);
   };

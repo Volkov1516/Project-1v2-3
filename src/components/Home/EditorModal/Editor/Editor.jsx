@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsNewDocument, createDocument, updateArticle } from 'redux/features/article/articleSlice';
+import { setIsNewDocument, createDocument, updateDocuments, updateDocumentContent } from 'redux/features/article/articleSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 
@@ -91,7 +91,10 @@ export const Editor = ({
         }
         else {
           await updateDoc(doc(db, 'articles', documentId), { content: state })
-            .then(() => dispatch(updateArticle({ id: documentId, content: state })))
+            .then(() => {
+              dispatch(updateDocumentContent(state));
+              dispatch(updateDocuments({ id: documentId, key: 'content', value: state }));
+            })  
             .catch(error => console.log(error));
         }
 
