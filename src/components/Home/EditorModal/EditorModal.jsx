@@ -12,7 +12,7 @@ const LazyArticleSettingsModal = lazy(() => import('./ArticleSettingsModal/Artic
 export default function EditorModal() {
   const dispatch = useDispatch();
   const { editorModalStatus } = useSelector(state => state.modal);
-  const { filteredDocumentsId, isNewDocument, documentIndex, articleCategories } = useSelector(state => state.article);
+  const { filteredDocumentsId, isNewDocument, documentIndex, documentCategories } = useSelector(state => state.article);
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
@@ -112,7 +112,7 @@ export default function EditorModal() {
           </div>
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
           <div className={css.categoriesContainer}>
-            {articleCategories?.map(i => (
+            {documentCategories?.map(i => (
               <div key={i?.id} className={css.category}>
                 {i?.name}
               </div>

@@ -3,10 +3,7 @@ import { setUser } from 'redux/features/user/userSlice';
 import {
   setDocuments,
   setFilteredDocumentsId,
-  setDocumentleId,
-  setArticleTitle,
-  setArticleContent,
-  setArticleCategories
+  setCurrentDocument
 } from 'redux/features/article/articleSlice';
 import { setModalGlobalSettings } from 'redux/features/modal/modalSlice';
 import { auth } from 'firebase.js';
@@ -24,11 +21,17 @@ export default function UserSettingsModal() {
       .then(() => {
         dispatch(setUser({ id: null, email: null, categories: null }));
         dispatch(setDocuments(null));
-        dispatch(setDocumentleId(null));
-        dispatch(setArticleTitle(null));
-        dispatch(setArticleContent(null));
         dispatch(setFilteredDocumentsId(null));
-        dispatch(setArticleCategories(null));
+        dispatch(setCurrentDocument({
+          isNew: null,
+          index: null,
+          id: null,
+          title: null,
+          content: null,
+          color: null,
+          categories: null,
+          archive: null
+        }));
         dispatch(setModalGlobalSettings(false));
       })
       .catch(error => console.log(error));

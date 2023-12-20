@@ -1,22 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const EMPTY_CONTENT = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
-
 const initialState = {
   documents: [],
   filteredDocumentsId: [],
   isNewDocument: false,
   documentIndex: null,
   documentId: null,
-
-
-  title: '',
-  content: EMPTY_CONTENT,
+  title: null,
+  content: null,
   color: null,
-  articleCategories: [],
-  date: null,
+  documentCategories: [],
   archive: null,
-  isArchived: false,
+  date: null,
 };
 
 export const articleSlice = createSlice({
@@ -32,29 +27,37 @@ export const articleSlice = createSlice({
     setIsNewDocument: (state, action) => {
       state.isNewDocument = action.payload;
     },
-    setDocumentIndex: (state, action) => {
-      state.documentIndex = action.payload;
-    },
-    setDocumentleId: (state, action) => {
-      state.documentId = action.payload;
-    },
-
-
-    setArticleTitle: (state, action) => {
+    setDocumentTitle: (state, action) => {
       state.title = action.payload;
     },
-    setArticleContent: (state, action) => {
-      state.content = action.payload;
+    setCurrentDocument: (state, action) => {
+      state.isNewDocument = action.payload?.isNew;
+      state.documentIndex = action.payload?.index;
+      state.documentId = action.payload?.id;
+      state.title = action.payload?.title;
+      state.content = action.payload?.content;
+      state.color = action.payload?.color;
+      state.documentCategories = action.payload?.categories;
+      state.archive = action.payload?.archive;
     },
-    setArticleColor: (state, action) => {
-      state.color = action.payload;
+
+
+
+    updateDocumentIndex: (state, action) => {
+      const currentDocumentId = state.filteredDocumentsId[action.payload];
+      const currentDocument = state.documents?.find(i => i.id === currentDocumentId);
+
+      state.documentIndex = action.payload;
+      state.documentId = currentDocument?.id;
+      state.title = currentDocument?.title || 'Untitled';
+      state.content = currentDocument?.content;
+      state.color = currentDocument?.color;
+      state.documentCategories = currentDocument?.categories;
+      state.date = currentDocument?.date;
+      state.archive = currentDocument?.archive;
+      state.archive = currentDocument?.archive;
     },
-    setArticleCategories: (state, action) => {
-      state.articleCategories = action.payload;
-    },
-    setIsArchived: (state, action) => {
-      state.isArchived = action.payload;
-    },
+
 
 
     updateColor: (state, action) => {
@@ -87,7 +90,7 @@ export const articleSlice = createSlice({
             id: i?.id,
             title: i?.title,
             content: i?.content,
-            categories: state?.articleCategories ? [...state.articleCategories, { id: action.payload.categoryId, name: action.payload.categoryName }] : [{ id: action.payload.categoryId, name: action.payload.categoryName }],
+            categories: state?.documentCategories ? [...state.documentCategories, { id: action.payload.categoryId, name: action.payload.categoryName }] : [{ id: action.payload.categoryId, name: action.payload.categoryName }],
             color: i?.color,
             date: i?.date,
             archive: i?.archive,
@@ -102,11 +105,11 @@ export const articleSlice = createSlice({
 
       state.documents = newArticles;
 
-      if (state.articleCategories) {
-        state.articleCategories.push({ id: action.payload.categoryId, name: action.payload.categoryName })
+      if (state.documentCategories) {
+        state.documentCategories.push({ id: action.payload.categoryId, name: action.payload.categoryName })
       }
       else {
-        state.articleCategories = [{ id: action.payload.categoryId, name: action.payload.categoryName }];
+        state.documentCategories = [{ id: action.payload.categoryId, name: action.payload.categoryName }];
       }
     },
     removeCategory: (state, action) => {
@@ -130,7 +133,7 @@ export const articleSlice = createSlice({
       });
 
       state.documents = newArticles;
-      state.articleCategories = state.articleCategories?.filter(i => i.id !== action.payload.categoryId);
+      state.documentCategories = state.documentCategories?.filter(i => i.id !== action.payload.categoryId);
     },
     setArticleArchive: (state, action) => {
       let newArticles = state.documents.map(i => {
@@ -156,7 +159,7 @@ export const articleSlice = createSlice({
 
       state.documents = JSON.parse(JSON.stringify(newArticles));
       state.filteredDocumentsId = newFilteredId;
-      state.isArchived = !state.isArchived;
+      state.archive = !state.archive;
     },
     addArticle: (state, action) => {
       state.documents.unshift(action.payload);
@@ -201,23 +204,6 @@ export const articleSlice = createSlice({
       let newFiltered = state.filteredDocumentsId.filter(i => i !== action.payload.id);
       state.filteredDocumentsId = newFiltered;
     },
-
-
-
-    updateDocumentIndex: (state, action) => {
-      const currentDocumentId = state.filteredDocumentsId[action.payload];
-      const currentDocument = state.documents?.find(i => i.id === currentDocumentId);
-
-      state.documentIndex = action.payload;
-      state.documentId = currentDocument?.id;
-      state.title = currentDocument?.title || 'Untitled';
-      state.content = currentDocument?.content;
-      state.color = currentDocument?.color;
-      state.articleCategories = currentDocument?.categories;
-      state.date = currentDocument?.date;
-      state.archive = currentDocument?.archive;
-      state.isArchived = currentDocument?.archive;
-    }
   }
 });
 
@@ -225,25 +211,17 @@ export const {
   setDocuments,
   setFilteredDocumentsId,
   setIsNewDocument,
-  setDocumentIndex,
-  setDocumentleId,
+  setDocumentTitle,
+  setCurrentDocument,
 
   updateDocumentIndex,
 
-
-  setArticleTitle,
-  setArticleContent,
-  setArticleColor,
   updateColor,
-  setArticleCategories,
   addArticleCategories,
   removeCategory,
   setArticleArchive,
-  setIsArchived,
   addArticle,
   updateArticle,
   deleteArticle,
-  incrementIndex,
-  decrementIndex,
 } = articleSlice.actions;
 export default articleSlice.reducer;

@@ -1,14 +1,6 @@
 import { useState, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setFilteredDocumentsId,
-  setIsNewDocument,
-  setDocumentleId,
-  setArticleTitle,
-  setArticleContent,
-  setArticleColor,
-  setArticleCategories
-} from 'redux/features/article/articleSlice';
+import { setFilteredDocumentsId, setCurrentDocument } from 'redux/features/article/articleSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -33,12 +25,16 @@ export const Sidebar = () => {
   const [activeCategoriesMenuButton, setActiveCategoriesMenuButton] = useState(false);
 
   const openModalEditor = () => {
-    dispatch(setIsNewDocument(true));
-    dispatch(setDocumentleId(uuidv4()));
-    dispatch(setArticleTitle(''));
-    dispatch(setArticleContent('{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'));
-    dispatch(setArticleColor(null));
-    dispatch(setArticleCategories([]));
+    dispatch(setCurrentDocument({
+      isNew: true,
+      index: null,
+      id: uuidv4(),
+      title: '',
+      content: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',
+      color: null,
+      categories: [],
+      archive: false
+    }));
     dispatch(setEditorModalStatus('edit'));
 
     window.history.pushState({ modal: 'new' }, '', '#editor');

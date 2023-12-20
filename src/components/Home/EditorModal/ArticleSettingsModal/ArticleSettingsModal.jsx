@@ -11,16 +11,16 @@ export default function ArticleSettingsModal() {
   const dispatch = useDispatch();
   const { userCategories } = useSelector(state => state.user);
   const { modalSettings, modalDeleteArticle } = useSelector(state => state.modal);
-  const { documentId, isArchived, title, color, articleCategories } = useSelector(state => state.article);
+  const { documentId, archive, title, color, documentCategories } = useSelector(state => state.article);
 
   const [deletionInputValue, setDeltionInputValue] = useState('');
   const [checkboxState, setCheckboxState] = useState(null);
 
   useEffect(() => {
     const initialState = {};
-    userCategories?.forEach(i => initialState[i.id] = articleCategories?.some(j => j?.id === i?.id));
+    userCategories?.forEach(i => initialState[i.id] = documentCategories?.some(j => j?.id === i?.id));
     setCheckboxState(initialState);
-  }, [documentId, articleCategories, userCategories]);
+  }, [documentId, documentCategories, userCategories]);
 
   const handleOpen = () => {
     dispatch(setModalSettings(true));
@@ -78,9 +78,9 @@ export default function ArticleSettingsModal() {
   const handleArchive = async () => {
     const articleRef = doc(db, 'articles', documentId);
 
-    await updateDoc(articleRef, { archive: !isArchived })
+    await updateDoc(articleRef, { archive: !archive })
       .then(() => {
-        dispatch(setArticleArchive({ id: documentId, archive: !isArchived }));
+        dispatch(setArticleArchive({ id: documentId, archive: !archive }));
         window.history.back();
       })
       .catch((error) => console.log(error));
@@ -129,7 +129,7 @@ export default function ArticleSettingsModal() {
                 </label>
               ))}
             </div>
-            <div className={css.archiveButton} onClick={handleArchive}>{isArchived ? 'unarchive' : 'archive'}</div>
+            <div className={css.archiveButton} onClick={handleArchive}>{archive ? 'unarchive' : 'archive'}</div>
             <div className={css.deleteButton} onClick={handleOpenDeletion}>delete</div>
             {modalDeleteArticle && (
               <div className={css.deletionContainer} onClick={handleCloseDeletion}>

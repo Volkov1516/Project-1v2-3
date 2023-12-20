@@ -1,14 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setIsNewDocument,
-  setDocumentIndex,
-  setDocumentleId,
-  setArticleTitle,
-  setArticleContent,
-  setArticleColor,
-  setIsArchived,
-  setArticleCategories
-} from 'redux/features/article/articleSlice';
+import { setCurrentDocument } from 'redux/features/article/articleSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 
 import css from './Content.module.css';
@@ -18,23 +9,27 @@ export const Content = ({ mouseTimer }) => {
   const { documents, filteredDocumentsId } = useSelector(state => state.article);
 
   const openModalEditor = (id, title, content, color, categories, archive) => {
+    let documentIndex;
 
     for (const [index, value] of filteredDocumentsId?.entries()) {
       if (id === value) {
-        dispatch(setDocumentIndex(index));
+        documentIndex = index;
       }
     }
 
-    dispatch(setIsNewDocument(false));
-    dispatch(setDocumentleId(id));
-    dispatch(setArticleTitle(title));
-    dispatch(setArticleContent(content));
-    dispatch(setArticleColor(color));
-    dispatch(setArticleCategories(categories));
-    dispatch(setIsArchived(archive));
+    dispatch(setCurrentDocument({
+      isNew: false,
+      index: documentIndex,
+      id,
+      title,
+      content,
+      color,
+      categories,
+      archive
+    }));
     dispatch(setEditorModalStatus('editFC'));
 
-    window.history.pushState({modal: 'editFC'}, '', '#editor');
+    window.history.pushState({ modal: 'editFC' }, '', '#editor');
   };
 
   const onMouseDown = (id, title, content, color, categories, archive) => {
@@ -43,22 +38,27 @@ export const Content = ({ mouseTimer }) => {
     mouseTimer = window.setTimeout(() => {
       window.navigator.vibrate(100);
 
+      let documentIndex;
+
       for (const [index, value] of filteredDocumentsId?.entries()) {
         if (id === value) {
-          dispatch(setDocumentIndex(index));
+          documentIndex = index;
         }
       }
 
-      dispatch(setIsNewDocument(false));
-      dispatch(setDocumentleId(id));
-      dispatch(setArticleTitle(title));
-      dispatch(setArticleContent(content));
-      dispatch(setArticleColor(color));
-      dispatch(setArticleCategories(categories));
-      dispatch(setIsArchived(archive));
+      dispatch(setCurrentDocument({
+        isNew: false,
+        index: documentIndex,
+        id,
+        title,
+        content,
+        color,
+        categories,
+        archive
+      }));
       dispatch(setEditorModalStatus('preview'));
 
-      window.history.pushState({modal: 'preview'}, '', '#preview');
+      window.history.pushState({ modal: 'preview' }, '', '#preview');
     }, 500);
   };
 
