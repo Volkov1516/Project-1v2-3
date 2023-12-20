@@ -203,34 +203,20 @@ export const articleSlice = createSlice({
     },
 
 
-    incrementIndex: (state) => {
-      state.documentIndex += 1;
-      const currentID = state.filteredDocumentsId[state.documentIndex];
-      const currentArticle = state.documents?.find(i => i.id === currentID);
 
-      state.documentId = currentArticle?.id;
-      state.title = currentArticle?.title || 'Untitled';
-      state.content = currentArticle?.content;
-      state.color = currentArticle?.color;
-      state.articleCategories = currentArticle?.categories;
-      state.date = currentArticle?.date;
-      state.archive = currentArticle?.archive;
-      state.isArchived = currentArticle?.archive;
-    },
-    decrementIndex: (state) => {
-      state.documentIndex -= 1;
+    updateDocumentIndex: (state, action) => {
+      const currentDocumentId = state.filteredDocumentsId[action.payload];
+      const currentDocument = state.documents?.find(i => i.id === currentDocumentId);
 
-      const currentID = state.filteredDocumentsId[state.documentIndex];
-      const currentArticle = state.documents?.find(i => i.id === currentID);
-
-      state.documentId = currentArticle?.id;
-      state.title = currentArticle?.title || 'Untitled';
-      state.content = currentArticle?.content;
-      state.color = currentArticle?.color;
-      state.articleCategories = currentArticle?.categories;
-      state.date = currentArticle?.date;
-      state.archive = currentArticle?.archive;
-      state.isArchived = currentArticle?.archive;
+      state.documentIndex = action.payload;
+      state.documentId = currentDocument?.id;
+      state.title = currentDocument?.title || 'Untitled';
+      state.content = currentDocument?.content;
+      state.color = currentDocument?.color;
+      state.articleCategories = currentDocument?.categories;
+      state.date = currentDocument?.date;
+      state.archive = currentDocument?.archive;
+      state.isArchived = currentDocument?.archive;
     }
   }
 });
@@ -241,6 +227,8 @@ export const {
   setIsNewDocument,
   setDocumentIndex,
   setDocumentleId,
+
+  updateDocumentIndex,
 
 
   setArticleTitle,

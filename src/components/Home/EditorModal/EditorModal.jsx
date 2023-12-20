@@ -1,7 +1,7 @@
 import { useRef, useState, lazy, Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
-import { incrementIndex, decrementIndex } from 'redux/features/article/articleSlice';
+import { updateDocumentIndex } from 'redux/features/article/articleSlice';
 
 import css from './EditorModal.module.css';
 
@@ -52,7 +52,7 @@ export default function EditorModal() {
 
     const modalPreviewElement = document.getElementById('editorModal');
     modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
-    dispatch(decrementIndex());
+    dispatch(updateDocumentIndex(documentIndex - 1));
   };
 
   const next = () => {
@@ -60,7 +60,7 @@ export default function EditorModal() {
 
     const modalPreviewElement = document.getElementById('editorModal');
     modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
-    dispatch(incrementIndex());
+    dispatch(updateDocumentIndex(documentIndex + 1));
   };
 
   const openEditorFromPreview = () => {
