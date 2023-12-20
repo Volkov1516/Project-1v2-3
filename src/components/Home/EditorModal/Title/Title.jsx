@@ -1,6 +1,6 @@
 import { useEffect, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsNewDocument, createDocument, setDocumentTitle, updateArticle } from 'redux/features/article/articleSlice';
+import { setIsNewDocument, createDocument, updateDocumentTitle, updateDocuments } from 'redux/features/article/articleSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 
@@ -21,7 +21,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
     }
   }, [title, ref]);
 
-  const onTitleChange = async (e) => dispatch(setDocumentTitle(e.target.value));
+  const onTitleChange = async (e) => dispatch(updateDocumentTitle(e.target.value));
 
   const onTitleBlur = async () => {
     if(isNewDocument && !saving) {
@@ -43,7 +43,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
     }
     else {
       await updateDoc(doc(db, 'articles', documentId), { title: title })
-        .then(() =>  dispatch(updateArticle({ id: documentId, title: title })))
+        .then(() =>  dispatch(updateDocuments({ id: documentId, key: 'title', value: title })))
         .catch(error => console.log(error));
     }
   }

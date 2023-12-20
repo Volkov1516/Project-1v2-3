@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentDocument } from 'redux/features/article/articleSlice';
+import { setCurrentDocument, updateDocuments } from 'redux/features/article/articleSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 
 import css from './Content.module.css';
@@ -57,6 +57,8 @@ export const Content = ({ mouseTimer }) => {
         archive
       }));
       dispatch(setEditorModalStatus('preview'));
+
+      dispatch(updateDocuments({id, key: 'title', value: '!!!NEW TITLE!!!'}));
 
       window.history.pushState({ modal: 'preview' }, '', '#preview');
     }, 500);

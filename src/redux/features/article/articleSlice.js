@@ -27,9 +27,6 @@ export const articleSlice = createSlice({
     setIsNewDocument: (state, action) => {
       state.isNewDocument = action.payload;
     },
-    setDocumentTitle: (state, action) => {
-      state.title = action.payload;
-    },
     setCurrentDocument: (state, action) => {
       state.isNewDocument = action.payload?.isNew;
       state.documentIndex = action.payload?.index;
@@ -50,6 +47,21 @@ export const articleSlice = createSlice({
 
       let newFiltered = state.filteredDocumentsId.filter(i => i !== action.payload.id);
       state.filteredDocumentsId = newFiltered;
+    },
+    updateDocuments: (state, action) => {
+      let newDocuments = state.documents.map(i => {
+        if (i.id === action.payload.id) {
+          return ({ ...i, [action.payload.key]: action.payload.value });
+        } else {
+          return i;
+        }
+      });
+
+      console.log(JSON.parse(JSON.stringify(newDocuments)));
+      state.documents = JSON.parse(JSON.stringify(newDocuments));
+    },
+    updateDocumentTitle: (state, action) => {
+      state.title = action.payload;
     },
 
 
@@ -172,7 +184,6 @@ export const articleSlice = createSlice({
       state.filteredDocumentsId = newFilteredId;
       state.archive = !state.archive;
     },
-    
     updateArticle: (state, action) => {
       let newArticles = state.documents.map(i => {
         if (i.id === action.payload.id) {
@@ -202,8 +213,6 @@ export const articleSlice = createSlice({
       if (action?.payload?.content) {
         state.content = action?.payload?.content;
       }
-      // state.title = action?.payload?.title;
-      // state.content = action?.payload?.content;
     },
   }
 });
@@ -212,10 +221,11 @@ export const {
   setDocuments,
   setFilteredDocumentsId,
   setIsNewDocument,
-  setDocumentTitle,
   setCurrentDocument,
   createDocument,
   deleteDocument,
+  updateDocuments,
+  updateDocumentTitle,
   updateDocumentIndex,
 
   updateArticle,
