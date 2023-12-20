@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsNewDocument, createDocument, updateDocument } from 'redux/features/article/articleSlice';
+import { setIsNewDocument, createDocument, updateDocument } from 'redux/features/document/documentSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 
@@ -35,7 +35,7 @@ export const Editor = ({
   const dispatch = useDispatch();
   const { userId } = useSelector(state => state.user);
   const { editorModalStatus } = useSelector(state => state.modal);
-  const { isNewDocument, documentId, content } = useSelector(state => state.article);
+  const { isNewDocument, documentId, content } = useSelector(state => state.document);
 
   let editorStateAutoSaveTimeout;
 

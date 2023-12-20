@@ -1,7 +1,7 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'redux/features/user/userSlice';
-import { setDocuments, setFilteredDocumentsId } from 'redux/features/article/articleSlice';
+import { setDocuments, setFilteredDocumentsId } from 'redux/features/document/documentSlice';
 import { setModalSettings, setModalGlobalSettings, setEditorModalStatus, setModalCategories, setModalDeleteArticle } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';

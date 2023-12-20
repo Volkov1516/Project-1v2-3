@@ -4,7 +4,7 @@ import { CLEAR_EDITOR_COMMAND } from 'lexical';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
 export const RefreshStatePlugin = () => {
-  const { content } = useSelector(state => state.article);
+  const { content } = useSelector(state => state.document);
   const [editor] = useLexicalComposerContext();
 
   useEffect(() => {

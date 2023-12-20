@@ -1,6 +1,6 @@
 import { useEffect, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsNewDocument, createDocument, updateDocument } from 'redux/features/article/articleSlice';
+import { setIsNewDocument, createDocument, updateDocument } from 'redux/features/document/documentSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
 
@@ -9,7 +9,7 @@ import css from './Title.module.css';
 export const Title = forwardRef(function MyTitle(props, ref) {
   const dispatch = useDispatch();
   const { userId } = useSelector(state => state.user);
-  const { isNewDocument, documentId, title, color } = useSelector(state => state.article);
+  const { isNewDocument, documentId, title, color } = useSelector(state => state.document);
   const { editorModalStatus } = useSelector(state => state.modal);
 
   const { saving } = props;

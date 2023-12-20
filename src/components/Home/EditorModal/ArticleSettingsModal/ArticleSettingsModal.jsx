@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateDocument, deleteDocument } from 'redux/features/article/articleSlice';
+import { updateDocument, deleteDocument } from 'redux/features/document/documentSlice';
 import { setModalSettings, setModalDeleteArticle } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
@@ -11,7 +11,7 @@ export default function ArticleSettingsModal() {
   const dispatch = useDispatch();
   const { userCategories } = useSelector(state => state.user);
   const { modalSettings, modalDeleteArticle } = useSelector(state => state.modal);
-  const { documentId, archive, title, color, documentCategories } = useSelector(state => state.article);
+  const { documentId, archive, title, color, documentCategories } = useSelector(state => state.document);
 
   const [deletionInputValue, setDeltionInputValue] = useState('');
   const [checkboxState, setCheckboxState] = useState(null);

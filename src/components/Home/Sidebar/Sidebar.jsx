@@ -1,6 +1,6 @@
 import { useState, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilteredDocumentsId, setCurrentDocument } from 'redux/features/article/articleSlice';
+import { setFilteredDocumentsId, setCurrentDocument } from 'redux/features/document/documentSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -15,7 +15,7 @@ const LazyUserSettingsModal = lazy(() => import('./UserSettingsModal/UserSetting
 export const Sidebar = () => {
   const dispatch = useDispatch();
   const { userCategories } = useSelector(state => state.user);
-  const { documents } = useSelector(state => state.article);
+  const { documents } = useSelector(state => state.document);
 
   const [activeButtonId, setActiveButtonId] = useState('articles');
   const [mainMenu, setMainMenu] = useState(false);

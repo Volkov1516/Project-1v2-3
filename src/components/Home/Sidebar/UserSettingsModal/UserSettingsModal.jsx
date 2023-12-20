@@ -4,7 +4,7 @@ import {
   setDocuments,
   setFilteredDocumentsId,
   setCurrentDocument
-} from 'redux/features/article/articleSlice';
+} from 'redux/features/document/documentSlice';
 import { setModalGlobalSettings } from 'redux/features/modal/modalSlice';
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';

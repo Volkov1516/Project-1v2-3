@@ -1,7 +1,7 @@
 import { useRef, useState, lazy, Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
-import { updateDocumentIndex } from 'redux/features/article/articleSlice';
+import { updateDocumentIndex } from 'redux/features/document/documentSlice';
 
 import css from './EditorModal.module.css';
 
@@ -12,7 +12,7 @@ const LazyArticleSettingsModal = lazy(() => import('./ArticleSettingsModal/Artic
 export default function EditorModal() {
   const dispatch = useDispatch();
   const { editorModalStatus } = useSelector(state => state.modal);
-  const { filteredDocumentsId, isNewDocument, documentIndex, documentCategories } = useSelector(state => state.article);
+  const { filteredDocumentsId, isNewDocument, documentIndex, documentCategories } = useSelector(state => state.document);
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);

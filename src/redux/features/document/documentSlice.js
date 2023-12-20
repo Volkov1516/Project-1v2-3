@@ -14,8 +14,8 @@ const initialState = {
   date: null,
 };
 
-export const articleSlice = createSlice({
-  name: 'article',
+export const documentSlice = createSlice({
+  name: 'document',
   initialState,
   reducers: {
     setDocuments: (state, action) => {
@@ -95,5 +95,5 @@ export const {
   updateDocument,
   deleteDocument,
   updateDocumentIndex,
-} = articleSlice.actions;
-export default articleSlice.reducer;
+} = documentSlice.actions;
+export default documentSlice.reducer;

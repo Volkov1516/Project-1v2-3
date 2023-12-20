@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentDocument } from 'redux/features/article/articleSlice';
+import { setCurrentDocument } from 'redux/features/document/documentSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 
 import css from './Content.module.css';
 
 export const Content = ({ mouseTimer }) => {
   const dispatch = useDispatch();
-  const { documents, filteredDocumentsId } = useSelector(state => state.article);
+  const { documents, filteredDocumentsId } = useSelector(state => state.document);
 
   const openModalEditor = (id, title, content, color, categories, archive) => {
     let documentIndex;
