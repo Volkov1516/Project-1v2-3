@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentDocument, updateDocuments } from 'redux/features/article/articleSlice';
+import { setCurrentDocument } from 'redux/features/article/articleSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 
 import css from './Content.module.css';

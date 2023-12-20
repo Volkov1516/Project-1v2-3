@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateDocumentColor, deleteDocument, updateDocumentArchive, addArticleCategories, removeCategory, updateDocuments } from 'redux/features/article/articleSlice';
+import { updateDocumentColor, deleteDocument, updateDocumentArchive, updateDocumentCategory, updateDocuments } from 'redux/features/article/articleSlice';
 import { setModalSettings, setModalDeleteArticle } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
@@ -25,7 +25,7 @@ export default function ArticleSettingsModal() {
   const handleOpen = () => {
     dispatch(setModalSettings(true));
 
-    window.history.pushState({modal: 'articleSettings'}, '', '#settings');
+    window.history.pushState({ modal: 'articleSettings' }, '', '#settings');
   };
 
   const handleClose = () => {
@@ -35,7 +35,7 @@ export default function ArticleSettingsModal() {
   const handleOpenDeletion = () => {
     dispatch(setModalDeleteArticle(true));
 
-    window.history.pushState({modal: 'deleteArticle'}, '', '#delete');
+    window.history.pushState({ modal: 'deleteArticle' }, '', '#delete');
   };
 
   const handleCloseDeletion = () => {
@@ -46,8 +46,17 @@ export default function ArticleSettingsModal() {
     if (e.target.checked) {
       await setDoc(doc(db, 'articles', documentId), { categories: arrayUnion({ id, name }) }, { merge: true })
         .then(() => {
+          let newDocumentCategories;
+
+          if (documentCategories) {
+            newDocumentCategories = [...documentCategories, { id, name }];
+          } else {
+            newDocumentCategories = [{ id, name }];
+          }
+
+          dispatch(updateDocumentCategory(newDocumentCategories));
+          dispatch(updateDocuments({ id: documentId, key: 'categories', value: newDocumentCategories }));
           setCheckboxState(prevState => ({ ...prevState, [id]: !prevState[id] }));
-          dispatch(addArticleCategories({ id: documentId, categoryId: id, categoryName: name }));
         })
         .catch((error) => console.log(error));
     }
@@ -56,8 +65,11 @@ export default function ArticleSettingsModal() {
 
       await updateDoc(docRef, { categories: arrayRemove({ id, name }) })
         .then(() => {
+          let newDocumentCategories = documentCategories?.filter(i => i.id !== id);
+
+          dispatch(updateDocumentCategory(newDocumentCategories));
+          dispatch(updateDocuments({ id: documentId, key: 'categories', value: newDocumentCategories }));
           setCheckboxState(prevState => ({ ...prevState, [id]: !prevState[id] }));
-          dispatch(removeCategory({ id: documentId, categoryId: id }));
         })
         .catch((error) => console.log(error));
     }

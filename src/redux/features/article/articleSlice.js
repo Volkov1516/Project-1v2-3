@@ -48,17 +48,6 @@ export const articleSlice = createSlice({
       let newFiltered = state.filteredDocumentsId.filter(i => i !== action.payload.id);
       state.filteredDocumentsId = newFiltered;
     },
-    updateDocuments: (state, action) => {
-      let newDocuments = state.documents.map(i => {
-        if (i.id === action.payload.id) {
-          return ({ ...i, [action.payload.key]: action.payload.value });
-        } else {
-          return i;
-        }
-      });
-
-      state.documents = JSON.parse(JSON.stringify(newDocuments));
-    },
     updateDocumentTitle: (state, action) => {
       state.title = action.payload;
     },
@@ -74,9 +63,20 @@ export const articleSlice = createSlice({
       state.filteredDocumentsId = newFilteredId;
       state.archive = !state.archive;
     },
+    updateDocumentCategory: (state, action) => {
+      state.documentCategories = action.payload;
+    },
+    updateDocuments: (state, action) => {
+      let newDocuments = state.documents.map(i => {
+        if (i.id === action.payload.id) {
+          return ({ ...i, [action.payload.key]: action.payload.value });
+        } else {
+          return i;
+        }
+      });
 
-
-
+      state.documents = JSON.parse(JSON.stringify(newDocuments));
+    },
     updateDocumentIndex: (state, action) => {
       const currentDocumentId = state.filteredDocumentsId[action.payload];
       const currentDocument = state.documents?.find(i => i.id === currentDocumentId);
@@ -91,58 +91,6 @@ export const articleSlice = createSlice({
       state.archive = currentDocument?.archive;
       state.archive = currentDocument?.archive;
     },
-    addArticleCategories: (state, action) => {
-      let newArticles = state.documents.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: i?.title,
-            content: i?.content,
-            categories: state?.documentCategories ? [...state.documentCategories, { id: action.payload.categoryId, name: action.payload.categoryName }] : [{ id: action.payload.categoryId, name: action.payload.categoryName }],
-            color: i?.color,
-            date: i?.date,
-            archive: i?.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.documents = newArticles;
-
-      if (state.documentCategories) {
-        state.documentCategories.push({ id: action.payload.categoryId, name: action.payload.categoryName })
-      }
-      else {
-        state.documentCategories = [{ id: action.payload.categoryId, name: action.payload.categoryName }];
-      }
-    },
-    removeCategory: (state, action) => {
-      let newArticles = state.documents.map(i => {
-        if (i.id === action.payload.id) {
-          let newObj = {
-            id: i?.id,
-            title: i?.title,
-            content: i?.content,
-            categories: i?.categories?.filter(i => i.id !== action.payload.categoryId),
-            color: i?.color,
-            date: i?.date,
-            archive: i?.archive,
-          }
-
-          return newObj;
-        }
-        else {
-          return i;
-        }
-      });
-
-      state.documents = newArticles;
-      state.documentCategories = state.documentCategories?.filter(i => i.id !== action.payload.categoryId);
-    }
   }
 });
 
@@ -153,14 +101,12 @@ export const {
   setCurrentDocument,
   createDocument,
   deleteDocument,
-  updateDocuments,
   updateDocumentTitle,
   updateDocumentContent,
   updateDocumentColor,
+  updateDocumentCategory,
   updateDocumentArchive,
+  updateDocuments,
   updateDocumentIndex,
-
-  addArticleCategories,
-  removeCategory,
 } = articleSlice.actions;
 export default articleSlice.reducer;
