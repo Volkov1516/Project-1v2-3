@@ -24,26 +24,22 @@ export const Title = forwardRef(function MyTitle(props, ref) {
   const onTitleChange = async (e) => dispatch(updateDocument({ id: documentId, key: 'title', value: e.target.value }));
 
   const onTitleBlur = async () => {
-    if(isNewDocument && !saving) {
-      await setDoc(doc(db, 'articles', documentId), {
-        title: title,
-        date: Timestamp.fromDate(new Date()),
-        userId: userId
-      })
+    if (isNewDocument && !saving) {
+      await setDoc(doc(db, 'documents', documentId), { userId, date: Timestamp.fromDate(new Date()), title })
         .then(() => {
           dispatch(setIsNewDocument(false));
           dispatch(createDocument({
             id: documentId,
-            title: title,
+            title,
             date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
-            userId: userId
+            userId
           }));
         })
         .catch(error => console.log(error));
     }
     else {
-      await updateDoc(doc(db, 'articles', documentId), { title: title })
-        .then(() =>  dispatch(updateDocument({ id: documentId, key: 'title', value: title })))
+      await updateDoc(doc(db, 'documents', documentId), { title })
+        .then(() => dispatch(updateDocument({ id: documentId, key: 'title', value: title })))
         .catch(error => console.log(error));
     }
   }

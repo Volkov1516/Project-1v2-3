@@ -25,7 +25,7 @@ export const App = () => {
     };
 
     const getDocuments = async (id) => {
-      const q = query(collection(db, 'articles'), where('userId', '==', id), orderBy('date', 'desc'));
+      const q = query(collection(db, 'documents'), where('userId', '==', id), orderBy('date', 'desc'));
       const querySnapshot = await getDocs(q);
       const documents = querySnapshot.docs.map(i => ({ id: i?.id, ...i.data() }));
       dispatch(setDocuments(JSON.parse(JSON.stringify(documents))));

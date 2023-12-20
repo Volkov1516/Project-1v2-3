@@ -73,25 +73,21 @@ export const Editor = ({
         setSaving(true);
 
         if (isNewDocument) {
-          await setDoc(doc(db, 'articles', documentId), {
-            content: state,
-            date: Timestamp.fromDate(new Date()),
-            userId: userId
-          })
+          await setDoc(doc(db, 'documents', documentId), { userId, date: Timestamp.fromDate(new Date()), content: state })
             .then(() => {
               dispatch(setIsNewDocument(false));
               dispatch(createDocument({
+                userId,
                 id: documentId,
                 content: state,
                 date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
-                userId: userId
               }));
             })
             .catch(error => console.log(error));
         }
         else {
-          await updateDoc(doc(db, 'articles', documentId), { content: state })
-            .then(() => dispatch(updateDocument({ id: documentId, key: 'content', value: state })))  
+          await updateDoc(doc(db, 'documents', documentId), { content: state })
+            .then(() => dispatch(updateDocument({ id: documentId, key: 'content', value: state })))
             .catch(error => console.log(error));
         }
 

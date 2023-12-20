@@ -19,33 +19,7 @@ export default function EditorModal() {
 
   const [saving, setSaving] = useState(false);
 
-  const close = () => {
-
-    window.history.back();
-
-
-    // switch (editorModalStatus) {
-    //   case 'edit':
-    //     // dispatch(setEditorModalStatus(false));
-    //     // window.history.pushState({}, '', '/');
-    //     window.history.back();
-    //     break;
-    //   // case 'editFC':
-    //   //   dispatch(setEditorModalStatus(false));
-    //   //   window.history.pushState({}, '', '/');
-    //   //   break;
-    //   // case 'editFP':
-    //   //   dispatch(setEditorModalStatus('preview'));
-    //   //   window.history.pushState({}, '', '#preview');
-    //   //   break;
-    //   // case 'preview':
-    //   //   dispatch(setEditorModalStatus(false));
-    //   //   window.history.pushState({}, '', '/');
-    //   //   break;
-    //   default:
-    //     return;
-    // }
-  };
+  const close = () => window.history.back();
 
   const prev = () => {
     if (documentIndex === 0) return;

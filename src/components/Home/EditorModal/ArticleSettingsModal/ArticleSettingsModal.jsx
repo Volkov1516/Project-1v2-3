@@ -44,7 +44,7 @@ export default function ArticleSettingsModal() {
 
   const handleCategory = async (e, id, name) => {
     if (e.target.checked) {
-      await setDoc(doc(db, 'articles', documentId), { categories: arrayUnion({ id, name }) }, { merge: true })
+      await setDoc(doc(db, 'documents', documentId), { categories: arrayUnion({ id, name }) }, { merge: true })
         .then(() => {
           let newDocumentCategories;
 
@@ -57,55 +57,45 @@ export default function ArticleSettingsModal() {
           dispatch(updateDocument({ id: documentId, key: 'categories', value: newDocumentCategories }));
           setCheckboxState(prevState => ({ ...prevState, [id]: !prevState[id] }));
         })
-        .catch((error) => console.log(error));
+        .catch(error => console.log(error));
     }
     else {
-      const docRef = doc(db, 'articles', documentId);
-
-      await updateDoc(docRef, { categories: arrayRemove({ id, name }) })
+      await updateDoc(doc(db, 'documents', documentId), { categories: arrayRemove({ id, name }) })
         .then(() => {
           let newDocumentCategories = documentCategories?.filter(i => i.id !== id);
 
           dispatch(updateDocument({ id: documentId, key: 'categories', value: newDocumentCategories }));
           setCheckboxState(prevState => ({ ...prevState, [id]: !prevState[id] }));
         })
-        .catch((error) => console.log(error));
+        .catch(error => console.log(error));
     }
   };
 
   const handleColor = async (color) => {
-    const articleRef = doc(db, 'articles', documentId);
-
-    await updateDoc(articleRef, {
-      color: color
-    })
+    await updateDoc(doc(db, 'documents', documentId), { color })
       .then(() => dispatch(updateDocument({ id: documentId, key: 'color', value: color })))
-      .catch((error) => console.log(error));
+      .catch(error => console.log(error));
   };
 
   const handleArchive = async () => {
-    const articleRef = doc(db, 'articles', documentId);
-
-    await updateDoc(articleRef, { archive: !archive })
+    await updateDoc(doc(db, 'documents', documentId), { archive: !archive })
       .then(() => {
         dispatch(updateDocument({ id: documentId, key: 'archive', value: !archive }));
         window.history.back();
       })
-      .catch((error) => console.log(error));
+      .catch(error => console.log(error));
 
-    dispatch(setModalSettings(false));
     window.history.back();
   };
 
   const handleDeleteArticle = async () => {
-    await deleteDoc(doc(db, 'articles', documentId))
+    await deleteDoc(doc(db, 'documents', documentId))
       .then(() => {
         dispatch(deleteDocument({ id: documentId }));
         window.history.back();
       })
-      .catch((error) => console.log(error));
+      .catch(error => console.log(error));
 
-    dispatch(setModalSettings(false));
     window.history.back();
   };
 

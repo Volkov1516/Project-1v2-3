@@ -6,9 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import css from './Sidebar.module.css';
 
-// import { EditCategoriesModal } from './EditCategoriesModal/EditCategoriesModal';
-// import { UserSettingsModal } from './UserSettingsModal/UserSettingsModal';
-
 const LazyEditCategoriesModal = lazy(() => import('./EditCategoriesModal/EditCategoriesModal'));
 const LazyUserSettingsModal = lazy(() => import('./UserSettingsModal/UserSettingsModal'));
 
@@ -17,10 +14,10 @@ export const Sidebar = () => {
   const { userCategories } = useSelector(state => state.user);
   const { documents } = useSelector(state => state.document);
 
-  const [activeButtonId, setActiveButtonId] = useState('articles');
+  const [activeButtonId, setActiveButtonId] = useState('documents');
   const [mainMenu, setMainMenu] = useState(false);
   const [categoriesMenu, setCategoriesMenu] = useState(false);
-  const [activeCategoryText, setActiveCategoryText] = useState('articles');
+  const [activeCategoryText, setActiveCategoryText] = useState('documents');
   const [activeMainMenuButton, setActiveMainMenuButton] = useState(false);
   const [activeCategoriesMenuButton, setActiveCategoriesMenuButton] = useState(false);
 
@@ -45,8 +42,8 @@ export const Sidebar = () => {
     documents?.forEach(i => !i?.archive && filteredDocumentsId.push(i?.id));
 
     dispatch(setFilteredDocumentsId(filteredDocumentsId));
-    setActiveButtonId('articles');
-    setActiveCategoryText('articles');
+    setActiveButtonId('documents');
+    setActiveCategoryText('documents');
     setCategoriesMenu(false);
     setActiveCategoriesMenuButton(false);
   };
@@ -99,7 +96,7 @@ export const Sidebar = () => {
   const categoriesComponent = () => {
     return (
       <div className={css.categoriesContainer}>
-        <div id="articles" className={`${css.categoryButton} ${activeButtonId === "articles" && css.activeCategoryButton}`} onClick={handleAll}>articles</div>
+        <div id="documents" className={`${css.categoryButton} ${activeButtonId === "documents" && css.activeCategoryButton}`} onClick={handleAll}>documents</div>
         {userCategories?.map(i => (
           <div id={i?.id} className={`${css.categoryButton} ${activeButtonId === i?.id && css.activeCategoryButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id, i?.name)}>
             {i?.name}
