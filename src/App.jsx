@@ -13,9 +13,10 @@ import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, getDocs, collection, query, where, orderBy } from 'firebase/firestore';
 
-import { Loading } from 'components/Loading/Loading';
 import { Auth } from 'components/Auth/Auth';
 import { Home } from 'components/Home/Home';
+
+import css from './App.module.css';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -39,14 +40,15 @@ export const App = () => {
       const filteredDocumentsId = [];
       documents?.forEach(i => !i?.archive && filteredDocumentsId.push(i?.id));
       dispatch(setFilteredDocumentsId(filteredDocumentsId));
+
+      setLogged(true);
+      setLoading(false);
     };
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         getUser(user?.uid, user?.email);
         getDocuments(user?.uid);
-        setLogged(true);
-        setLoading(false);
         window.history.pushState({}, '', '/');
       } else {
         setLogged(false);
@@ -101,5 +103,7 @@ export const App = () => {
     return () => window.removeEventListener('popstate', handlePopState);
   }, [dispatch]);
 
-  return loading ? <Loading /> : logged ? <Home /> : <Auth />;
+  return loading
+    ? <div className={css.container}><div className={css.spinner} /></div>
+    : logged ? <Home /> : <Auth />;
 };
