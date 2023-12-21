@@ -1,20 +1,26 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'redux/features/user/userSlice';
 import { setDocuments, setFilteredDocumentsId } from 'redux/features/document/documentSlice';
-import { setModalSettings, setModalGlobalSettings, setEditorModalStatus, setModalCategories, setModalDeleteArticle } from 'redux/features/modal/modalSlice';
+import {
+  setModalSettings,
+  setModalGlobalSettings,
+  setEditorModalStatus,
+  setModalCategories,
+  setModalDeleteArticle
+} from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, getDocs, collection, query, where, orderBy } from 'firebase/firestore';
 
 import { Loading } from 'components/Loading/Loading';
-
-const LazyAuthComponent = lazy(() => import('components/Auth/Auth'));
-const LazyHomeComponent = lazy(() => import('components/Home/Home'));
+import { Auth } from 'components/Auth/Auth';
+import { Home } from 'components/Home/Home';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const [logged, setLogged] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [logged, setLogged] = useState(false);
 
   useEffect(() => {
     const getUser = async (id, email) => {
@@ -40,9 +46,12 @@ export const App = () => {
         getUser(user?.uid, user?.email);
         getDocuments(user?.uid);
         setLogged(true);
+        setLoading(false);
         window.history.pushState({}, '', '/');
       } else {
         setLogged(false);
+        setLoading(false);
+        window.history.pushState({}, '', '/');
       }
     });
 
@@ -87,13 +96,10 @@ export const App = () => {
       }
     };
 
-    // popstate - событие, которое срабатывает, когда изменяется история браузера. Например, через кнопки "назад" и "вперед"
     window.addEventListener('popstate', handlePopState);
 
     return () => window.removeEventListener('popstate', handlePopState);
   }, [dispatch]);
 
-  return logged
-    ? <Suspense fallback={<Loading />}><LazyHomeComponent /></Suspense>
-    : <Suspense fallback={<Loading />}><LazyAuthComponent /></Suspense>;
+  return loading ? <Loading /> : logged ? <Home /> : <Auth />;
 };

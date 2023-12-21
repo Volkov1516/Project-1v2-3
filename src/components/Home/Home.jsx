@@ -7,7 +7,7 @@ import { Content } from './Content/Content';
 
 const LazyEditorModal = lazy(() => import('./EditorModal/EditorModal'));
 
-export default function Home() {
+export const Home = () => {
   let mouseTimer;
 
   const onMouseUp = () => mouseTimer && window.clearTimeout(mouseTimer);

@@ -13,9 +13,3 @@
   tab-size: 1;
   user-select: none !important;
 }
-
-@media (max-width: 639px) {
-  .input {
-    font-size: 18px;
-  }
-}
