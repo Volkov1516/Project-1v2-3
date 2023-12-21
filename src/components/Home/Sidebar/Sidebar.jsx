@@ -1,13 +1,13 @@
-import { useState, lazy, Suspense } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilteredDocumentsId, setCurrentDocument } from 'redux/features/document/documentSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { v4 as uuidv4 } from 'uuid';
 
-import css from './Sidebar.module.css';
+import { CategoriesModal } from './CategoriesModal/CategoriesModal';
+import { SettingsModal } from './SettingsModal/SettingsModal';
 
-const LazyEditCategoriesModal = lazy(() => import('./EditCategoriesModal/EditCategoriesModal'));
-const LazyUserSettingsModal = lazy(() => import('./UserSettingsModal/UserSettingsModal'));
+import css from './Sidebar.module.css';
 
 export const Sidebar = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export const Sidebar = () => {
   const { documents } = useSelector(state => state.document);
 
   const [activeButtonId, setActiveButtonId] = useState('documents');
-  const [mainMenu, setMainMenu] = useState(false);
+  const [settingsMenu, setSettingsMenu] = useState(false);
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [activeCategoryText, setActiveCategoryText] = useState('documents');
   const [activeMainMenuButton, setActiveMainMenuButton] = useState(false);
@@ -81,13 +81,13 @@ export const Sidebar = () => {
 
   const handleMainMenu = () => {
     setCategoriesMenu(false);
-    setMainMenu(!mainMenu);
+    setSettingsMenu(!settingsMenu);
     setActiveCategoriesMenuButton(false);
     setActiveMainMenuButton(!activeMainMenuButton);
   };
 
   const handleCategoriesMenu = () => {
-    setMainMenu(false);
+    setSettingsMenu(false);
     setCategoriesMenu(!categoriesMenu);
     setActiveMainMenuButton(false);
     setActiveCategoriesMenuButton(!activeCategoriesMenuButton);
@@ -103,43 +103,28 @@ export const Sidebar = () => {
           </div>
         ))}
         <div id="archive" className={`${css.categoryButton} ${activeButtonId === "archive" && css.activeCategoryButton}`} onClick={handleArchive}>archive</div>
-        <Suspense>
-          <LazyEditCategoriesModal />
-        </Suspense>
-      </div>
-    );
-  };
-
-  const menuComponent = () => {
-    return (
-      <div className={css.menuContainer}>
-        {/* <div className={css.toggleGroup}>
-          <span className={css.toggleGroupText}>striped list</span>
-          <label className={css.switch}>
-            <input type="checkbox" checked={stripedList} onChange={handleStripedList} />
-            <span className={css.slider}></span>
-          </label>
-        </div> */}
-        <Suspense>
-          <LazyUserSettingsModal />
-        </Suspense>
+        <CategoriesModal />
       </div>
     );
   };
 
   return (
-    <aside className={css.container}>
+    <div className={css.container}>
       <div className={css.start}>
-        <div className={`${css.categoriesButtonSmall} ${activeCategoriesMenuButton && css.activeCategoriesMenuButton}`} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
+        <div className={`${css.smallDisplayCategoriesButton} ${activeCategoriesMenuButton && css.activeCategoriesMenuButton}`} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
         <div className={css.createButton} onClick={openModalEditor}>CREATE</div>
-        <div className={css.categoriesWrapper}>{categoriesComponent()}</div>
+        <div className={css.largeDisplayCategoriesWrapper}>{categoriesComponent()}</div>
       </div>
       <div className={css.end}>
-        <div className={css.menuWrapper}>{menuComponent()}</div>
-        <div className={`${css.menuButtonSmall} ${activeMainMenuButton && css.activeMainMenuButton}`} onClick={handleMainMenu}>menu</div>
+        <div className={css.largeDisplaySettingsWrapper}><SettingsModal /></div>
+        <div className={`${css.smallDisplaySettingsButton} ${activeMainMenuButton && css.activeMainMenuButton}`} onClick={handleMainMenu}>menu</div>
       </div>
-      {mainMenu && <div className={css.menuWrapperSmall}>{menuComponent()}</div>}
-      {categoriesMenu && <div className={css.categoriesWrapperSmall}>{categoriesComponent()}</div>}
-    </aside>
+      {categoriesMenu && <div className={css.smallDisplayCategoriesWrapper}>{categoriesComponent()}</div>}
+      {settingsMenu && (
+        <div className={css.smallDisplaySettingsWrapper}>
+          <SettingsModal />
+        </div>
+      )}
+    </div>
   );
 };

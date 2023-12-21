@@ -9,7 +9,7 @@ import { Title } from './Title/Title';
 import { Editor } from './Editor/Editor';
 const LazyArticleSettingsModal = lazy(() => import('./ArticleSettingsModal/ArticleSettingsModal'));
 
-export default function EditorModal() {
+export const EditorModal = () => {
   const dispatch = useDispatch();
   const { editorModalStatus } = useSelector(state => state.modal);
   const { filteredDocumentsId, isNewDocument, documentIndex, documentCategories } = useSelector(state => state.document);

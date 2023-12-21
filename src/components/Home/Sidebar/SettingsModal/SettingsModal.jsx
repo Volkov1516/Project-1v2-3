@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from 'redux/features/user/userSlice';
 import {
@@ -9,9 +10,9 @@ import { setModalGlobalSettings } from 'redux/features/modal/modalSlice';
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
 
-import css from './UserSettingsModal.module.css';
+import css from './SettingsModal.module.css';
 
-export default function UserSettingsModal() {
+export const SettingsModal = memo(function SettingsComponent() {
   const dispatch = useDispatch();
   const { modalGlobalSettings } = useSelector(state => state.modal);
   const { email } = useSelector(state => state.user);
@@ -67,4 +68,4 @@ export default function UserSettingsModal() {
       )}
     </>
   );
-};
+});

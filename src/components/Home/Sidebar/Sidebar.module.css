@@ -10,15 +10,7 @@
   border-right: 1px solid black;
 }
 
-.start {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  row-gap: 16px;
-}
-
-.end {
+.start, .end {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -42,7 +34,7 @@
   background-color: var(--gray1500);
 }
 
-.categoriesWrapper {
+.largeDisplayCategoriesWrapper {
   min-width: 100%;
   width: 100%;
 }
@@ -70,8 +62,8 @@
   background-color: var(--gray200);
 }
 
-.menuButtonSmall,
-.categoriesButtonSmall {
+.smallDisplaySettingsButton,
+.smallDisplayCategoriesButton {
   display: none;
   padding: 12px 16px;
   border-radius: 1em;
@@ -82,19 +74,14 @@
 }
 
 .categoryButton:active,
-.menuButtonSmall:active,
-.categoriesButtonSmall:active {
+.smallDisplaySettingsButton:active,
+.smallDisplayCategoriesButton:active {
   background-color: var(--gray200);
 }
 
-.menuWrapper {
+.largeDisplaySettingsWrapper {
   min-width: 100%;
   width: 100%;
-}
-
-.menuContainer {
-  display: flex;
-  flex-direction: column;
 }
 
 .toggleGroup {
@@ -112,16 +99,23 @@
   user-select: none;
 }
 
-.menuWrapperSmall {
+.smallDisplaySettingsWrapper {
   position: absolute;
-  min-width: 100%;
-  height: calc(100vh - 80px);
-  background-color: var(--gray100);
   bottom: 100%;
   right: 0;
+  min-width: 100%;
+  height: calc(100vh - 80px);
+  padding: 16px;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-start;
+  align-items: flex-end;
+  row-gap: 8px;
+  background-color: var(--gray100);
+  overflow: auto;
 }
 
-.categoriesWrapperSmall {
+.smallDisplayCategoriesWrapper {
   position: absolute;
   min-width: 100%;
   height: calc(100vh - 80px);
@@ -220,7 +214,7 @@
     background-color: var(--gray1500);
   }
 
-  .menuButtonSmall:hover,
+  .smallDisplaySettingsButton:hover,
   .categoryButton:hover,
   .userButton:hover {
     background-color: var(--gray200);
@@ -257,12 +251,12 @@
     padding: 12px 16px;
   }
 
-  .menuButtonSmall {
+  .smallDisplaySettingsButton {
     padding: 16px;
     display: block;
   }
 
-  .categoriesButtonSmall {
+  .smallDisplayCategoriesButton {
     width: 100%;
     max-width: 140px;
     padding: 16px;
@@ -273,7 +267,7 @@
     text-align: end;
   }
 
-  .categoriesWrapper {
+  .largeDisplayCategoriesWrapper {
     display: none;
   }
 
@@ -299,19 +293,8 @@
     text-align: end;
   }
 
-  .menuWrapper {
+  .largeDisplaySettingsWrapper {
     display: none;
-  }
-
-  .menuContainer {
-    height: 100%;
-    padding: 16px;
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-start;
-    align-items: flex-end;
-    row-gap: 8px;
-    overflow: auto;
   }
 
   .toggleGroup {

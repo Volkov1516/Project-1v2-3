@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUserCategory, updateUserCategory, deleteUserCategory } from 'redux/features/user/userSlice';
 import { setModalCategories } from 'redux/features/modal/modalSlice';
@@ -6,11 +6,11 @@ import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
-import css from './EditCategoriesModal.module.css';
-
 import { Input } from './Input';
 
-export default function EditCategoriesModal() {
+import css from './CategoriesModal.module.css';
+
+export const CategoriesModal = memo(function CategoriesComponent() {
   const dispatch = useDispatch();
   const { modalCategories } = useSelector(state => state.modal);
   const { userId, userCategories } = useSelector(state => state.user);
@@ -91,4 +91,4 @@ export default function EditCategoriesModal() {
       )}
     </>
   );
-};
+});

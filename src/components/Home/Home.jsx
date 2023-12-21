@@ -1,11 +1,8 @@
-import { lazy, Suspense } from 'react';
-
-import css from './Home.module.css';
-
 import { Sidebar } from './Sidebar/Sidebar';
 import { Content } from './Content/Content';
+import { EditorModal } from './EditorModal/EditorModal';
 
-const LazyEditorModal = lazy(() => import('./EditorModal/EditorModal'));
+import css from './Home.module.css';
 
 export const Home = () => {
   let mouseTimer;
@@ -15,10 +12,8 @@ export const Home = () => {
   return (
     <div className={css.container} onScroll={onMouseUp}>
       <Sidebar />
-      <Suspense>
-        <Content mouseTimer={mouseTimer} />
-      </Suspense>
-      <LazyEditorModal />
+      <Content mouseTimer={mouseTimer} />
+      <EditorModal />
     </div>
   );
 };
