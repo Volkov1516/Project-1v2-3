@@ -148,18 +148,18 @@
     padding: 8px 16px 16px;
     flex-direction: row-reverse;
     justify-content: space-between;
-    background-color: red;
+    background-color: white;
   }
 
-  /* .container:after {
+  .container:after {
     content: "";
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 16px;
     height: 1px;
     width: calc(100% - 32px);
     background-color: black;
-  } */
+  }
 
   .start {
     display: flex;
