@@ -18,7 +18,6 @@ export const Sidebar = () => {
   const [activeButtonId, setActiveButtonId] = useState('documents');
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [activeCategoryText, setActiveCategoryText] = useState('documents');
-  const [activeCategoriesMenuButton, setActiveCategoriesMenuButton] = useState(false);
 
   const openModalEditor = () => {
     dispatch(setCurrentDocument({
@@ -44,7 +43,6 @@ export const Sidebar = () => {
     setActiveButtonId('documents');
     setActiveCategoryText('documents');
     setCategoriesMenu(false);
-    setActiveCategoriesMenuButton(false);
   };
 
   const handleArchive = () => {
@@ -55,7 +53,6 @@ export const Sidebar = () => {
     setActiveButtonId('archive');
     setActiveCategoryText('archive');
     setCategoriesMenu(false);
-    setActiveCategoriesMenuButton(false);
   };
 
   const setFilteredByCategory = (id, name) => {
@@ -75,7 +72,6 @@ export const Sidebar = () => {
     setActiveButtonId(id);
     setActiveCategoryText(name);
     setCategoriesMenu(false);
-    setActiveCategoriesMenuButton(false);
   };
 
   const handleCategoriesMenu = () => {
@@ -83,7 +79,6 @@ export const Sidebar = () => {
       window.history.back();
     }
     setCategoriesMenu(!categoriesMenu);
-    setActiveCategoriesMenuButton(!activeCategoriesMenuButton);
   };
 
   const categoriesComponent = () => {
