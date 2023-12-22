@@ -53,6 +53,7 @@
   font-weight: 600;
   cursor: pointer;
   user-select: none;
+  color: #1971C2;;
 }
 
 .closeButton:active {
@@ -104,13 +105,13 @@
     padding: 0;
     margin: 0;
     border-radius: 0;
-    font-size: 32px;
+    /* font-size: 32px; */
     font-weight: 600;
     cursor: default;
     user-select: none;
     text-overflow: ellipsis;
     white-space: nowrap;
-    align-self: flex-start;
+    /* align-self: flex-start; */
   }
 
   .openButton:active {
@@ -120,7 +121,10 @@
   }
 
   .container {
-    padding: 16px;
+    /* padding: 16px; */
+    /* padding-bottom: 81px; */
+    height: calc(100vh - 81px);
+    background-color: transparent;
   }
 
   .content {

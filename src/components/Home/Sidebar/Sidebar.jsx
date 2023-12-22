@@ -15,10 +15,8 @@ export const Sidebar = () => {
   const { documents } = useSelector(state => state.document);
 
   const [activeButtonId, setActiveButtonId] = useState('documents');
-  const [settingsMenu, setSettingsMenu] = useState(false);
   const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [activeCategoryText, setActiveCategoryText] = useState('documents');
-  const [activeMainMenuButton, setActiveMainMenuButton] = useState(false);
   const [activeCategoriesMenuButton, setActiveCategoriesMenuButton] = useState(false);
 
   const openModalEditor = () => {
@@ -79,17 +77,8 @@ export const Sidebar = () => {
     setActiveCategoriesMenuButton(false);
   };
 
-  const handleMainMenu = () => {
-    setCategoriesMenu(false);
-    setSettingsMenu(!settingsMenu);
-    setActiveCategoriesMenuButton(false);
-    setActiveMainMenuButton(!activeMainMenuButton);
-  };
-
   const handleCategoriesMenu = () => {
-    setSettingsMenu(false);
     setCategoriesMenu(!categoriesMenu);
-    setActiveMainMenuButton(false);
     setActiveCategoriesMenuButton(!activeCategoriesMenuButton);
   };
 
@@ -116,15 +105,9 @@ export const Sidebar = () => {
         <div className={css.largeDisplayCategoriesWrapper}>{categoriesComponent()}</div>
       </div>
       <div className={css.end}>
-        <div className={css.largeDisplaySettingsWrapper}><SettingsModal /></div>
-        <div className={`${css.smallDisplaySettingsButton} ${activeMainMenuButton && css.activeMainMenuButton}`} onClick={handleMainMenu}>menu</div>
+        <SettingsModal />
       </div>
       {categoriesMenu && <div className={css.smallDisplayCategoriesWrapper}>{categoriesComponent()}</div>}
-      {settingsMenu && (
-        <div className={css.smallDisplaySettingsWrapper}>
-          <SettingsModal />
-        </div>
-      )}
     </div>
   );
 };

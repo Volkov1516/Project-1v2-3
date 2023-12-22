@@ -39,9 +39,14 @@ export const SettingsModal = memo(function SettingsComponent() {
   };
 
   const handleOpen = () => {
-    dispatch(setModalGlobalSettings(true));
+    if (modalGlobalSettings) {
+      window.history.back();
+    }
+    else {
+      dispatch(setModalGlobalSettings(true));
 
-    window.history.pushState({ modal: 'globalSettings' }, '', '#settings');
+      window.history.pushState({ modal: 'globalSettings' }, '', '#settings');
+    }
   };
 
   const handleClose = () => {
