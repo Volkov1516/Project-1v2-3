@@ -24,10 +24,6 @@ article {
   overflow-wrap: break-word;
 }
 
-.dot {
-  color: #1971c2;
-}
-
 article:not(:last-child) {
   border-bottom: 1px solid black;
   padding: 8px 0px;
@@ -37,54 +33,55 @@ article:last-child {
   padding: 8px 0px 0px;
 }
 
-article:active {
+/* article:active {
   text-decoration: underline;
   text-decoration-thickness: 2px;
-}
+} */
 
 article.white {
-  /* background-color: white; */
   background-color: transparent;
   color: black;
 }
 
 article.black {
-  background-color: black !important;
-  color: white;
+  background-color: transparent;
+  color: black;
 }
 
 article.red {
-  /* background-color: #e03131 !important;
-  color: white; */
-  color: #e03131;
-  /* font-weight: 800; */
+  text-decoration:line-through;
+  text-decoration-thickness: 16px;
+  text-decoration-color: rgba(224, 49, 49, 0.5);
 }
 
 article.orange {
-  background-color: #fd7e14 !important;
-  color: white;
+  text-decoration:line-through;
+  text-decoration-thickness: 16px;
+  text-decoration-color: rgb(253, 126, 20, 0.5);
 }
 
 article.yellow {
-  background-color: #ffd43b !important;
-  color: white;
+  text-decoration:line-through;
+  text-decoration-thickness: 16px;
+  text-decoration-color: rgb(255, 212, 59, 0.5);
 }
 
 article.green {
-  background-color: #2f9e44 !important;
-  color: white;
+  text-decoration:line-through;
+  text-decoration-thickness: 16px;
+  text-decoration-color: rgba(47, 158, 67, 0.5);
 }
 
 article.blue {
-  /* background-color: #1971c2 !important;
-  color: white; */
-  color: #1971c2;
-  /* font-weight: 800; */
+  text-decoration:line-through;
+  text-decoration-thickness: 16px;
+  text-decoration-color: rgb(25, 113, 194, 0.5);
 }
 
 article.purple {
-  background-color: #9c36b5 !important;
-  color: white;
+  text-decoration:line-through;
+  text-decoration-thickness: 16px;
+  text-decoration-color: rgb(156, 54, 181, 0.5);
 }
 
 .emptyContainer {
@@ -101,12 +98,12 @@ article.purple {
   user-select: none;
 }
 
-@media (hover: hover) {
+/* @media (hover: hover) {
   article:hover {
     text-decoration: underline;
     text-decoration-thickness: 3px;
   }
-}
+} */
 
 @media (max-width: 639px) {
   .emptyContainer {

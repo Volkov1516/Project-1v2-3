@@ -28,37 +28,39 @@ textarea.black {
 }
 
 textarea.red {
-  /* background-color: #e03131;
-  color: white; */
-  color: #e03131;
-  /* font-weight: 800; */
+  text-decoration:line-through;
+  text-decoration-thickness: 16px;
+  text-decoration-color: rgba(224, 49, 49, 0.7);
 }
 
 textarea.orange {
-  background-color: #fd7e14;
-  color: white;
+  text-decoration:line-through;
+  text-decoration-thickness: 16px;
+  text-decoration-color: rgb(253, 126, 20, 0.7);
 }
 
 textarea.yellow {
-  background-color: #ffd43b;
-  color: white;
+  text-decoration:line-through;
+  text-decoration-thickness: 16px;
+  text-decoration-color: rgb(255, 212, 59, 0.5);
 }
 
 textarea.green {
-  background-color: #2f9e44;
-  color: white;
+  text-decoration:line-through;
+  text-decoration-thickness: 16px;
+  text-decoration-color: rgba(47, 158, 67, 0.5);
 }
 
 textarea.blue {
-  /* background-color: #1971c2;
-  color: white; */
-  color: #1971c2;
-  /* font-weight: 800; */
+  text-decoration:line-through;
+  text-decoration-thickness: 16px;
+  text-decoration-color: rgb(25, 113, 194, 0.5);
 }
 
 textarea.purple {
-  background-color: #9c36b5;
-  color: white;
+  text-decoration:line-through;
+  text-decoration-thickness: 16px;
+  text-decoration-color: rgb(156, 54, 181, 0.5);
 }
 
 .preview {

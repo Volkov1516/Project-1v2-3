@@ -77,7 +77,6 @@ export const Content = ({ mouseTimer }) => {
           className={`${css.documentTitle} ${css[i?.color]}`}
         >
           {i?.title || 'Untitled'}
-          {/* <span className={css.dot}>.</span> */}
         </article>
       ))}
       {filteredDocumentsId?.length < 1 && (
