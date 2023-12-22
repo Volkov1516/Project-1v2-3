@@ -17,8 +17,8 @@
   margin-top: 5vh;
   display: flex;
   flex-direction: column;
-  /* background-color: white; */
-  background-color: var(--gray100);
+  background-color: white;
+  /* background-color: var(--gray100); */
   /* background-color: #FDF7E4; */
   overflow: hidden;
   user-select: none !important;
@@ -43,8 +43,8 @@
 .editFC {
   height: 100%;
   width: 100%;
-  /* background-color: white; */
-  background-color: var(--gray100);
+  background-color: white;
+  /* background-color: var(--gray100); */
   /* background-color: #FDF7E4; */
   overflow: hidden;
 }

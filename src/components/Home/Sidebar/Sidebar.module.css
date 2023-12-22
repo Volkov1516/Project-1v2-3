@@ -22,23 +22,22 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  row-gap: 16px;
+  gap: 16px;
 }
 
 .createButton {
   width: 100%;
-  padding: 4px 16px;
-  background-color: var(--black);
-  color: var(--white);
+  padding: 8px 16px;
+  background-color: black;
+  color: white;
   font-size: 24px;
-  font-weight: 600;
   text-align: center;
   user-select: none;
   cursor: pointer;
 }
 
 .createButton:active {
-  background-color: var(--gray1500);
+  background-color: var(--gray1400);
 }
 
 .largeDisplayCategoriesWrapper {
@@ -54,7 +53,7 @@
 .categoryButton {
   width: 100%;
   padding: 8px 16px;
-  border-radius: 1em;
+  border-radius: 32px;
   font-weight: 600;
   text-transform: lowercase;
   cursor: pointer;
@@ -62,11 +61,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: #1971C2;
+  /* color: #1971C2; */
 }
 
 .activeCategoryButton {
-  background-color: var(--gray200);
+  background-color: var(--gray100);
 }
 
 .smallDisplaySettingsButton,
@@ -78,7 +77,10 @@
   color: #1971C2;
 }
 
-.categoryButton:active,
+.categoryButton:active {
+  background-color: var(--gray100);
+}
+
 .smallDisplaySettingsButton:active,
 .smallDisplayCategoriesButton:active {
   text-decoration: underline;
@@ -112,87 +114,10 @@
 .smallDisplayCategoriesWrapper {
   position: absolute;
   min-width: 100%;
-  height: calc(100vh - 80px);
-  background-color: var(--gray100);
+  height: calc(100vh - 81px);
+  background-color: white;
   bottom: 100%;
   right: 0;
-}
-
-.switch {
-  --button-width: 44px;
-  --button-height: 22px;
-  --toggle-diameter: 18px;
-  --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
-  --toggle-shadow-offset: 0px;
-  --toggle-wider: 1em;
-  --color-grey: #DDDDDD;
-  --color-green: black;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.slider {
-  display: inline-block;
-  width: var(--button-width);
-  height: var(--button-height);
-  background-color: var(--color-grey);
-  border-radius: calc(var(--button-height) / 2);
-  position: relative;
-  transition: 0.1s all ease-in-out;
-}
-
-.slider::after {
-  content: "";
-  display: inline-block;
-  width: var(--toggle-diameter);
-  height: var(--toggle-diameter);
-  background-color: #fff;
-  border-radius: calc(var(--toggle-diameter) / 2);
-  position: absolute;
-  top: var(--button-toggle-offset);
-  transform: translateX(var(--button-toggle-offset));
-  box-shadow: var(--toggle-shadow-offset) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
-  transition: 0.1s all ease-in-out;
-}
-
-.switch input[type="checkbox"]:checked+.slider {
-  background-color: var(--color-green);
-}
-
-.switch input[type="checkbox"]:checked+.slider::after {
-  transform: translateX(calc(var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset)));
-  box-shadow: calc(var(--toggle-shadow-offset) * -1) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
-}
-
-.switch input[type="checkbox"] {
-  display: none;
-}
-
-.switch input[type="checkbox"]:active+.slider::after {
-  width: var(--toggle-wider);
-}
-
-.switch input[type="checkbox"]:checked:active+.slider::after {
-  transform: translateX(calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)));
-}
-
-.userButton {
-  width: 100%;
-  margin-top: 8px;
-  padding: 8px 16px;
-  border-radius: 1em;
-  font-weight: 600;
-  text-transform: lowercase;
-  cursor: pointer;
-  user-select: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.userButton:active {
-  background-color: var(--gray200);
 }
 
 .activeCategoriesMenuButton {
@@ -205,13 +130,13 @@
 
 @media (hover: hover) {
   .createButton:hover {
-    background-color: var(--gray1500);
+    background-color: var(--gray1400);
   }
 
   .smallDisplaySettingsButton:hover,
   .categoryButton:hover,
   .userButton:hover {
-    background-color: var(--gray200);
+    background-color: var(--gray100);
   }
 }
 
@@ -221,7 +146,6 @@
     padding: 8px 16px 16px;
     flex-direction: row-reverse;
     justify-content: space-between;
-    background-color: transparent;
   }
 
   .container:after {
@@ -239,7 +163,6 @@
     flex-direction: row-reverse;
     justify-content: flex-end;
     align-items: center;
-    column-gap: 16px;
   }
 
   .end {

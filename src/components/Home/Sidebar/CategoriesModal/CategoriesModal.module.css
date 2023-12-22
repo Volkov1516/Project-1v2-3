@@ -2,7 +2,7 @@
   width: 100%;
   padding: 8px 16px;
   border-radius: 1em;
-  color: #1971C2;
+  /* color: #1971C2; */
   font-weight: 600;
   cursor: pointer;
   user-select: none;
@@ -47,7 +47,7 @@
 }
 
 .openButton:active {
-  background-color: var(--gray200);
+  background-color: var(--gray100);
 }
 
 .closeButton:active {
@@ -124,7 +124,7 @@
 
   .openButton:hover,
   .deleteButton:hover {
-    background-color: var(--gray200);
+    background-color: var(--gray100);
   }
 
   .closeButton:hover {
