@@ -12,7 +12,7 @@ import { signOut } from 'firebase/auth';
 
 import css from './SettingsModal.module.css';
 
-export const SettingsModal = memo(function SettingsComponent() {
+export const SettingsModal = memo(function SettingsComponent({ setCategoriesMenu }) {
   const dispatch = useDispatch();
   const { modalGlobalSettings } = useSelector(state => state.modal);
   const { email } = useSelector(state => state.user);
@@ -39,6 +39,8 @@ export const SettingsModal = memo(function SettingsComponent() {
   };
 
   const handleOpen = () => {
+    setCategoriesMenu(false);
+
     if (modalGlobalSettings) {
       window.history.back();
     }

@@ -13,6 +13,7 @@ export const Sidebar = () => {
   const dispatch = useDispatch();
   const { userCategories } = useSelector(state => state.user);
   const { documents } = useSelector(state => state.document);
+  const { modalGlobalSettings } = useSelector(state => state.modal);
 
   const [activeButtonId, setActiveButtonId] = useState('documents');
   const [categoriesMenu, setCategoriesMenu] = useState(false);
@@ -78,6 +79,9 @@ export const Sidebar = () => {
   };
 
   const handleCategoriesMenu = () => {
+    if (modalGlobalSettings) {
+      window.history.back();
+    }
     setCategoriesMenu(!categoriesMenu);
     setActiveCategoriesMenuButton(!activeCategoriesMenuButton);
   };
@@ -100,12 +104,12 @@ export const Sidebar = () => {
   return (
     <div className={css.container}>
       <div className={css.start}>
-        <div className={`${css.smallDisplayCategoriesButton} ${activeCategoriesMenuButton && css.activeCategoriesMenuButton}`} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
         <div className={css.createButton} onClick={openModalEditor}>CREATE</div>
         <div className={css.largeDisplayCategoriesWrapper}>{categoriesComponent()}</div>
+        <div className={css.smallDisplayCategoriesButton} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
       </div>
       <div className={css.end}>
-        <SettingsModal />
+        <SettingsModal setCategoriesMenu={setCategoriesMenu}/>
       </div>
       {categoriesMenu && <div className={css.smallDisplayCategoriesWrapper}>{categoriesComponent()}</div>}
     </div>

@@ -6,8 +6,15 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* background-color: var(--gray100); */
-  border-right: 1px solid black;
+}
+
+.container:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  height: calc(100% - 32px);
+  width: 1px;
+  background-color: black;
 }
 
 .start, .end {
@@ -65,8 +72,6 @@
 .smallDisplaySettingsButton,
 .smallDisplayCategoriesButton {
   display: none;
-  padding: 12px 16px;
-  border-radius: 1em;
   font-weight: 600;
   cursor: pointer;
   user-select: none;
@@ -76,7 +81,8 @@
 .categoryButton:active,
 .smallDisplaySettingsButton:active,
 .smallDisplayCategoriesButton:active {
-  background-color: var(--gray200);
+  text-decoration: underline;
+  text-decoration-thickness: 4px;
 }
 
 .largeDisplaySettingsWrapper {
@@ -100,20 +106,6 @@
 }
 
 .smallDisplaySettingsWrapper {
-  /* position: absolute;
-  bottom: 100%;
-  right: 0;
-  min-width: 100%;
-  height: calc(100vh - 80px);
-  padding: 16px;
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-start;
-  align-items: flex-end;
-  row-gap: 8px;
-  background-color: var(--gray100);
-  overflow: auto; */
-
   display: none;
 }
 
@@ -230,15 +222,24 @@
     flex-direction: row-reverse;
     justify-content: space-between;
     background-color: transparent;
-    border-top: 1px solid black;
+  }
+
+  .container:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 16px;
+    height: 1px;
+    width: calc(100% - 32px);
+    background-color: black;
   }
 
   .start {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: flex-end;
     align-items: center;
-    column-gap: 8px;
+    column-gap: 16px;
   }
 
   .end {
@@ -265,7 +266,6 @@
   .smallDisplayCategoriesButton {
     width: 100%;
     max-width: 140px;
-    padding: 16px;
     display: inline-block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -301,50 +301,5 @@
 
   .largeDisplaySettingsWrapper {
     display: none;
-  }
-
-  .toggleGroup {
-    padding: 0px;
-    width: 100%;
-    margin-bottom: 0;
-  }
-
-  .toggleGroupText {
-    color: var(--gray1000);
-    font-size: 32px;
-    font-weight: 600;
-    cursor: default;
-    user-select: none;
-  }
-
-  .switch {
-    --button-width: 64px;
-    --button-height: 32px;
-    --toggle-diameter: 28px;
-    --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
-    --toggle-shadow-offset: 0px;
-    --toggle-wider: 1em;
-    --color-grey: #cccccc;
-    --color-green: black;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-  }
-
-  .userButton {
-    width: fit-content;
-    max-width: 340px;
-    padding: 0;
-    margin: 0;
-    border-radius: 0;
-    color: var(--gray1000);
-    font-size: 24px;
-    font-weight: 600;
-    cursor: default;
-    user-select: none;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-align: end;
-    flex: 1;
   }
 }
