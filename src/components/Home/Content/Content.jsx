@@ -74,7 +74,7 @@ export const Content = ({ mouseTimer }) => {
           onMouseUp={onMouseUp}
           onTouchStart={() => onMouseDown(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
           onTouchEnd={onMouseUp}
-          className={css[i?.color]}
+          className={`${css.documentTitle} ${css[i?.color]}`}
         >
           {i?.title || 'Untitled'}
           {/* <span className={css.dot}>.</span> */}
