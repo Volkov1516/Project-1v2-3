@@ -143,6 +143,7 @@
 @media (max-width: 639px) {
   .container {
     position: fixed;
+    bottom: 0;
     width: 100%;
     padding: 8px 16px 16px;
     flex-direction: row-reverse;
