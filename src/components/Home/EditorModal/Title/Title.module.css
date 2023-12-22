@@ -30,13 +30,13 @@ textarea.black {
 textarea.red {
   text-decoration:line-through;
   text-decoration-thickness: 16px;
-  text-decoration-color: rgba(224, 49, 49, 0.7);
+  text-decoration-color: rgba(224, 49, 49, 0.5);
 }
 
 textarea.orange {
   text-decoration:line-through;
   text-decoration-thickness: 16px;
-  text-decoration-color: rgb(253, 126, 20, 0.7);
+  text-decoration-color: rgb(253, 126, 20, 0.5);
 }
 
 textarea.yellow {
