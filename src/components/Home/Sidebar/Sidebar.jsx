@@ -18,14 +18,12 @@ export const Sidebar = () => {
   const [activeButtonId, setActiveButtonId] = useState('documents');
   const [activeCategoryText, setActiveCategoryText] = useState('documents');
   const [categoriesMenu, setCategoriesMenu] = useState(false);
-  const [categoriesMenuHeight, setCategoriesMenuHeight] = useState(0);
 
   const scrollRef = useRef(null);
 
   useEffect(() => {
     if (!categoriesMenu) return;
     
-    setCategoriesMenuHeight(window.innerHeight - 80);
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [categoriesMenu]);
 
@@ -114,7 +112,7 @@ export const Sidebar = () => {
         <div className={`${css.smallDisplayCategoriesButton} ${categoriesMenu && css.activeCategoriesBtn}`} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
       </div>
       <div className={css.end}><SettingsModal setCategoriesMenu={setCategoriesMenu} /></div>
-      {categoriesMenu && <div ref={scrollRef} style={{height: categoriesMenuHeight}} className={css.smallDisplayCategoriesWrapper}>{categoriesComponent()}</div>}
+      {categoriesMenu && <div ref={scrollRef} className={css.smallDisplayCategoriesWrapper}>{categoriesComponent()}</div>}
     </div>
   );
 };
