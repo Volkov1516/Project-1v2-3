@@ -43,6 +43,11 @@
   display: none;
 }
 
+.largeDisplayCategoriesWrapper {
+  height: 500px;
+  overflow-y: auto;
+}
+
 .categoriesContainer {
   display: flex;
   flex-direction: column;
@@ -150,20 +155,20 @@
     position: absolute;
     min-width: 100%;
     height: calc(100vh - 80px);
-    background-color: white;
+    background-color: red;
     bottom: 100%;
     right: 0;
+    overflow-y: scroll;
   }
 
   .categoriesContainer {
-    height: 100%;
+    min-height: 100%;
     padding: 16px;
     display: flex;
     flex-direction: column-reverse;
     justify-content: flex-start;
     align-items: flex-end;
     row-gap: 8px;
-    overflow: auto;
   }
 
   .categoryButton {

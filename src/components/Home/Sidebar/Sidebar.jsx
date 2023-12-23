@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilteredDocumentsId, setCurrentDocument } from 'redux/features/document/documentSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
@@ -18,6 +18,14 @@ export const Sidebar = () => {
   const [activeButtonId, setActiveButtonId] = useState('documents');
   const [activeCategoryText, setActiveCategoryText] = useState('documents');
   const [categoriesMenu, setCategoriesMenu] = useState(false);
+
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (!categoriesMenu) return;
+
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [categoriesMenu]);
 
   const openModalEditor = () => {
     dispatch(setCurrentDocument({
@@ -103,8 +111,8 @@ export const Sidebar = () => {
         <div className={css.largeDisplayCategoriesWrapper}>{categoriesComponent()}</div>
         <div className={`${css.smallDisplayCategoriesButton} ${categoriesMenu && css.activeCategoriesBtn}`} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
       </div>
-      <div className={css.end}><SettingsModal setCategoriesMenu={setCategoriesMenu}/></div>
-      {categoriesMenu && <div className={css.smallDisplayCategoriesWrapper}>{categoriesComponent()}</div>}
+      <div className={css.end}><SettingsModal setCategoriesMenu={setCategoriesMenu} /></div>
+      {categoriesMenu && <div ref={scrollRef} className={css.smallDisplayCategoriesWrapper}>{categoriesComponent()}</div>}
     </div>
   );
 };
