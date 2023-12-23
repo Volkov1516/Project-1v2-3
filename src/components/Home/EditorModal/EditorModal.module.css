@@ -31,7 +31,7 @@
   max-height: 100%;
   user-select: none !important;
   scroll-behavior: smooth;
-  padding-bottom: 500px;
+  padding-bottom: 600px;
 }
 
 .preview>.editor>.header {
@@ -57,7 +57,7 @@
   max-height: 100%;
   user-select: none !important;
   scroll-behavior: smooth;
-  padding-bottom: calc(500px + 5vh);
+  padding-bottom: calc(600px + 5vh);
 }
 
 .edit>.editor>.header,
@@ -239,7 +239,7 @@
   .edit>.editor,
   .editFP>.editor,
   .editFC>.editor {
-    padding-bottom: 577px;
+    padding-bottom: 678px;
   }
 
   .edit>.editor>.header,
