@@ -10,7 +10,7 @@ export const Home = () => {
   const onMouseUp = () => mouseTimer && window.clearTimeout(mouseTimer);
 
   return (
-    <div className={css.container} onScroll={onMouseUp}>
+    <div id="home" className={css.container} onScroll={onMouseUp}>
       <Sidebar />
       <Content mouseTimer={mouseTimer} />
       <EditorModal />
