@@ -156,7 +156,7 @@
     position: absolute;
     min-width: 100%;
     height: calc(100vh - 80px);
-    background-color: red;
+    background-color: white;
     bottom: 100%;
     right: 0;
     overflow-y: scroll;

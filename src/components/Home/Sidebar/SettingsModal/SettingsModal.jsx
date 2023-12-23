@@ -57,7 +57,7 @@ export const SettingsModal = memo(function SettingsComponent({ setCategoriesMenu
 
   return (
     <>
-      <div className={css.openButton} onClick={handleOpen}>settings</div>
+      <div className={`${css.openButton} ${modalGlobalSettings && css.openButtonActive}`} onClick={handleOpen}>settings</div>
       {modalGlobalSettings && (
         <div className={css.container} onClick={handleClose}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
@@ -66,8 +66,16 @@ export const SettingsModal = memo(function SettingsComponent({ setCategoriesMenu
               <button className={css.closeButton} onClick={handleClose}>close</button>
             </div>
             <div className={css.group}>
-              <span className={css.emailLabel}>email:</span>
               <span className={css.email}>{email}</span>
+            </div>
+            <div className={css.group}>
+              <span className={css.email}>info</span>
+            </div>
+            <div className={css.group}>
+              <span className={css.email}>contacts</span>
+            </div>
+            <div className={css.group}>
+              <span className={css.email}>support the project</span>
             </div>
             <div className={css.signOutButton} onClick={handleSignOut}>sing out</div>
           </div>
