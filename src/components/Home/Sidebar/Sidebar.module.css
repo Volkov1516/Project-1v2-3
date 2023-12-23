@@ -154,7 +154,7 @@
   .smallDisplayCategoriesWrapper {
     position: absolute;
     min-width: 100%;
-    height: calc(100vh - 80px);
+    /* height: calc(100vh - 80px); */
     background-color: red;
     bottom: 100%;
     right: 0;

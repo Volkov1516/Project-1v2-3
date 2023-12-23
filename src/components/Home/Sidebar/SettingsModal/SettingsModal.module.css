@@ -121,9 +121,7 @@
   }
 
   .container {
-    /* padding: 16px; */
-    /* padding-bottom: 81px; */
-    height: calc(100vh - 81px);
+    height: calc(100vh - 80px);
     background-color: transparent;
   }
 
