@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { setUser } from 'redux/features/user/userSlice';
 import { setDocuments, setFilteredDocumentsId } from 'redux/features/document/documentSlice';
 import {
-  setModalSettings,
-  setModalGlobalSettings,
   setEditorModalStatus,
-  setModalCategories,
-  setModalDeleteArticle
+  setDocumentSettingsModal,
+  setDocumentDeleteModal,
+  setCategoriesModal,
+  setSettingsModal,
 } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -62,39 +62,41 @@ export const App = () => {
 
   useEffect(() => {
     const handlePopState = (e) => {
+      console.log(JSON.stringify(e.state));
+
       if (e.state && !e.state.modal) {
         dispatch(setEditorModalStatus(false));
-        dispatch(setModalGlobalSettings(false));
-        dispatch(setModalCategories(false));
+        dispatch(setSettingsModal(false));
+        dispatch(setCategoriesModal(false));
       }
-      else if (e.state && e.state.modal === 'new') {
+      else if (e.state && e.state.modal === 'editorModalNew') {
         dispatch(setEditorModalStatus('edit'));
-        dispatch(setModalSettings(false));
+        dispatch(setDocumentSettingsModal(false));
       }
       else if (e.state && e.state.modal === 'editFC') {
         dispatch(setEditorModalStatus('editFC'));
-        dispatch(setModalSettings(false));
+        dispatch(setDocumentSettingsModal(false));
       }
       else if (e.state && e.state.modal === 'preview') {
         dispatch(setEditorModalStatus('preview'));
-        dispatch(setModalSettings(false));
+        dispatch(setDocumentSettingsModal(false));
       }
       else if (e.state && e.state.modal === 'editFP') {
         dispatch(setEditorModalStatus('editFP'));
-        dispatch(setModalSettings(false));
+        dispatch(setDocumentSettingsModal(false));
       }
       else if (e.state && e.state.modal === 'articleSettings') {
-        dispatch(setModalSettings(true));
-        dispatch(setModalDeleteArticle(false));
+        dispatch(setDocumentSettingsModal(true));
+        dispatch(setDocumentDeleteModal(false));
       }
       else if (e.state && e.state.modal === 'deleteArticle') {
-        dispatch(setModalDeleteArticle(true));
+        dispatch(setDocumentDeleteModal(true));
       }
-      else if (e.state && e.state.modal === 'globalSettings') {
-        dispatch(setModalGlobalSettings(true));
+      else if (e.state && e.state.modal === 'settings') {
+        dispatch(setSettingsModal(true));
       }
       else if (e.state && e.state.modal === 'categories') {
-        dispatch(setModalCategories(true));
+        dispatch(setCategoriesModal(true));
       }
     };
 

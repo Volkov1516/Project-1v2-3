@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateDocument, deleteDocument } from 'redux/features/document/documentSlice';
-import { setModalSettings, setModalDeleteArticle } from 'redux/features/modal/modalSlice';
+import { setDocumentSettingsModal, setDocumentDeleteModal } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 
@@ -10,7 +10,7 @@ import css from './ArticleSettingsModal.module.css';
 export default function ArticleSettingsModal() {
   const dispatch = useDispatch();
   const { userCategories } = useSelector(state => state.user);
-  const { modalSettings, modalDeleteArticle } = useSelector(state => state.modal);
+  const { documentSettingsModal, documentDeleteModal } = useSelector(state => state.modal);
   const { documentId, archive, title, color, documentCategories } = useSelector(state => state.document);
 
   const [deletionInputValue, setDeltionInputValue] = useState('');
@@ -23,7 +23,7 @@ export default function ArticleSettingsModal() {
   }, [documentId, documentCategories, userCategories]);
 
   const handleOpen = () => {
-    dispatch(setModalSettings(true));
+    dispatch(setDocumentSettingsModal(true));
 
     window.history.pushState({ modal: 'articleSettings' }, '', '#settings');
   };
@@ -33,7 +33,7 @@ export default function ArticleSettingsModal() {
   };
 
   const handleOpenDeletion = () => {
-    dispatch(setModalDeleteArticle(true));
+    dispatch(setDocumentDeleteModal(true));
 
     window.history.pushState({ modal: 'deleteArticle' }, '', '#delete');
   };
@@ -102,7 +102,7 @@ export default function ArticleSettingsModal() {
   return (
     <>
       <div className={css.openButton} onClick={handleOpen}>settings</div>
-      {modalSettings && (
+      {documentSettingsModal && (
         <div className={css.container} onClick={handleClose}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
             <div className={css.header}>
@@ -129,7 +129,7 @@ export default function ArticleSettingsModal() {
             </div>
             <div className={css.archiveButton} onClick={handleArchive}>{archive ? 'unarchive' : 'archive'}</div>
             <div className={css.deleteButton} onClick={handleOpenDeletion}>delete</div>
-            {modalDeleteArticle && (
+            {documentDeleteModal && (
               <div className={css.deletionContainer} onClick={handleCloseDeletion}>
                 <div className={css.deletionContent} onClick={(e) => e.stopPropagation()}>
                   <div className={css.deletionHeader}>

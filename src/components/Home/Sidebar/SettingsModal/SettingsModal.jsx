@@ -6,7 +6,7 @@ import {
   setFilteredDocumentsId,
   setCurrentDocument
 } from 'redux/features/document/documentSlice';
-import { setModalGlobalSettings } from 'redux/features/modal/modalSlice';
+import { setSettingsModal } from 'redux/features/modal/modalSlice';
 import { auth } from 'firebase.js';
 import { signOut } from 'firebase/auth';
 
@@ -14,10 +14,25 @@ import css from './SettingsModal.module.css';
 
 export const SettingsModal = memo(function SettingsComponent({ setCategoriesMenu }) {
   const dispatch = useDispatch();
-  const { modalGlobalSettings } = useSelector(state => state.modal);
+  const { settingsModal } = useSelector(state => state.modal);
   const { email } = useSelector(state => state.user);
 
-  const handleSignOut = async () => {
+  const open = () => {
+    setCategoriesMenu(false);
+
+    if (settingsModal) {
+      window.history.back();
+    }
+    else {
+      dispatch(setSettingsModal(true));
+
+      window.history.pushState({ modal: 'settings' }, '', '#settings');
+    }
+  };
+
+  const close = () => window.history.back();
+
+  const logOut = async () => {
     await signOut(auth)
       .then(() => {
         dispatch(setUser({ id: null, email: null, categories: null }));
@@ -33,37 +48,20 @@ export const SettingsModal = memo(function SettingsComponent({ setCategoriesMenu
           categories: null,
           archive: null
         }));
-        dispatch(setModalGlobalSettings(false));
+        dispatch(setSettingsModal(false));
       })
       .catch(error => console.log(error));
   };
 
-  const handleOpen = () => {
-    setCategoriesMenu(false);
-
-    if (modalGlobalSettings) {
-      window.history.back();
-    }
-    else {
-      dispatch(setModalGlobalSettings(true));
-
-      window.history.pushState({ modal: 'globalSettings' }, '', '#settings');
-    }
-  };
-
-  const handleClose = () => {
-    window.history.back();
-  }
-
   return (
     <>
-      <div className={`${css.openButton} ${modalGlobalSettings && css.openButtonActive}`} onClick={handleOpen}>settings</div>
-      {modalGlobalSettings && (
-        <div className={css.container} onClick={handleClose}>
+      <div className={`${css.openButton} ${settingsModal && css.openButtonActive}`} onClick={open}>settings</div>
+      {settingsModal && (
+        <div className={css.container} onClick={close}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
             <div className={css.header}>
               <span className={css.title}>settings</span>
-              <button className={css.closeButton} onClick={handleClose}>close</button>
+              <button className={css.closeButton} onClick={close}>close</button>
             </div>
             <div className={css.group}>
               <span className={css.email}>{email}</span>
@@ -77,7 +75,7 @@ export const SettingsModal = memo(function SettingsComponent({ setCategoriesMenu
             <div className={css.group}>
               <span className={css.email}>support the project</span>
             </div>
-            <div className={css.signOutButton} onClick={handleSignOut}>sing out</div>
+            <div className={css.signOutButton} onClick={logOut}>sing out</div>
           </div>
         </div>
       )}

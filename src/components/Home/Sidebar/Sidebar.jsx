@@ -13,21 +13,27 @@ export const Sidebar = () => {
   const dispatch = useDispatch();
   const { userCategories } = useSelector(state => state.user);
   const { documents } = useSelector(state => state.document);
-  const { modalGlobalSettings } = useSelector(state => state.modal);
+  const { settingsModal } = useSelector(state => state.modal);
 
   const [activeButtonId, setActiveButtonId] = useState('documents');
   const [activeCategoryText, setActiveCategoryText] = useState('documents');
   const [categoriesMenu, setCategoriesMenu] = useState(false);
 
-  const scrollRef = useRef(null);
+  const categoriesWrapperRef = useRef(null);
 
   useEffect(() => {
     if (!categoriesMenu) return;
-    
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+
+    categoriesWrapperRef.current.scrollTop = categoriesWrapperRef.current.scrollHeight;
   }, [categoriesMenu]);
 
-  const openModalEditor = () => {
+  const handleCategoriesMenu = () => {
+    if (settingsModal) window.history.back();
+
+    setCategoriesMenu(!categoriesMenu);
+  };
+
+  const openEditorModal = () => {
     dispatch(setCurrentDocument({
       isNew: true,
       index: null,
@@ -40,10 +46,10 @@ export const Sidebar = () => {
     }));
     dispatch(setEditorModalStatus('edit'));
 
-    window.history.pushState({ modal: 'new' }, '', '#editor');
+    window.history.pushState({ modal: 'editorModalNew' }, '', '#editor');
   };
 
-  const handleAll = () => {
+  const filterByAll = () => {
     const filteredDocumentsId = [];
     documents?.forEach(i => !i?.archive && filteredDocumentsId.push(i?.id));
 
@@ -53,7 +59,7 @@ export const Sidebar = () => {
     setCategoriesMenu(false);
   };
 
-  const handleArchive = () => {
+  const filterByArchive = () => {
     const filteredDocumentsId = [];
     documents?.forEach(i => i?.archive && filteredDocumentsId.push(i?.id));
 
@@ -63,7 +69,7 @@ export const Sidebar = () => {
     setCategoriesMenu(false);
   };
 
-  const setFilteredByCategory = (id, name) => {
+  const filterByCategory = (id, name) => {
     const unarchived = documents?.filter(i => !i?.archive);
     let newArr = [];
 
@@ -82,23 +88,16 @@ export const Sidebar = () => {
     setCategoriesMenu(false);
   };
 
-  const handleCategoriesMenu = () => {
-    if (modalGlobalSettings) {
-      window.history.back();
-    }
-    setCategoriesMenu(!categoriesMenu);
-  };
-
   const categoriesComponent = () => {
     return (
       <div className={css.categoriesContainer}>
-        <div id="documents" className={`${css.categoryButton} ${activeButtonId === "documents" && css.activeCategoryButton}`} onClick={handleAll}>documents</div>
+        <div id="documents" className={`${css.categoryButton} ${activeButtonId === "documents" && css.activeCategoryButton}`} onClick={filterByAll}>documents</div>
         {userCategories?.map(i => (
-          <div id={i?.id} className={`${css.categoryButton} ${activeButtonId === i?.id && css.activeCategoryButton}`} key={i?.id} onClick={() => setFilteredByCategory(i?.id, i?.name)}>
+          <div id={i?.id} className={`${css.categoryButton} ${activeButtonId === i?.id && css.activeCategoryButton}`} key={i?.id} onClick={() => filterByCategory(i?.id, i?.name)}>
             {i?.name}
           </div>
         ))}
-        <div id="archive" className={`${css.categoryButton} ${activeButtonId === "archive" && css.activeCategoryButton}`} onClick={handleArchive}>archive</div>
+        <div id="archive" className={`${css.categoryButton} ${activeButtonId === "archive" && css.activeCategoryButton}`} onClick={filterByArchive}>archive</div>
         <CategoriesModal />
       </div>
     );
@@ -107,12 +106,12 @@ export const Sidebar = () => {
   return (
     <div className={css.container}>
       <div className={css.start}>
-        <div className={css.createButton} onClick={openModalEditor}>CREATE</div>
+        <div className={css.createButton} onClick={openEditorModal}>CREATE</div>
         <div className={css.largeDisplayCategoriesWrapper}>{categoriesComponent()}</div>
         <div className={`${css.smallDisplayCategoriesButton} ${categoriesMenu && css.activeCategoriesBtn}`} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
       </div>
       <div className={css.end}><SettingsModal setCategoriesMenu={setCategoriesMenu} /></div>
-      {categoriesMenu && <div ref={scrollRef} className={css.smallDisplayCategoriesWrapper}>{categoriesComponent()}</div>}
+      {categoriesMenu && <div ref={categoriesWrapperRef} className={css.smallDisplayCategoriesWrapper}>{categoriesComponent()}</div>}
     </div>
   );
 };

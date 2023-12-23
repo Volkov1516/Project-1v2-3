@@ -1,7 +1,7 @@
 import { useState, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUserCategory, updateUserCategory, deleteUserCategory } from 'redux/features/user/userSlice';
-import { setModalCategories } from 'redux/features/modal/modalSlice';
+import { setCategoriesModal } from 'redux/features/modal/modalSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,20 +12,18 @@ import css from './CategoriesModal.module.css';
 
 export const CategoriesModal = memo(function CategoriesComponent() {
   const dispatch = useDispatch();
-  const { modalCategories } = useSelector(state => state.modal);
+  const { categoriesModal } = useSelector(state => state.modal);
   const { userId, userCategories } = useSelector(state => state.user);
 
   const [inputValue, setInputValue] = useState('');
 
   const handleOpen = () => {
-    dispatch(setModalCategories(true));
+    dispatch(setCategoriesModal(true));
 
     window.history.pushState({ modal: 'categories' }, '', '#categories');
   };
 
-  const handleClose = () => {
-    window.history.back();
-  }
+  const close = () => window.history.back();
 
   const handleAddUserCategory = async () => {
     if (!inputValue) return;
@@ -69,12 +67,12 @@ export const CategoriesModal = memo(function CategoriesComponent() {
   return (
     <>
       <div className={css.openButton} onClick={handleOpen}>edit categories</div>
-      {modalCategories && (
-        <div className={css.container} onClick={handleClose}>
+      {categoriesModal && (
+        <div className={css.container} onClick={close}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
             <div className={css.header}>
               <span className={css.title}>edit categories</span>
-              <button className={css.closeButton} onClick={handleClose}>close</button>
+              <button className={css.closeButton} onClick={close}>close</button>
             </div>
             <div className={css.creationGroup}>
               <input className={css.creationInput} placeholder="new category..." value={inputValue} onChange={(e) => setInputValue(e.target.value)} />

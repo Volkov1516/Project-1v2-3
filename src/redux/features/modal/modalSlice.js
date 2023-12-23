@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   editorModalStatus: null,
-  modalSettings: false,
-  modalGlobalSettings: false,
-  modalCategories: false,
-  modalDeleteArticle: false,
+  documentSettingsModal: false,
+  documentDeleteModal: false,
+  settingsModal: false,
+  categoriesModal: false
 };
 
 export const modalSlice = createSlice({
@@ -15,26 +15,27 @@ export const modalSlice = createSlice({
     setEditorModalStatus: (state, action) => {
       state.editorModalStatus = action.payload;
     },
-    setModalSettings: (state, action) => {
-      state.modalSettings = action.payload;
+    setDocumentSettingsModal: (state, action) => {
+      state.documentSettingsModal = action.payload;
     },
-    setModalGlobalSettings: (state, action) => {
-      state.modalGlobalSettings = action.payload;
+    setDocumentDeleteModal: (state, action) => {
+      state.documentDeleteModal = action.payload;
     },
-    setModalCategories: (state, action) => {
-      state.modalCategories = action.payload;
+    setCategoriesModal: (state, action) => {
+      state.categoriesModal = action.payload;
     },
-    setModalDeleteArticle: (state, action) => {
-      state.modalDeleteArticle = action.payload;
-    }
+    setSettingsModal: (state, action) => {
+      state.settingsModal = action.payload;
+    },
+
   }
 });
 
 export const {
   setEditorModalStatus,
-  setModalSettings,
-  setModalGlobalSettings,
-  setModalCategories,
-  setModalDeleteArticle,
+  setDocumentSettingsModal,
+  setDocumentDeleteModal,
+  setCategoriesModal,
+  setSettingsModal
 } = modalSlice.actions;
 export default modalSlice.reducer;
