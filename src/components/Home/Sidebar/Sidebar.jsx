@@ -16,8 +16,8 @@ export const Sidebar = () => {
   const { modalGlobalSettings } = useSelector(state => state.modal);
 
   const [activeButtonId, setActiveButtonId] = useState('documents');
-  const [categoriesMenu, setCategoriesMenu] = useState(false);
   const [activeCategoryText, setActiveCategoryText] = useState('documents');
+  const [categoriesMenu, setCategoriesMenu] = useState(false);
 
   const openModalEditor = () => {
     dispatch(setCurrentDocument({
@@ -101,11 +101,9 @@ export const Sidebar = () => {
       <div className={css.start}>
         <div className={css.createButton} onClick={openModalEditor}>CREATE</div>
         <div className={css.largeDisplayCategoriesWrapper}>{categoriesComponent()}</div>
-        <div className={css.smallDisplayCategoriesButton} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
+        <div className={`${css.smallDisplayCategoriesButton} ${categoriesMenu && css.activeCategoriesBtn}`} onClick={handleCategoriesMenu}>{activeCategoryText}</div>
       </div>
-      <div className={css.end}>
-        <SettingsModal setCategoriesMenu={setCategoriesMenu}/>
-      </div>
+      <div className={css.end}><SettingsModal setCategoriesMenu={setCategoriesMenu}/></div>
       {categoriesMenu && <div className={css.smallDisplayCategoriesWrapper}>{categoriesComponent()}</div>}
     </div>
   );
