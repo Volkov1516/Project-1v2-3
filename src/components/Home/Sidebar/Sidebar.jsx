@@ -25,8 +25,7 @@ export const Sidebar = () => {
   useEffect(() => {
     if (!categoriesMenu) return;
     
-    const home = document.getElementById('home')
-    setCategoriesMenuHeight(home.clientHeight - 80);
+    setCategoriesMenuHeight(window.innerHeight - 80);
     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [categoriesMenu]);
 
