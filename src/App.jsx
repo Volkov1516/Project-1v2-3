@@ -62,8 +62,6 @@ export const App = () => {
 
   useEffect(() => {
     const handlePopState = (e) => {
-      console.log(JSON.stringify(e.state));
-
       if (e.state && !e.state.modal) {
         dispatch(setEditorModalStatus(false));
         dispatch(setSettingsModal(false));
