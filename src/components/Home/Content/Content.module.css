@@ -9,7 +9,7 @@
 
 .document {
   width: 100%;
-  /* max-width: 700px; */
+  max-width: 700px;
   text-transform: uppercase;
   font-size: 40px;
   font-weight: 400;
@@ -82,39 +82,9 @@
   user-select: none;
 }
 
-.document:active {
-  background-color: var(--gray100);
-}
-
-.document.red:active {
-  text-decoration: none;
-  background-color: rgba(224, 49, 49, 0.5);
-}
-
-.document.blue:active {
-  text-decoration: none;
-  background-color: rgb(25, 113, 194, 0.5);
-}
-
-@media (hover: hover) {
-  .document:hover {
-    background-color: var(--gray100);
-  }
-
-  .document.red:hover {
-    text-decoration: none;
-    background-color: rgba(224, 49, 49, 0.5);
-  }
-
-  .document.blue:hover {
-    text-decoration: none;
-    background-color: rgb(25, 113, 194, 0.5);
-  }
-}
-
 @media (max-width: 639px) {
   .document:not(:last-child) {
-    border-bottom: 1px solid var(--gray500);
+    border-bottom: 1px solid var(--gray300);
     padding: 8px 0px;
   }
   
