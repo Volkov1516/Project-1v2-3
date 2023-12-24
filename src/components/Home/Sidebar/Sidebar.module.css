@@ -102,7 +102,7 @@
     left: 16px;
     height: 1px;
     width: calc(100% - 32px);
-    background-color: black;
+    background-color: var(--gray500);
   }
 
   .start {
