@@ -98,14 +98,14 @@ export const Editor = ({
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      {(editorModalStatus !== "preview") && <ToolbarBlockPlugin modalEditorContentRef={editorRef} titleRef={titleRef} />}
-      {(editorModalStatus !== "preview") && <ToolbarTextPlugin modalEditorContentRef={editorRef} />}
       <div className={css.container} onContextMenu={handleContentMenu}>
         <RichTextPlugin
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           ErrorBoundary={LexicalErrorBoundary}
         />
-        {editorModalStatus !== "preview" && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
+        {(editorModalStatus !== "preview") && <ToolbarBlockPlugin modalEditorContentRef={editorRef} titleRef={titleRef} />}
+        {(editorModalStatus !== "preview") && <ToolbarTextPlugin modalEditorContentRef={editorRef} />}
+        {(editorModalStatus !== "preview") && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
         {editorModalStatus === "edit" && <AutoFocusPlugin />}
         {editorModalStatus === "preview" && <RefreshStatePlugin />}
         <ListPlugin />

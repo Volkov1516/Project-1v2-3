@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateDocument, deleteDocument } from 'redux/features/document/documentSlice';
 import { setDocumentSettingsModal, setDocumentDeleteModal } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 
-import css from './ArticleSettingsModal.module.css';
+import css from './DocumentSettingsModal.module.css';
 
-export default function ArticleSettingsModal() {
+export const DocumentSettingsModal = memo(function DocumentSettingsModalComponent() {
   const dispatch = useDispatch();
   const { userCategories } = useSelector(state => state.user);
   const { documentSettingsModal, documentDeleteModal } = useSelector(state => state.modal);
@@ -146,4 +146,4 @@ export default function ArticleSettingsModal() {
       )}
     </>
   );
-};
+});

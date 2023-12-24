@@ -8,7 +8,7 @@
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
-  user-select: none !important;
+  /* user-select: none !important; */
 }
 
 .preview {
@@ -21,7 +21,7 @@
   /* background-color: var(--gray100); */
   /* background-color: #FDF7E4; */
   overflow: hidden;
-  user-select: none !important;
+  /* user-select: none !important; */
 }
 
 .preview>.editor {
@@ -29,9 +29,9 @@
   padding: 0px 8px;
   overflow: auto;
   max-height: 100%;
-  user-select: none !important;
+  /* user-select: none !important; */
   scroll-behavior: smooth;
-  padding-bottom: 600px;
+  padding-bottom: 500px;
 }
 
 .preview>.editor>.header {
@@ -57,7 +57,7 @@
   max-height: 100%;
   user-select: none !important;
   scroll-behavior: smooth;
-  padding-bottom: calc(600px + 5vh);
+  padding-bottom: calc(500px + 5vh);
 }
 
 .edit>.editor>.header,
@@ -71,22 +71,21 @@
   margin-bottom: 5vh;
 }
 
-.navigation {
-  display: none;
-  /* padding: 8px 16px;
-  display: flex !important;
-  justify-content: space-between;
-  align-items: center;
-  background-color: var(--gray100); */
-}
-
 .preview>.navigation {
+  position: relative;
   padding: 8px;
   display: flex !important;
   justify-content: space-between;
   align-items: center;
-  /* background-color: var(--gray100); */
-  border-bottom: 1px solid black;
+}
+
+.preview>.navigation:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 1px;
+  width: calc(100% - 16px);
+  background-color: var(--gray300);
 }
 
 .navigationStart {
@@ -216,11 +215,19 @@
     height: calc(100% - 16px);
     margin: 8px;
     flex-direction: column-reverse;
-    /* border-radius: 1em; */
   }
 
   .preview>.navigation {
-    border-top: 1px solid black;
+    position: relative;
+  }
+
+  .preview>.navigation:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 1px;
+    width: calc(100% - 16px);
+    background-color: var(--gray300);
   }
 
   .preview>.editor>.header {
@@ -239,7 +246,7 @@
   .edit>.editor,
   .editFP>.editor,
   .editFC>.editor {
-    padding-bottom: 678px;
+    padding-bottom: 578px;
   }
 
   .edit>.editor>.header,
