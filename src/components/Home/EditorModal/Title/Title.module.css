@@ -5,7 +5,7 @@ textarea {
   outline: none;
   border: none;
   text-transform: uppercase;
-  font-size: 36px;
+  font-size: 40px;
   font-weight: 400;
   resize: none;
   overflow: auto;
@@ -17,14 +17,8 @@ textarea::placeholder {
   color: #BFC7B4;
 }
 
-textarea.white {
-  background-color: transparent;
-  color: black;
-}
-
-textarea.black {
-  background-color: black;
-  color: white;
+textarea.none {
+  text-decoration: none;
 }
 
 textarea.red {
