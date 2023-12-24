@@ -65,25 +65,25 @@ export const Content = ({ mouseTimer }) => {
   const onMouseUp = () => mouseTimer && window.clearTimeout(mouseTimer);
 
   return (
-    <main className={css.container} onScroll={onMouseUp}>
+    <div className={css.container} onScroll={onMouseUp}>
       {documents?.map((i) => filteredDocumentsId.includes(i.id) && (
-        <article
+        <div
           key={i?.id}
           onClick={() => openModalEditor(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
           onMouseDown={() => onMouseDown(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
           onMouseUp={onMouseUp}
           onTouchStart={() => onMouseDown(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
           onTouchEnd={onMouseUp}
-          className={`${css.documentTitle} ${css[i?.color]}`}
+          className={`${css.document} ${css[i?.color]}`}
         >
           {i?.title || 'Untitled'}
-        </article>
+        </div>
       ))}
       {filteredDocumentsId?.length < 1 && (
         <div className={css.emptyContainer}>
           no documents
         </div>
       )}
-    </main>
+    </div>
   );
 };
