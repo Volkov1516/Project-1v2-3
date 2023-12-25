@@ -95,12 +95,13 @@
   }
 
   .preview>.content {
-    padding: 44px 8px 500px;
+    padding: 45px 8px 500px;
   }
 
   .preview>.content>.header {
     position: fixed;
     top: 8px;
+    height: 40px;
     width: calc(100% - 32px);
     display: flex;
     justify-content: space-between;
