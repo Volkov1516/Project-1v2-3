@@ -106,7 +106,7 @@ export const Editor = ({
         {(editorModalStatus !== "preview") && <ToolbarBlockPlugin modalEditorContentRef={editorRef} titleRef={titleRef} />}
         {(editorModalStatus !== "preview") && <ToolbarTextPlugin modalEditorContentRef={editorRef} />}
         {(editorModalStatus !== "preview") && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
-        {editorModalStatus === "edit" && <AutoFocusPlugin />}
+        {editorModalStatus === "editorModalNew" && <AutoFocusPlugin />}
         {editorModalStatus === "preview" && <RefreshStatePlugin />}
         <ListPlugin />
         <CheckListPlugin />
