@@ -122,7 +122,7 @@
   .editorModalNew>.content>.header,
   .editorModalFromPreview>.content>.header,
   .editorModalFromComponent>.content>.header {
-    height: 53px;
+    /* height: 53px; */
     padding: 16px 0px;
     margin-bottom: 0;
   }
