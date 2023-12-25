@@ -5,9 +5,9 @@ import { setDocumentSettingsModal, setDocumentDeleteModal } from 'redux/features
 import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 
-import css from './DocumentSettingsModal.module.css';
+import css from './Settings.module.css';
 
-export const DocumentSettingsModal = memo(function DocumentSettingsModalComponent() {
+export const Settings = memo(function SettingsComponent() {
   const dispatch = useDispatch();
   const { userCategories } = useSelector(state => state.user);
   const { documentSettingsModal, documentDeleteModal } = useSelector(state => state.modal);

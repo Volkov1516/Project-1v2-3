@@ -22,7 +22,7 @@
   overflow: hidden;
 }
 
-.preview>.editor {
+.preview>.content {
   position: relative;
   max-height: 100%;
   padding: 0 16px 500px;
@@ -30,17 +30,13 @@
   scroll-behavior: smooth;
 }
 
-.preview>.editor>.header {
+.preview>.content>.header {
   display: none;
 }
 
-
-
-
-
-.edit,
-.editFP,
-.editFC {
+.editorModalNew,
+.editorModalFromPreview,
+.editorModalFromComponent {
   height: 100%;
   width: 100%;
   background-color: white;
@@ -49,20 +45,19 @@
   overflow: hidden;
 }
 
-.edit>.editor,
-.editFP>.editor,
-.editFC>.editor {
+.editorModalNew>.content,
+.editorModalFromPreview>.content,
+.editorModalFromComponent>.content {
   position: relative;
   overflow: auto;
   max-height: 100%;
-  user-select: none !important;
   scroll-behavior: smooth;
   padding-bottom: calc(500px + 5vh);
 }
 
-.edit>.editor>.header,
-.editFP>.editor>.header,
-.editFC>.editor>.header {
+.editorModalNew>.content>.header,
+.editorModalFromPreview>.content>.header,
+.editorModalFromComponent>.content>.header {
   width: 100%;
   padding: 16px;
   display: flex;
@@ -99,32 +94,32 @@
     flex-direction: column-reverse;
   }
 
-  .preview>.editor {
+  .preview>.content {
     padding: 0 8px 500px;
   }
 
-  .preview>.editor>.header {
+  .preview>.content>.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 8px 0px 16px;
   }
 
-  .edit,
-  .editFP,
-  .editFC {
+  .editorModalNew,
+  .editorModalFromPreview,
+  .editorModalFromComponent {
     padding: 0px 16px;
   }
 
-  .edit>.editor,
-  .editFP>.editor,
-  .editFC>.editor {
+  .editorModalNew>.content,
+  .editorModalFromPreview>.content,
+  .editorModalFromComponent>.content {
     padding-bottom: 578px;
   }
 
-  .edit>.editor>.header,
-  .editFP>.editor>.header,
-  .editFC>.editor>.header {
+  .editorModalNew>.content>.header,
+  .editorModalFromPreview>.content>.header,
+  .editorModalFromComponent>.content>.header {
     padding: 16px 0px;
     margin-bottom: 0;
   }

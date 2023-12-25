@@ -1,12 +1,13 @@
+import { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { updateDocumentIndex } from 'redux/features/document/documentSlice';
 
-import { DocumentSettingsModal } from '../DocumentSettingsModal/DocumentSettingsModal';
+import { Settings } from '../Settings/Settings';
 
 import css from './Navigation.module.css';
 
-export const Navigation = () => {
+export const Navigation = memo(function MemoizedNavigation() {
   const dispatch = useDispatch();
   const { filteredDocumentsId, documentIndex } = useSelector(state => state.document);
 
@@ -14,24 +15,24 @@ export const Navigation = () => {
 
   const prev = () => {
     if (documentIndex === 0) return;
+    dispatch(updateDocumentIndex(documentIndex - 1));
 
     const modalPreviewElement = document.getElementById('editorModal');
     modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
-    dispatch(updateDocumentIndex(documentIndex - 1));
   };
 
   const next = () => {
     if (documentIndex === filteredDocumentsId?.length - 1) return;
+    dispatch(updateDocumentIndex(documentIndex + 1));
 
     const modalPreviewElement = document.getElementById('editorModal');
     modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
-    dispatch(updateDocumentIndex(documentIndex + 1));
   };
 
   const openEditorFromPreview = () => {
-    dispatch(setEditorModalStatus('editFP'));
+    dispatch(setEditorModalStatus('editorModalFromPreview'));
 
-    window.history.pushState({ modal: 'editFP' }, '', '#editor');
+    window.history.pushState({ modal: 'editorModalFromPreview' }, '', '#editor');
   }
 
   return (
@@ -48,7 +49,7 @@ export const Navigation = () => {
         </div>
         <button className={css.navigationEditButton} onClick={openEditorFromPreview}>edit</button>
         <div className={css.navigationSettingsWrapper}>
-          <DocumentSettingsModal />
+          <Settings />
         </div>
       </div>
       <div className={css.navigationEnd}>
@@ -56,4 +57,4 @@ export const Navigation = () => {
       </div>
     </div>
   );
-};
+});

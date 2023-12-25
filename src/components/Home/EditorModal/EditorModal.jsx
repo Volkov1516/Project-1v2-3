@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import css from './EditorModal.module.css';
-
+import { Navigation } from './Navigation/Navigation';
 import { Title } from './Title/Title';
 import { Editor } from './Editor/Editor';
-import { DocumentSettingsModal } from './DocumentSettingsModal/DocumentSettingsModal';
-import { Navigation } from './Navigation/Navigation';
 import { Categories } from './Categories/Categories';
+import { Settings } from './Settings/Settings';
+
+import css from './EditorModal.module.css';
 
 export const EditorModal = () => {
   const { editorModalStatus } = useSelector(state => state.modal);
@@ -24,14 +24,10 @@ export const EditorModal = () => {
     <div className={css.container} key={documentIndex} onClick={close}>
       <div className={css[editorModalStatus]} onClick={(e) => e.stopPropagation()}>
         {editorModalStatus === "preview" && <Navigation />}
-        <div id="editorModal" className={css.editor} ref={editorRef}>
+        <div id="editorModal" className={css.content} ref={editorRef}>
           <div className={css.header}>
-            <div className={css.headerStart}>
-              <div className={css.headerCloseButton} onClick={close}>close</div>
-            </div>
-            <div className={css.headerEnd}>
-              {!isNewDocument && <DocumentSettingsModal />}
-            </div>
+            <div className={css.headerStart}><div className={css.headerCloseButton} onClick={close}>close</div></div>
+            <div className={css.headerEnd}>{!isNewDocument && <Settings />}</div>
           </div>
           <Title ref={titleRef} saving={saving} setSaving={setSaving} />
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />

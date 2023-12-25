@@ -27,9 +27,9 @@ export const Content = ({ mouseTimer }) => {
       categories,
       archive
     }));
-    dispatch(setEditorModalStatus('editFC'));
+    dispatch(setEditorModalStatus('editorModalFromComponent'));
 
-    window.history.pushState({ modal: 'editFC' }, '', '#editor');
+    window.history.pushState({ modal: 'editorModalFromComponent' }, '', '#editor');
   };
 
   const onMouseDown = (id, title, content, color, categories, archive) => {

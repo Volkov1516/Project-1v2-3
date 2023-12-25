@@ -68,19 +68,19 @@ export const App = () => {
         dispatch(setCategoriesModal(false));
       }
       else if (e.state && e.state.modal === 'editorModalNew') {
-        dispatch(setEditorModalStatus('edit'));
+        dispatch(setEditorModalStatus('editorModalNew'));
         dispatch(setDocumentSettingsModal(false));
       }
-      else if (e.state && e.state.modal === 'editFC') {
-        dispatch(setEditorModalStatus('editFC'));
+      else if (e.state && e.state.modal === 'editorModalFromComponent') {
+        dispatch(setEditorModalStatus('editorModalFromComponent'));
+        dispatch(setDocumentSettingsModal(false));
+      }
+      else if (e.state && e.state.modal === 'editorModalFromPreview') {
+        dispatch(setEditorModalStatus('editorModalFromPreview'));
         dispatch(setDocumentSettingsModal(false));
       }
       else if (e.state && e.state.modal === 'preview') {
         dispatch(setEditorModalStatus('preview'));
-        dispatch(setDocumentSettingsModal(false));
-      }
-      else if (e.state && e.state.modal === 'editFP') {
-        dispatch(setEditorModalStatus('editFP'));
         dispatch(setDocumentSettingsModal(false));
       }
       else if (e.state && e.state.modal === 'articleSettings') {
