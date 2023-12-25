@@ -101,6 +101,7 @@
   }
 
   .preview>.content>.header {
+    height: unset !important;
     display: flex;
     justify-content: space-between;
     align-items: center;
