@@ -76,11 +76,12 @@ background-color: black;
 }
 
 .arrowWrapper:active {
-  background-color: var(--gray800);
+  background-color: var(--gray1000);
 }
 
 .arrowWrapper:disabled:active {
   cursor: not-allowed;
+  background-color: white;
 }
 
 .arrowWrapper:disabled>.arrowLeft {
