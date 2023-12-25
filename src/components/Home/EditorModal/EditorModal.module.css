@@ -95,29 +95,14 @@
   }
 
   .preview>.content {
-    padding: 45px 8px 500px;
+    padding: 0 8px 500px;
   }
 
   .preview>.content>.header {
-    position: fixed;
-    top: 8px;
-    /* height: 40px; */
-    width: calc(100% - 32px);
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 8px 0px 16px;
-    background-color: white;
-    z-index: 3;
-  }
-
-  .preview>.content>.header::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    height: 1px;
-    width: 100%;
-    background-color: var(--gray300);
   }
 
   .editorModalNew,
