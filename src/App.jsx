@@ -83,11 +83,11 @@ export const App = () => {
         dispatch(setEditorModalStatus('preview'));
         dispatch(setDocumentSettingsModal(false));
       }
-      else if (e.state && e.state.modal === 'articleSettings') {
+      else if (e.state && e.state.modal === 'documentSettings') {
         dispatch(setDocumentSettingsModal(true));
         dispatch(setDocumentDeleteModal(false));
       }
-      else if (e.state && e.state.modal === 'deleteArticle') {
+      else if (e.state && e.state.modal === 'documentDeleteModal') {
         dispatch(setDocumentDeleteModal(true));
       }
       else if (e.state && e.state.modal === 'settings') {

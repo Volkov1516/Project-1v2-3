@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentDocument } from 'redux/features/document/documentSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 
 import css from './Content.module.css';
 
-export const Content = ({ mouseTimer }) => {
+export const Content = memo(function MemoizedContent({ mouseTimer }) {
   const dispatch = useDispatch();
   const { documents, filteredDocumentsId } = useSelector(state => state.document);
 
@@ -86,4 +87,4 @@ export const Content = ({ mouseTimer }) => {
       )}
     </div>
   );
-};
+});

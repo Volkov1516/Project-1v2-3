@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilteredDocumentsId, setCurrentDocument } from 'redux/features/document/documentSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
@@ -9,7 +9,7 @@ import { SettingsModal } from './SettingsModal/SettingsModal';
 
 import css from './Sidebar.module.css';
 
-export const Sidebar = () => {
+export const Sidebar = memo(function MemoizedSidebar() {
   const dispatch = useDispatch();
   const { userCategories } = useSelector(state => state.user);
   const { documents } = useSelector(state => state.document);
@@ -114,4 +114,4 @@ export const Sidebar = () => {
       {categoriesMenu && <div ref={categoriesWrapperRef} className={css.smallDisplayCategoriesWrapper}>{categoriesComponent()}</div>}
     </div>
   );
-};
+});

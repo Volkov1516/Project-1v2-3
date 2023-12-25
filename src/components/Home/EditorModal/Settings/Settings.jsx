@@ -1,7 +1,7 @@
 import { useState, useEffect, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateDocument, deleteDocument } from 'redux/features/document/documentSlice';
-import { setDocumentSettingsModal, setDocumentDeleteModal } from 'redux/features/modal/modalSlice';
+import { setEditorModalStatus, setDocumentSettingsModal, setDocumentDeleteModal } from 'redux/features/modal/modalSlice';
 import { doc, deleteDoc, updateDoc, arrayUnion, arrayRemove, setDoc } from 'firebase/firestore';
 import { db } from 'firebase.js';
 
@@ -25,22 +25,18 @@ export const Settings = memo(function SettingsComponent() {
   const handleOpen = () => {
     dispatch(setDocumentSettingsModal(true));
 
-    window.history.pushState({ modal: 'articleSettings' }, '', '#settings');
+    window.history.pushState({ modal: 'documentSettings' }, '', '#settings');
   };
 
-  const handleClose = () => {
-    window.history.back();
-  };
+  const handleClose = () => window.history.back();
 
   const handleOpenDeletion = () => {
     dispatch(setDocumentDeleteModal(true));
 
-    window.history.pushState({ modal: 'deleteArticle' }, '', '#delete');
+    window.history.pushState({ modal: 'documentDeleteModal' }, '', '#delete');
   };
 
-  const handleCloseDeletion = () => {
-    window.history.back();
-  };
+  const handleCloseDeletion = () => window.history.back();
 
   const handleCategory = async (e, id, name) => {
     if (e.target.checked) {
@@ -92,11 +88,14 @@ export const Settings = memo(function SettingsComponent() {
     await deleteDoc(doc(db, 'documents', documentId))
       .then(() => {
         dispatch(deleteDocument({ id: documentId }));
+        dispatch(setDocumentDeleteModal(false));
+        window.history.back();
+        dispatch(setDocumentSettingsModal(false));
+        window.history.back();
+        dispatch(setEditorModalStatus(false));
         window.history.back();
       })
       .catch(error => console.log(error));
-
-    window.history.back();
   };
 
   return (
@@ -106,12 +105,11 @@ export const Settings = memo(function SettingsComponent() {
         <div className={css.container} onClick={handleClose}>
           <div className={css.content} onClick={(e) => e.stopPropagation()}>
             <div className={css.header}>
-              <span className={css.title}>article settings</span>
+              <span className={css.title}>document settings</span>
               <div className={css.closeButton} onClick={handleClose}>close</div>
             </div>
             <div className={css.colorsContainer}>
-              <div className={`${css.color} ${color === "white" && css.active}`} onClick={() => handleColor("white")} style={{ backgroundColor: "white" }}></div>
-              <div className={`${css.color} ${color === "black" && css.active}`} onClick={() => handleColor("black")} style={{ backgroundColor: "black" }}></div>
+              <div className={`${css.color} ${color === "white" && css.active}`} onClick={() => handleColor("none")} style={{ backgroundColor: "white" }}></div>
               <div className={`${css.color} ${color === "red" && css.active}`} onClick={() => handleColor("red")} style={{ backgroundColor: "#e03131" }}></div>
               <div className={`${css.color} ${color === "orange" && css.active}`} onClick={() => handleColor("orange")} style={{ backgroundColor: "#fd7e14" }}></div>
               <div className={`${css.color} ${color === "yellow" && css.active}`} onClick={() => handleColor("yellow")} style={{ backgroundColor: "#ffd43b" }}></div>
@@ -137,7 +135,10 @@ export const Settings = memo(function SettingsComponent() {
                   </div>
                   <span className={css.message}>type <b className={css.deletionTitle}>{title}</b> to proceed deletion</span>
                   <input className={css.input} type="text" placeholder="type here..." value={deletionInputValue} onChange={(e) => setDeltionInputValue(e.target.value)} />
-                  <button disabled={deletionInputValue.toLowerCase().trim() !== title.toLowerCase().trim()} className={css.deleteForeverButton} onClick={handleDeleteArticle}>delete forever</button>
+                  {title
+                    ? <button disabled={deletionInputValue?.toLowerCase().trim() !== title?.toLowerCase().trim()} className={css.deleteForeverButton} onClick={handleDeleteArticle}>delete forever</button>
+                    : <button className={css.deleteForeverButton} onClick={handleDeleteArticle}>delete forever</button>
+                  }
                 </div>
               </div>
             )}

@@ -8,7 +8,7 @@
   user-select: none;
 }
 
-.openButton {
+.openButton, .closeButton {
   color: #1971c2;
 }
 
@@ -19,6 +19,7 @@
 .deletionCloseButton:active {
   text-decoration: underline;
   text-decoration-thickness: 2px;
+  user-select: none;
 }
 
 .container {
@@ -189,9 +190,9 @@
 }
 
 .deleteForeverButton:disabled {
-  outline: 1px solid #e03131;
+  outline: 1px solid var(--gray500);
   background-color: var(--white);
-  color: #e03131;
+  color: var(--gray500);
   cursor: not-allowed;
 }
 
@@ -223,7 +224,7 @@
   }
 
   .colorsContainer {
-    justify-content: center;
+    justify-content: flex-start;
     gap: 12px;
     padding: 16px;
   }

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -9,7 +10,7 @@ import { Settings } from './Settings/Settings';
 
 import css from './EditorModal.module.css';
 
-export const EditorModal = () => {
+export const EditorModal = memo(function MemoizedEditorModal() {
   const { editorModalStatus } = useSelector(state => state.modal);
   const { isNewDocument, documentIndex } = useSelector(state => state.document);
 
@@ -36,4 +37,4 @@ export const EditorModal = () => {
       </div>
     </div>
   );
-};
+});
