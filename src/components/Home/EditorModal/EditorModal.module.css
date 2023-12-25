@@ -89,6 +89,14 @@
   }
 }
 
+@media (min-width: 639px) {
+  .editorModalNew>.content>.header,
+  .editorModalFromPreview>.content>.header,
+  .editorModalFromComponent>.content>.header {
+    height: 52px;
+  }
+}
+
 @media (max-width: 639px) {
   .preview {
     height: calc(100% - 16px);
