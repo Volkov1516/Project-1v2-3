@@ -91,7 +91,7 @@
 
 @media (max-width: 639px) {
   .preview {
-    height: calc(100% - 16px);
+    height: calc(100vh - 16px);
     margin: 8px;
     flex-direction: column-reverse;
   }
