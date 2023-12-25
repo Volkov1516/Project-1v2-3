@@ -15,6 +15,7 @@ export const Navigation = memo(function MemoizedNavigation() {
 
   const prev = () => {
     if (documentIndex === 0) return;
+
     dispatch(updateDocumentIndex(documentIndex - 1));
 
     const modalPreviewElement = document.getElementById('editorModal');
@@ -23,6 +24,7 @@ export const Navigation = memo(function MemoizedNavigation() {
 
   const next = () => {
     if (documentIndex === filteredDocumentsId?.length - 1) return;
+
     dispatch(updateDocumentIndex(documentIndex + 1));
 
     const modalPreviewElement = document.getElementById('editorModal');
@@ -39,13 +41,13 @@ export const Navigation = memo(function MemoizedNavigation() {
     <div className={css.navigation}>
       <div className={css.navigationStart}>
         <div className={css.navigationControlls}>
-          <div className={css.arrowWrapper} onClick={prev}>
+          <button disabled={documentIndex === 0} className={css.arrowWrapper} onClick={prev}>
             <div className={css.arrowLeft} />
-          </div>
+          </button>
           <div className={css.navigationCountBubble}>{`${documentIndex + 1}`}/{filteredDocumentsId?.length}</div>
-          <div className={css.arrowWrapper} onClick={next}>
+          <button disabled={documentIndex === filteredDocumentsId?.length - 1} className={css.arrowWrapper} onClick={next}>
             <div className={css.arrowRight} />
-          </div>
+          </button>
         </div>
         <button className={css.navigationEditButton} onClick={openEditorFromPreview}>edit</button>
         <div className={css.navigationSettingsWrapper}>
