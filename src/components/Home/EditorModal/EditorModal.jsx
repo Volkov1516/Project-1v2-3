@@ -1,18 +1,17 @@
 import { useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
-import { updateDocumentIndex } from 'redux/features/document/documentSlice';
+import { useSelector } from 'react-redux';
 
 import css from './EditorModal.module.css';
 
 import { Title } from './Title/Title';
 import { Editor } from './Editor/Editor';
 import { DocumentSettingsModal } from './DocumentSettingsModal/DocumentSettingsModal';
+import { Navigation } from './Navigation/Navigation';
+import { Categories } from './Categories/Categories';
 
 export const EditorModal = () => {
-  const dispatch = useDispatch();
   const { editorModalStatus } = useSelector(state => state.modal);
-  const { filteredDocumentsId, isNewDocument, documentIndex, documentCategories } = useSelector(state => state.document);
+  const { isNewDocument, documentIndex } = useSelector(state => state.document);
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
@@ -21,54 +20,11 @@ export const EditorModal = () => {
 
   const close = () => window.history.back();
 
-  const prev = () => {
-    if (documentIndex === 0) return;
-
-    const modalPreviewElement = document.getElementById('editorModal');
-    modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
-    dispatch(updateDocumentIndex(documentIndex - 1));
-  };
-
-  const next = () => {
-    if (documentIndex === filteredDocumentsId?.length - 1) return;
-
-    const modalPreviewElement = document.getElementById('editorModal');
-    modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
-    dispatch(updateDocumentIndex(documentIndex + 1));
-  };
-
-  const openEditorFromPreview = () => {
-    dispatch(setEditorModalStatus('editFP'));
-
-    window.history.pushState({ modal: 'editFP' }, '', '#editor');
-  }
-
   return editorModalStatus && (
-    <div key={documentIndex} className={css.container} onClick={close}>
+    <div className={css.container} key={documentIndex} onClick={close}>
       <div className={css[editorModalStatus]} onClick={(e) => e.stopPropagation()}>
-        {editorModalStatus === "preview" && (
-          <div className={css.navigation}>
-            <div className={css.navigationStart}>
-              <div className={css.navigationControlls}>
-                <div className={css.arrowWrapper} onClick={prev}>
-                  <div className={css.arrowLeft} />
-                </div>
-                <div className={css.navigationCountBubble}>{`${documentIndex + 1}`}/{filteredDocumentsId?.length}</div>
-                <div className={css.arrowWrapper} onClick={next}>
-                  <div className={css.arrowRight} />
-                </div>
-              </div>
-              <button className={css.navigationEditButton} onClick={openEditorFromPreview}>edit</button>
-              <div className={css.navigationSettingsWrapper}>
-                <DocumentSettingsModal />
-              </div>
-            </div>
-            <div className={css.navigationEnd}>
-              <div className={css.navigationCloseButton} onClick={close}>close</div>
-            </div>
-          </div>
-        )}
-        <div id="editorModal" ref={editorRef} className={css.editor}>
+        {editorModalStatus === "preview" && <Navigation />}
+        <div id="editorModal" className={css.editor} ref={editorRef}>
           <div className={css.header}>
             <div className={css.headerStart}>
               <div className={css.headerCloseButton} onClick={close}>close</div>
@@ -77,17 +33,9 @@ export const EditorModal = () => {
               {!isNewDocument && <DocumentSettingsModal />}
             </div>
           </div>
-          <div className={css.titleWrapper}>
-            <Title ref={titleRef} saving={saving} setSaving={setSaving} />
-          </div>
+          <Title ref={titleRef} saving={saving} setSaving={setSaving} />
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
-          <div className={css.categoriesContainer}>
-            {documentCategories?.map(i => (
-              <div key={i?.id} className={css.category}>
-                {i?.name}
-              </div>
-            ))}
-          </div>
+          <Categories />
         </div>
       </div>
     </div>

@@ -47,17 +47,19 @@ export const Title = forwardRef(function MyTitle(props, ref) {
   const handleEnter = (e) => e.key === 'Enter' && e.preventDefault();
 
   return (
-    <textarea
-      ref={ref}
-      className={`${css[color]} ${css[editorModalStatus]}`}
-      rows={1}
-      spellCheck={false}
-      placeholder="Title"
-      value={editorModalStatus === "preview" ? (title || 'UNTITLED') : title}
-      onChange={onTitleChange}
-      onBlur={onTitleBlur}
-      onKeyDown={handleEnter}
-      readOnly={editorModalStatus === "preview"}
-    />
+    <div className={css.container}>
+      <textarea
+        ref={ref}
+        className={`${css[color]} ${css[editorModalStatus]}`}
+        rows={1}
+        spellCheck={false}
+        placeholder="Title"
+        value={editorModalStatus === "preview" ? (title || 'UNTITLED') : title}
+        onChange={onTitleChange}
+        onBlur={onTitleBlur}
+        onKeyDown={handleEnter}
+        readOnly={editorModalStatus === "preview"}
+      />
+    </div>
   );
 });
