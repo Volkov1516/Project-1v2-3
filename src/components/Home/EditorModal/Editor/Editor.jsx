@@ -29,6 +29,7 @@ import { SetEditablePlugin } from './plugins/SetEditablePlugin/SetEditablePlugin
 export const Editor = ({
   editorRef,
   titleRef,
+  categoriesRef,
   saving,
   setSaving,
 }) => {
@@ -103,7 +104,7 @@ export const Editor = ({
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           ErrorBoundary={LexicalErrorBoundary}
         />
-        {(editorModalStatus !== "preview") && <ToolbarBlockPlugin modalEditorContentRef={editorRef} titleRef={titleRef} />}
+        {(editorModalStatus !== "preview") && <ToolbarBlockPlugin modalEditorContentRef={editorRef} titleRef={titleRef} categoriesRef={categoriesRef} />}
         {(editorModalStatus !== "preview") && <ToolbarTextPlugin modalEditorContentRef={editorRef} />}
         {(editorModalStatus !== "preview") && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
         {editorModalStatus === "editorModalNew" && <AutoFocusPlugin />}

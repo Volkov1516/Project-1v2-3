@@ -16,6 +16,7 @@ export const EditorModal = memo(function MemoizedEditorModal() {
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
+  const categoriesRef = useRef(null);
 
   const [saving, setSaving] = useState(false);
 
@@ -31,8 +32,8 @@ export const EditorModal = memo(function MemoizedEditorModal() {
             <div className={css.headerEnd}>{!isNewDocument && <Settings />}</div>
           </div>
           <Title ref={titleRef} saving={saving} setSaving={setSaving} />
-          <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
-          <Categories />
+          <Categories ref={categoriesRef} />
+          <Editor editorRef={editorRef} titleRef={titleRef} categoriesRef={categoriesRef} saving={saving} setSaving={setSaving} />
         </div>
       </div>
     </div>
