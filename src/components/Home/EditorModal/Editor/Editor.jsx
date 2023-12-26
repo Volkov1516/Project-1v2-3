@@ -70,17 +70,18 @@ export const Editor = ({
       clearTimeout(editorStateAutoSaveTimeout);
 
       let state = JSON.stringify(editorState);
+      const tempDocId = documentId;
 
       editorStateAutoSaveTimeout = setTimeout(async () => {
         setSaving(true);
 
         if (isNewDocument) {
-          await setDoc(doc(db, 'documents', documentId), { userId, date: Timestamp.fromDate(new Date()), content: state })
+          await setDoc(doc(db, 'documents', tempDocId), { userId, date: Timestamp.fromDate(new Date()), content: state })
             .then(() => {
               dispatch(setIsNewDocument(false));
               dispatch(createDocument({
                 userId,
-                id: documentId,
+                id: tempDocId,
                 content: state,
                 date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
               }));
@@ -88,8 +89,14 @@ export const Editor = ({
             .catch(error => console.log(error));
         }
         else {
-          await updateDoc(doc(db, 'documents', documentId), { content: state })
-            .then(() => dispatch(updateDocument({ id: documentId, key: 'content', value: state })))
+          await updateDoc(doc(db, 'documents', tempDocId), { content: state })
+            .then(() => {
+              // To avoid false content change after saving and quick navigation
+              // Anyway, content for preview changes inside SyncStatePlugin
+              if (editorModalStatus !== 'editorModalFromPreview') {
+                dispatch(updateDocument({ id: tempDocId, key: 'content', value: state }));
+              }
+            })
             .catch(error => console.log(error));
         }
 
