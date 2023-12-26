@@ -20,11 +20,12 @@ import { ToolbarTextPlugin } from './plugins/ToolbarTextPlugin/ToolbarTextPlugin
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
+import { SetEditablePlugin } from './plugins/SetEditablePlugin/SetEditablePlugin';
+import { SyncStatePlugin } from './plugins/SyncStatePlugin/SyncStatePlagin';
 
 import { MainTheme } from './themes/MainTheme';
 
 import css from './Editor.module.css';
-import { SetEditablePlugin } from './plugins/SetEditablePlugin/SetEditablePlugin';
 
 export const Editor = ({
   editorRef,
@@ -93,7 +94,7 @@ export const Editor = ({
         }
 
         setSaving(false);
-      }, 1000);
+      }, 2000);
     }
   };
 
@@ -109,6 +110,7 @@ export const Editor = ({
         {(editorModalStatus !== "preview") && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
         {editorModalStatus === "editorModalNew" && <AutoFocusPlugin />}
         {editorModalStatus === "preview" && <RefreshStatePlugin />}
+        <SyncStatePlugin />
         <ListPlugin />
         <CheckListPlugin />
         <HorizontalRulePlugin />
