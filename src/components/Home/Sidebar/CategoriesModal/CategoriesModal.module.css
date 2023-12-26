@@ -103,7 +103,7 @@
   padding: 8px;
   outline: none;
   border: none;
-  background-color: var(--gray100);
+  background-color: var(--gray200);
   font-size: 16px;
   text-transform: lowercase;
 }
@@ -125,7 +125,7 @@
 
   .openButton:hover,
   .deleteButton:hover {
-    background-color: var(--gray100);
+    background-color: var(--gray200);
   }
 
   .closeButton:hover {

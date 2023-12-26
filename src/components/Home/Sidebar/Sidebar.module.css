@@ -67,11 +67,11 @@
 }
 
 .categoryButton:active {
-  background-color: var(--gray100);
+  background-color: var(--gray200);
 }
 
 .activeCategoryButton {
-  background-color: var(--gray100);
+  background-color: var(--gray200);
 }
 
 @media (hover: hover) {
@@ -80,7 +80,7 @@
   }
 
   .categoryButton:hover {
-    background-color: var(--gray100);
+    background-color: var(--gray200);
   }
 }
 
