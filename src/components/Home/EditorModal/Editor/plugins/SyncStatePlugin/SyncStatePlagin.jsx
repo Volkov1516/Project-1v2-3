@@ -17,7 +17,7 @@ export const SyncStatePlugin = () => {
 
       dispatch(updateDocument({ id: documentId, key: 'content', value: jsonString }));
     }
-  }, [editor, documentId, editorModalStatus]);
+  }, [editor, documentId, editorModalStatus, dispatch]);
 
   return null;
 };
