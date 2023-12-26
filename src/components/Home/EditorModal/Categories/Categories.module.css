@@ -11,15 +11,10 @@
 }
 
 .category {
-  padding: 4px 16px;
+  padding: 4px 12px;
   border-radius: 2em;
   background-color: var(--gray200);
+  font-size: 14px;
   font-weight: 600;
   user-select: none;
-}
-
-@media (max-width: 639px) {
-  .category {
-    padding: 8px 16px;
-  }
 }
