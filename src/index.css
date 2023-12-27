@@ -38,6 +38,10 @@ button {
   font-size: 16px;
 }
 
+hr {
+  margin: 8px 0px;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
