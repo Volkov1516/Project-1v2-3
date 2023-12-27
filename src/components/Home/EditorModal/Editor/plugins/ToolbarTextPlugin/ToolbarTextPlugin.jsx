@@ -12,9 +12,7 @@ import {
   COPY_COMMAND,
   KEY_ARROW_UP_COMMAND,
 } from 'lexical';
-import {
-  $patchStyleText
-} from '@lexical/selection';
+import { $patchStyleText } from '@lexical/selection';
 
 import css from './ToolbarTextPlugin.module.css';
 
@@ -467,60 +465,60 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           <button
             ref={textBgRed}
             id="tool"
-            onClick={() => formatTextBg("#e03131")}
+            onClick={() => formatTextBg("rgba(224, 49, 49, 0.5)")}
           >
-            <mark style={{ backgroundColor: "#e03131", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "rgba(224, 49, 49, 0.5)", padding: "0px 8px", borderRadius: "2px" }}>
               a
             </mark>
           </button>
           <button
             ref={textBgOrange}
             id="tool"
-            onClick={() => formatTextBg("#fd7e14")}
+            onClick={() => formatTextBg("rgb(253, 126, 20, 0.5)")}
           >
-            <mark style={{ backgroundColor: "#fd7e14", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "rgb(253, 126, 20, 0.5)", padding: "0px 8px", borderRadius: "2px" }}>
               a
             </mark>
           </button>
           <button
             ref={textBgYellow}
             id="tool"
-            onClick={() => formatTextBg("#ffd43b")}
+            onClick={() => formatTextBg("rgb(255, 212, 59, 0.5)")}
           >
-            <mark style={{ backgroundColor: "#ffd43b", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "rgb(255, 212, 59, 0.5)", padding: "0px 8px", borderRadius: "2px" }}>
               a
             </mark>
           </button>
           <button
             ref={textBgGreen}
             id="tool"
-            onClick={() => formatTextBg("#2f9e44")}
+            onClick={() => formatTextBg("rgba(47, 158, 67, 0.5)")}
           >
-            <mark style={{ backgroundColor: "#2f9e44", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "rgba(47, 158, 67, 0.5)", padding: "0px 8px", borderRadius: "2px" }}>
               a
             </mark>
           </button>
           <button
             ref={textBgBlue}
             id="tool"
-            onClick={() => formatTextBg("#1971c2")}
+            onClick={() => formatTextBg("rgb(25, 113, 194, 0.5)")}
           >
-            <mark style={{ backgroundColor: "#1971c2", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "rgb(25, 113, 194, 0.5)", padding: "0px 8px", borderRadius: "2px" }}>
               a
             </mark>
           </button>
           <button
             ref={textBgPurple}
             id="tool"
-            onClick={() => formatTextBg("#9c36b5")}
+            onClick={() => formatTextBg("rgb(156, 54, 181, 0.5)")}
           >
-            <mark style={{ backgroundColor: "#9c36b5", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "rgb(156, 54, 181, 0.5)", padding: "0px 8px", borderRadius: "2px" }}>
               a
             </mark>
           </button>
         </div>
       )}
-      <div onKeyDown={handleKeyDown} className={css.container} style={{ top: top, left: left, transform: transform }}>
+      <div className={css.container} style={{ top: top, left: left, transform: transform }} onKeyDown={handleKeyDown}>
         {isSmallScreen && (
           <button
             id="tool"

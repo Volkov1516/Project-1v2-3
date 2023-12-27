@@ -26,9 +26,9 @@
 }
 
 .code {
-  padding: 2px 4px;
-  background-color: #DEE2E6;
+  padding: 4px;
   border-radius: 4px;
+  background-color: var(--gray200);
   font-size: 14px;
   font-family: monospace;
 }
