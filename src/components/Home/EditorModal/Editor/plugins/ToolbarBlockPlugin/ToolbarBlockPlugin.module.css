@@ -9,7 +9,7 @@
 }
 
 .placeholder {
-  color: #BFC7B4;
+  color: var(--gray400);
   white-space: nowrap;
 }
 
@@ -24,31 +24,34 @@
 }
 
 .tool {
+  height: 32px;
+  padding: 0px 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   white-space: nowrap;
-  height: 32px;
-  padding: 0px 8px;
   outline: none;
-  border: 1px solid #BFC7B4;
+  border: 1px solid var(--gray400);
   border-radius: 2px;
-  cursor: pointer;
   background-color: transparent;
-  color: #BFC7B4;
+  color: var(--gray400);
   font-weight: 500;
+  cursor: pointer;
 }
 
 .tool:focus {
-  background-color: #BFC7B4;
+  background-color: var(--gray400);
   color: white;
 }
 
-
+.tool:active {
+  background-color: var(--gray400);
+  color: white;
+}
 
 @media (hover: hover) {
   .tool:hover {
-    background-color: #BFC7B4;
+    background-color: var(--gray400);
     color: white;
   }
 }
@@ -57,6 +60,15 @@
   .container {
     width: calc(100vw - 32px);
     overflow-x: hidden;
+  }
+
+  .tools {
+    column-gap: 4px;
+  }
+
+  .tool {
+    height: 36px;
+    padding: 0px 10px;
   }
 
   ::-webkit-scrollbar {

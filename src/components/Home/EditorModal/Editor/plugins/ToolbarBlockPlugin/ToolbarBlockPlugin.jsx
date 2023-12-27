@@ -7,18 +7,11 @@ import {
   $getSelection,
   $isRangeSelection,
   BLUR_COMMAND,
-  KEY_ARROW_RIGHT_COMMAND,
+  KEY_ARROW_RIGHT_COMMAND
 } from 'lexical';
 import { $setBlocksType } from '@lexical/selection';
-import {
-  $createHeadingNode,
-  $createQuoteNode,
-} from '@lexical/rich-text';
-import {
-  INSERT_ORDERED_LIST_COMMAND,
-  INSERT_UNORDERED_LIST_COMMAND,
-  INSERT_CHECK_LIST_COMMAND,
-} from '@lexical/list';
+import { $createHeadingNode, $createQuoteNode } from '@lexical/rich-text';
+import { INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND, INSERT_CHECK_LIST_COMMAND } from '@lexical/list';
 import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
 
 import css from './ToolbarBlockPlugin.module.css';

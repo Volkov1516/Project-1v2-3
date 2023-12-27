@@ -20,7 +20,7 @@ textarea {
 }
 
 textarea::placeholder {
-  color: #BFC7B4;
+  color: var(--gray400);
 }
 
 textarea.none {
