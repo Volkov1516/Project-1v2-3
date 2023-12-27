@@ -42,7 +42,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef, titleRef, categories
         const node = selection.getNodes();
 
         if (node[0].__type === ('paragraph' || 'root')) {
-          const top = nativeSelection.anchorNode.offsetTop + titleRef.current.scrollHeight + (categoriesRef?.current?.scrollHeight + 16);
+          const top = nativeSelection.anchorNode.offsetTop + titleRef.current.scrollHeight + categoriesRef?.current?.scrollHeight;
           const viewport = window.visualViewport.width;
 
           const editorHeaderHeightWithPaddings = 22 + 32;
