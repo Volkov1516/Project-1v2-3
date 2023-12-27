@@ -56,7 +56,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef, titleRef, categories
             setLeft(left);
           }
           else {
-            setTop(top - 6 + editorHeaderHeightWithPaddings);
+            setTop(top - 8 + editorHeaderHeightWithPaddings);
             setLeft(0);
           }
 
