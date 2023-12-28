@@ -111,7 +111,7 @@ export const Auth = () => {
       <div className={css.header}>
         <div className={css.logo}>
           <img className={css.logoImg} src={logo} alt="logo" />
-          <span className={css.logoText}>Journalisto</span>
+          <span className={css.logoText}>Journal X</span>
         </div>
       </div>
       {!reset ?

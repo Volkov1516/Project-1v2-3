@@ -1,9 +1,22 @@
 {
-  "short_name": "JX",
   "name": "Journal X",
+  "short_name": "JX",
   "description": "Note taking application.",
-  "categories": ["education", "lifestyle", "productivity"],
+  "categories": [
+    "education",
+    "lifestyle",
+    "productivity"
+  ],
+  "start_url": "/",
+  "lang": "en",
   "orientation": "portrait",
+  "display": "standalone",
+  "protocol_handlers": [
+    {
+      "protocol": "The protocol you would like to handle. For example: web+myapp",
+      "url": "The url you would like to open when the user chooses this shortcut. This must be a URL local to your PWA. For example: If my start_url is /, this URL must be something like /shortcut"
+    }
+  ],
   "shortcuts": [
     {
       "name": "Home",
@@ -13,26 +26,31 @@
   ],
   "icons": [
     {
-      "src": "logo.png",
+      "src": "public/manifest-icon-192.maskable.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "sizes": "64x64 32x32 24x24 16x16",
       "purpose": "any"
     },
     {
-      "src": "logo.png",
+      "src": "public/manifest-icon-192.maskable.png",
+      "sizes": "192x192",
       "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "public/manifest-icon-512.maskable.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "public/manifest-icon-512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "maskable"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "protocol_handlers": [  
-    {
-      "protocol":"The protocol you would like to handle. For example: web+myapp",
-      "url":"The url you would like to open when the user chooses this shortcut. This must be a URL local to your PWA. For example: If my start_url is /, this URL must be something like /shortcut"
-    }
-  ],
-  "background_color": "#ffffff"
+  "background_color": "#000000",
+  "theme_color": "#ffffff",
+  "dir": "ltr"
 }
