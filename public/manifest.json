@@ -1,6 +1,16 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "JX",
+  "name": "Journal X",
+  "description": "Note taking application.",
+  "categories": ["education", "lifestyle", "productivity"],
+  "orientation": "portrait",
+  "shortcuts": [
+    {
+      "name": "Home",
+      "url": "/",
+      "description": "Starting page."
+    }
+  ],
   "icons": [
     {
       "src": "logo.png",
@@ -18,5 +28,11 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
+  "protocol_handlers": [  
+    {
+      "protocol":"The protocol you would like to handle. For example: web+myapp",
+      "url":"The url you would like to open when the user chooses this shortcut. This must be a URL local to your PWA. For example: If my start_url is /, this URL must be something like /shortcut"
+    }
+  ],
   "background_color": "#ffffff"
 }
