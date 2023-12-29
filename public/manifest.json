@@ -21,18 +21,12 @@
   "icons": [
     {
       "src": "logo.png",
-      "sizes": "192x192",
+      "sizes": "192x192 64x64 32x32 24x24 16x16",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "public/manifest-icon-512.maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "public/manifest-icon-512.maskable.png",
+      "src": "logo.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
