@@ -1,9 +1,10 @@
 .container {
   position: fixed;
-  left: 0;
+  right: 0;
   top: 0;
   height: 100vh;
-  width: 100vw;
+  width: calc(100vw - 296px);
+
   display: flex;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
@@ -98,6 +99,17 @@
 }
 
 @media (max-width: 639px) {
+  .container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+  
+    display: flex;
+    justify-content: center;
+  }
+
   .preview {
     height: calc(100% - 16px);
     margin: 8px;

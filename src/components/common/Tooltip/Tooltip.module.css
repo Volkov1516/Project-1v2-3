@@ -1,0 +1,31 @@
+.container {
+  position: relative;
+}
+
+.bubble {
+  position: absolute;
+  display: none;
+  width: fit-content;
+  height: fit-content;
+  padding: 2px 8px;
+  border-radius: 2px;
+  background-color: black;
+  color: white;
+  font-size: 12px;
+  font-weight: 300;
+  text-wrap: nowrap;
+  user-select: none;
+  z-index: 99;
+}
+
+.container:hover > .bubble {
+  display: block;
+  left: calc(100% + 8px);
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+}
+
+.bubble:hover {
+  display: none;
+}

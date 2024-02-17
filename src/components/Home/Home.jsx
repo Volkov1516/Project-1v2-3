@@ -1,4 +1,4 @@
-import { Sidebar } from './Sidebar/Sidebar';
+import { Bar } from './Bar/Bar';
 import { Content } from './Content/Content';
 import { EditorModal } from './EditorModal/EditorModal';
 
@@ -11,7 +11,7 @@ export const Home = () => {
 
   return (
     <div className={css.container} onScroll={onMouseUp}>
-      <Sidebar />
+      <Bar />
       <Content mouseTimer={mouseTimer} />
       <EditorModal />
     </div>

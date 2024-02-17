@@ -1,41 +1,161 @@
 .container {
   height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 16px 16px 200px;
+  width: 240px;
   overflow: auto;
+  border-right: 1px solid #DDD;
+  background-color: #fbfbfb;
+  padding-top: 12px;
+  padding-bottom: 240px;
 }
 
-.document {
+.testFolder {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 16px;
   width: 100%;
-  max-width: 700px;
-/*  text-transform: uppercase;*/
-  font-size: 40px;
-  font-weight: 400;
-  line-height: 1em;
   overflow-wrap: break-word;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+}
+
+.testNote {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  padding: 4px 16px;
+  width: 100%;
+  overflow-wrap: break-word;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+}
+
+.testTask {
+  margin: 8px 0px;
+  padding: 8px 16px;
+  font-size: 12px;
+  background-color: #EEE;
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+  color: #444;
+}
+
+.testTaskFooter {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.testTaskFooterDone {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 2px;
+  /* color: black; */
+  color: white;
+  background-color: black;
   cursor: pointer;
   user-select: none;
 }
 
-.document:not(:last-child) {
-  border-bottom: 1px solid var(--gray300);
-  padding: 12px 0px;
+.testTaskWithCircle {
+  /* display: flex; */
+  /* align-items: center; */
+  /* gap: 8px; */
+  margin: 8px 0px;
+  padding: 8px 16px;
+  font-size: 12px;
+  background-color: #EEE;
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+  color: #444;
+  word-wrap: break-word;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
 }
 
-.document:last-child {
-  padding: 12px 0px 0px;
+.icon {
+  float: left;
+  margin-right: 6px;
+}
+
+.document {
+  /* position: relative; */
+  padding: 8px 16px;
+  width: 100%;
+  /* font-weight: 400; */
+  font-size: 16px;
+  line-height: 1em;
+  overflow-wrap: break-word;
+  cursor: pointer;
+  user-select: none;
+
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+}
+
+/* .document:nth-child(4)::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: #ff3b30;
+  border-radius: 50%;
+}
+
+.document:nth-child(9)::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: #007AFF;
+  border-radius: 50%;
+} */
+
+/* 
+.document:not(:last-child) {
+  border-bottom: 1px solid #DDD;
+} */
+
+.document:hover, .testFolder:hover, .testNote:hover {
+  background-color: #EEE;
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+}
+
+.document:active, .testFolder:active, .testNote:active {
+  background-color: #DDD;
 }
 
 .document.none {
   text-decoration: none;
 }
 
-.document.red {
-  text-decoration:line-through;
-  text-decoration-thickness: 16px;
-  text-decoration-color: rgba(224, 49, 49, 0.5);
+.red {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  background-color: #ff3b30;
+  /* background-color: rgba(224, 49, 49); */
+  margin-right: 6px;
+}
+
+.blue {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  background-color: #007AFF;
+  /* background-color: rgb(25, 113, 194); */
+  margin-right: 6px;
 }
 
 .document.orange {
@@ -56,11 +176,7 @@
   text-decoration-color: rgba(47, 158, 67, 0.5);
 }
 
-.document.blue {
-  text-decoration:line-through;
-  text-decoration-thickness: 16px;
-  text-decoration-color: rgb(25, 113, 194, 0.5);
-}
+
 
 .document.purple {
   text-decoration:line-through;
@@ -78,17 +194,17 @@
   color: var(--gray200);
   font-size: 40px;
   font-weight: 500;
-  text-transform: uppercase;
   user-select: none;
 }
 
 @media (max-width: 639px) {
-  .document:not(:last-child) {
-    border-bottom: 1px solid var(--gray300);
-    padding: 8px 0px;
-  }
-  
-  .document:last-child {
-    padding: 8px 0px 0px;
+  .container {
+    height: 100vh;
+    width: 100%;
+    overflow: auto;
+    border-right: 1px solid #DDD;
+    background-color: #fbfbfb;
+    padding-top: 12px;
+    padding-bottom: 240px;
   }
 }
