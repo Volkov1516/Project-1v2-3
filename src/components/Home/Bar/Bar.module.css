@@ -9,6 +9,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  background-color: rgba(255, 255, 255, .15);
+  backdrop-filter: blur(8px);
 }
 
 .start, .end {
@@ -24,6 +26,12 @@
   align-items: center;
   background-color: black;
   border-radius: 100%;
+}
+
+.addSvg {
+  width: 40px;
+  height: 40px;
+  fill: white;
 }
 
 .add:hover {
@@ -43,6 +51,12 @@
   padding: 8px;
 }
 
+.buttonSvg {
+  width: 24px;
+  height: 24px;
+  fill: black;
+}
+
 .button:hover {
   background-color: #EEE;
   cursor: pointer;
@@ -58,15 +72,30 @@
     bottom: 0;
     flex-direction: row-reverse;
     width: 100%;
+    padding: 8px 16px 8px 10px;
     height: fit-content;
     border-right: none;
-    border-top: 1px solid #DDD;
+    border-top: 1px solid #BBB;
   }
 
   .start, .end {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
-    gap: 8px;
+    gap: 16px;
+  }
+
+  .addSvg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .buttonSvg {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .hide {
+    display: none;
   }
 }

@@ -33,6 +33,11 @@
   border: 1px solid transparent;
 }
 
+.testFolderSvg {
+  width: 24px;
+  height: 24px;
+}
+
 .testTask {
   margin: 8px 0px;
   padding: 8px 16px;
@@ -47,17 +52,6 @@
   margin-top: 8px;
   display: flex;
   justify-content: flex-end;
-}
-
-.testTaskFooterDone {
-  font-size: 12px;
-  padding: 2px 8px;
-  border-radius: 2px;
-  /* color: black; */
-  color: white;
-  background-color: black;
-  cursor: pointer;
-  user-select: none;
 }
 
 .testTaskWithCircle {
@@ -126,13 +120,17 @@
   border-bottom: 1px solid #DDD;
 } */
 
-.document:hover, .testFolder:hover, .testNote:hover {
+.document:hover,
+.testFolder:hover,
+.testNote:hover {
   background-color: #EEE;
   border-top: 1px solid #DDD;
   border-bottom: 1px solid #DDD;
 }
 
-.document:active, .testFolder:active, .testNote:active {
+.document:active,
+.testFolder:active,
+.testNote:active {
   background-color: #DDD;
 }
 
@@ -159,19 +157,19 @@
 }
 
 .document.orange {
-  text-decoration:line-through;
+  text-decoration: line-through;
   text-decoration-thickness: 16px;
   text-decoration-color: rgb(253, 126, 20, 0.5);
 }
 
 .document.yellow {
-  text-decoration:line-through;
+  text-decoration: line-through;
   text-decoration-thickness: 16px;
   text-decoration-color: rgb(255, 212, 59, 0.5);
 }
 
 .document.green {
-  text-decoration:line-through;
+  text-decoration: line-through;
   text-decoration-thickness: 16px;
   text-decoration-color: rgba(47, 158, 67, 0.5);
 }
@@ -179,7 +177,7 @@
 
 
 .document.purple {
-  text-decoration:line-through;
+  text-decoration: line-through;
   text-decoration-thickness: 16px;
   text-decoration-color: rgb(156, 54, 181, 0.5);
 }
@@ -206,5 +204,44 @@
     background-color: #fbfbfb;
     padding-top: 12px;
     padding-bottom: 240px;
+  }
+
+  .document {
+    padding: 8px 16px;
+    font-weight: 700;
+    font-size: 40px;
+  }
+
+  .testFolder {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: fit-content;
+    padding: 8px 16px;
+    gap: 0;
+    /* font-weight: 700; */
+    font-size: 16px;
+    padding: 2px 16px;
+    /* align-items: flex-end; */
+  }
+
+  .testFolderSvg {
+    width: 140px;
+    height: 140px;
+    padding: 0;
+  }
+
+  .testNote {
+    padding: 8px 16px;
+    font-weight: 700;
+    font-size: 40px;
+  }
+
+  .testTaskWithCircle {
+    font-size: 16px;
+  }
+
+  .hide {
+    display: none;
   }
 }
