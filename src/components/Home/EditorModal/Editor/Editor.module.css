@@ -12,6 +12,11 @@
   outline: 0;
   tab-size: 1;
   user-select: none !important;
-
   font-size: 15px;
+}
+
+@media (max-width: 639px) {
+  .input {
+    font-size: 16px;
+  }
 }
