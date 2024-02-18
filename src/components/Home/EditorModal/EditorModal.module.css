@@ -11,6 +11,12 @@
   z-index: 2;
 }
 
+
+.headerEnd {
+  display: flex;
+  gap: 16px;
+}
+
 .preview {
   width: 742px;
   height: 90vh;

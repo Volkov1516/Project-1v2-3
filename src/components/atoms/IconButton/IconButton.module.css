@@ -1,0 +1,65 @@
+button {
+  position: relative;
+  outline: none;
+  border: none;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  user-select: none;
+}
+
+@media (hover: hover) {
+  button:hover {
+    background-color: var(--gray100);
+    cursor: pointer;
+  }
+}
+
+button:active {
+  background-color: var(--gray200);
+}
+
+.small {
+  width: 24px;
+  height: 24px;
+}
+
+.medium {
+  width: 24px;
+  height: 24px;
+  margin: 8px;
+}
+
+.large {
+  width: 40px;
+  height: 40px;
+}
+
+.primary {
+  background-color: black;
+}
+
+@media (hover: hover) {
+  .primary:hover {
+    background-color: #222;
+    cursor: pointer;
+  }
+}
+
+.primary:active {
+  background-color: #333;
+}
+
+.primary > svg {
+  fill: white;
+}
+
+@media (max-width: var(--mobile)) {
+  .medium {
+    width: 32px;
+    height: 32px;
+    margin: 0px;
+  }
+}

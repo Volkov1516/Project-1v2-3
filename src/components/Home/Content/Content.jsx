@@ -67,21 +67,12 @@ export const Content = memo(function MemoizedContent({ mouseTimer }) {
 
   return (
     <div className={css.container} onScroll={onMouseUp}>
-
       <div className={css.testFolder}>
         <svg className={css.testFolderSvg}  viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
           <path d="M853.333333 256H469.333333l-85.333333-85.333333H170.666667c-46.933333 0-85.333333 38.4-85.333334 85.333333v170.666667h853.333334v-85.333334c0-46.933333-38.4-85.333333-85.333334-85.333333z" fill="#FFA000" /><path d="M853.333333 256H170.666667c-46.933333 0-85.333333 38.4-85.333334 85.333333v426.666667c0 46.933333 38.4 85.333333 85.333334 85.333333h682.666666c46.933333 0 85.333333-38.4 85.333334-85.333333V341.333333c0-46.933333-38.4-85.333333-85.333334-85.333333z" fill="#FFCA28" />
         </svg>
         Projects
       </div>
-
-      <div className={`${css.testNote} ${css.hide}`}>
-        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24" fill="black">
-          <path d="M240-180v-620h480v620L480-283.333 240-180Z" />
-        </svg>
-        Diamonds And Rust
-      </div>
-
       {documents?.map((i) => filteredDocumentsId.includes(i.id) && (
         <div
           key={i?.id}
@@ -96,7 +87,6 @@ export const Content = memo(function MemoizedContent({ mouseTimer }) {
           {i?.title || 'Untitled'}
         </div>
       ))}
-
       <div className={css.testTaskWithCircle}>
         <span className={css.icon}>
           <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">

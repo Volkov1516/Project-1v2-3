@@ -8,6 +8,8 @@ import { Editor } from './Editor/Editor';
 import { Categories } from './Categories/Categories';
 import { Settings } from './Settings/Settings';
 
+import { IconButton } from 'components/atoms/IconButton/IconButton';
+
 import css from './EditorModal.module.css';
 
 export const EditorModal = memo(function MemoizedEditorModal() {
@@ -28,8 +30,12 @@ export const EditorModal = memo(function MemoizedEditorModal() {
         {editorModalStatus === "preview" && <Navigation />}
         <div id="editorModal" className={css.content} ref={editorRef}>
           <div className={css.header}>
-            <div className={css.headerStart}><div className={css.headerCloseButton} onClick={close}>close</div></div>
-            <div className={css.headerEnd}>{!isNewDocument && <Settings />}</div>
+            <div className={css.headerStart}>
+            </div>
+            <div className={css.headerEnd}>
+              {!isNewDocument && <Settings />}
+              <IconButton onClick={close} path="M256-227.692 227.692-256l224-224-224-224L256-732.308l224 224 224-224L732.308-704l-224 224 224 224L704-227.692l-224-224-224 224Z" />
+            </div>
           </div>
           <Title ref={titleRef} saving={saving} setSaving={setSaving} />
           <Categories ref={categoriesRef} />

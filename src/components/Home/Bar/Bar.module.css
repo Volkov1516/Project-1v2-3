@@ -20,52 +20,6 @@
   gap: 8px;
 }
 
-.add {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-  border-radius: 100%;
-}
-
-.addSvg {
-  width: 40px;
-  height: 40px;
-  fill: white;
-}
-
-.add:hover {
-  /* background-color: #222; */
-  cursor: pointer;
-}
-
-.add:active {
-  background-color: #222;
-}
-
-.button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100%;
-  padding: 8px;
-}
-
-.buttonSvg {
-  width: 24px;
-  height: 24px;
-  fill: black;
-}
-
-.button:hover {
-  background-color: #EEE;
-  cursor: pointer;
-}
-
-.button:active {
-  background-color: #DDD;
-}
-
 @media (max-width: 639px) {
   .container {
     position: fixed;
@@ -83,19 +37,5 @@
     flex-direction: row-reverse;
     align-items: center;
     gap: 16px;
-  }
-
-  .addSvg {
-    width: 48px;
-    height: 48px;
-  }
-
-  .buttonSvg {
-    width: 32px;
-    height: 32px;
-  }
-  
-  .hide {
-    display: none;
   }
 }

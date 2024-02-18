@@ -4,6 +4,7 @@ import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { updateDocumentIndex } from 'redux/features/document/documentSlice';
 
 import { Settings } from '../Settings/Settings';
+import { IconButton } from 'components/atoms/IconButton/IconButton';
 
 import css from './Navigation.module.css';
 
@@ -49,13 +50,13 @@ export const Navigation = memo(function MemoizedNavigation() {
             <div className={css.arrowRight} />
           </button>
         </div>
-        <button className={css.navigationEditButton} onClick={openEditorFromPreview}>edit</button>
+        <IconButton onClick={openEditorFromPreview} path="M200-200h43.923l427.923-427.923-43.923-43.923L200-243.923V-200Zm-40 40v-100.769l555-556.077 101.616 102.538L260.769-160H160Zm600-555.538L715.538-760 760-715.538Zm-110.501 66.039-21.576-22.347 43.923 43.923-22.347-21.576Z" />
         <div className={css.navigationSettingsWrapper}>
           <Settings />
         </div>
       </div>
       <div className={css.navigationEnd}>
-        <div className={css.navigationCloseButton} onClick={close}>close</div>
+        <IconButton onClick={close} path="M256-227.692 227.692-256l224-224-224-224L256-732.308l224 224 224-224L732.308-704l-224 224 224 224L704-227.692l-224-224-224 224Z" />
       </div>
     </div>
   );
