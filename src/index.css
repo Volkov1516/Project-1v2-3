@@ -86,7 +86,8 @@ body.dark-theme {
 }
 
 body {
-  background-color: var(--bg);
+  /* background-color: var(--bg); */
+  background-color: #191919;
 }
 
 
