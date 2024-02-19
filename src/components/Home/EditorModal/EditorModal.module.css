@@ -124,6 +124,7 @@
     height: calc(100% - 16px);
     margin: 8px;
     flex-direction: column-reverse;
+    border: 1px solid white;
   }
 
   .preview>.content {
