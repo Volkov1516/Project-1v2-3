@@ -1,8 +1,10 @@
 .paragraph {
   margin-bottom: 8px;
-  color: black;
+  /* color: black; */
   line-height: 1.5em;
   font-weight: 400;
+
+  color: var(--secondary);
 }
 
 .bold {
@@ -29,6 +31,7 @@
   padding: 4px;
   border-radius: 4px;
   background-color: var(--gray200);
+  color: var(--secondary);
   font-size: 14px;
   font-family: monospace;
 }
@@ -46,41 +49,50 @@
 .h1 {
   font-weight: 600;
   padding: 8px 0px;
+  color: var(--secondary);
 }
 
 .h1>span {
   font-size: 30px;
+  color: var(--secondary);
 }
 
 .h2 {
   font-weight: 600;
   padding: 8px 0px;
+  color: var(--secondary);
 }
 
 .h2>span {
   font-size: 24px;
+  color: var(--secondary);
 }
 
 .h3 {
   font-weight: 600;
   padding: 8px 0px;
+  color: var(--secondary);
 }
 
 .h3>span {
   font-size: 20px;
+  color: var(--secondary);
 }
 
 .quote {
   margin: 0 0 8px;
   padding-left: 16px;
-  border-left: 4px solid black;
+  border-left: 4px solid var(--secondary);;
   color: var(--gray400);
+
+  color: var(--secondary);
 }
 
 .listItem {
   margin: 0 0 8px 16px;
-  color: black;
   line-height: 1.5em;
+
+  color: var(--secondary);
 }
 
 .listItemChecked,

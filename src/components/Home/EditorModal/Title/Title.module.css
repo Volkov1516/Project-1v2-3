@@ -17,6 +17,8 @@ textarea {
   overflow: auto;
   line-height: 1em;
   background-color: transparent;
+
+  color: var(--secondary);
 }
 
 textarea::placeholder {
