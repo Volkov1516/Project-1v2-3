@@ -10,53 +10,53 @@
   user-select: none;
 }
 
-.button > svg {
+.button>svg {
   width: 24px;
   height: 24px;
   margin: 8px;
-  fill: var(--secondary);
+  fill: var(--buttonColorSecondary);
 }
 
 @media (hover: hover) {
   .button:hover {
-    background-color: var(--hover);
+    background-color: var(--buttonHoverSecondary);
     cursor: pointer;
   }
 }
 
 .button:active {
-  background-color: var(--active);
+  background-color: var(--buttonActiveSecondary);
 }
 
 .primary {
-  background-color: var(--secondary);
+  background-color: var(--buttonBackgroundPrimary);
 }
 
-.primary > svg {
+.primary>svg {
   width: 40px;
   height: 40px;
   margin: 0px;
-  fill: var(--primary);
+  fill: var(--buttonColorPrimary);
 }
 
 @media (hover: hover) {
   .primary:hover {
-    background-color: var(--hoverPrimary);
+    background-color: var(--buttonHoverPrimary);
     cursor: pointer;
   }
 }
 
 .primary:active {
-  background-color: var(--activePrimary);
+  background-color: var(--buttonActivePrimary);
 }
 
 @media (max-width: 639px) {
-  .button > svg {
+  .button>svg {
     width: 32px;
     height: 32px;
   }
 
-  .primary > svg {
+  .primary>svg {
     width: 48px;
     height: 48px;
   }

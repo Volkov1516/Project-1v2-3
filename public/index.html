@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="description" content="Note taking app." />
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#191919" media="(prefers-color-scheme: dark)">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="logo.png" />
   <title>Journal X</title>
 </head>
+
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <script>('serviceWorker' in navigator) && navigator.serviceWorker.register('/service-worker.js', { scope: '/' })</script>
   <div id="root"></div>
 </body>
+
 </html>

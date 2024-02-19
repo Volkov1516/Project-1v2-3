@@ -3,11 +3,9 @@
   width: 240px;
   overflow: auto;
   border-right: 1px solid #DDD;
-  /* background-color: #fbfbfb; */
-  background-color: var(--managerBg);
-  color: var(--secondary);
-  background-color: #191919;
-  
+  background-color: var(--backgroundSecondary);
+  color: var(--fontColorPrimary);
+
   padding-top: 12px;
   padding-bottom: 240px;
 }
@@ -95,58 +93,20 @@
   align-items: center;
 }
 
-/* .document:nth-child(4)::before {
-  content: '';
-  position: absolute;
-  left: 4px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
-  background-color: #ff3b30;
-  border-radius: 50%;
-}
-
-.document:nth-child(9)::before {
-  content: '';
-  position: absolute;
-  left: 4px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
-  background-color: #007AFF;
-  border-radius: 50%;
-} */
-
-/* 
-.document:not(:last-child) {
-  border-bottom: 1px solid #DDD;
-} */
-
-/* .document:hover,
-.testFolder:hover,
-.testNote:hover {
-  background-color: #EEE;
-  border-top: 1px solid #DDD;
-  border-bottom: 1px solid #DDD;
-} */
-
 @media (hover: hover) {
   .document:hover,
-.testFolder:hover,
-.testNote:hover {
-  background-color: #EEE;
-  border-top: 1px solid #DDD;
-  border-bottom: 1px solid #DDD;
-}
-
+  .testFolder:hover,
+  .testNote:hover {
+    background-color: var(--buttonHoverSecondary);
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+  }
 }
 
 .document:active,
 .testFolder:active,
 .testNote:active {
-  background-color: #DDD;
+  background-color: var(--buttonActiveSecondary);
 }
 
 .document.none {
@@ -216,10 +176,7 @@
     width: 100%;
     overflow: auto;
     border-right: 1px solid #DDD;
-    /* background-color: #fbfbfb; */
-    background-color: var(--managerBg);
-    background-color: #191919;
-
+    background-color: var(--backgroundPrimary);
     padding-top: 12px;
     padding-bottom: 240px;
   }

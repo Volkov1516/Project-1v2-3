@@ -4,14 +4,14 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
   font-family: "Inter", sans-serif;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
 :root {
-  /* COLORS */
+  --transparent: rgba(255, 255, 255, 0);
   --white: #FFFFFF;
+  --gray50: #F9F9F9;
   --gray100: #EEEEEE;
   --gray200: #DDDDDD;
   --gray300: #CCCCCC;
@@ -25,72 +25,70 @@
   --gray1100: #444444;
   --gray1200: #333333;
   --gray1300: #222222;
+  --gray1350: #191919;
   --gray1400: #111111;
   --black: #000000;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --primary: var(--white);
-    --secondary: var(--black);
-    --hover: var(--gray100);
-    --active: var(--gray200);
-    --hoverPrimary: var(--gray1400);
-    --activePrimary: var(--gray1300);
-    --managerBg: var(--white);
-
-    --bg: var(--white);
-    --iconColor: var(--black);
+    --backgroundPrimary: var(--white);
+    --backgroundSecondary: var(--gray50);
+    --buttonColorPrimary: var(--white);
+    --buttonBackgroundPrimary: var(--black);
+    --buttonHoverPrimary: var(--gray1400);
+    --buttonActivePrimary: var(--gray1300);
+    --buttonColorSecondary: var(--black);
+    --buttonBackgroundSecondary: var(--transparent);
+    --buttonHoverSecondary: var(--gray100);
+    --buttonActiveSecondary: var(--gray200);
+    --fontColorPrimary: var(--black);
   }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary: var(--black);
-    --secondary: var(--white);
-    --hover: var(--gray1400);
-    --active: var(--gray1300);
-    --hoverPrimary: var(--gray100);
-    --activePrimary: var(--gray200);
-    --managerBg: var(--black);
-
-    --bg: var(--black);
-    --iconColor: var(--white);
+    --backgroundPrimary: var(--gray1350);
+    --backgroundSecondary: var(--gray1300);
+    --buttonColorPrimary: var(--black);
+    --buttonBackgroundPrimary: var(--white);
+    --buttonHoverPrimary: var(--gray100);
+    --buttonActivePrimary: var(--gray200);
+    --buttonColorSecondary: var(--white);
+    --buttonBackgroundSecondary: var(--transparent);
+    --buttonHoverSecondary: var(--gray1300);
+    --buttonActiveSecondary: var(--gray1400);
+    --fontColorPrimary: var(--white);
   }
 }
 
 body.light-theme {
-  --primary: var(--white);
-  --secondary: var(--black);
-  --hover: var(--gray100);
-  --active: var(--gray200);
-  --hoverPrimary: var(--gray1400);
-  --activePrimary: var(--gray1300);
-  --managerBg: var(--white);
-
-  --bg: var(--white);
-  --iconColor: var(--black);
+  --backgroundPrimary: var(--white);
+  --backgroundSecondary: var(--gray50);
+  --buttonColorPrimary: var(--white);
+  --buttonBackgroundPrimary: var(--black);
+  --buttonHoverPrimary: var(--gray1400);
+  --buttonActivePrimary: var(--gray1300);
+  --buttonColorSecondary: var(--black);
+  --buttonBackgroundSecondary: var(--transparent);
+  --buttonHoverSecondary: var(--gray100);
+  --buttonActiveSecondary: var(--gray200);
+  --fontColorPrimary: var(--black);
 }
 
 body.dark-theme {
-  --primary: var(--black);
-  --secondary: var(--white);
-  --hover: var(--gray1400);
-  --active: var(--gray1300);
-  --hoverPrimary: var(--gray100);
-  --activePrimary: var(--gray200);
-  --managerBg: var(--black);
-
-  --bg: var(--black);
-  --iconColor: var(--white);
+  --backgroundPrimary: var(--gray1350);
+  --backgroundSecondary: var(--gray1300);
+  --buttonColorPrimary: var(--black);
+  --buttonBackgroundPrimary: var(--white);
+  --buttonHoverPrimary: var(--gray100);
+  --buttonActivePrimary: var(--gray200);
+  --buttonColorSecondary: var(--white);
+  --buttonBackgroundSecondary: var(--transparent);
+  --buttonHoverSecondary: var(--gray1300);
+  --buttonActiveSecondary: var(--gray1400);
+  --fontColorPrimary: var(--white);
 }
-
-body {
-  /* background-color: var(--bg); */
-  background-color: #191919;
-}
-
-
 
 hr {
   margin: 8px 0px;

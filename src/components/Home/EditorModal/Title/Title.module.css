@@ -18,7 +18,7 @@ textarea {
   line-height: 1em;
   background-color: transparent;
 
-  color: var(--secondary);
+  color: var(--fontColorPrimary);
 }
 
 textarea::placeholder {

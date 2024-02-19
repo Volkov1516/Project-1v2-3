@@ -18,14 +18,16 @@
   z-index: 99;
 }
 
-.container:hover > .bubble {
-  display: block;
-  left: calc(100% + 8px);
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-}
+@media (hover: hover) {
+  .container:hover>.bubble {
+    display: block;
+    left: calc(100% + 8px);
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+  }
 
-.bubble:hover {
-  display: none;
+  .bubble:hover {
+    display: none;
+  }
 }
