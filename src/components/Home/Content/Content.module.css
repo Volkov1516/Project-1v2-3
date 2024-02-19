@@ -3,7 +3,10 @@
   width: 240px;
   overflow: auto;
   border-right: 1px solid #DDD;
-  background-color: #fbfbfb;
+  /* background-color: #fbfbfb; */
+  background-color: var(--managerBg);
+  color: var(--secondary);
+  
   padding-top: 12px;
   padding-bottom: 240px;
 }
@@ -120,12 +123,23 @@
   border-bottom: 1px solid #DDD;
 } */
 
-.document:hover,
+/* .document:hover,
 .testFolder:hover,
 .testNote:hover {
   background-color: #EEE;
   border-top: 1px solid #DDD;
   border-bottom: 1px solid #DDD;
+} */
+
+@media (hover: hover) {
+  .document:hover,
+.testFolder:hover,
+.testNote:hover {
+  background-color: #EEE;
+  border-top: 1px solid #DDD;
+  border-bottom: 1px solid #DDD;
+}
+
 }
 
 .document:active,
@@ -201,7 +215,10 @@
     width: 100%;
     overflow: auto;
     border-right: 1px solid #DDD;
-    background-color: #fbfbfb;
+    /* background-color: #fbfbfb; */
+    background-color: var(--managerBg);
+
+
     padding-top: 12px;
     padding-bottom: 240px;
   }

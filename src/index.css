@@ -10,6 +10,7 @@
 }
 
 :root {
+  /* COLORS */
   --white: #FFFFFF;
   --gray100: #EEEEEE;
   --gray200: #DDDDDD;
@@ -21,13 +22,74 @@
   --gray800: #777777;
   --gray900: #666666;
   --gray1000: #555555;
-  --gray1400: #333333;
-  --gray1500: #222222;
-  --gray1600: #111111;
+  --gray1100: #444444;
+  --gray1200: #333333;
+  --gray1300: #222222;
+  --gray1400: #111111;
   --black: #000000;
-
-  --mobile: 639px;
 }
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --primary: var(--white);
+    --secondary: var(--black);
+    --hover: var(--gray100);
+    --active: var(--gray200);
+    --hoverPrimary: var(--gray1400);
+    --activePrimary: var(--gray1300);
+    --managerBg: var(--white);
+
+    --bg: var(--white);
+    --iconColor: var(--black);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: var(--black);
+    --secondary: var(--white);
+    --hover: var(--gray1400);
+    --active: var(--gray1300);
+    --hoverPrimary: var(--gray100);
+    --activePrimary: var(--gray200);
+    --managerBg: var(--black);
+
+    --bg: var(--black);
+    --iconColor: var(--white);
+  }
+}
+
+body.light-theme {
+  --primary: var(--white);
+  --secondary: var(--black);
+  --hover: var(--gray100);
+  --active: var(--gray200);
+  --hoverPrimary: var(--gray1400);
+  --activePrimary: var(--gray1300);
+  --managerBg: var(--white);
+
+  --bg: var(--white);
+  --iconColor: var(--black);
+}
+
+body.dark-theme {
+  --primary: var(--black);
+  --secondary: var(--white);
+  --hover: var(--gray1400);
+  --active: var(--gray1300);
+  --hoverPrimary: var(--gray100);
+  --activePrimary: var(--gray200);
+  --managerBg: var(--black);
+
+  --bg: var(--black);
+  --iconColor: var(--white);
+}
+
+body {
+  background-color: var(--bg);
+}
+
+
 
 hr {
   margin: 8px 0px;

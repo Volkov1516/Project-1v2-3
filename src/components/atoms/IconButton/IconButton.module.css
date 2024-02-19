@@ -14,39 +14,40 @@
   width: 24px;
   height: 24px;
   margin: 8px;
+  fill: var(--secondary);
 }
 
 @media (hover: hover) {
   .button:hover {
-    background-color: var(--gray100);
+    background-color: var(--hover);
     cursor: pointer;
   }
 }
 
 .button:active {
-  background-color: var(--gray200);
+  background-color: var(--active);
 }
 
 .primary {
-  background-color: black;
-}
-
-@media (hover: hover) {
-  .primary:hover {
-    background-color: #222;
-    cursor: pointer;
-  }
-}
-
-.primary:active {
-  background-color: #333;
+  background-color: var(--secondary);
 }
 
 .primary > svg {
   width: 40px;
   height: 40px;
   margin: 0px;
-  fill: white;
+  fill: var(--primary);
+}
+
+@media (hover: hover) {
+  .primary:hover {
+    background-color: var(--hoverPrimary);
+    cursor: pointer;
+  }
+}
+
+.primary:active {
+  background-color: var(--activePrimary);
 }
 
 @media (max-width: 639px) {
