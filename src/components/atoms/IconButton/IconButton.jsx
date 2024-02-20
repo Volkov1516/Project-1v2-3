@@ -6,19 +6,23 @@ export const IconButton = ({
   viewBox = '0 -960 960 960',
   onClick
 }) => {
-  const handleClick = (e) => {
+  const handleTouchStart = (e) => {
     const element = e.currentTarget;
-
-    element.style.active = null;
-    element.classList.add(css.pressed);
-
-    setTimeout(function() {
-      element.classList.remove(css.pressed);
-    }, 100);
+    element.classList.add(css.touch);
   };
 
+  const handleTouchEnd = (e) => {
+    const element = e.currentTarget;
+    element.classList.remove(css.touch);
+  }
+
   return (
-    <button id="iconButton" className={`${css.button} ${primary && css.primary}`} onClick={onClick} onTouchStart={handleClick}>
+    <button
+      className={`${css.button} ${primary && css.primary}`}
+      onClick={onClick}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       <svg className={css.svg} viewBox={viewBox} xmlns="http://www.w3.org/2000/svg">
         <path d={path} />
       </svg>

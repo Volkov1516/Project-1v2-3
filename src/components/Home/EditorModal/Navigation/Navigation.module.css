@@ -60,13 +60,8 @@
   background-color: var(--buttonColorPrimary);
 }
 
-/* .arrowWrapper:active {
-  background-color: var(--gray1000);
-} */
-
-.pressed {
-  z-index: 2;
-  background-color: red;
+.touch {
+  background-color: var(--buttonActivePrimary);
 }
 
 .arrowWrapper:disabled:active {
@@ -112,12 +107,18 @@
   }
 
   .arrowWrapper:hover {
-    background-color: var(--gray1400);
+    background-color: var(--buttonHoverPrimary);
   }
 
   .arrowWrapper:disabled:hover {
     background-color: white;
     cursor: not-allowed;
+  }
+}
+
+@media (min-width: 639px) {
+  .arrowWrapper:active {
+    background-color: var(--buttonActivePrimary);
   }
 }
 

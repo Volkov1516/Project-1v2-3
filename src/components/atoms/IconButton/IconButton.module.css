@@ -17,17 +17,6 @@
   fill: var(--buttonColorSecondary);
 }
 
-@media (hover: hover) {
-  .button:hover {
-    background-color: var(--buttonHoverSecondary);
-    cursor: pointer;
-  }
-}
-
-/* .button:active {
-  background-color: var(--buttonActiveSecondary);
-} */
-
 .primary {
   background-color: var(--buttonBackgroundPrimary);
 }
@@ -40,24 +29,24 @@
 }
 
 @media (hover: hover) {
+  .button:hover {
+    background-color: var(--buttonHoverSecondary);
+    cursor: pointer;
+  }
+
   .primary:hover {
     background-color: var(--buttonHoverPrimary);
     cursor: pointer;
   }
 }
 
-.primary:active {
-  background-color: var(--buttonActivePrimary);
-}
-
-.pressed {
-  z-index: 2;
-  background-color: red;
-}
-
 @media (min-width: 639px) {
   .button:active {
     background-color: var(--buttonActiveSecondary);
+  }
+
+  .primary:active {
+    background-color: var(--buttonActivePrimary);
   }
 }
 
@@ -70,5 +59,13 @@
   .primary>svg {
     width: 48px;
     height: 48px;
+  }
+
+  .button.touch {
+    background-color: var(--buttonActiveSecondary);
+  }
+
+  .primary.touch {
+    background-color: var(--buttonActivePrimary);
   }
 }

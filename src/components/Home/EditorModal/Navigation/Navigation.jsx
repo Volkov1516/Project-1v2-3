@@ -38,26 +38,37 @@ export const Navigation = memo(function MemoizedNavigation() {
     window.history.pushState({ modal: 'editorModalFromPreview' }, '', '#editor');
   }
 
-  const handleTouch = (e) => {
+  const handleTouchStart = (e) => {
     const element = e.currentTarget;
-
-    element.style.active = null;
-    element.classList.add(css.pressed);
-
-    setTimeout(function() {
-      element.classList.remove(css.pressed);
-    }, 100);
+    element.classList.add(css.touch);
   };
+
+  const handleTouchEnd = (e) => {
+    const element = e.currentTarget;
+    element.classList.remove(css.touch);
+  }
 
   return (
     <div className={css.navigation}>
       <div className={css.navigationStart}>
         <div className={css.navigationControlls}>
-          <button disabled={documentIndex === 0} className={css.arrowWrapper} onClick={prev} onTouchStart={handleTouch}>
+          <button
+            disabled={documentIndex === 0}
+            className={css.arrowWrapper}
+            onClick={prev}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <div className={css.arrowLeft} />
           </button>
           <div className={css.navigationCountBubble}>{`${documentIndex + 1}`}/{filteredDocumentsId?.length}</div>
-          <button disabled={documentIndex === filteredDocumentsId?.length - 1} className={css.arrowWrapper} onClick={next} onTouchStart={handleTouch}>
+          <button
+            disabled={documentIndex === filteredDocumentsId?.length - 1}
+            className={css.arrowWrapper}
+            onClick={next}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <div className={css.arrowRight} />
           </button>
         </div>
