@@ -1,4 +1,4 @@
-import { Tooltip } from 'components/common/Tooltip/Tooltip';
+import { Tooltip } from 'components/atoms/Tooltip/Tooltip';
 import { IconButton } from 'components/atoms/IconButton/IconButton';
 
 import css from './Bar.module.css';

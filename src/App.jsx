@@ -13,8 +13,8 @@ import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, getDocs, collection, query, where, orderBy } from 'firebase/firestore';
 
-import { Auth } from 'components/Auth/Auth';
-import { Home } from 'components/Home/Home';
+import { Auth } from 'components/pages/Auth/Auth';
+import { Home } from 'components/pages/Home/Home';
 
 import css from './App.module.css';
 
