@@ -5,6 +5,7 @@ import { FolderNavigation } from './FolderNavigation/FolderNavigation';
 import { Folders } from './Folders/Folders';
 
 import css from './Content.module.css';
+import { Notes } from './Notes/Notes';
 
 export const Content = memo(function MemoizedContent({ mouseTimer }) {
   const { documents, path } = useSelector(state => state.user);
@@ -38,6 +39,7 @@ export const Content = memo(function MemoizedContent({ mouseTimer }) {
     <div className={css.container} onScroll={onMouseUp}>
       <FolderNavigation text={folder?.text} />
       <Folders folders={folder?.folders} />
+      <Notes notes={folder?.notes} />
     </div>
   );
 });

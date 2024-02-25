@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { updateDocuments } from 'redux/features/user/userSlice';
 import { setIsNewDocument, createDocument, updateDocument } from 'redux/features/document/documentSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
@@ -35,7 +36,7 @@ export const Editor = ({
   setSaving,
 }) => {
   const dispatch = useDispatch();
-  const { userId } = useSelector(state => state.user);
+  const { userId, documents, path } = useSelector(state => state.user);
   const { editorModalStatus } = useSelector(state => state.modal);
   const { isNewDocument, documentId, content } = useSelector(state => state.document);
 
@@ -75,6 +76,29 @@ export const Editor = ({
         setSaving(true);
 
         if (isNewDocument) {
+          const newNote = {
+            id: documentId,
+            title: 'Untitled',
+          };
+
+          const newDocuments = JSON.parse(JSON.stringify(documents));
+
+          function findFolder(object, id, newObject) {
+            if (object.id === id) {
+              object.notes.push(newObject);
+              return true;
+            } else if (object.folders && object.folders.length > 0) {
+              for (let i = 0; i < object.folders.length; i++) {
+                if (findFolder(object.folders[i], id, newObject)) {
+                  return true;
+                }
+              }
+            }
+            return false;
+          }
+
+          findFolder(newDocuments, path[path.length - 1], newNote);
+
           await setDoc(doc(db, 'documents', documentId), { userId, date: Timestamp.fromDate(new Date()), content: state })
             .then(() => {
               dispatch(setIsNewDocument(false));
@@ -86,6 +110,12 @@ export const Editor = ({
               }));
             })
             .catch(error => console.log(error));
+
+          await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true })
+            .then(() => {
+              dispatch(updateDocuments(newDocuments));
+            })
+            .catch(err => console.log(err));
         }
         else {
           await updateDoc(doc(db, 'documents', documentId), { content: state })

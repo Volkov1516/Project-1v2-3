@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateDocuments } from 'redux/features/user/userSlice';
+import { setCurrentDocument } from 'redux/features/document/documentSlice';
+import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
@@ -21,6 +23,18 @@ export const Bar = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const handleAddNote = () => {
+    dispatch(setCurrentDocument({
+      isNew: true,
+      index: null,
+      id: uuidv4(),
+      title: '',
+      content: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',
+    }));
+    dispatch(setEditorModalStatus('editorModalNew'));
+
+    window.history.pushState({ modal: 'editorModalNew' }, '', '#editor');
+  };
 
   const handleAddFolder = async (text) => {
     setLoading(true);
@@ -29,7 +43,7 @@ export const Bar = () => {
       id: uuidv4(),
       text,
       folders: [],
-      nots: [],
+      notes: [],
       tasks: []
     };
 
@@ -79,7 +93,7 @@ export const Bar = () => {
     <div className={css.container}>
       <div className={css.start}>
         <Tooltip position="right" text="Add Note">
-          <IconButton primary size="large" path="M460-460H240v-40h220v-220h40v220h220v40H500v220h-40v-220Z" />
+          <IconButton onClick={handleAddNote} primary size="large" path="M460-460H240v-40h220v-220h40v220h220v40H500v220h-40v-220Z" />
         </Tooltip>
         <Tooltip position="right" text="Add Task">
           <IconButton path="m382-267.692-198.769-198.77L211.769-495 382-324.769 748.231-691l28.538 28.538L382-267.692Z" />

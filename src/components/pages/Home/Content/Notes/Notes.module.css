@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.note {
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 16px;
+  line-height: 1em;
+  overflow-wrap: break-word;
+  border: 1px solid transparent;
+  user-select: none;
+  transition: background-color 0.1s ease-in;
+}
+
+@media (hover: hover) {
+  .note:hover {
+    background-color: var(--buttonHoverSecondary);
+    border-top: 1px solid var(--borderColor);
+    border-bottom: 1px solid var(--borderColor);
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 639px) {
+  .note:active {
+    background-color: var(--buttonActiveSecondary);
+  }
+}
+
+@media (max-width: 639px) {
+  .note {
+    font-weight: 700;
+    font-size: 48px;
+  }
+
+  .note.touch {
+    background-color: var(--buttonActiveSecondary);
+  }
+}

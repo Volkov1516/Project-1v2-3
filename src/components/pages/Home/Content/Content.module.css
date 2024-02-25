@@ -5,50 +5,13 @@
   border-right: 1px solid var(--borderColor);
   background-color: var(--backgroundSecondary);
   color: var(--fontColorPrimary);
-  padding-bottom: 240px;
-}
-
-.document {
-  /* position: relative; */
-  padding: 8px 16px;
-  width: 100%;
-  /* font-weight: 400; */
-  font-size: 16px;
-  line-height: 1em;
-  overflow-wrap: break-word;
-  cursor: pointer;
-  user-select: none;
-  border: 1px solid transparent;
-  display: flex;
-  align-items: center;
-}
-
-@media (hover: hover) {
-  .document:hover {
-    background-color: var(--buttonHoverSecondary);
-    border-top: 1px solid var(--borderColor);
-    border-bottom: 1px solid var(--borderColor);
-  }
-}
-
-.document:active {
-  background-color: var(--buttonActiveSecondary);
+  padding-bottom: 50vh;
 }
 
 @media (max-width: 639px) {
   .container {
-    height: 100vh;
     width: 100%;
-    overflow: auto;
-    border-right: 1px solid var(--borderColor);
+    border-right: none;
     background-color: var(--backgroundPrimary);
-    padding-top: 12px;
-    padding-bottom: 240px;
-  }
-
-  .document {
-    padding: 8px 16px;
-    font-weight: 700;
-    font-size: 48px;
   }
 }
