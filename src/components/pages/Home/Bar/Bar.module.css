@@ -2,7 +2,7 @@
   width: fit-content;
   height: 100vh;
   padding: 8px;
-  border-right: 1px solid #DDD;
+  border-right: 1px solid var(--borderColor);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,6 +17,12 @@
   gap: 8px;
 }
 
+.createFolderModalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 @media (max-width: 639px) {
   .container {
     position: fixed;
@@ -26,7 +32,7 @@
     padding: 8px 16px 8px 10px;
     height: fit-content;
     border-right: none;
-    border-top: 1px solid #BBB;
+    border-top: 1px solid var(--borderColor);
     background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(8px);
   }

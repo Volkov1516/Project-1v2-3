@@ -34,6 +34,7 @@
   :root {
     --backgroundPrimary: var(--white);
     --backgroundSecondary: var(--gray50);
+    --borderColor: var(--gray200);
     --buttonColorPrimary: var(--white);
     --buttonBackgroundPrimary: var(--black);
     --buttonHoverPrimary: var(--gray1400);
@@ -50,13 +51,14 @@
   :root {
     --backgroundPrimary: var(--gray1350);
     --backgroundSecondary: var(--gray1300);
+    --borderColor: var(--gray1200);
     --buttonColorPrimary: var(--black);
     --buttonBackgroundPrimary: var(--white);
     --buttonHoverPrimary: var(--gray100);
     --buttonActivePrimary: var(--gray200);
     --buttonColorSecondary: var(--white);
     --buttonBackgroundSecondary: var(--transparent);
-    --buttonHoverSecondary: var(--gray1300);
+    --buttonHoverSecondary: var(--gray1200);
     --buttonActiveSecondary: var(--gray1400);
     --fontColorPrimary: var(--white);
   }
@@ -65,6 +67,7 @@
 body.light-theme {
   --backgroundPrimary: var(--white);
   --backgroundSecondary: var(--gray50);
+  --borderColor: var(--gray200);
   --buttonColorPrimary: var(--white);
   --buttonBackgroundPrimary: var(--black);
   --buttonHoverPrimary: var(--gray1400);
@@ -79,13 +82,14 @@ body.light-theme {
 body.dark-theme {
   --backgroundPrimary: var(--gray1350);
   --backgroundSecondary: var(--gray1300);
+  --borderColor: var(--gray1200);
   --buttonColorPrimary: var(--black);
   --buttonBackgroundPrimary: var(--white);
   --buttonHoverPrimary: var(--gray100);
   --buttonActivePrimary: var(--gray200);
   --buttonColorSecondary: var(--white);
   --buttonBackgroundSecondary: var(--transparent);
-  --buttonHoverSecondary: var(--gray1300);
+  --buttonHoverSecondary: var(--gray1200);
   --buttonActiveSecondary: var(--gray1400);
   --fontColorPrimary: var(--white);
 }

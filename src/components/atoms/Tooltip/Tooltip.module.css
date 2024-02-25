@@ -19,7 +19,25 @@
 }
 
 @media (hover: hover) {
-  .container:hover>.bubble {
+  .container:hover>.top {
+    display: block;
+    top: -20px;
+  }
+
+  .container:hover>.bottom {
+    text-align: center;
+    display: block;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .container:hover>.left {
+    display: block;
+    left: -20px;
+  }
+
+  .container:hover>.right {
     display: block;
     left: calc(100% + 8px);
     top: 0;

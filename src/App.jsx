@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser } from 'redux/features/user/userSlice';
-import { setDocuments, setFilteredDocumentsId } from 'redux/features/document/documentSlice';
 import {
   setEditorModalStatus,
   setDocumentSettingsModal,
@@ -11,7 +10,7 @@ import {
 } from 'redux/features/modal/modalSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
-import { doc, getDoc, getDocs, collection, query, where, orderBy } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 
 import { Auth } from 'components/pages/Auth/Auth';
 import { Home } from 'components/pages/Home/Home';
@@ -28,19 +27,7 @@ export const App = () => {
       const docRef = doc(db, 'users', id);
       const docSnap = await getDoc(docRef);
 
-      dispatch(setUser({ id, email, categories: docSnap?.data()?.categories }));
-    };
-
-    const getDocuments = async (id) => {
-      const q = query(collection(db, 'documents'), where('userId', '==', id), orderBy('date', 'desc'));
-      const querySnapshot = await getDocs(q);
-      const documents = querySnapshot.docs.map(i => ({ id: i?.id, ...i.data() }));
-      dispatch(setDocuments(JSON.parse(JSON.stringify(documents))));
-
-      const filteredDocumentsId = [];
-      documents?.forEach(i => !i?.archive && filteredDocumentsId.push(i?.id));
-      dispatch(setFilteredDocumentsId(filteredDocumentsId));
-
+      dispatch(setUser({ id, email, documents: docSnap?.data()?.documents }));
       setLogged(true);
       setLoading(false);
     };
@@ -48,7 +35,6 @@ export const App = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         getUser(user?.uid, user?.email);
-        getDocuments(user?.uid);
         window.history.pushState({}, '', '/');
       } else {
         setLogged(false);

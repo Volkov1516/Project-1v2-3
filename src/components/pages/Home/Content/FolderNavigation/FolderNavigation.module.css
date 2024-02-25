@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  background-color: var(--backgroundPrimary);
+  border-bottom: 1px solid var(--borderColor);
+  user-select: none;
+}

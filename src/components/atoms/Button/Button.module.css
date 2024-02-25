@@ -1,0 +1,20 @@
+.button {
+  padding: 8px 12px;
+  outline: none;
+  border: 1px solid var(--borderColor);
+  background-color: var(--buttonBackgroundPrimary);
+  font-size: 14px;
+  color: var(--buttonColorPrimary);
+}
+
+@media (hover: hover) {
+  .button:hover {
+    cursor: pointer;
+  }
+}
+
+.button:disabled {
+  background-color: var(--buttonBackgroundSecondary);
+  color: var(--buttonColorSecondary);
+  cursor: not-allowed;
+}

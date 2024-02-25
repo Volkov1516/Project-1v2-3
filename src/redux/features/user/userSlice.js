@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   userId: null,
   email: null,
-  userCategories: [],
+  documents: null,
+  path: ['root']
 };
 
 export const userSlice = createSlice({
@@ -13,30 +14,16 @@ export const userSlice = createSlice({
     setUser: (state, action) => {
       state.userId = action.payload?.id;
       state.email = action.payload?.email;
-      state.userCategories = action.payload?.categories;
+      state.documents = action.payload?.documents;
     },
-    addUserCategory: (state, action) => {
-      if (state.userCategories) {
-        state.userCategories.push(action.payload);
-      }
-      else {
-        state.userCategories = [action.payload];
-      }
+    updateDocuments: (state, action) => {
+      state.documents = action.payload;
     },
-    updateUserCategory: (state, action) => {
-      state.userCategories = action.payload;
-    },
-    deleteUserCategory: (state, action) => {
-      let newCategories = state.userCategories.filter(i => i.id !== action.payload);
-      state.userCategories = newCategories;
+    updatePath: (state, action) => {
+      state.path = action.payload;
     }
   }
 });
 
-export const {
-  setUser,
-  addUserCategory,
-  updateUserCategory,
-  deleteUserCategory
-} = userSlice.actions;
+export const { setUser, updateDocuments, updatePath } = userSlice.actions;
 export default userSlice.reducer;

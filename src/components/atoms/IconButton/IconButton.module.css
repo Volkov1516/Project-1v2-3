@@ -17,6 +17,13 @@
   fill: var(--buttonColorSecondary);
 }
 
+.small>svg {
+  width: 24px;
+  height: 24px;
+  margin: 0px;
+  fill: var(--buttonColorSecondary);
+}
+
 .primary {
   background-color: var(--buttonBackgroundPrimary);
 }

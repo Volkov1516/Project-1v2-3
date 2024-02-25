@@ -1,15 +1,92 @@
-import { memo } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentDocument } from 'redux/features/document/documentSlice';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
+import { updateDocuments } from 'redux/features/user/userSlice';
+import { db } from 'firebase.js';
+import { doc, setDoc } from 'firebase/firestore';
 
-import { IconButton } from 'components/atoms/IconButton/IconButton';
+import { FolderNavigation } from './FolderNavigation/FolderNavigation';
+import { Folders } from './Folders/Folders';
 
 import css from './Content.module.css';
 
 export const Content = memo(function MemoizedContent({ mouseTimer }) {
   const dispatch = useDispatch();
-  const { documents, filteredDocumentsId } = useSelector(state => state.document);
+  const { userId, documents, path } = useSelector(state => state.user);
+  const { filteredDocumentsId } = useSelector(state => state.document);
+
+  const [folder, setFolder] = useState(null);
+
+  useEffect(() => {
+    function findFolder(object, id) {
+      if (object.id === id) {
+        return object;
+      } else if (object.folders && object.folders.length > 0) {
+        for (let i = 0; i < object.folders.length; i++) {
+          const result = findFolder(object.folders[i], id);
+
+          if (result) {
+            return result;
+          }
+        }
+      }
+
+      return null;
+    }
+
+    let res = findFolder(documents, path[path.length - 1]);
+    setFolder(res);
+  }, [documents, path]);
+
+  const handleEditFolder = async (id, text = 'Renamed') => {
+    const newDocuments = JSON.parse(JSON.stringify(documents));
+
+    function findFolder(object, id, newName) {
+      if (object.id === id) {
+        object.text = (newName);
+        return true;
+      } else if (object.folders && object.folders.length > 0) {
+        for (let i = 0; i < object.folders.length; i++) {
+          if (findFolder(object.folders[i], id, newName)) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
+    findFolder(newDocuments, id, text);
+
+    await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true })
+      .then(() => dispatch(updateDocuments(newDocuments)))
+      .catch(err => console.log(err));
+  };
+
+  const handleDeleteFolder = async () => {
+    const newDocuments = JSON.parse(JSON.stringify(documents));
+    console.log(newDocuments);
+
+    function deleteObjectById(id, folders) {
+      for (let i = 0; i < folders.length; i++) {
+        if (folders[i].id === id) {
+          folders.splice(i, 1);
+          return;
+        }
+        if (folders[i].folders && folders[i].folders.length > 0) {
+          deleteObjectById(id, folders[i].folders);
+        }
+      }
+    }
+
+    deleteObjectById("fd032abf-d611-4963-95a9-3e4a7318690d", newDocuments.folders);
+    console.log(newDocuments);
+
+    await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true })
+      .then(() => dispatch(updateDocuments(newDocuments)))
+      .catch(err => console.log(err));
+  };
 
   const openModalEditor = (id, title, content, color, categories, archive) => {
     let documentIndex;
@@ -69,52 +146,8 @@ export const Content = memo(function MemoizedContent({ mouseTimer }) {
 
   return (
     <div className={css.container} onScroll={onMouseUp}>
-      <div className={css.testFolder}>
-        <svg className={css.testFolderSvg} viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
-          <path d="M853.333333 256H469.333333l-85.333333-85.333333H170.666667c-46.933333 0-85.333333 38.4-85.333334 85.333333v170.666667h853.333334v-85.333334c0-46.933333-38.4-85.333333-85.333334-85.333333z" fill="#FFA000" /><path d="M853.333333 256H170.666667c-46.933333 0-85.333333 38.4-85.333334 85.333333v426.666667c0 46.933333 38.4 85.333333 85.333334 85.333333h682.666666c46.933333 0 85.333333-38.4 85.333334-85.333333V341.333333c0-46.933333-38.4-85.333333-85.333334-85.333333z" fill="#FFCA28" />
-        </svg>
-        Projects
-      </div>
-      {documents?.map((i) => filteredDocumentsId.includes(i.id) && (
-        <div
-          key={i?.id}
-          onClick={() => openModalEditor(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
-          onMouseDown={() => onMouseDown(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
-          onMouseUp={onMouseUp}
-          onTouchStart={() => onMouseDown(i?.id, i?.title, i?.content, i?.color, i?.categories, i?.archive)}
-          onTouchEnd={onMouseUp}
-          className={`${css.document}`}
-        >
-          <span className={css[i?.color]} />
-          {i?.title || 'Untitled'}
-        </div>
-      ))}
-
-
-      <div className={css.testTaskWithCircle}>
-        <span className={css.icon}>
-          <IconButton path="M480.134-120q-74.673 0-140.41-28.339-65.737-28.34-114.365-76.922-48.627-48.582-76.993-114.257Q120-405.194 120-479.866q0-74.673 28.339-140.41 28.34-65.737 76.922-114.365 48.582-48.627 114.257-76.993Q405.194-840 479.866-840q74.673 0 140.41 28.339 65.737 28.34 114.365 76.922 48.627 48.582 76.993 114.257Q840-554.806 840-480.134q0 74.673-28.339 140.41-28.34 65.737-76.922 114.365-48.582 48.627-114.257 76.993Q554.806-120 480.134-120ZM480-160q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-        </span>
-        <span>
-          Define the new design system for the project. Define the new design system for the project. Define the new design system for the project. Define the new design system for the project.Define the new design system for the project. Define the new design system for the project.
-        </span>
-      </div>
-
-      <div className={css.testTaskWithCircle}>
-        <span className={css.icon}>
-          <IconButton path="M480.134-120q-74.673 0-140.41-28.339-65.737-28.34-114.365-76.922-48.627-48.582-76.993-114.257Q120-405.194 120-479.866q0-74.673 28.339-140.41 28.34-65.737 76.922-114.365 48.582-48.627 114.257-76.993Q405.194-840 479.866-840q74.673 0 140.41 28.339 65.737 28.34 114.365 76.922 48.627 48.582 76.993 114.257Q840-554.806 840-480.134q0 74.673-28.339 140.41-28.34 65.737-76.922 114.365-48.582 48.627-114.257 76.993Q554.806-120 480.134-120ZM480-160q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-        </span>
-        <span>
-          Here comes some random task...
-        </span>
-      </div>
-
-      {filteredDocumentsId?.length < 1 && (
-        <div className={css.emptyContainer}>
-          no documents
-        </div>
-      )}
-
+      <FolderNavigation text={folder?.text} />
+      <Folders folders={folder?.folders} />
     </div>
   );
 });

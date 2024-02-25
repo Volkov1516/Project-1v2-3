@@ -1,0 +1,92 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+.folder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px 4px 16px;
+  border: 1px solid transparent;
+  transition: background-color 0.1s ease-in;
+  /* overflow: visible; */
+}
+
+.start {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+
+
+.settings {
+  display: none;
+}
+
+.svg {
+  width: 24px;
+  height: 24px;
+}
+
+.eiditFolderModalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (hover: hover) {
+  .folder:hover {
+    background-color: var(--buttonHoverSecondary);
+    border-top: 1px solid var(--borderColor);
+    border-bottom: 1px solid var(--borderColor);
+    cursor: pointer;
+  }
+
+  .folder:hover>.settings {
+    display: block;
+  }
+}
+
+@media (min-width: 639px) {
+  .folder:active {
+    background-color: var(--buttonActiveSecondary);
+  }
+}
+
+@media (max-width: 639px) {
+  .container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .svg {
+    width: 144px;
+    height: 144px;
+    padding: 0;
+  }
+
+  .folder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 50%;
+    padding: 0;
+    border: none;
+  }
+
+  .folder.touch {
+    background-color: var(--buttonActiveSecondary);
+  }
+
+  .start {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+  }
+}
