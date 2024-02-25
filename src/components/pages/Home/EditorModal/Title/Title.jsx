@@ -49,7 +49,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
     findFolder(newDocuments, path[path.length - 1], newNote);
 
     if (isNewDocument && !saving) {
-      await setDoc(doc(db, 'documents', documentId), { userId, date: Timestamp.fromDate(new Date()), title })
+      await setDoc(doc(db, 'notes', documentId), { userId, date: Timestamp.fromDate(new Date()), title })
         .then(() => {
           dispatch(setIsNewDocument(false));
           dispatch(createDocument({
@@ -68,7 +68,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
         .catch(err => console.log(err));
     }
     else {
-      await updateDoc(doc(db, 'documents', documentId), { title })
+      await updateDoc(doc(db, 'notes', documentId), { title })
         .then(() => dispatch(updateDocument({ id: documentId, key: 'title', value: title })))
         .catch(error => console.log(error));
 
