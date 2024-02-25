@@ -13,11 +13,11 @@ export const Content = memo(function MemoizedContent({ mouseTimer }) {
 
   useEffect(() => {
     function findFolder(object, id) {
-      if (object.id === id) {
+      if (object?.id === id) {
         return object;
-      } else if (object.folders && object.folders.length > 0) {
-        for (let i = 0; i < object.folders.length; i++) {
-          const result = findFolder(object.folders[i], id);
+      } else if (object?.folders && object?.folders.length > 0) {
+        for (let i = 0; i < object?.folders.length; i++) {
+          const result = findFolder(object?.folders[i], id);
 
           if (result) {
             return result;

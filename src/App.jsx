@@ -27,7 +27,12 @@ export const App = () => {
       const docRef = doc(db, 'users', id);
       const docSnap = await getDoc(docRef);
 
-      dispatch(setUser({ id, email, documents: docSnap?.data()?.documents }));
+      dispatch(setUser({ id, email, documents: docSnap?.data()?.documents || {
+        id: 'root',
+        folders: [],
+        notes: [],
+        tasks: []
+      }}));
       setLogged(true);
       setLoading(false);
     };
