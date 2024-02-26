@@ -29,8 +29,11 @@ export const noteSlice = createSlice({
     updateActiveNoteMode: (state, action) => {
       state.activeNoteMode = action.payload;
     },
+    updateIsNewNote: (state, action) => {
+      state.isNewNote = action.payload;
+    }
   }
 });
 
-export const { updateNotesCache, setActiveNote, updateActiveNoteTitle, updateActiveNoteMode } = noteSlice.actions;
+export const { updateNotesCache, setActiveNote, updateActiveNoteTitle, updateActiveNoteMode, updateIsNewNote } = noteSlice.actions;
 export default noteSlice.reducer;

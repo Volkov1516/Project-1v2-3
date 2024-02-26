@@ -16,8 +16,8 @@ import css from './EditorModal.module.css';
 export const EditorModal = memo(function MemoizedEditorModal() {
   const dispatch = useDispatch();
 
-  const { activeNoteMode } = useSelector(state => state.note);
-  const { isNewDocument, documentIndex } = useSelector(state => state.document);
+  const { activeNoteMode, isNewNote } = useSelector(state => state.note);
+  const { documentIndex } = useSelector(state => state.document);
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
@@ -44,7 +44,7 @@ export const EditorModal = memo(function MemoizedEditorModal() {
             <div className={css.headerStart}>
             </div>
             <div className={css.headerEnd}>
-              {!isNewDocument && <Settings />}
+              {!isNewNote && <Settings />}
               <IconButton onClick={handleClose} path="M256-227.692 227.692-256l224-224-224-224L256-732.308l224 224 224-224L732.308-704l-224 224 224 224L704-227.692l-224-224-224 224Z" />
             </div>
           </div>

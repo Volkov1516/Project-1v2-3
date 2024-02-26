@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateDocuments } from 'redux/features/user/userSlice';
-import { setCurrentDocument } from 'redux/features/document/documentSlice';
-import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
+import { setActiveNote } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
@@ -24,14 +23,13 @@ export const Bar = () => {
   const [loading, setLoading] = useState(false);
 
   const handleAddNote = () => {
-    dispatch(setCurrentDocument({
+    dispatch(setActiveNote({
       isNew: true,
-      index: null,
+      mode: 'edit',
       id: uuidv4(),
       title: '',
       content: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',
     }));
-    dispatch(setEditorModalStatus('editorModalNew'));
   };
 
   const handleAddFolder = async (text) => {
