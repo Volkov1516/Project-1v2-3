@@ -10,6 +10,7 @@ import css from './Title.module.css';
 export const Title = forwardRef(function MyTitle(props, ref) {
   const dispatch = useDispatch();
   const { userId, documents, path } = useSelector(state => state.user);
+  const { activeNoteTitle } = useSelector(state => state.note);
   const { isNewDocument, documentId, title, color } = useSelector(state => state.document);
   const { editorModalStatus } = useSelector(state => state.modal);
 
@@ -90,7 +91,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
         rows={1}
         spellCheck={false}
         placeholder="Title"
-        value={editorModalStatus === "preview" ? (title || 'UNTITLED') : title}
+        value={editorModalStatus === "preview" ? (activeNoteTitle || 'UNTITLED') : activeNoteTitle}
         onChange={onTitleChange}
         onBlur={onTitleBlur}
         onKeyDown={handleEnter}

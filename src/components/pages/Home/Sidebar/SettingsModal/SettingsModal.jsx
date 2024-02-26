@@ -21,16 +21,13 @@ export const SettingsModal = memo(function SettingsComponent({ setCategoriesMenu
     setCategoriesMenu(false);
 
     if (settingsModal) {
-      window.history.back();
     }
     else {
       dispatch(setSettingsModal(true));
 
-      window.history.pushState({ modal: 'settings' }, '', '#settings');
     }
   };
 
-  const close = () => window.history.back();
 
   const logOut = async () => {
     await signOut(auth)

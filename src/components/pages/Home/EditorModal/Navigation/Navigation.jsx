@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
 import { updateDocumentIndex } from 'redux/features/document/documentSlice';
+import { updateActiveNoteMode } from 'redux/features/note/noteSlice';
 
 import { Settings } from '../Settings/Settings';
 import { IconButton } from 'components/atoms/IconButton/IconButton';
@@ -12,7 +13,9 @@ export const Navigation = memo(function MemoizedNavigation() {
   const dispatch = useDispatch();
   const { filteredDocumentsId, documentIndex } = useSelector(state => state.document);
 
-  const close = () => window.history.back();
+  const close = () => {
+    dispatch(updateActiveNoteMode(null));
+  };
 
   const prev = () => {
     if (documentIndex === 0) return;
@@ -34,8 +37,6 @@ export const Navigation = memo(function MemoizedNavigation() {
 
   const openEditorFromPreview = () => {
     dispatch(setEditorModalStatus('editorModalFromPreview'));
-
-    window.history.pushState({ modal: 'editorModalFromPreview' }, '', '#editor');
   }
 
   const handleTouchStart = (e) => {

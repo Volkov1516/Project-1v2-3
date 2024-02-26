@@ -37,14 +37,15 @@ export const Editor = ({
 }) => {
   const dispatch = useDispatch();
   const { userId, documents, path } = useSelector(state => state.user);
+  const { activeNoteContent } = useSelector(state => state.note);
   const { editorModalStatus } = useSelector(state => state.modal);
-  const { isNewDocument, documentId, content } = useSelector(state => state.document);
+  const { isNewDocument, documentId } = useSelector(state => state.document);
 
   let editorStateAutoSaveTimeout;
 
   const initialConfig = {
     namespace: 'Editor',
-    editorState: content,
+    editorState: activeNoteContent,
     theme: MainTheme,
     nodes: [
       HeadingNode,

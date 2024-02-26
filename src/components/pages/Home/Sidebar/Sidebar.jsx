@@ -28,7 +28,6 @@ export const Sidebar = memo(function MemoizedSidebar() {
   }, [categoriesMenu]);
 
   const handleCategoriesMenu = () => {
-    if (settingsModal) window.history.back();
 
     setCategoriesMenu(!categoriesMenu);
   };
@@ -46,7 +45,6 @@ export const Sidebar = memo(function MemoizedSidebar() {
     }));
     dispatch(setEditorModalStatus('editorModalNew'));
 
-    window.history.pushState({ modal: 'editorModalNew' }, '', '#editor');
   };
 
   const filterByAll = () => {

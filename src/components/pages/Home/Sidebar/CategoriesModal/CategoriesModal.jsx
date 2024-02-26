@@ -20,10 +20,8 @@ export const CategoriesModal = memo(function CategoriesComponent() {
   const handleOpen = () => {
     dispatch(setCategoriesModal(true));
 
-    window.history.pushState({ modal: 'categories' }, '', '#categories');
   };
 
-  const close = () => window.history.back();
 
   const handleAddUserCategory = async () => {
     if (!inputValue) return;

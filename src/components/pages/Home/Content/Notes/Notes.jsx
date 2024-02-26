@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateNotesCache, updateActiveNoteId } from 'redux/features/note/noteSlice';
-import { setCurrentDocument } from 'redux/features/document/documentSlice';
-import { setEditorModalStatus } from 'redux/features/modal/modalSlice';
+import { updateDocuments } from 'redux/features/user/userSlice';
+import { updateNotesCache, setActiveNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 
 import { IconButton } from 'components/atoms/IconButton/IconButton';
 import { Input } from 'components/atoms/Input/Input';
@@ -16,12 +15,15 @@ import css from './Notes.module.css';
 export const Notes = ({ notes }) => {
   const dispatch = useDispatch();
 
+  const { userId, documents, path } = useSelector(state => state.user);
   const { notesCache, activeNoteId } = useSelector(state => state.note);
 
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [titleInputValue, setTitleInput] = useState('');
-  const [titleInputValueDelete, setTitleInputDelete] = useState('');
+  const [openEditNoteModal, setOpenEditNoteModal] = useState(false);
+  const [loadingEditNoteModal, setLoadingEditNoteModal] = useState(false);
+  const [noteIdEditNoteModal, setNoteIdEditNoteModal] = useState(null);
+  const [titleInputValue, setTitleInputValue] = useState('');
+  const [titleDeleteValue, setTitleDeleteValue] = useState('');
+  const [titleDeleteInputValue, setTitleDeleteInputValue] = useState('');
 
   const handleTouchStart = (e) => {
     const element = e.currentTarget;
@@ -31,18 +33,7 @@ export const Notes = ({ notes }) => {
   const handleTouchEnd = (e) => {
     const element = e.currentTarget;
     element.classList.remove(css.touch);
-  }
-
-  const handleOpenEditNoteModal = (e, id, title) => {
-    setTitleInput(title);
-    setOpen(true);
   };
-
-  const handleEditTitle = () => {
-    setLoading(false);
-  };
-
-  const handleDeleteNote = () => { };
 
   const handleOpenNote = async (id) => {
     // STEP 1: Return if this note is openned (need to clean up activeNoteId after close!)
@@ -83,15 +74,165 @@ export const Notes = ({ notes }) => {
     }
 
     // STEP 4: Open Editor with targetNote data
-    dispatch(updateActiveNoteId(id));
-    dispatch(setCurrentDocument({
+    dispatch(setActiveNote({
       isNew: false,
+      mode: 'edit',
       id: targetNote?.id,
       title: targetNote?.title,
       content: targetNote?.content,
     }));
-    dispatch(setEditorModalStatus('editorModalFromComponent'));
-    window.history.pushState({ modal: 'editorModalFromComponent' }, '', '#editor');
+  };
+
+  const handleOpenEditNoteModal = (e, id, title) => {
+    e.stopPropagation();
+    setNoteIdEditNoteModal(id);
+    setTitleInputValue(title);
+    setTitleDeleteValue(title);
+    setOpenEditNoteModal(true);
+  };
+
+  const handleEditNoteTitle = async () => {
+    // STEP 1: Return if no changes
+    if (titleInputValue === titleDeleteValue) return;
+
+    if (titleInputValue && titleInputValue.length > 0) {
+      setLoadingEditNoteModal(true);
+
+      // STEP 2: Update title in user.documents (Redux, Firebase)
+      const documentsCopy = JSON.parse(JSON.stringify(documents));
+
+      function updateNoteTitle(object, folderId, noteId, newTitle) {
+        if (object.id === folderId) {
+          if (object.notes && object.notes.length > 0) {
+            for (let i = 0; i < object?.notes?.length; i++) {
+              if (object.notes[i].id === noteId) {
+                object.notes[i].title = newTitle;
+              }
+            }
+          }
+        }
+        else if (object.folders && object.folders.length > 0) {
+          for (let i = 0; i < object?.folders?.length; i++) {
+            updateNoteTitle(object.folders[i], folderId, noteId, newTitle);
+          }
+        }
+      }
+
+      updateNoteTitle(documentsCopy, path[path.length - 1], noteIdEditNoteModal, titleInputValue);
+
+      await setDoc(doc(db, 'users', userId), { documents: documentsCopy }, { merge: true })
+        .then(() => {
+          dispatch(updateDocuments(documentsCopy));
+          setLoadingEditNoteModal(false);
+        })
+        .catch(err => {
+          console.log(err);
+          setLoadingEditNoteModal(false);
+        });
+
+      // STEP 3: Update title in notes (Firebase) and notesCache (Redux)
+      await setDoc(doc(db, 'notes', noteIdEditNoteModal), { title: titleInputValue }, { merge: true })
+        .then(() => {
+          if (notesCache) {
+            let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));
+
+            for (let i = 0; i < notesCacheCopy.length; i++) {
+              if (notesCacheCopy[i].id === noteIdEditNoteModal) {
+                notesCacheCopy[i].title = titleInputValue;
+              }
+            }
+
+            dispatch(updateNotesCache(notesCacheCopy));
+          }
+
+          setLoadingEditNoteModal(false);
+        })
+        .catch(err => {
+          console.log(err);
+          setLoadingEditNoteModal(false);
+        });
+
+      // STEP 4: Update title in activeNoteTitle (Redux) and titleDeleteValue
+      dispatch(updateActiveNoteTitle(titleInputValue));
+      setTitleDeleteValue(titleInputValue);
+    }
+  };
+
+  const handleDeleteNote = async () => {
+    // STEP 1: Check if titleDeleteValue === titleDeleteInputValue
+    if (titleDeleteValue !== titleDeleteInputValue) return;
+
+    setLoadingEditNoteModal(true);
+
+    // STEP 2: Delete Note from user.documents (Firebase and Redux)
+    const documentsCopy = JSON.parse(JSON.stringify(documents));
+
+    function deleteNote(object, folderId, noteId) {
+      if (object.id === folderId) {
+        if (object.notes && object.notes.length > 0) {
+          for (let i = 0; i < object?.notes?.length; i++) {
+            if (object.notes[i].id === noteId) {
+              object.notes.splice(i, 1);
+              return;
+            }
+          }
+        }
+      }
+      else if (object.folders && object.folders.length > 0) {
+        for (let i = 0; i < object?.folders?.length; i++) {
+          deleteNote(object.folders[i], folderId, noteId);
+        }
+      }
+    }
+
+    deleteNote(documentsCopy, path[path.length - 1], noteIdEditNoteModal);
+
+    await setDoc(doc(db, 'users', userId), { documents: documentsCopy }, { merge: true })
+      .then(() => {
+        dispatch(updateDocuments(documentsCopy));
+        setLoadingEditNoteModal(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setLoadingEditNoteModal(false);
+      });
+
+    // STEP 3: Delete Note from notes (Firebase) and notesCache (Redux)
+    await deleteDoc(doc(db, 'notes', noteIdEditNoteModal))
+      .then(() => {
+        if (notesCache) {
+          let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));
+
+          if (notesCacheCopy && notesCacheCopy.length > 0) {
+            let filteredNotesCacheCopy = notesCacheCopy.filter(i => i.id !== noteIdEditNoteModal);
+            dispatch(updateNotesCache(filteredNotesCacheCopy));
+          }
+        }
+
+        setLoadingEditNoteModal(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setLoadingEditNoteModal(false);
+      });
+
+    // STEP 4: Reset activeNote... (Redux) and inputs
+    if (activeNoteId === noteIdEditNoteModal) {
+      dispatch(setActiveNote({
+        isNew: null,
+        mode: null,
+        id: null,
+        title: null,
+        content: null,
+      }));
+    }
+
+    setTitleInputValue('');
+    setTitleDeleteValue('');
+    setTitleDeleteInputValue('');
+
+    // STEP 5: Close modal
+    setOpenEditNoteModal(false);
   };
 
   return (
@@ -111,15 +252,15 @@ export const Notes = ({ notes }) => {
         </div>
       ))}
       <Modal
-        loading={loading}
-        open={open}
-        setOpen={setOpen}
+        loading={loadingEditNoteModal}
+        open={openEditNoteModal}
+        setOpen={setOpenEditNoteModal}
       >
         <div className={css.eiditNoteModalContent}>
-          <Input label="Edit note title" placeholder="Enter folder name" value={titleInputValue} onChange={e => setTitleInput(e.target.value)} />
-          <Button text="Rename folder" disabled={!titleInputValue} onClick={handleEditTitle} />
-          <Input label={`Enter ${titleInputValue} to delete the note`} placeholder="Enter folder name" value={titleInputValueDelete} onChange={e => setTitleInputDelete(e.target.value)} />
-          <Button text="Delete folder" disabled={!titleInputValueDelete} onClick={handleDeleteNote} />
+          <Input label="Edit note title" placeholder="Enter note name" value={titleInputValue} onChange={e => setTitleInputValue(e.target.value)} />
+          <Button text="Rename note" disabled={!titleInputValue} onClick={handleEditNoteTitle} />
+          <Input label={`Enter ${titleDeleteValue} to delete the note`} placeholder="Enter note name" value={titleDeleteInputValue} onChange={e => setTitleDeleteInputValue(e.target.value)} />
+          <Button text="Delete note" disabled={titleDeleteValue !== titleDeleteInputValue} onClick={handleDeleteNote} />
         </div>
       </Modal>
     </div>

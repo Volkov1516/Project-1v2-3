@@ -32,8 +32,6 @@ export const Bar = () => {
       content: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',
     }));
     dispatch(setEditorModalStatus('editorModalNew'));
-
-    window.history.pushState({ modal: 'editorModalNew' }, '', '#editor');
   };
 
   const handleAddFolder = async (text) => {

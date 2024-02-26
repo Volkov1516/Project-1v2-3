@@ -26,19 +26,17 @@ export const Settings = memo(function SettingsComponent() {
 
   const handleOpen = () => {
     dispatch(setDocumentSettingsModal(true));
-
-    window.history.pushState({ modal: 'documentSettings' }, '', '#settings');
   };
 
-  const handleClose = () => window.history.back();
+  const handleClose = () => {
+  };
+
+  const handleCloseDeletion = () => {
+  };
 
   const handleOpenDeletion = () => {
     dispatch(setDocumentDeleteModal(true));
-
-    window.history.pushState({ modal: 'documentDeleteModal' }, '', '#delete');
   };
-
-  const handleCloseDeletion = () => window.history.back();
 
   const handleCategory = async (e, id, name) => {
     if (e.target.checked) {
@@ -79,11 +77,8 @@ export const Settings = memo(function SettingsComponent() {
     await updateDoc(doc(db, 'documents', documentId), { archive: !archive })
       .then(() => {
         dispatch(updateDocument({ id: documentId, key: 'archive', value: !archive }));
-        window.history.back();
       })
       .catch(error => console.log(error));
-
-    window.history.back();
   };
 
   const handleDeleteArticle = async () => {
@@ -91,11 +86,8 @@ export const Settings = memo(function SettingsComponent() {
       .then(() => {
         dispatch(deleteDocument({ id: documentId }));
         dispatch(setDocumentDeleteModal(false));
-        window.history.back();
         dispatch(setDocumentSettingsModal(false));
-        window.history.back();
         dispatch(setEditorModalStatus(false));
-        window.history.back();
       })
       .catch(error => console.log(error));
   };

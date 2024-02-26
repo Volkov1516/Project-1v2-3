@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActiveNote } from 'redux/features/note/noteSlice';
 
 import { Navigation } from './Navigation/Navigation';
 import { Title } from './Title/Title';
@@ -13,7 +14,9 @@ import { IconButton } from 'components/atoms/IconButton/IconButton';
 import css from './EditorModal.module.css';
 
 export const EditorModal = memo(function MemoizedEditorModal() {
-  const { editorModalStatus } = useSelector(state => state.modal);
+  const dispatch = useDispatch();
+
+  const { activeNoteMode } = useSelector(state => state.note);
   const { isNewDocument, documentIndex } = useSelector(state => state.document);
 
   const editorRef = useRef(null);
@@ -22,19 +25,27 @@ export const EditorModal = memo(function MemoizedEditorModal() {
 
   const [saving, setSaving] = useState(false);
 
-  const close = () => window.history.back();
+  const handleClose = () => {
+    dispatch(setActiveNote({
+      isNew: null,
+      mode: null,
+      id: null,
+      title: null,
+      content: null,
+    }));
+  };
 
-  return editorModalStatus && (
-    <div className={css.container} key={documentIndex} onClick={close}>
-      <div className={css[editorModalStatus]} onClick={(e) => e.stopPropagation()}>
-        {editorModalStatus === "preview" && <Navigation />}
+  return activeNoteMode && (
+    <div className={css.container} key={documentIndex} onClick={handleClose}>
+      <div className={css[activeNoteMode]} onClick={(e) => e.stopPropagation()}>
+        {activeNoteMode === "preview" && <Navigation />}
         <div id="editorModal" className={css.content} ref={editorRef}>
           <div className={css.header}>
             <div className={css.headerStart}>
             </div>
             <div className={css.headerEnd}>
               {!isNewDocument && <Settings />}
-              <IconButton onClick={close} path="M256-227.692 227.692-256l224-224-224-224L256-732.308l224 224 224-224L732.308-704l-224 224 224 224L704-227.692l-224-224-224 224Z" />
+              <IconButton onClick={handleClose} path="M256-227.692 227.692-256l224-224-224-224L256-732.308l224 224 224-224L732.308-704l-224 224 224 224L704-227.692l-224-224-224 224Z" />
             </div>
           </div>
           <Title ref={titleRef} saving={saving} setSaving={setSaving} />
