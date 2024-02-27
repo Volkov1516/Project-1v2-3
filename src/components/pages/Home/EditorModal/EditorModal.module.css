@@ -33,125 +33,14 @@
 .edit>.content {
   position: relative;
   max-height: 100%;
-  padding-bottom: calc(500px + 5vh);
   overflow: auto;
   scroll-behavior: smooth;
-}
-
-
-
-
-
-
-
-
-
-
-
-.preview {
-  width: 742px;
-  height: 90vh;
-  margin-top: 5vh;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--backgroundPrimary);
-  color: var(--fontColorPrimary);
-
-  overflow: hidden;
-}
-
-.preview>.content {
-  position: relative;
-  max-height: 100%;
-  padding: 0 16px 500px;
-  overflow: auto;
-  scroll-behavior: smooth;
-}
-
-.preview>.content>.header {
-  display: none;
-}
-
-/* .editorModalNew,
-.editorModalFromPreview,
-.editorModalFromComponent {
-  height: 100%;
-  width: 100%;
-  background-color: var(--backgroundPrimary);
-  color: var(--fontColorPrimary);
-  overflow: hidden;
-} */
-
-/* .editorModalNew>.content,
-.editorModalFromPreview>.content,
-.editorModalFromComponent>.content {
-  position: relative;
-  overflow: auto;
-  max-height: 100%;
-  scroll-behavior: smooth;
-  padding-bottom: calc(500px + 5vh);
-} */
-
-/* .editorModalNew>.content>.header,
-.editorModalFromPreview>.content>.header,
-.editorModalFromComponent>.content>.header {
-  width: 100%;
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5vh;
-} */
-
-@media (min-width: 639px) {
-
-  .editorModalNew>.content>.header,
-  .editorModalFromPreview>.content>.header,
-  .editorModalFromComponent>.content>.header {
-    height: 52px;
-  }
+  padding: 5px 16px calc(500px + 5vh) 17px;
+  /* padding-bottom: calc(500px + 5vh); */
 }
 
 @media (max-width: 639px) {
   .container {
     width: 100vw;
-  }
-
-  .preview {
-    height: calc(100% - 16px);
-    margin: 8px;
-    flex-direction: column-reverse;
-    border: 1px solid white;
-  }
-
-  .preview>.content {
-    padding: 0 8px 500px;
-  }
-
-  .preview>.content>.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0px 16px;
-  }
-
-  .editorModalNew,
-  .editorModalFromPreview,
-  .editorModalFromComponent {
-    padding: 0px 16px;
-  }
-
-  .editorModalNew>.content,
-  .editorModalFromPreview>.content,
-  .editorModalFromComponent>.content {
-    padding-bottom: 578px;
-  }
-
-  .editorModalNew>.content>.header,
-  .editorModalFromPreview>.content>.header,
-  .editorModalFromComponent>.content>.header {
-    /* height: 53px; */
-    padding: 16px 0px;
-    margin-bottom: 0;
   }
 }
