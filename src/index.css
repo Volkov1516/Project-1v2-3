@@ -28,6 +28,11 @@
   --gray1350: #191919;
   --gray1400: #111111;
   --black: #000000;
+
+  --fintSizeTitle: 48px;
+  --fontWeightTitle: 700;
+
+  --editorInputWidth: 700px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -60,7 +65,7 @@
     --buttonBackgroundSecondary: var(--transparent);
     --buttonHoverSecondary: var(--gray1200);
     --buttonActiveSecondary: var(--gray1400);
-    --fontColorPrimary: var(--white);
+    --fontColorPrimary: var(--gray100);
   }
 }
 
@@ -91,7 +96,7 @@ body.dark-theme {
   --buttonBackgroundSecondary: var(--transparent);
   --buttonHoverSecondary: var(--gray1200);
   --buttonActiveSecondary: var(--gray1400);
-  --fontColorPrimary: var(--white);
+  --fontColorPrimary: var(--gray100);
 }
 
 hr {

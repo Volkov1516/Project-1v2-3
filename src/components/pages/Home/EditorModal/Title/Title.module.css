@@ -4,68 +4,17 @@
   user-select: none;
 }
 
-textarea {
-  width: 100%;
-  max-width: 700px;
+.textarea {
   display: block;
+  width: 100%;
+  max-width: var(--editorInputWidth);
   outline: none;
   border: none;
-  /* text-transform: uppercase; */
-  font-size: 48px;
-  font-weight: 700;
-  resize: none;
-  overflow: auto;
-  line-height: 1em;
-  background-color: transparent;
-
+  background-color: var(--transparent);
   color: var(--fontColorPrimary);
-}
-
-textarea::placeholder {
-  color: var(--gray400);
-}
-
-textarea.none {
-  text-decoration: none;
-}
-
-textarea.red {
-  text-decoration:line-through;
-  text-decoration-thickness: 16px;
-  text-decoration-color: rgba(224, 49, 49, 0.5);
-}
-
-textarea.orange {
-  text-decoration:line-through;
-  text-decoration-thickness: 16px;
-  text-decoration-color: rgb(253, 126, 20, 0.5);
-}
-
-textarea.yellow {
-  text-decoration:line-through;
-  text-decoration-thickness: 16px;
-  text-decoration-color: rgb(255, 212, 59, 0.5);
-}
-
-textarea.green {
-  text-decoration:line-through;
-  text-decoration-thickness: 16px;
-  text-decoration-color: rgba(47, 158, 67, 0.5);
-}
-
-textarea.blue {
-  text-decoration:line-through;
-  text-decoration-thickness: 16px;
-  text-decoration-color: rgb(25, 113, 194, 0.5);
-}
-
-textarea.purple {
-  text-decoration:line-through;
-  text-decoration-thickness: 16px;
-  text-decoration-color: rgb(156, 54, 181, 0.5);
-}
-
-.preview {
-  cursor: default;
-  user-select: none !important;
+  font-size: var(--fintSizeTitle);
+  font-weight: var(--fontWeightTitle);
+  line-height: 1em;
+  overflow: auto;
+  resize: none;
 }

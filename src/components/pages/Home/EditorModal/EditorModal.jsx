@@ -1,6 +1,6 @@
 // [x] Fix expand
 // [] Continue to refactor the component's layout
-// [] Jump in to the Title component. Fix it and refactor saving (new, existing)
+// [x] Jump in to the Title component. Fix it and refactor saving (new, existing)
 // [] Go to Editor.jsx
 
 import { memo, useRef, useState } from 'react';

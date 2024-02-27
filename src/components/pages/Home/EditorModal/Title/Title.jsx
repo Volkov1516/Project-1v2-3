@@ -1,7 +1,7 @@
 import { useEffect, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateDocuments } from 'redux/features/user/userSlice';
-import { updateNotesCache, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
+import { updateNotesCache, updateIsNewNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 
@@ -9,23 +9,22 @@ import css from './Title.module.css';
 
 export const Title = forwardRef(function MyTitle(props, ref) {
   const dispatch = useDispatch();
+
   const { userId, documents, path } = useSelector(state => state.user);
-  const { notesCache, activeNoteId, activeNoteTitle } = useSelector(state => state.note);
-  const { editorModalStatus } = useSelector(state => state.modal);
+  const { notesCache, isNewNote, activeNoteMode, activeNoteId, activeNoteTitle } = useSelector(state => state.note);
 
   useEffect(() => {
-    if (ref?.current) {
-      ref.current.style.height = '40px';
-      ref.current.style.height = (ref?.current.scrollHeight) + 'px';
-    }
+    if (ref?.current) ref.current.style.height = ref.current.scrollHeight + 'px';
   }, [activeNoteTitle, ref]);
 
-  const onTitleChange = async (e) => dispatch(updateActiveNoteTitle(e.target.value));
+  const handleEnter = e => e.key === 'Enter' && e.preventDefault();
 
-  const onTitleBlur = async () => {
+  const handleTitleChange = e => dispatch(updateActiveNoteTitle(e.target.value));
+
+  const handleTitleBlur = async () => {
     const newNote = {
       id: activeNoteId,
-      title: activeNoteTitle,
+      title: activeNoteTitle || 'Untitled',
     };
 
     // STEP 1: Create/Update title in user.documents (Firestore, Redux)
@@ -33,7 +32,16 @@ export const Title = forwardRef(function MyTitle(props, ref) {
 
     function findFolder(object, id, newObject) {
       if (object.id === id) {
-        object.notes.push(newObject);
+        if (isNewNote) {
+          object.notes.push(newObject);
+        }
+        else {
+          for (let i = 0; i < object?.notes?.length; i++) {
+            if (object.notes[i].id === activeNoteId) {
+              object.notes[i].title = activeNoteTitle;
+            }
+          }
+        }
       } else if (object.folders && object.folders.length > 0) {
         for (let i = 0; i < object.folders.length; i++) {
           findFolder(object.folders[i], id, newObject);
@@ -48,7 +56,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
       .catch(err => console.log(err));
 
     // STEP 2: Update title in notes and notesCache
-    await setDoc(doc(db, 'notes', activeNoteId), { title: activeNoteTitle }, { merge: true })
+    await setDoc(doc(db, 'notes', activeNoteId), newNote, { merge: true })
       .then(() => {
         if (notesCache) {
           let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));
@@ -66,23 +74,23 @@ export const Title = forwardRef(function MyTitle(props, ref) {
         }
       })
       .catch(error => console.log(error));
-  }
 
-  const handleEnter = (e) => e.key === 'Enter' && e.preventDefault();
+    dispatch(updateIsNewNote(false));
+  }
 
   return (
     <div className={css.container}>
       <textarea
         ref={ref}
-        className={css[editorModalStatus]}
+        className={css.textarea}
+        placeholder="Untitled"
         rows={1}
         spellCheck={false}
-        placeholder="Title"
-        value={editorModalStatus === "preview" ? (activeNoteTitle || 'UNTITLED') : activeNoteTitle}
-        onChange={onTitleChange}
-        onBlur={onTitleBlur}
+        readOnly={activeNoteMode === "preview"}
+        value={activeNoteMode === "preview" ? (activeNoteTitle || "Untitled") : activeNoteTitle}
         onKeyDown={handleEnter}
-        readOnly={editorModalStatus === "preview"}
+        onChange={handleTitleChange}
+        onBlur={handleTitleBlur}
       />
     </div>
   );
