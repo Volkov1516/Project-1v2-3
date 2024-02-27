@@ -65,7 +65,7 @@
     --buttonBackgroundSecondary: var(--transparent);
     --buttonHoverSecondary: var(--gray1200);
     --buttonActiveSecondary: var(--gray1400);
-    --fontColorPrimary: var(--gray100);
+    --fontColorPrimary: var(--gray200);
   }
 }
 
@@ -96,7 +96,7 @@ body.dark-theme {
   --buttonBackgroundSecondary: var(--transparent);
   --buttonHoverSecondary: var(--gray1200);
   --buttonActiveSecondary: var(--gray1400);
-  --fontColorPrimary: var(--gray100);
+  --fontColorPrimary: var(--gray200);
 }
 
 hr {

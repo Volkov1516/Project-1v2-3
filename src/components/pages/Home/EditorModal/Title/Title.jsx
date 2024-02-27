@@ -56,7 +56,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
       .catch(err => console.log(err));
 
     // STEP 2: Update title in notes and notesCache
-    await setDoc(doc(db, 'notes', activeNoteId), newNote, { merge: true })
+    await setDoc(doc(db, 'notes', activeNoteId), { title: activeNoteTitle || 'Untitled' }, { merge: true })
       .then(() => {
         if (notesCache) {
           let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));

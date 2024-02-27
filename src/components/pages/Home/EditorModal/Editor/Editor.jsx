@@ -1,8 +1,13 @@
+// [] Refactor the component
+// [x] Data saving
+// [] Go to theme
+// [] Go to plugins
+
 import { useSelector, useDispatch } from 'react-redux';
 import { updateDocuments } from 'redux/features/user/userSlice';
-import { setIsNewDocument, createDocument, updateDocument } from 'redux/features/document/documentSlice';
+import { updateNotesCache, updateIsNewNote } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
-import { doc, setDoc, updateDoc, Timestamp } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
@@ -13,9 +18,10 @@ import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListItemNode, ListNode } from '@lexical/list';
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 
-import { RefreshStatePlugin } from './plugins/RefreshStatePlugin/RefreshStatePlugin';
-import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
+
+import { RefreshStatePlugin } from './plugins/RefreshStatePlugin/RefreshStatePlugin';
 import { ToolbarBlockPlugin } from './plugins/ToolbarBlockPlugin/ToolbarBlockPlugin';
 import { ToolbarTextPlugin } from './plugins/ToolbarTextPlugin/ToolbarTextPlugin';
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
@@ -28,19 +34,13 @@ import { MainTheme } from './themes/MainTheme';
 
 import css from './Editor.module.css';
 
-export const Editor = ({
-  editorRef,
-  titleRef,
-  saving,
-  setSaving,
-}) => {
-  const dispatch = useDispatch();
-  const { userId, documents, path } = useSelector(state => state.user);
-  const { activeNoteContent } = useSelector(state => state.note);
-  const { editorModalStatus } = useSelector(state => state.modal);
-  const { isNewDocument, documentId } = useSelector(state => state.document);
-
+export const Editor = ({ editorRef, titleRef, saving, setSaving }) => {
   let editorStateAutoSaveTimeout;
+
+  const dispatch = useDispatch();
+
+  const { userId, documents, path } = useSelector(state => state.user);
+  const { notesCache, isNewNote, activeNoteMode, activeNoteId, activeNoteContent } = useSelector(state => state.note);
 
   const initialConfig = {
     namespace: 'Editor',
@@ -58,27 +58,28 @@ export const Editor = ({
     },
   };
 
-  const handleContentMenu = (e) => {
+  const handleContentMenu = e => {
     const viewportWidth = window.visualViewport.width;
 
-    if (viewportWidth < 640) {
-      e.preventDefault();
-    }
+    if (viewportWidth < 640) e.preventDefault();
   };
 
-  const onEditorChange = async (editorState) => {
+  const handleEditorChange = (editorState) => {
     if (!saving) {
+      // STEP 1: Clear timeout while typing
       clearTimeout(editorStateAutoSaveTimeout);
 
       let state = JSON.stringify(editorState);
 
+      // STEP 2: Run the new timeout and save data after its time left
       editorStateAutoSaveTimeout = setTimeout(async () => {
         setSaving(true);
 
-        if (isNewDocument) {
+        // STEP 3: Update user.documents in isNewNote
+        if (isNewNote) {
           const newNote = {
-            id: documentId,
-            title: 'Untitled',
+            id: activeNoteId,
+            title: 'Untitled'
           };
 
           const newDocuments = JSON.parse(JSON.stringify(documents));
@@ -86,47 +87,47 @@ export const Editor = ({
           function findFolder(object, id, newObject) {
             if (object.id === id) {
               object.notes.push(newObject);
-              return true;
             } else if (object.folders && object.folders.length > 0) {
               for (let i = 0; i < object.folders.length; i++) {
-                if (findFolder(object.folders[i], id, newObject)) {
-                  return true;
-                }
+                findFolder(object.folders[i], id, newObject);
               }
             }
-            return false;
           }
 
           findFolder(newDocuments, path[path.length - 1], newNote);
 
-          await setDoc(doc(db, 'documents', documentId), { userId, date: Timestamp.fromDate(new Date()), content: state })
-            .then(() => {
-              dispatch(setIsNewDocument(false));
-              dispatch(createDocument({
-                userId,
-                id: documentId,
-                content: state,
-                date: Timestamp.fromDate(new Date()).toDate().toLocaleDateString(),
-              }));
-            })
-            .catch(error => console.log(error));
-
           await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true })
-            .then(() => {
-              dispatch(updateDocuments(newDocuments));
-            })
+            .then(() => dispatch(updateDocuments(newDocuments)))
             .catch(err => console.log(err));
         }
-        else {
-          await updateDoc(doc(db, 'documents', documentId), { content: state })
-            .then(() => {
-              if (editorModalStatus !== 'editorModalFromPreview') {
-                dispatch(updateDocument({ id: documentId, key: 'content', value: state }));
-              }
-            })
-            .catch(error => console.log(error));
-        }
 
+        // STEP 4: Update notesCache and notes
+        await setDoc(doc(db, 'notes', activeNoteId), { content: state }, { merge: true })
+          .then(() => {
+            if (isNewNote) {
+              if (notesCache) {
+                dispatch(updateNotesCache([...notesCache, { id: activeNoteId, title: 'Untitled', content: state }]))
+              }
+              else {
+                dispatch(updateNotesCache([{ id: activeNoteId, title: 'Untitled', content: state }]))
+              }
+            }
+            else {
+              let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));
+
+              for (let i = 0; i < notesCacheCopy.length; i++) {
+                if (notesCacheCopy[i].id === activeNoteId) {
+                  notesCacheCopy[i].content = state;
+                }
+              }
+
+              dispatch(updateNotesCache(notesCacheCopy));
+            }
+          })
+          .catch(err => console.log(err));
+
+        // STEP 4: Update isNewNote anyway
+        dispatch(updateIsNewNote(false));
         setSaving(false);
       }, 2000);
     }
@@ -139,11 +140,11 @@ export const Editor = ({
           contentEditable={<ContentEditable spellCheck={false} className={css.input} />}
           ErrorBoundary={LexicalErrorBoundary}
         />
-        {(editorModalStatus !== "preview") && <ToolbarBlockPlugin modalEditorContentRef={editorRef} titleRef={titleRef} />}
-        {(editorModalStatus !== "preview") && <ToolbarTextPlugin modalEditorContentRef={editorRef} />}
-        {(editorModalStatus !== "preview") && <OnChangePlugin ignoreSelectionChange={true} onChange={onEditorChange} />}
-        {editorModalStatus === "editorModalNew" && <AutoFocusPlugin />}
-        {editorModalStatus === "preview" && <RefreshStatePlugin />}
+        {isNewNote && <AutoFocusPlugin />}
+        <OnChangePlugin ignoreSelectionChange={true} onChange={handleEditorChange} />
+        <ToolbarBlockPlugin modalEditorContentRef={editorRef} titleRef={titleRef} />
+        <ToolbarTextPlugin modalEditorContentRef={editorRef} />
+        <RefreshStatePlugin />
         <SyncStatePlugin />
         <SetEditablePlugin />
         <ListPlugin />

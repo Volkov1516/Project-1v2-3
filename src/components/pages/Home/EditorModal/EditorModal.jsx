@@ -1,8 +1,3 @@
-// [x] Fix expand
-// [] Continue to refactor the component's layout
-// [x] Jump in to the Title component. Fix it and refactor saving (new, existing)
-// [] Go to Editor.jsx
-
 import { memo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveNote } from 'redux/features/note/noteSlice';
@@ -39,7 +34,7 @@ export const EditorModal = memo(function MemoizedEditorModal() {
       <div className={css[activeNoteMode]} onClick={(e) => e.stopPropagation()}>
         <Header handleClose={handleClose} />
         <div id="editorModalContent" ref={editorRef} className={css.content}>
-          <Title ref={titleRef} saving={saving} setSaving={setSaving} />
+          <Title ref={titleRef} />
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
         </div>
         {activeNoteMode === "preview" && <Navigation />}
