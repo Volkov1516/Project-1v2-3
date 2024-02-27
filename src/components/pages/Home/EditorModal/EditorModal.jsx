@@ -1,27 +1,26 @@
-import { memo } from 'react';
-import { useRef, useState } from 'react';
+// [x] Fix expand
+// [] Continue to refactor the component's layout
+// [] Jump in to the Title component. Fix it and refactor saving (new, existing)
+// [] Go to Editor.jsx
+
+import { memo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveNote } from 'redux/features/note/noteSlice';
 
-import { Navigation } from './Navigation/Navigation';
+import { Header } from './Header/Header';
 import { Title } from './Title/Title';
 import { Editor } from './Editor/Editor';
-import { Categories } from './Categories/Categories';
-import { Settings } from './Settings/Settings';
-
-import { IconButton } from 'components/atoms/IconButton/IconButton';
+import { Navigation } from './Navigation/Navigation';
 
 import css from './EditorModal.module.css';
 
 export const EditorModal = memo(function MemoizedEditorModal() {
   const dispatch = useDispatch();
 
-  const { activeNoteMode, isNewNote } = useSelector(state => state.note);
-  const { documentIndex } = useSelector(state => state.document);
+  const { activeNoteMode, activeNoteId } = useSelector(state => state.note);
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
-  const categoriesRef = useRef(null);
 
   const [saving, setSaving] = useState(false);
 
@@ -36,22 +35,14 @@ export const EditorModal = memo(function MemoizedEditorModal() {
   };
 
   return activeNoteMode && (
-    <div className={css.container} key={documentIndex} onClick={handleClose}>
+    <div id="editorModalContainer" key={activeNoteId} className={css.container} onClick={handleClose}>
       <div className={css[activeNoteMode]} onClick={(e) => e.stopPropagation()}>
-        {activeNoteMode === "preview" && <Navigation />}
-        <div id="editorModal" className={css.content} ref={editorRef}>
-          <div className={css.header}>
-            <div className={css.headerStart}>
-            </div>
-            <div className={css.headerEnd}>
-              {!isNewNote && <Settings />}
-              <IconButton onClick={handleClose} path="M256-227.692 227.692-256l224-224-224-224L256-732.308l224 224 224-224L732.308-704l-224 224 224 224L704-227.692l-224-224-224 224Z" />
-            </div>
-          </div>
+        <Header handleClose={handleClose} />
+        <div id="editorModalContent" ref={editorRef} className={css.content}>
           <Title ref={titleRef} saving={saving} setSaving={setSaving} />
-          <Categories ref={categoriesRef} />
-          <Editor editorRef={editorRef} titleRef={titleRef} categoriesRef={categoriesRef} saving={saving} setSaving={setSaving} />
+          <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
         </div>
+        {activeNoteMode === "preview" && <Navigation />}
       </div>
     </div>
   );

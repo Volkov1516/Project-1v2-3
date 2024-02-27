@@ -22,7 +22,7 @@ export const Navigation = memo(function MemoizedNavigation() {
 
     dispatch(updateDocumentIndex(documentIndex - 1));
 
-    const modalPreviewElement = document.getElementById('editorModal');
+    const modalPreviewElement = document.getElementById('editorModalContent');
     modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
   };
 
@@ -31,7 +31,7 @@ export const Navigation = memo(function MemoizedNavigation() {
 
     dispatch(updateDocumentIndex(documentIndex + 1));
 
-    const modalPreviewElement = document.getElementById('editorModal');
+    const modalPreviewElement = document.getElementById('editorModalContent');
     modalPreviewElement.scrollTo({ top: 0, behavior: 'instant' });
   };
 

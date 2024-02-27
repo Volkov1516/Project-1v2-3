@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  /* margin-bottom: 5vh; */
+  padding: 8px;
+  border-bottom: 1px solid var(--borderColor);
+}
+
+.start,
+.end {
+  display: flex;
+  gap: 8px;
+}
+
+.rotateArrow {
+  transform: rotate(-180deg);
+}
+
+@media (min-width: 639px) {
+  .arrowBack {
+    display: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .expand,
+  .close {
+    display: none;
+  }
+}

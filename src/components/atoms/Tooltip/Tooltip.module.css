@@ -1,3 +1,13 @@
+@keyframes containerOpen {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .container {
   position: relative;
 }
@@ -16,6 +26,7 @@
   text-wrap: nowrap;
   user-select: none;
   z-index: 99;
+  animation: containerOpen 0.1s ease-in;
 }
 
 @media (hover: hover) {
