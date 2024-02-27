@@ -40,7 +40,7 @@ export const Editor = ({ editorRef, titleRef, saving, setSaving }) => {
   const dispatch = useDispatch();
 
   const { userId, documents, path } = useSelector(state => state.user);
-  const { notesCache, isNewNote, activeNoteMode, activeNoteId, activeNoteContent } = useSelector(state => state.note);
+  const { notesCache, isNewNote, activeNoteId, activeNoteContent } = useSelector(state => state.note);
 
   const initialConfig = {
     namespace: 'Editor',
