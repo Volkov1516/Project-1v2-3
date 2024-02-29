@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { setSnackbar } from 'redux/features/app/appSlice';
 import { updateDocuments, updatePath } from 'redux/features/user/userSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
@@ -10,7 +11,6 @@ import { Button } from 'components/atoms/Button/Button';
 import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Folders.module.css';
-import { Snackbar } from 'components/atoms/Snackbar/Snackbar';
 
 export const Folders = ({ folders }) => {
   const dispatch = useDispatch();
@@ -21,7 +21,6 @@ export const Folders = ({ folders }) => {
   const [folderId, setFoldeId] = useState(null);
   const [folderNameInputValue, setFolderNameNameInput] = useState('');
   const [folderNameInputValueDelete, setFolderNameNameInputDelete] = useState('');
-  const [popupDeleteFolderMessage, setPopupDeleteFolderMessage] = useState(null);
 
   const handleTouchStart = (e) => {
     const element = e.currentTarget;
@@ -98,7 +97,7 @@ export const Folders = ({ folders }) => {
         dispatch(updateDocuments(newDocuments));
         setLoading(false);
         setOpen(false);
-        setPopupDeleteFolderMessage('Folder was deleted')
+        dispatch(setSnackbar('Folder was deleted'));
       })
       .catch(err => console.log(err));
   };
@@ -136,7 +135,6 @@ export const Folders = ({ folders }) => {
           <Button text="Delete folder" disabled={!folderNameInputValueDelete} onClick={handleDeleteFolder} />
         </div>
       </Modal>
-      <Snackbar message={popupDeleteFolderMessage} />
     </div>
   );
 };

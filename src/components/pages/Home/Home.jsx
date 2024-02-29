@@ -1,6 +1,7 @@
 import { Bar } from './Bar/Bar';
 import { Content } from './Content/Content';
 import { EditorModal } from './EditorModal/EditorModal';
+import { Snackbar } from 'components/atoms/Snackbar/Snackbar';
 
 import css from './Home.module.css';
 
@@ -14,6 +15,7 @@ export const Home = () => {
       <Bar />
       <Content mouseTimer={mouseTimer} />
       <EditorModal />
+      <Snackbar />
     </div>
   );
 };

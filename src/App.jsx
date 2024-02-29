@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { setSnackbar } from 'redux/features/app/appSlice';
 import { setUser } from 'redux/features/user/userSlice';
 import { auth, db } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -7,7 +8,6 @@ import { doc, getDoc } from 'firebase/firestore';
 
 import { Auth } from 'components/pages/Auth/Auth';
 import { Home } from 'components/pages/Home/Home';
-import { Snackbar } from 'components/atoms/Snackbar/Snackbar';
 
 import css from './App.module.css';
 
@@ -16,7 +16,6 @@ export const App = () => {
 
   const [loading, setLoading] = useState(true);
   const [logged, setLogged] = useState(false);
-  const [snackbarError, setSnackbarError] = useState(null);
 
   useEffect(() => {
     const getUser = async (id, email) => {
@@ -36,7 +35,7 @@ export const App = () => {
         setLogged(true);
         setLoading(false);
       } catch (error) {
-        setSnackbarError('Error receiving data');
+        dispatch(setSnackbar('Error receiving data'));
       }
     };
 
@@ -63,7 +62,6 @@ export const App = () => {
   return (
     <div>
       {logged ? <Home /> : <Auth />}
-      <Snackbar message={snackbarError} />
     </div>
   );
 };

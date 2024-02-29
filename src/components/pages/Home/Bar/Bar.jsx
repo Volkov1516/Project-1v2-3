@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { setSnackbar } from 'redux/features/app/appSlice';
 import { updateDocuments } from 'redux/features/user/userSlice';
 import { setActiveNote } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
@@ -13,16 +14,15 @@ import { Input } from 'components/atoms/Input/Input';
 import { Button } from 'components/atoms/Button/Button';
 
 import css from './Bar.module.css';
-import { Snackbar } from 'components/atoms/Snackbar/Snackbar';
 
 export const Bar = () => {
   const dispatch = useDispatch();
+
   const { userId, documents, path } = useSelector(state => state.user);
 
   const [folderInputValue, setFolderNameInput] = useState('');
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [popupCreateFolderMessage, setPopupCreateFolderMessage] = useState(null);
 
   const handleAddNote = () => {
     dispatch(setActiveNote({
@@ -70,7 +70,7 @@ export const Bar = () => {
         setLoading(false);
         setOpen(false);
         setFolderNameInput('');
-        setPopupCreateFolderMessage('Folder was created');
+        dispatch(setSnackbar('Folder was created'));
       })
       .catch(err => console.log(err));
   };
@@ -125,7 +125,6 @@ export const Bar = () => {
           <Button text="Create folder" disabled={!folderInputValue} onClick={() => handleCreateFolder(folderInputValue)} />
         </div>
       </Modal>
-      <Snackbar message={popupCreateFolderMessage} />
     </div>
   );
 };
