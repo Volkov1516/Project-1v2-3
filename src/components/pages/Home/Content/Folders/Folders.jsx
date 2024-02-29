@@ -12,6 +12,8 @@ import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Folders.module.css';
 
+import { findFolder } from 'utils/findFolder';
+
 export const Folders = ({ folders }) => {
   const dispatch = useDispatch();
   const { userId, documents, path } = useSelector(state => state.user);
@@ -19,7 +21,7 @@ export const Folders = ({ folders }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [folderId, setFoldeId] = useState(null);
-  const [folderNameInputValue, setFolderNameNameInput] = useState('');
+  const [folderNameInputValue, setFolderNameInputValue] = useState('');
   const [folderNameInputValueDelete, setFolderNameNameInputDelete] = useState('');
 
   const handleTouchStart = (e) => {
@@ -39,7 +41,7 @@ export const Folders = ({ folders }) => {
   const handleOpenEditFodlerModal = (e, id, text) => {
     e.stopPropagation();
     setFoldeId(id);
-    setFolderNameNameInput(text);
+    setFolderNameInputValue(text);
     setOpen(true);
   };
 
@@ -48,29 +50,20 @@ export const Folders = ({ folders }) => {
 
     const newDocuments = JSON.parse(JSON.stringify(documents));
 
-    function findFolder(object, folderId, newName) {
-      if (object.id === folderId) {
-        object.text = (newName);
-        return true;
-      } else if (object.folders && object.folders.length > 0) {
-        for (let i = 0; i < object.folders.length; i++) {
-          if (findFolder(object.folders[i], folderId, newName)) {
-            return true;
-          }
-        }
-      }
+    const editFolderName = (targetFolder) => targetFolder.text = folderNameInputValue;
 
-      return false;
+    findFolder(newDocuments, folderId, editFolderName);
+
+    try {
+      await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+
+      dispatch(updateDocuments(newDocuments));
+      dispatch(setSnackbar('Folder was renamed'));
+    } catch (error) {
+      dispatch(setSnackbar('Failed to rename the folder'));
     }
 
-    findFolder(newDocuments, folderId, folderNameInputValue);
-
-    await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true })
-      .then(() => {
-        dispatch(updateDocuments(newDocuments));
-        setLoading(false);
-      })
-      .catch(err => console.log(err));
+    setLoading(false);
   }
 
   const handleDeleteFolder = async () => {
@@ -92,19 +85,22 @@ export const Folders = ({ folders }) => {
 
     deleteObjectById(folderId, newDocuments.folders);
 
-    await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true })
-      .then(() => {
-        dispatch(updateDocuments(newDocuments));
-        setLoading(false);
-        setOpen(false);
-        dispatch(setSnackbar('Folder was deleted'));
-      })
-      .catch(err => console.log(err));
+    try {
+      await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+
+      dispatch(updateDocuments(newDocuments));
+      dispatch(setSnackbar('Folder was deleted'));
+    } catch (error) {
+      dispatch(setSnackbar('Failed to delete the folder'));
+    }
+
+    setLoading(false);
+    setOpen(false);
   };
 
   return (
     <div className={css.container}>
-      {folders?.map((i, index) => (
+      {folders?.map(i => (
         <div
           key={i.id}
           className={css.folder}
@@ -129,7 +125,7 @@ export const Folders = ({ folders }) => {
         setOpen={setOpen}
       >
         <div className={css.eiditFolderModalContent}>
-          <Input label="Edit folder name" placeholder="Enter folder name" value={folderNameInputValue} onChange={e => setFolderNameNameInput(e.target.value)} />
+          <Input label="Edit folder name" placeholder="Enter folder name" value={folderNameInputValue} onChange={e => setFolderNameInputValue(e.target.value)} />
           <Button text="Rename folder" disabled={!folderNameInputValue} onClick={handleEditFolderName} />
           <Input label={`Enter ${folderNameInputValue} to delete the folder`} placeholder="Enter folder name" value={folderNameInputValueDelete} onChange={e => setFolderNameNameInputDelete(e.target.value)} />
           <Button text="Delete folder" disabled={!folderNameInputValueDelete} onClick={handleDeleteFolder} />
