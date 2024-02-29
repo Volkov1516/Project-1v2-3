@@ -15,6 +15,8 @@ import { Button } from 'components/atoms/Button/Button';
 
 import css from './Bar.module.css';
 
+import { findFolder } from 'utils/findFolder';
+
 export const Bar = () => {
   const dispatch = useDispatch();
 
@@ -24,7 +26,7 @@ export const Bar = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleAddNote = () => {
+  const handleCreateNote = () => {
     dispatch(setActiveNote({
       isNew: true,
       mode: 'edit',
@@ -34,45 +36,37 @@ export const Bar = () => {
     }));
   };
 
-  const handleCreateFolder = async (text) => {
+  const handleCreateFolder = async () => {
     setLoading(true);
-
-    const newFolder = {
-      id: uuidv4(),
-      text,
-      folders: [],
-      notes: [],
-      tasks: []
-    };
 
     const newDocuments = JSON.parse(JSON.stringify(documents));
 
-    function findFolder(object, id, newObject) {
-      if (object.id === id) {
-        object.folders.push(newObject);
-        return true;
-      } else if (object.folders && object.folders.length > 0) {
-        for (let i = 0; i < object.folders.length; i++) {
-          if (findFolder(object.folders[i], id, newObject)) {
-            return true;
-          }
-        }
-      }
+    const createFolder = (targetFolder) => {
+      const newFolder = {
+        id: uuidv4(),
+        text: folderInputValue,
+        folders: [],
+        notes: [],
+        tasks: []
+      };
 
-      return false;
+      targetFolder.folders.push(newFolder);
+    };
+
+    findFolder(newDocuments, path[path.length - 1], createFolder);
+
+    try {
+      await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+
+      dispatch(updateDocuments(newDocuments));
+      dispatch(setSnackbar('Folder was created'));
+    } catch (error) {
+      dispatch(setSnackbar('Failed to add the folder'));
     }
 
-    findFolder(newDocuments, path[path.length - 1], newFolder);
-
-    await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true })
-      .then(() => {
-        dispatch(updateDocuments(newDocuments));
-        setLoading(false);
-        setOpen(false);
-        setFolderNameInput('');
-        dispatch(setSnackbar('Folder was created'));
-      })
-      .catch(err => console.log(err));
+    setFolderNameInput('');
+    setOpen(false);
+    setLoading(false);
   };
 
   const handleTheme = () => {
@@ -92,7 +86,7 @@ export const Bar = () => {
     <div className={css.container}>
       <div className={css.start}>
         <Tooltip position="right" text="Add Note">
-          <IconButton onClick={handleAddNote} primary size="large" path="M460-460H240v-40h220v-220h40v220h220v40H500v220h-40v-220Z" />
+          <IconButton onClick={handleCreateNote} primary size="large" path="M460-460H240v-40h220v-220h40v220h220v40H500v220h-40v-220Z" />
         </Tooltip>
         <Tooltip position="right" text="Add Task">
           <IconButton path="m382-267.692-198.769-198.77L211.769-495 382-324.769 748.231-691l28.538 28.538L382-267.692Z" />
@@ -122,7 +116,7 @@ export const Bar = () => {
       >
         <div className={css.createFolderModalContent}>
           <Input label="Folder name" autofocus placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderNameInput(e.target.value)} />
-          <Button text="Create folder" disabled={!folderInputValue} onClick={() => handleCreateFolder(folderInputValue)} />
+          <Button text="Create folder" disabled={!folderInputValue} onClick={handleCreateFolder} />
         </div>
       </Modal>
     </div>
