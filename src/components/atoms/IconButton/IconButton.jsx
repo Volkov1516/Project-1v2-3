@@ -5,7 +5,8 @@ export const IconButton = ({
   path,
   viewBox = '0 -960 960 960',
   onClick,
-  small = false
+  small = false,
+  snack
 }) => {
   const handleTouchStart = (e) => {
     const element = e.currentTarget;
@@ -19,7 +20,7 @@ export const IconButton = ({
 
   return (
     <button
-      className={`${css.button} ${primary && css.primary} ${small && css.small}`}
+      className={`${css.button} ${primary && css.primary} ${small && css.small} ${snack && css.snack}`}
       onClick={onClick}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}

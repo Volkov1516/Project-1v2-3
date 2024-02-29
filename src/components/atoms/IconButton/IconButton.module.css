@@ -35,13 +35,24 @@
   fill: var(--buttonColorPrimary);
 }
 
+.snack {
+  background-color: var(--buttonBackgroundPrimary);
+}
+
+.snack>svg {
+  width: 24px;
+  height: 25px;
+  margin: 0px;
+  fill: var(--buttonColorPrimary);
+}
+
 @media (hover: hover) {
   .button:hover {
     background-color: var(--buttonHoverSecondary);
     cursor: pointer;
   }
 
-  .primary:hover {
+  .primary:hover, .snack:hover {
     background-color: var(--buttonHoverPrimary);
     cursor: pointer;
   }
@@ -52,7 +63,7 @@
     background-color: var(--buttonActiveSecondary);
   }
 
-  .primary:active {
+  .primary:active, .snack:hover {
     background-color: var(--buttonActivePrimary);
   }
 }
