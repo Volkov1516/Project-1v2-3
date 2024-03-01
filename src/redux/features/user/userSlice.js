@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   userId: null,
-  email: null,
+  userEmail: null,
+  userName: null,
+  userPhoto: null,
   documents: null,
   path: ['root']
 };
@@ -13,8 +15,16 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       state.userId = action.payload?.id;
-      state.email = action.payload?.email;
+      state.userEmail = action.payload?.email;
+      state.userName = action.payload?.name;
+      state.userPhoto = action.payload?.photo;
       state.documents = action.payload?.documents;
+    },
+    updateUserName: (state, action) => {
+      state.userName = action.payload;
+    },
+    updateUserPhoto: (state, action) => {
+      state.userPhoto = action.payload;
     },
     updateDocuments: (state, action) => {
       state.documents = action.payload;
@@ -25,5 +35,5 @@ export const userSlice = createSlice({
   }
 });
 
-export const { setUser, updateDocuments, updatePath } = userSlice.actions;
+export const { setUser, updateUserName, updateUserPhoto, updateDocuments, updatePath } = userSlice.actions;
 export default userSlice.reducer;

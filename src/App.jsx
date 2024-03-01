@@ -18,13 +18,18 @@ export const App = () => {
   const [logged, setLogged] = useState(false);
 
   useEffect(() => {
-    const getUser = async (id, email) => {
+    const getUser = async (id, email, name, photo) => {
       try {
         const docRef = doc(db, 'users', id);
         const docSnap = await getDoc(docRef);
 
+
         dispatch(setUser({
-          id, email, documents: docSnap?.data()?.documents || {
+          id,
+          email,
+          name: docSnap?.data()?.name || name || null,
+          photo: docSnap?.data()?.photo || photo || null,
+          documents: docSnap?.data()?.documents || {
             id: 'root',
             folders: [],
             notes: [],
@@ -41,7 +46,7 @@ export const App = () => {
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        getUser(user?.uid, user?.email);
+        getUser(user?.uid, user?.email, user?.displayName, user?.photoURL);
       } else {
         setLogged(false);
         setLoading(false);

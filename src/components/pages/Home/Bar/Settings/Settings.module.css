@@ -1,0 +1,94 @@
+@keyframes openModal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.container {
+  position: fixed;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  animation: openModal 0.1s ease-in;
+}
+
+.content {
+  /* width: 50vw; */
+  position: relative;
+  background-color: var(--backgroundPrimary);
+  border: 1px solid var(--borderColor);
+  color: var(--fontColorPrimary);
+  overflow: auto;
+}
+
+.navigation {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+  border-bottom: 1px solid var(--borderColor);
+}
+
+.section {
+
+}
+
+.accountGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+.sectionName {
+  padding: 8px;
+  border-bottom: 1px solid var(--borderColor);
+  font-size: var(--fontSizeH3);
+  font-weight: var(--fontWeightTitle);
+}
+
+.photo {
+  height: 160px;
+  width: 160px;
+  border-radius: 50%;
+}
+
+.accoutSettings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.accoutSettingsField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.emailText {
+  font-size: 15px;
+}
+
+@media (max-width: 639px) {
+  .content {
+    height: 100vh;
+    width: 100vh;
+  }
+
+  .accountGroup {
+    flex-direction: column;
+  }
+
+  .accoutSettings {
+    width: 100%;
+  }
+}
