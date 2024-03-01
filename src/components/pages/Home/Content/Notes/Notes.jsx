@@ -16,6 +16,8 @@ import css from './Notes.module.css';
 import { findFolder } from 'utils/findFolder';
 
 export const Notes = ({ notes }) => {
+  let timeout;
+
   const dispatch = useDispatch();
 
   const { userId, documents, path } = useSelector(state => state.user);
@@ -27,16 +29,6 @@ export const Notes = ({ notes }) => {
   const [titleInputValue, setTitleInputValue] = useState('');
   const [titleDeleteValue, setTitleDeleteValue] = useState('');
   const [titleDeleteInputValue, setTitleDeleteInputValue] = useState('');
-
-  const handleTouchStart = (e) => {
-    const element = e.currentTarget;
-    element.classList.add(css.touch);
-  };
-
-  const handleTouchEnd = (e) => {
-    const element = e.currentTarget;
-    element.classList.remove(css.touch);
-  };
 
   const handleOpenNote = async (id) => {
     // STEP 1: Return if this note is openned (need to clean up activeNoteId after close!)
@@ -211,6 +203,24 @@ export const Notes = ({ notes }) => {
     setOpenEditNoteModal(false);
   };
 
+  const handleTouchStart = (e, id, title) => {
+    const element = e.currentTarget;
+    element.classList.add(css.touch);
+
+    timeout = setTimeout(() => handleOpenEditNoteModal(e, id, title), 1000);
+  };
+
+  const handleTouchEnd = (e) => {
+    const element = e.currentTarget;
+    element.classList.remove(css.touch);
+
+    clearTimeout(timeout);
+  };
+
+  const handleTouchMove = () => {
+    clearTimeout(timeout);
+  };
+
   return (
     <div className={css.container}>
       {notes?.map((i) => (
@@ -218,8 +228,9 @@ export const Notes = ({ notes }) => {
           key={i.id}
           className={css.note}
           onClick={() => handleOpenNote(i.id)}
-          onTouchStart={handleTouchStart}
+          onTouchStart={(e) => handleTouchStart(e, i.id, i.title)}
           onTouchEnd={handleTouchEnd}
+          onTouchMove={handleTouchMove}
         >
           {i.title}
           <span className={css.settings}>
