@@ -1,9 +1,5 @@
-// [] Refactor the component
-// [x] Data saving
-// [] Go to theme
-// [] Go to plugins
-
 import { useSelector, useDispatch } from 'react-redux';
+import { setSnackbar } from 'redux/features/app/appSlice';
 import { updateDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, updateIsNewNote } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
@@ -33,6 +29,8 @@ import { SyncStatePlugin } from './plugins/SyncStatePlugin/SyncStatePlagin';
 import { MainTheme } from './themes/MainTheme';
 
 import css from './Editor.module.css';
+
+import { findFolder } from 'utils/findFolder';
 
 export const Editor = ({ editorRef, titleRef, saving, setSaving }) => {
   let editorStateAutoSaveTimeout;
@@ -76,55 +74,48 @@ export const Editor = ({ editorRef, titleRef, saving, setSaving }) => {
         setSaving(true);
 
         // STEP 3: Update user.documents in isNewNote
-        if (isNewNote) {
-          const newNote = {
-            id: activeNoteId,
-            title: 'Untitled'
-          };
+        try {
+          if (isNewNote) {
+            const newNote = {
+              id: activeNoteId,
+              title: 'Untitled'
+            };
 
-          const newDocuments = JSON.parse(JSON.stringify(documents));
+            const newDocuments = JSON.parse(JSON.stringify(documents));
 
-          function findFolder(object, id, newObject) {
-            if (object.id === id) {
-              object.notes.push(newObject);
-            } else if (object.folders && object.folders.length > 0) {
-              for (let i = 0; i < object.folders.length; i++) {
-                findFolder(object.folders[i], id, newObject);
-              }
-            }
-          }
+            const editContent = (targetNote) => targetNote.notes.push(newNote);
 
-          findFolder(newDocuments, path[path.length - 1], newNote);
+            findFolder(newDocuments, path[path.length - 1], editContent);
 
-          await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true })
-            .then(() => dispatch(updateDocuments(newDocuments)))
-            .catch(err => console.log(err));
-        }
+            await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
 
-        // STEP 4: Update notesCache and notes
-        await setDoc(doc(db, 'notes', activeNoteId), { content: state }, { merge: true })
-          .then(() => {
-            if (isNewNote) {
-              if (notesCache) {
-                dispatch(updateNotesCache([...notesCache, { id: activeNoteId, title: 'Untitled', content: state }]))
-              }
-              else {
-                dispatch(updateNotesCache([{ id: activeNoteId, title: 'Untitled', content: state }]))
-              }
+            dispatch(updateDocuments(newDocuments));
+
+            await setDoc(doc(db, 'notes', activeNoteId), { content: state }, { merge: true });
+
+            if (notesCache) {
+              dispatch(updateNotesCache([...notesCache, { id: activeNoteId, title: 'Untitled', content: state }]))
             }
             else {
-              let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));
-
-              for (let i = 0; i < notesCacheCopy.length; i++) {
-                if (notesCacheCopy[i].id === activeNoteId) {
-                  notesCacheCopy[i].content = state;
-                }
-              }
-
-              dispatch(updateNotesCache(notesCacheCopy));
+              dispatch(updateNotesCache([{ id: activeNoteId, title: 'Untitled', content: state }]))
             }
-          })
-          .catch(err => console.log(err));
+          }
+          else {
+            await setDoc(doc(db, 'notes', activeNoteId), { content: state }, { merge: true });
+
+            let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));
+
+            for (let i = 0; i < notesCacheCopy.length; i++) {
+              if (notesCacheCopy[i].id === activeNoteId) {
+                notesCacheCopy[i].content = state;
+              }
+            }
+
+            dispatch(updateNotesCache(notesCacheCopy));
+          }
+        } catch (error) {
+          dispatch(setSnackbar('Faild to update note title'));
+        }
 
         // STEP 4: Update isNewNote anyway
         dispatch(updateIsNewNote(false));
