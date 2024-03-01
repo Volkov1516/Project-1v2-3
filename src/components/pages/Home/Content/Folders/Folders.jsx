@@ -15,6 +15,8 @@ import css from './Folders.module.css';
 import { findFolder } from 'utils/findFolder';
 
 export const Folders = ({ folders }) => {
+  let timeout;
+
   const dispatch = useDispatch();
   const { userId, documents, path } = useSelector(state => state.user);
 
@@ -24,16 +26,6 @@ export const Folders = ({ folders }) => {
   const [folderInputValue, setFolderInputValue] = useState('');
   const [folderDeleteValue, setFolderDeleteValue] = useState('');
   const [folderDeleteInputValue, setFolderDeleteInputValue] = useState('');
-
-  const handleTouchStart = (e) => {
-    const element = e.currentTarget;
-    element.classList.add(css.touch);
-  };
-
-  const handleTouchEnd = (e) => {
-    const element = e.currentTarget;
-    element.classList.remove(css.touch);
-  }
 
   const handleOpenFolder = (id) => dispatch(updatePath([...path, id]));
 
@@ -108,6 +100,24 @@ export const Folders = ({ folders }) => {
     setOpenEditFolderModal(false);
   };
 
+  const handleTouchStart = (e, id, name) => {
+    const element = e.currentTarget;
+    element.classList.add(css.touch);
+
+    timeout = setTimeout(() => handleOpenEditFodlerModal(e, id, name), 1000);
+  };
+
+  const handleTouchEnd = (e) => {
+    const element = e.currentTarget;
+    element.classList.remove(css.touch);
+
+    clearTimeout(timeout);
+  };
+
+  const handleTouchMove = () => {
+    clearTimeout(timeout);
+  };
+
   return (
     <div className={css.container}>
       {folders?.map(i => (
@@ -115,8 +125,9 @@ export const Folders = ({ folders }) => {
           key={i.id}
           className={css.folder}
           onClick={() => handleOpenFolder(i.id)}
-          onTouchStart={handleTouchStart}
+          onTouchStart={(e) => handleTouchStart(e, i.id, i.name)}
           onTouchEnd={handleTouchEnd}
+          onTouchMove={handleTouchMove}
         >
           <div className={css.start}>
             <svg className={css.svg} viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
