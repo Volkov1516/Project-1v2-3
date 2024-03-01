@@ -24,6 +24,7 @@
   font-size: 15px;
   user-select: none;
   animation: modalFadeIn 0.1s ease-in;
+  z-index: 99;
 }
 
 @media (max-width: 639px) {

@@ -37,7 +37,7 @@ export const Content = memo(function MemoizedContent({ mouseTimer }) {
 
   return (
     <div className={css.container} onScroll={onMouseUp}>
-      <FolderNavigation text={folder?.name} />
+      <FolderNavigation name={folder?.name} />
       <Folders folders={folder?.folders} />
       <Notes notes={folder?.notes} />
     </div>

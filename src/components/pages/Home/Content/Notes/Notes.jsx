@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { setSnackbar } from 'redux/features/app/appSlice';
 import { updateDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
@@ -11,6 +12,8 @@ import { Button } from 'components/atoms/Button/Button';
 import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Notes.module.css';
+
+import { findFolder } from 'utils/findFolder';
 
 export const Notes = ({ notes }) => {
   const dispatch = useDispatch();
@@ -68,8 +71,7 @@ export const Notes = ({ notes }) => {
 
         dispatch(updateNotesCache(newNotesCache));
       } catch (error) {
-        console.log(error);
-        return;
+        dispatch(setSnackbar('Faild to open the note'));
       }
     }
 
@@ -98,63 +100,50 @@ export const Notes = ({ notes }) => {
     if (titleInputValue && titleInputValue.length > 0) {
       setLoadingEditNoteModal(true);
 
-      // STEP 2: Update title in user.documents (Redux, Firebase)
-      const documentsCopy = JSON.parse(JSON.stringify(documents));
+      try {
+        // STEP 2: Update title in user.documents (Redux, Firebase)
+        const documentsCopy = JSON.parse(JSON.stringify(documents));
 
-      function updateNoteTitle(object, folderId, noteId, newTitle) {
-        if (object.id === folderId) {
-          if (object.notes && object.notes.length > 0) {
-            for (let i = 0; i < object?.notes?.length; i++) {
-              if (object.notes[i].id === noteId) {
-                object.notes[i].title = newTitle;
+        const editNoteTitle = (targetFolder) => {
+          if (targetFolder.notes && targetFolder.notes.length > 0) {
+            for (let i = 0; i < targetFolder?.notes?.length; i++) {
+              if (targetFolder.notes[i].id === noteIdEditNoteModal) {
+                targetFolder.notes[i].title = titleInputValue;
               }
             }
           }
-        }
-        else if (object.folders && object.folders.length > 0) {
-          for (let i = 0; i < object?.folders?.length; i++) {
-            updateNoteTitle(object.folders[i], folderId, noteId, newTitle);
+        };
+
+        findFolder(documentsCopy, path[path.length - 1], editNoteTitle);
+
+        await setDoc(doc(db, 'users', userId), { documents: documentsCopy }, { merge: true });
+
+        dispatch(updateDocuments(documentsCopy));
+
+        // STEP 3: Update title in notes (Firebase) and notesCache (Redux)
+        await setDoc(doc(db, 'notes', noteIdEditNoteModal), { title: titleInputValue }, { merge: true });
+
+        if (notesCache) {
+          let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));
+
+          for (let i = 0; i < notesCacheCopy.length; i++) {
+            if (notesCacheCopy[i].id === noteIdEditNoteModal) {
+              notesCacheCopy[i].title = titleInputValue;
+            }
           }
+
+          dispatch(updateNotesCache(notesCacheCopy));
         }
+
+        dispatch(setSnackbar('Note was renamed'));
+      } catch (error) {
+        dispatch(setSnackbar('Failed to rename the note'));
       }
-
-      updateNoteTitle(documentsCopy, path[path.length - 1], noteIdEditNoteModal, titleInputValue);
-
-      await setDoc(doc(db, 'users', userId), { documents: documentsCopy }, { merge: true })
-        .then(() => {
-          dispatch(updateDocuments(documentsCopy));
-          setLoadingEditNoteModal(false);
-        })
-        .catch(err => {
-          console.log(err);
-          setLoadingEditNoteModal(false);
-        });
-
-      // STEP 3: Update title in notes (Firebase) and notesCache (Redux)
-      await setDoc(doc(db, 'notes', noteIdEditNoteModal), { title: titleInputValue }, { merge: true })
-        .then(() => {
-          if (notesCache) {
-            let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));
-
-            for (let i = 0; i < notesCacheCopy.length; i++) {
-              if (notesCacheCopy[i].id === noteIdEditNoteModal) {
-                notesCacheCopy[i].title = titleInputValue;
-              }
-            }
-
-            dispatch(updateNotesCache(notesCacheCopy));
-          }
-
-          setLoadingEditNoteModal(false);
-        })
-        .catch(err => {
-          console.log(err);
-          setLoadingEditNoteModal(false);
-        });
 
       // STEP 4: Update title in activeNoteTitle (Redux) and titleDeleteValue
       dispatch(updateActiveNoteTitle(titleInputValue));
       setTitleDeleteValue(titleInputValue);
+      setLoadingEditNoteModal(false);
     }
   };
 
@@ -164,57 +153,43 @@ export const Notes = ({ notes }) => {
 
     setLoadingEditNoteModal(true);
 
-    // STEP 2: Delete Note from user.documents (Firebase and Redux)
-    const documentsCopy = JSON.parse(JSON.stringify(documents));
+    try {
+      // STEP 2: Delete Note from user.documents (Firebase and Redux)
+      const documentsCopy = JSON.parse(JSON.stringify(documents));
 
-    function deleteNote(object, folderId, noteId) {
-      if (object.id === folderId) {
-        if (object.notes && object.notes.length > 0) {
-          for (let i = 0; i < object?.notes?.length; i++) {
-            if (object.notes[i].id === noteId) {
-              object.notes.splice(i, 1);
+      const deleteNote = (targetFodler) => {
+        if (targetFodler.notes && targetFodler.notes.length > 0) {
+          for (let i = 0; i < targetFodler.notes.length; i++) {
+            if (targetFodler.notes[i].id === noteIdEditNoteModal) {
+              targetFodler.notes.splice(i, 1);
               return;
             }
           }
         }
-      }
-      else if (object.folders && object.folders.length > 0) {
-        for (let i = 0; i < object?.folders?.length; i++) {
-          deleteNote(object.folders[i], folderId, noteId);
+      };
+
+      findFolder(documentsCopy, path[path.length - 1], deleteNote);
+
+      await setDoc(doc(db, 'users', userId), { documents: documentsCopy }, { merge: true });
+
+      dispatch(updateDocuments(documentsCopy));
+
+      // STEP 3: Delete Note from notes (Firebase) and notesCache (Redux)
+      await deleteDoc(doc(db, 'notes', noteIdEditNoteModal));
+
+      if (notesCache) {
+        let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));
+
+        if (notesCacheCopy && notesCacheCopy.length > 0) {
+          let filteredNotesCacheCopy = notesCacheCopy.filter(i => i.id !== noteIdEditNoteModal);
+          dispatch(updateNotesCache(filteredNotesCacheCopy));
         }
       }
+
+      dispatch(setSnackbar('Note was deleted'));
+    } catch (error) {
+      dispatch(setSnackbar('Faild to delete the note'));
     }
-
-    deleteNote(documentsCopy, path[path.length - 1], noteIdEditNoteModal);
-
-    await setDoc(doc(db, 'users', userId), { documents: documentsCopy }, { merge: true })
-      .then(() => {
-        dispatch(updateDocuments(documentsCopy));
-        setLoadingEditNoteModal(false);
-      })
-      .catch(err => {
-        console.log(err);
-        setLoadingEditNoteModal(false);
-      });
-
-    // STEP 3: Delete Note from notes (Firebase) and notesCache (Redux)
-    await deleteDoc(doc(db, 'notes', noteIdEditNoteModal))
-      .then(() => {
-        if (notesCache) {
-          let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));
-
-          if (notesCacheCopy && notesCacheCopy.length > 0) {
-            let filteredNotesCacheCopy = notesCacheCopy.filter(i => i.id !== noteIdEditNoteModal);
-            dispatch(updateNotesCache(filteredNotesCacheCopy));
-          }
-        }
-
-        setLoadingEditNoteModal(false);
-      })
-      .catch(err => {
-        console.log(err);
-        setLoadingEditNoteModal(false);
-      });
 
     // STEP 4: Reset activeNote... (Redux) and inputs
     if (activeNoteId === noteIdEditNoteModal) {
@@ -232,6 +207,7 @@ export const Notes = ({ notes }) => {
     setTitleDeleteInputValue('');
 
     // STEP 5: Close modal
+    setLoadingEditNoteModal(false);
     setOpenEditNoteModal(false);
   };
 

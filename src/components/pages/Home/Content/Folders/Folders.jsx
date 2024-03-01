@@ -74,40 +74,38 @@ export const Folders = ({ folders }) => {
   const handleDeleteFolder = async () => {
     if (folderDeleteValue !== folderDeleteInputValue) return;
 
-    if (folderInputValue && folderInputValue.length > 0) {
-      setLoadingEditFolderModal(true);
+    setLoadingEditFolderModal(true);
 
-      const newDocuments = JSON.parse(JSON.stringify(documents));
+    const newDocuments = JSON.parse(JSON.stringify(documents));
 
-      function deleteObjectById(id, folders) {
-        for (let i = 0; i < folders.length; i++) {
-          if (folders[i].id === id) {
-            folders.splice(i, 1);
-            return;
-          }
-          if (folders[i].folders && folders[i].folders.length > 0) {
-            deleteObjectById(id, folders[i].folders);
-          }
+    function deleteObjectById(id, folders) {
+      for (let i = 0; i < folders.length; i++) {
+        if (folders[i].id === id) {
+          folders.splice(i, 1);
+          return;
+        }
+        if (folders[i].folders && folders[i].folders.length > 0) {
+          deleteObjectById(id, folders[i].folders);
         }
       }
-
-      deleteObjectById(folderIdEditFolderModal, newDocuments.folders);
-
-      try {
-        await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
-
-        dispatch(updateDocuments(newDocuments));
-        dispatch(setSnackbar('Folder was deleted'));
-      } catch (error) {
-        dispatch(setSnackbar('Failed to delete the folder'));
-      }
-
-      setFolderInputValue('');
-      setFolderDeleteValue('');
-      setFolderDeleteInputValue('');
-      setLoadingEditFolderModal(false);
-      setOpenEditFolderModal(false);
     }
+
+    deleteObjectById(folderIdEditFolderModal, newDocuments.folders);
+
+    try {
+      await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+
+      dispatch(updateDocuments(newDocuments));
+      dispatch(setSnackbar('Folder was deleted'));
+    } catch (error) {
+      dispatch(setSnackbar('Failed to delete the folder'));
+    }
+
+    setFolderInputValue('');
+    setFolderDeleteValue('');
+    setFolderDeleteInputValue('');
+    setLoadingEditFolderModal(false);
+    setOpenEditFolderModal(false);
   };
 
   return (
