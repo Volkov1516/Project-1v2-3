@@ -1,11 +1,14 @@
 import { useEffect, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { setSnackbar } from 'redux/features/app/appSlice';
 import { updateDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, updateIsNewNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 
 import css from './Title.module.css';
+
+import { findFolder } from 'utils/findFolder';
 
 export const Title = forwardRef(function MyTitle(props, ref) {
   const dispatch = useDispatch();
@@ -27,56 +30,52 @@ export const Title = forwardRef(function MyTitle(props, ref) {
       title: activeNoteTitle || 'Untitled',
     };
 
-    // STEP 1: Create/Update title in user.documents (Firestore, Redux)
-    const newDocuments = JSON.parse(JSON.stringify(documents));
+    try {
+      // STEP 1: Create/Update title in user.documents (Firestore, Redux)
+      const newDocuments = JSON.parse(JSON.stringify(documents));
 
-    function findFolder(object, id, newObject) {
-      if (object.id === id) {
+      const editTitle = (targetFodler) => {
         if (isNewNote) {
-          object.notes.push(newObject);
+          targetFodler.notes.push(newNote);
         }
         else {
-          for (let i = 0; i < object?.notes?.length; i++) {
-            if (object.notes[i].id === activeNoteId) {
-              object.notes[i].title = activeNoteTitle;
+          for (let i = 0; i < targetFodler?.notes?.length; i++) {
+            if (targetFodler.notes[i].id === activeNoteId) {
+              targetFodler.notes[i].title = activeNoteTitle;
             }
           }
         }
-      } else if (object.folders && object.folders.length > 0) {
-        for (let i = 0; i < object.folders.length; i++) {
-          findFolder(object.folders[i], id, newObject);
+      };
+
+      findFolder(newDocuments, path[path.length - 1], editTitle);
+
+      await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+
+      dispatch(updateDocuments(newDocuments));
+
+      // STEP 2: Update title in notes and notesCache
+      await setDoc(doc(db, 'notes', activeNoteId), { title: activeNoteTitle || 'Untitled' }, { merge: true });
+
+      if (notesCache) {
+        let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));
+
+        for (let i = 0; i < notesCacheCopy.length; i++) {
+          if (notesCacheCopy[i].id === activeNoteId) {
+            notesCacheCopy[i].title = activeNoteTitle;
+          }
         }
+
+        dispatch(updateNotesCache(notesCacheCopy));
       }
+      else {
+        dispatch(updateNotesCache([newNote]));
+      }
+
+      dispatch(updateIsNewNote(false));
+    } catch (error) {
+      dispatch(setSnackbar('Faild to update note title'));
     }
-
-    findFolder(newDocuments, path[path.length - 1], newNote);
-
-    await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true })
-      .then(() => dispatch(updateDocuments(newDocuments)))
-      .catch(err => console.log(err));
-
-    // STEP 2: Update title in notes and notesCache
-    await setDoc(doc(db, 'notes', activeNoteId), { title: activeNoteTitle || 'Untitled' }, { merge: true })
-      .then(() => {
-        if (notesCache) {
-          let notesCacheCopy = JSON.parse(JSON.stringify(notesCache));
-
-          for (let i = 0; i < notesCacheCopy.length; i++) {
-            if (notesCacheCopy[i].id === activeNoteId) {
-              notesCacheCopy[i].title = activeNoteTitle;
-            }
-          }
-
-          dispatch(updateNotesCache(notesCacheCopy));
-        }
-        else {
-          dispatch(updateNotesCache([newNote]));
-        }
-      })
-      .catch(error => console.log(error));
-
-    dispatch(updateIsNewNote(false));
-  }
+  };
 
   return (
     <div className={css.container}>
