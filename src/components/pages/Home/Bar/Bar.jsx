@@ -44,7 +44,7 @@ export const Bar = () => {
     const createFolder = (targetFolder) => {
       const newFolder = {
         id: uuidv4(),
-        text: folderInputValue,
+        name: folderInputValue,
         folders: [],
         notes: [],
         tasks: []
