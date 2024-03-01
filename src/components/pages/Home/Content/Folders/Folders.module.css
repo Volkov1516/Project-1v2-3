@@ -78,7 +78,7 @@
   }
 
   .folder.touch {
-    background-color: var(--buttonActiveSecondary);
+    background-color: var(--buttonHoverSecondary);
   }
 
   .start {

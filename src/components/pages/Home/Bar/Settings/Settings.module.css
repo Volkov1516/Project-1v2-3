@@ -22,7 +22,6 @@
 }
 
 .content {
-  /* width: 50vw; */
   position: relative;
   background-color: var(--backgroundPrimary);
   border: 1px solid var(--borderColor);
@@ -37,8 +36,8 @@
   border-bottom: 1px solid var(--borderColor);
 }
 
-.section {
-
+.section:not(:last-child) {
+  border-bottom: 1px solid var(--borderColor);
 }
 
 .accountGroup {
@@ -50,7 +49,6 @@
 
 .sectionName {
   padding: 8px;
-  border-bottom: 1px solid var(--borderColor);
   font-size: var(--fontSizeH3);
   font-weight: var(--fontWeightTitle);
 }
@@ -78,10 +76,19 @@
   font-size: 15px;
 }
 
+.themeGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  user-select: none;
+}
+
 @media (max-width: 639px) {
   .content {
     height: 100vh;
     width: 100vh;
+    border: none;
   }
 
   .accountGroup {
@@ -90,5 +97,6 @@
 
   .accoutSettings {
     width: 100%;
+    gap: 16px;
   }
 }

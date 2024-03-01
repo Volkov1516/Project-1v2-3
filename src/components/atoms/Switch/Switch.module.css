@@ -17,7 +17,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #DEE2E6;
+  background-color: var(--gray500);
   cursor: pointer;
   transition: 0.1s ease-in;
   border-radius: 20px;
@@ -41,4 +41,22 @@ input:checked+.slider {
 
 input:checked+.slider:before {
   transform: translateX(18px);
+}
+
+@media (max-width: 639px) {
+  .switch {
+    width: 48px;
+    height: 30px;
+  }
+
+  .slider {
+    border-radius: 20px;
+  }
+
+  .slider:before {
+    height: 26px;
+    width: 26px;
+    left: 2px;
+    bottom: 2px;
+  }
 }

@@ -112,12 +112,12 @@ hr {
 }
 
 ::-webkit-scrollbar-track {
-  background: #EEE;
-  border-left: 1px solid #DDD;
+  background: var(--backgroundSecondary);
+  border-left: 1px solid var(--borderColor);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #DDD;
+  background: var(--borderColor);
 }
 
 ::-webkit-scrollbar-thumb:hover {

@@ -18,3 +18,10 @@
   color: var(--buttonColorSecondary);
   cursor: not-allowed;
 }
+
+@media (max-width: 639px) {
+  .button {
+    padding: 12px;
+    font-size: 14px;
+  }
+}

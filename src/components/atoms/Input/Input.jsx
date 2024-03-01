@@ -1,11 +1,11 @@
 import css from './Input.module.css';
 
-export const Input = ({ label, placeholder, value, onChange, autofocus, onBlur }) => {
+export const Input = ({ id, label, placeholder, value, onChange, autofocus, onBlur }) => {
   return (
     <div className={css.containe}>
-      <label htmlFor="input" className={css.label}>{label}</label>
+      <label htmlFor={id} className={css.label}>{label}</label>
       <input
-        id="input"
+        id={id}
         className={css.input}
         type="text"
         autoComplete="off"

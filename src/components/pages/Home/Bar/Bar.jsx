@@ -90,9 +90,9 @@ export const Bar = () => {
         <Tooltip position="right" text="Add Note">
           <IconButton onClick={handleCreateNote} primary size="large" path="M460-460H240v-40h220v-220h40v220h220v40H500v220h-40v-220Z" />
         </Tooltip>
-        {/* <Tooltip position="right" text="Add Task">
+        <Tooltip position="right" text="Add Task">
           <IconButton path="m382-267.692-198.769-198.77L211.769-495 382-324.769 748.231-691l28.538 28.538L382-267.692Z" />
-        </Tooltip> */}
+        </Tooltip>
         <Tooltip position="right" text="Add Folder">
           <IconButton onClick={() => setOpenCreateFolderModal(true)} path="M120-200v-560h263.846l80 80H840v480H120Zm40-40h640v-400H447.769l-80-80H160v480Zm0 0v-480 480Z" />
         </Tooltip>
@@ -129,7 +129,7 @@ export const Bar = () => {
         setOpen={setOpenCreateFolderModal}
       >
         <div className={css.createFolderModalContent}>
-          <Input label="Folder name" autofocus placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderNameInput(e.target.value)} />
+          <Input id="folderNameId" label="Folder name" autofocus placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderNameInput(e.target.value)} />
           <Button text="Create folder" disabled={!folderInputValue} onClick={handleCreateFolder} />
         </div>
       </Modal>

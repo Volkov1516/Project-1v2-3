@@ -80,7 +80,7 @@
   }
 
   .button.touch {
-    background-color: var(--buttonActiveSecondary);
+    background-color: var(--buttonHoverSecondary);
   }
 
   .primary.touch {
