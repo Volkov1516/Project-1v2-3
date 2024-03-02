@@ -2,6 +2,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -17,7 +18,7 @@
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 99;
+  z-index: 2;
   animation: openModal 0.1s ease-in;
 }
 
@@ -25,8 +26,6 @@
   position: relative;
   background-color: var(--backgroundPrimary);
   border: 1px solid var(--borderColor);
-  color: var(--fontColorPrimary);
-  overflow: auto;
 }
 
 .navigation {
@@ -36,21 +35,29 @@
   border-bottom: 1px solid var(--borderColor);
 }
 
+.sections {
+  height: 75vh;
+  width: 100%;
+  overflow: auto;
+}
+
 .section:not(:last-child) {
   border-bottom: 1px solid var(--borderColor);
 }
 
-.accountGroup {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-}
-
 .sectionName {
-  padding: 8px;
+  padding: 8px 16px;
   font-size: var(--fontSizeH3);
   font-weight: var(--fontWeightTitle);
+  user-select: none;
+}
+
+.accountGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px 16px;
 }
 
 .photo {
@@ -70,6 +77,7 @@
   flex-direction: column;
   gap: 8px;
   font-size: 12px;
+  user-select: none;
 }
 
 .emailText {
@@ -80,7 +88,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
+  padding: 8px 16px 16px;
+  font-size: 15px;
   user-select: none;
 }
 
@@ -91,6 +100,10 @@
     border: none;
   }
 
+  .sections {
+    height: calc(100vh - 65px);
+  }
+
   .accountGroup {
     flex-direction: column;
   }
@@ -98,5 +111,13 @@
   .accoutSettings {
     width: 100%;
     gap: 16px;
+  }
+
+  .emailText {
+    font-size: 16px;
+  }
+
+  .themeGroup {
+    font-size: 16px;
   }
 }

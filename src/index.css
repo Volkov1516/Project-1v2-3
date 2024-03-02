@@ -30,11 +30,10 @@
   --black: #000000;
 
   --fintSizeTitle: 48px;
-  --fontWeightTitle: 700;
-
   --fontSizeH1: 40px;
   --fontSizeH2: 32px;
   --fontSizeH3: 24px;
+  --fontWeightTitle: 700;
 
   --editorInputWidth: 700px;
 }
@@ -101,6 +100,10 @@ body.dark-theme {
   --buttonHoverSecondary: var(--gray1200);
   --buttonActiveSecondary: var(--gray1400);
   --fontColorPrimary: var(--gray200);
+}
+
+body {
+  color: var(--fontColorPrimary);
 }
 
 hr {
