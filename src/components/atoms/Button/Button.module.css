@@ -1,16 +1,25 @@
 .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
   padding: 8px 12px;
   outline: none;
+  font-size: var(--fontSizeMedium);
+  transition: background-color 0.1s ease-in;
+  user-select: none;
+}
+
+.contained {
   border: 1px solid var(--borderColor);
   background-color: var(--buttonBackgroundPrimary);
-  font-size: 14px;
   color: var(--buttonColorPrimary);
 }
 
-@media (hover: hover) {
-  .button:hover {
-    cursor: pointer;
-  }
+.outlined {
+  border: 1px solid var(--borderColor);
+  background-color: transparent;
+  color: var(--fontColorPrimary);
 }
 
 .button:disabled {
@@ -19,9 +28,44 @@
   cursor: not-allowed;
 }
 
+@media (hover: hover) {
+  .button:hover {
+    cursor: pointer;
+  }
+
+  .contained:hover {
+    background-color: var(--buttonHoverPrimary);
+  }
+
+  .outlined:hover {
+    background-color: var(--buttonHoverSecondary);
+  }
+}
+
+@media (min-width: 639px) {
+  .button:active {
+    cursor: pointer;
+  }
+
+  .contained:active {
+    background-color: var(--buttonActivePrimary);
+  }
+
+  .outlined:active {
+    background-color: var(--buttonActiveSecondary);
+  }
+}
+
 @media (max-width: 639px) {
   .button {
     padding: 12px;
-    font-size: 14px;
+  }
+
+  .button.touch {
+    background-color: var(--buttonHoverSecondary);
+  }
+
+  .primary.touch {
+    background-color: var(--buttonActivePrimary);
   }
 }

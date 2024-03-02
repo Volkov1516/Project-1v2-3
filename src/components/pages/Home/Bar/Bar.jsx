@@ -24,8 +24,6 @@ export const Bar = () => {
   const { theme } = useSelector(state => state.app);
   const { userEmail, userPhoto, userName, userId, documents, path } = useSelector(state => state.user);
 
-  console.log(theme);
-
   const [folderInputValue, setFolderNameInput] = useState('');
   const [openCreateFolderModal, setOpenCreateFolderModal] = useState(false);
   const [loadingCreateFolderModal, setLoadingCreateFolderModal] = useState(false);

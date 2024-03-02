@@ -16,12 +16,11 @@
   border: 1px solid var(--borderColor);
   background-color: var(--backgroundSecondary);
   color: var(--fontColorPrimary);
-  font-size: 15px;
+  font-size: var(--fontSizeMedium);
 }
 
 @media (max-width: 639px) {
   .input {
     padding: 8px;
-    font-size: 16px;
   }
 }

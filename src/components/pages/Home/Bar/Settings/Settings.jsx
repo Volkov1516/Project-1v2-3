@@ -1,9 +1,11 @@
 import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTheme, setSnackbar } from 'redux/features/app/appSlice';
-import { updateUserName, updateUserPhoto } from 'redux/features/user/userSlice';
-import { db } from 'firebase.js';
+import { setUser, updateUserName, updateUserPhoto } from 'redux/features/user/userSlice';
+import { updateNotesCache, setActiveNote } from 'redux/features/note/noteSlice';
+import { db, auth } from 'firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
+import { signOut } from 'firebase/auth';
 
 import { IconButton } from 'components/atoms/IconButton/IconButton';
 import { Input } from 'components/atoms/Input/Input';
@@ -11,6 +13,10 @@ import { Switch } from 'components/atoms/Switch/Switch';
 import { Button } from 'components/atoms/Button/Button';
 
 import css from './Settings.module.css';
+
+import logo from '../../../../../assets/logo.png';
+import googlePlay from '../../../../../assets/google-play.svg';
+import patreon from '../../../../../assets/patreon.svg';
 
 export const Settings = ({ open, setOpen }) => {
   const dispatch = useDispatch();
@@ -53,6 +59,21 @@ export const Settings = ({ open, setOpen }) => {
     }
   };
 
+  const handleLogOut = async () => {
+    try {
+      await signOut(auth);
+
+      localStorage.setItem('theme', null);
+
+      dispatch(setTheme(null));
+      dispatch(setUser(null, null, null, null, null));
+      dispatch(updateNotesCache(null));
+      dispatch(setActiveNote(null, null, null, null, null));
+    } catch (error) {
+      dispatch(setSnackbar('Faild to log out'));
+    }
+  };
+
   return open && createPortal(
     <div className={css.container} onClick={() => setOpen(false)}>
       <div className={css.content} onClick={e => e.stopPropagation()}>
@@ -65,7 +86,7 @@ export const Settings = ({ open, setOpen }) => {
             <div className={css.accountGroup}>
               <img src={userPhoto} alt="avatar" className={css.photo} />
               <div className={css.accoutSettings}>
-                <div className={css.accoutSettingsField}>Email <span className={css.emailText}>{userEmail}</span></div>
+                <div className={css.accoutSettingsField}><span className={css.emailLabel}>Email</span> {userEmail}</div>
                 <Input id="userNameInput" label="Name" value={userName} onChange={e => handleChangeUserName(e)} onBlur={handleBlurUserName} />
                 <Input id="userPhotoInput" label="Photo URL" value={userPhoto} onChange={e => handleChangeUserPhoto(e)} onBlur={handleBlurUserPhoto} />
               </div>
@@ -73,27 +94,48 @@ export const Settings = ({ open, setOpen }) => {
           </section>
           <section className={css.section}>
             <div className={css.sectionName}>Appearance</div>
-            <div className={css.themeGroup}>
+            <div className={css.themeField}>
               <span>Dark theme</span>
               <Switch checked={theme === "dark" ? true : false} onChange={handleSwitchTheme} />
             </div>
           </section>
           <section className={css.section}>
             <div className={css.sectionName}>Links</div>
-            <div>(icon) Website</div>
-            <div>(icon) Play Market</div>
-            <div>(icon) Patreon</div>
+            <Button type="outlined">
+              <img src={logo} alt="website" width={24} height={24} />
+              <span>Website</span>
+            </Button>
+            <Button type="outlined">
+              <img src={googlePlay} alt="google play" width={24} height={24} />
+              <span>Google Play</span>
+            </Button>
+            <Button type="outlined">
+              <img src={patreon} alt="patreon" width={24} height={24} />
+              <span>Patreon</span>
+            </Button>
           </section>
           <section className={css.section}>
             <div className={css.sectionName}>Updates</div>
-            <div>what's new</div>
-            <div>future updates</div>
+            <span>Version: 0.1</span>
+            <b>What's new:</b>
+            <ul className={css.list}>
+              <li>Beta release!</li>
+            </ul>
+            <b>Future updates:</b>
+            <ul className={css.list}>
+              <li>Link</li>
+              <li>Image</li>
+              <li>Video</li>
+              <li>Code Block</li>
+            </ul>
           </section>
           <section className={css.section}>
             <div className={css.sectionName}>Contacts</div>
-            <div>email</div>
+            <div>volkov.x@outlook.com</div>
           </section>
-          <Button text="Log out" />
+          <section className={css.section}>
+            <Button onClick={handleLogOut} type="contained">Log out</Button>
+          </section>
         </div>
       </div>
     </div>,

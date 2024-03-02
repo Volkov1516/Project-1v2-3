@@ -33,6 +33,9 @@
   --fontSizeH1: 40px;
   --fontSizeH2: 32px;
   --fontSizeH3: 24px;
+  --fontSizeLarge: 20px;
+  --fontSizeMedium: 16px;
+  --fontSizeSmall: 12px;
   --fontWeightTitle: 700;
 
   --editorInputWidth: 700px;
