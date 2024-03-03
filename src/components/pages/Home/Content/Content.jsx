@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux';
 
 import { FolderNavigation } from './FolderNavigation/FolderNavigation';
 import { Folders } from './Folders/Folders';
+import { Notes } from './Notes/Notes';
+import { Tasks } from './Tasks/Tasks';
 
 import css from './Content.module.css';
-import { Notes } from './Notes/Notes';
 
 export const Content = memo(function MemoizedContent({ mouseTimer }) {
   const { documents, path } = useSelector(state => state.user);
@@ -40,6 +41,7 @@ export const Content = memo(function MemoizedContent({ mouseTimer }) {
       <FolderNavigation name={folder?.name} />
       <Folders folders={folder?.folders} />
       <Notes notes={folder?.notes} />
+      <Tasks tasks={folder?.tasks} />
     </div>
   );
 });

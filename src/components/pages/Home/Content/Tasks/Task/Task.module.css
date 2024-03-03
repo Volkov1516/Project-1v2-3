@@ -1,0 +1,30 @@
+.task {
+  display: flex;
+  align-items: flex-start;
+  padding: 0px 8px;
+}
+
+.textarea {
+  padding: 13px 0px 0px;
+  height: fit-content;
+  display: block;
+  width: 100%;
+  outline: none;
+  border: none;
+  background-color: var(--transparent);
+  color: var(--fontColorPrimary);
+  font-size: var(--fontSizeSmall);
+  line-height: 1em;
+  resize: none;
+  overflow: hidden;
+}
+
+@media (hover: hover) {
+  .task:hover {}
+}
+
+@media (max-width: 639px) {
+  .textarea {
+    font-size: var(--fontSizeMedium);
+  }
+}

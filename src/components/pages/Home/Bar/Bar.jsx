@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme, setSnackbar } from 'redux/features/app/appSlice';
-import { updateDocuments } from 'redux/features/user/userSlice';
+import { updateDocuments, setActiveTaskId } from 'redux/features/user/userSlice';
 import { setActiveNote } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
@@ -72,6 +72,25 @@ export const Bar = () => {
     setLoadingCreateFolderModal(false);
   };
 
+  const handleCreateTask = () => {
+    const newTaskId = uuidv4();
+    const newDocuments = JSON.parse(JSON.stringify(documents));
+
+    const createTask = (targetFolder) => {
+      const newFolder = {
+        id: newTaskId,
+        content: ''
+      };
+
+      targetFolder.tasks.unshift(newFolder);
+    };
+
+    findFolder(newDocuments, path[path.length - 1], createTask);
+
+    dispatch(updateDocuments(newDocuments));
+    dispatch(setActiveTaskId(newTaskId));
+  };
+
   const handleTheme = () => {
     const body = document.body;
 
@@ -98,7 +117,7 @@ export const Bar = () => {
           <IconButton onClick={handleCreateNote} primary size="large" path="M460-460H240v-40h220v-220h40v220h220v40H500v220h-40v-220Z" />
         </Tooltip>
         <Tooltip position="right" text="Add Task">
-          <IconButton path="m382-267.692-198.769-198.77L211.769-495 382-324.769 748.231-691l28.538 28.538L382-267.692Z" />
+          <IconButton onClick={handleCreateTask} path="m382-267.692-198.769-198.77L211.769-495 382-324.769 748.231-691l28.538 28.538L382-267.692Z" />
         </Tooltip>
         <Tooltip position="right" text="Add Folder">
           <IconButton onClick={() => setOpenCreateFolderModal(true)} path="M120-200v-560h263.846l80 80H840v480H120Zm40-40h640v-400H447.769l-80-80H160v480Zm0 0v-480 480Z" />

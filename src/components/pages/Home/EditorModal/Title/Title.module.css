@@ -12,7 +12,7 @@
   border: none;
   background-color: var(--transparent);
   color: var(--fontColorPrimary);
-  font-size: var(--fintSizeTitle);
+  font-size: var(--fontSizeTitle);
   font-weight: var(--fontWeightTitle);
   line-height: 1em;
   overflow: auto;

@@ -6,7 +6,8 @@ const initialState = {
   userName: null,
   userPhoto: null,
   documents: null,
-  path: ['root']
+  path: ['root'],
+  activeTaskId: null
 };
 
 export const userSlice = createSlice({
@@ -31,9 +32,12 @@ export const userSlice = createSlice({
     },
     updatePath: (state, action) => {
       state.path = action.payload;
-    }
+    },
+    setActiveTaskId: (state, action) => {
+      state.activeTaskId = action.payload;
+    },
   }
 });
 
-export const { setUser, updateUserName, updateUserPhoto, updateDocuments, updatePath } = userSlice.actions;
+export const { setUser, updateUserName, updateUserPhoto, updateDocuments, updatePath, setActiveTaskId } = userSlice.actions;
 export default userSlice.reducer;
