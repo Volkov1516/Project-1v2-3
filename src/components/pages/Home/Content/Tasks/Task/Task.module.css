@@ -19,3 +19,9 @@
   overflow: hidden;
   resize: none;
 }
+
+@media (max-width: 639px) {
+  .textarea {
+    padding: 16px 0px 0px;
+  }
+}
