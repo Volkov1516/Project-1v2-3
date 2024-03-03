@@ -9,7 +9,7 @@
   position: relative;
   min-height: 100px;
   resize: none;
-  outline: 0;
+  outline: none;
   tab-size: 1;
   user-select: none !important;
   font-size: 15px;

@@ -17,7 +17,10 @@ export const Title = forwardRef(function MyTitle(props, ref) {
   const { notesCache, isNewNote, activeNoteMode, activeNoteId, activeNoteTitle } = useSelector(state => state.note);
 
   useEffect(() => {
-    if (ref?.current) ref.current.style.height = ref.current.scrollHeight + 'px';
+    if (ref?.current) {
+      ref.current.style.height = 'auto';
+      ref.current.style.height = ref.current.scrollHeight + 'px';
+    }
   }, [activeNoteTitle, ref]);
 
   const handleEnter = e => e.key === 'Enter' && e.preventDefault();
