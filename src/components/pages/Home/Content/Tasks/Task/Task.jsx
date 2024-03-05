@@ -30,7 +30,7 @@ export const Task = ({ id, content }) => {
       const newDocuments = JSON.parse(JSON.stringify(documents));
 
       const deleteTask = (targetFolder) => {
-        if (targetFolder.notes && targetFolder.notes.length > 0) {
+        if (targetFolder.tasks && targetFolder.tasks.length > 0) {
           for (let i = 0; i < targetFolder.tasks.length; i++) {
             if (targetFolder.tasks[i].id === id) {
               targetFolder.tasks.splice(i, 1);
@@ -67,8 +67,8 @@ export const Task = ({ id, content }) => {
       try {
         const newDocuments = JSON.parse(JSON.stringify(documents));
 
-        const deleteTask = (targetFolder) => {
-          if (targetFolder.notes && targetFolder.notes.length > 0) {
+        const createTask = (targetFolder) => {
+          if (targetFolder.tasks && targetFolder.tasks.length > 0) {
             for (let i = 0; i < targetFolder.tasks.length; i++) {
               if (targetFolder.tasks[i].id === id) {
                 targetFolder.tasks[i].content = e.target.value;
@@ -77,7 +77,7 @@ export const Task = ({ id, content }) => {
           }
         };
 
-        findFolder(newDocuments, path[path.length - 1], deleteTask);
+        findFolder(newDocuments, path[path.length - 1], createTask);
 
         dispatch(updateDocuments(newDocuments));
 
