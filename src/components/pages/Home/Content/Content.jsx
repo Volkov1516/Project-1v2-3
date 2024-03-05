@@ -5,6 +5,7 @@ import { FolderNavigation } from './FolderNavigation/FolderNavigation';
 import { Folders } from './Folders/Folders';
 import { Notes } from './Notes/Notes';
 import { Tasks } from './Tasks/Tasks';
+import { DragAndDrop } from './DragAndDrop/DragAndDrop';
 
 import css from './Content.module.css';
 
@@ -39,6 +40,7 @@ export const Content = memo(function MemoizedContent({ mouseTimer }) {
   return (
     <div className={css.container} onScroll={onMouseUp}>
       <FolderNavigation name={folder?.name} />
+      <DragAndDrop />
       <Folders folders={folder?.folders} />
       <Notes notes={folder?.notes} />
       <Tasks tasks={folder?.tasks} />
