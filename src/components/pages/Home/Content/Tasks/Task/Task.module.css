@@ -9,13 +9,12 @@
   display: block;
   min-height: 18px;
   width: 100%;
-  padding: 12px 0px 0px;
+  padding: 14px 0px 0px;
   outline: none;
   border: none;
   background-color: transparent;
   color: var(--fontColorPrimary);
-  font-size: var(--fontSizeMedium);
-  line-height: 1em;
+  font-size: var(--fontSizeSmall);
   overflow: hidden;
   resize: none;
 }
@@ -23,5 +22,6 @@
 @media (max-width: 639px) {
   .textarea {
     padding: 16px 0px 0px;
+    font-size: var(--fontSizeMedium);
   }
 }
