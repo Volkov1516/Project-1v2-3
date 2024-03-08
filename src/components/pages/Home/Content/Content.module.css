@@ -7,7 +7,7 @@
   background-color: var(--backgroundSecondary);
   color: var(--fontColorPrimary);
   padding-bottom: 50vh;
-  touch-action: none;
+  /* touch-action: none; */
 }
 
 @media (max-width: 639px) {

@@ -106,7 +106,12 @@ export const Home = () => {
   };
 
   return (
-    <div className={css.container} onScroll={onMouseUp} onPointerMove={handlePointerMove} onPointerUp={handleOnPointerUp}>
+    <div
+      className={css.container}
+      onScroll={onMouseUp}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handleOnPointerUp}
+    >
       <Bar />
       <Content
         mouseTimer={mouseTimer}
