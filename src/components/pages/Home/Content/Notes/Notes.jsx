@@ -64,6 +64,7 @@ export const Notes = ({ notes }) => {
         dispatch(updateNotesCache(newNotesCache));
       } catch (error) {
         dispatch(setSnackbar('Faild to open the note'));
+        return;
       }
     }
 
@@ -245,9 +246,9 @@ export const Notes = ({ notes }) => {
       >
         <div className={css.eiditNoteModalContent}>
           <Input id="noteTitleId" label="Edit note title" placeholder="Enter note name" value={titleInputValue} onChange={e => setTitleInputValue(e.target.value)} />
-          <Button text="Rename note" disabled={!titleInputValue} onClick={handleEditNoteTitle} />
+          <Button type="outlined" disabled={!titleInputValue} onClick={handleEditNoteTitle}>Rename note</Button>
           <Input id="noteDeleteTitleId" label={`Enter ${titleDeleteValue} to delete the note`} placeholder="Enter note name" value={titleDeleteInputValue} onChange={e => setTitleDeleteInputValue(e.target.value)} />
-          <Button text="Delete note" disabled={titleDeleteValue !== titleDeleteInputValue} onClick={handleDeleteNote} />
+          <Button type="outlined" disabled={titleDeleteValue !== titleDeleteInputValue} onClick={handleDeleteNote}>Delete note</Button>
         </div>
       </Modal>
     </div>

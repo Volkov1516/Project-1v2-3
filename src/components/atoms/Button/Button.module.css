@@ -22,12 +22,6 @@
   color: var(--fontColorPrimary);
 }
 
-.button:disabled {
-  background-color: var(--buttonBackgroundSecondary);
-  color: var(--buttonColorSecondary);
-  cursor: not-allowed;
-}
-
 @media (hover: hover) {
   .button:hover {
     cursor: pointer;
@@ -40,6 +34,12 @@
   .outlined:hover {
     background-color: var(--buttonHoverSecondary);
   }
+}
+
+.button:disabled {
+  background-color: var(--buttonBackgroundSecondary);
+  color: var(--buttonColorSecondary);
+  cursor: not-allowed;
 }
 
 @media (min-width: 639px) {

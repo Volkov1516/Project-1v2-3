@@ -154,7 +154,7 @@ export const Bar = () => {
       >
         <div className={css.createFolderModalContent}>
           <Input id="folderNameId" label="Folder name" autofocus placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderNameInput(e.target.value)} />
-          <Button text="Create folder" disabled={!folderInputValue} onClick={handleCreateFolder} />
+          <Button type="outlined" disabled={!folderInputValue} onClick={handleCreateFolder}>Create folder</Button>
         </div>
       </Modal>
       <Settings open={openSettingsModal} setOpen={setOpenSettingsModal} />
