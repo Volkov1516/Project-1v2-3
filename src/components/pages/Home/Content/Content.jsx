@@ -10,12 +10,15 @@ import css from './Content.module.css';
 
 export const Content = memo(function MemoizedContent({
   mouseTimer,
+  isDraggable,
+  setIsDraggable,
   setDraggableId,
   setDraggableIndex,
   setDraggableOffsetX,
   setDraggableOffsetY,
-  setIsDraggable
 }) {
+  let pointerTimer;
+
   const { documents, path } = useSelector(state => state.user);
 
   const [folder, setFolder] = useState(null);
@@ -41,30 +44,36 @@ export const Content = memo(function MemoizedContent({
     setFolder(res);
   }, [documents, path]);
 
-  const onMouseUp = () => mouseTimer && window.clearTimeout(mouseTimer);
+
 
   const handleOnPointerDown = (e, index, id) => {
-    // STEP 1: Get draggable element props
-    setIsDraggable(true);
-    setDraggableIndex(index);
-    setDraggableId(id);
+    pointerTimer = setTimeout(() => {
+      e.preventDefault();
 
-    // STEP 2: Remove draggable element from the list and make it following the pointer
-    const draggableElement = document.getElementById(id);
+      // STEP 1: Get draggable element props
+      setIsDraggable(true);
+      setDraggableIndex(index);
+      setDraggableId(id);
 
-    // Положение указателя относительно верхнего левого угла draggable
-    const offsetX = e.clientX - draggableElement.getBoundingClientRect().left;
-    const offsetY = e.clientY - draggableElement.getBoundingClientRect().top;
+      // STEP 2: Remove draggable element from the list and make it following the pointer
+      const draggableElement = document.getElementById(id);
 
-    setDraggableOffsetX(offsetX);
-    setDraggableOffsetY(offsetY);
+      // Положение указателя относительно верхнего левого угла draggable
+      const offsetX = e.clientX - draggableElement.getBoundingClientRect().left;
+      const offsetY = e.clientY - draggableElement.getBoundingClientRect().top;
 
-    draggableElement.style.position = 'absolute';
-    draggableElement.style.left = (e.clientX - offsetX) + 'px';
-    draggableElement.style.top = (e.clientY - offsetY) + 'px';
-    draggableElement.style.backgroundColor = 'gray';
-    draggableElement.style.opacity = 0.5;
-    draggableElement.style.zIndex = -0;
+      setDraggableOffsetX(offsetX);
+      setDraggableOffsetY(offsetY);
+
+      draggableElement.style.touchAction = 'none';
+      draggableElement.style.position = 'absolute';
+      draggableElement.style.left = (e.clientX - offsetX) + 'px';
+      draggableElement.style.top = (e.clientY - offsetY) + 'px';
+      draggableElement.style.backgroundColor = 'gray';
+      draggableElement.style.opacity = 0.5;
+      draggableElement.style.zIndex = -0;
+    }, 200);
+
 
     // const newDocuments = JSON.parse(JSON.stringify(documents));
 
@@ -80,10 +89,33 @@ export const Content = memo(function MemoizedContent({
     // findFolder(newDocuments, path[path.length - 1], getSiblingPosition);
   };
 
+  const handleOnPointerMove = (e, id) => {
+    e.preventDefault();
+
+    clearTimeout(pointerTimer);
+    console.log('pointer move');
+  };
+
+  const handleOnPointerUp = (e, id) => {
+    e.preventDefault();
+
+    clearTimeout(pointerTimer);
+    console.log('pointer up');
+
+    const draggableElement = document.getElementById(id);
+    draggableElement.style.touchAction = 'auto';
+  };
+
   return (
-    <div className={css.container} onScroll={onMouseUp}>
+    <div className={css.container}>
       <FolderNavigation name={folder?.name} />
-      <Folders folders={folder?.folders} onPointerDown={handleOnPointerDown} />
+      <Folders
+        folders={folder?.folders}
+        isDraggable={isDraggable}
+        onPointerDown={handleOnPointerDown}
+        onPointerUp={handleOnPointerUp}
+        onPointerMove={handleOnPointerMove}
+      />
       <Notes notes={folder?.notes} />
       <Tasks tasks={folder?.tasks} />
     </div>

@@ -14,7 +14,7 @@ import css from './Folders.module.css';
 
 import { findFolder } from 'utils/findFolder';
 
-export const Folders = ({ folders, onPointerDown }) => {
+export const Folders = ({ folders, isDraggable, onPointerDown, onPointerUp, onPointerMove }) => {
   let timeout;
 
   const dispatch = useDispatch();
@@ -104,7 +104,7 @@ export const Folders = ({ folders, onPointerDown }) => {
     const element = e.currentTarget;
     element.classList.add(css.touch);
 
-    timeout = setTimeout(() => handleOpenEditFodlerModal(e, id, name), 1000);
+    // timeout = setTimeout(() => handleOpenEditFodlerModal(e, id, name), 1000);
   };
 
   const handleTouchEnd = (e) => {
@@ -131,6 +131,8 @@ export const Folders = ({ folders, onPointerDown }) => {
           onTouchEnd={handleTouchEnd}
           onTouchMove={handleTouchMove}
           onPointerDown={e => onPointerDown(e, index, i.id)}
+          onPointerUp={e => onPointerUp(e, i.id)}
+          onPointerMove={e => onPointerMove(e, i.id)}
         >
           <div data-index={index} className={css.start}>
             <svg data-index={index} className={css.svg} viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
