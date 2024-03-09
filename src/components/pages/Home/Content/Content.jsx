@@ -92,7 +92,7 @@ export const Content = memo(function MemoizedContent({
   const handleOnPointerMove = (e, index, id) => {
     e.preventDefault();
 
-    // clearTimeout(pointerTimer);
+    clearTimeout(pointerTimer);
     console.log('pointer move');
   };
 
