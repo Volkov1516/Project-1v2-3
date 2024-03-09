@@ -9,7 +9,6 @@ import { Tasks } from './Tasks/Tasks';
 import css from './Content.module.css';
 
 export const Content = memo(function MemoizedContent({
-  mouseTimer,
   isDraggable,
   setIsDraggable,
   setDraggableId,
@@ -20,6 +19,8 @@ export const Content = memo(function MemoizedContent({
   let pointerTimer;
 
   const { documents, path } = useSelector(state => state.user);
+
+  const [initialScrollY, setInitialScrollY] = useState(null);
 
   const [folder, setFolder] = useState(null);
 
@@ -44,12 +45,10 @@ export const Content = memo(function MemoizedContent({
     setFolder(res);
   }, [documents, path]);
 
-
-
   const handleOnPointerDown = (e, index, id) => {
-    pointerTimer = setTimeout(() => {
-      e.preventDefault();
+    e.preventDefault();
 
+    pointerTimer = setTimeout(() => {
       // STEP 1: Get draggable element props
       setIsDraggable(true);
       setDraggableIndex(index);
@@ -65,13 +64,13 @@ export const Content = memo(function MemoizedContent({
       setDraggableOffsetX(offsetX);
       setDraggableOffsetY(offsetY);
 
-      draggableElement.style.touchAction = 'none';
+      // draggableElement.style.touchAction = 'none';
       draggableElement.style.position = 'absolute';
       draggableElement.style.left = (e.clientX - offsetX) + 'px';
       draggableElement.style.top = (e.clientY - offsetY) + 'px';
       draggableElement.style.backgroundColor = 'gray';
       draggableElement.style.opacity = 0.5;
-      draggableElement.style.zIndex = -0;
+      draggableElement.style.zIndex = 2;
     }, 200);
 
 
@@ -89,25 +88,32 @@ export const Content = memo(function MemoizedContent({
     // findFolder(newDocuments, path[path.length - 1], getSiblingPosition);
   };
 
-  const handleOnPointerMove = (e, index, id) => {
-    e.preventDefault();
+  const handleOnPointerUp = (e, index, id) => {
+    clearTimeout(pointerTimer);
 
-    // clearTimeout(pointerTimer);
-    console.log('pointer move');
+    setInitialScrollY(null);
   };
 
-  const handleOnPointerUp = (e, index, id) => {
-    e.preventDefault();
-
+  const handleOnPointerMove = (e, index, id) => {
     clearTimeout(pointerTimer);
-    console.log('pointer up');
 
-    const draggableElement = document.getElementById(id);
-    draggableElement.style.touchAction = 'auto';
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      if (!isDraggable) {
+        if (!initialScrollY) {
+          setInitialScrollY(Math.round(e.clientY));
+        }
+        else {
+          const managerElement = document.getElementById('manager');
+          managerElement.scrollTop = initialScrollY - e.clientY;
+        }
+      }
+    }
   };
 
   return (
-    <div className={css.container} onScroll={() => clearTimeout(pointerTimer)}>
+    <div id="manager" className={css.container} onScroll={() => clearTimeout(pointerTimer)}>
       <FolderNavigation name={folder?.name} />
       <Folders
         folders={folder?.folders}

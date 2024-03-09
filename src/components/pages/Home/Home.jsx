@@ -52,10 +52,6 @@ export const Home = () => {
     }
   }, [dispatch]);
 
-  let mouseTimer;
-
-  const onMouseUp = () => mouseTimer && window.clearTimeout(mouseTimer);
-
   const handlePointerMove = (e) => {
     e.preventDefault();
 
@@ -108,13 +104,11 @@ export const Home = () => {
   return (
     <div
       className={css.container}
-      onScroll={onMouseUp}
       onPointerMove={handlePointerMove}
       onPointerUp={handleOnPointerUp}
     >
       <Bar />
       <Content
-        mouseTimer={mouseTimer}
         isDraggable={isDraggable}
         setIsDraggable={setIsDraggable}
         draggableId={draggableId}

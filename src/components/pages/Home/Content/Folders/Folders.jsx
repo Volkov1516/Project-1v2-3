@@ -9,7 +9,7 @@ import { IconButton } from 'components/atoms/IconButton/IconButton';
 import { Input } from 'components/atoms/Input/Input';
 import { Button } from 'components/atoms/Button/Button';
 import { Modal } from 'components/atoms/Modal/Modal';
- 
+
 import css from './Folders.module.css';
 
 import { findFolder } from 'utils/findFolder';
@@ -107,14 +107,14 @@ export const Folders = ({ folders, onPointerDown, onPointerUp, onPointerMove }) 
     // timeout = setTimeout(() => handleOpenEditFodlerModal(e, id, name), 1000);
   };
 
-  const handleTouchEnd = (e) => {
+  const handleTouchEnd = (e, id) => {
     const element = e.currentTarget;
     element.classList.remove(css.touch);
 
     clearTimeout(timeout);
   };
 
-  const handleTouchMove = () => {
+  const handleTouchMove = (e, id) => {
     clearTimeout(timeout);
   };
 
@@ -128,8 +128,8 @@ export const Folders = ({ folders, onPointerDown, onPointerUp, onPointerMove }) 
           data-index={index}
           onClick={() => handleOpenFolder(i.id)}
           onTouchStart={(e) => handleTouchStart(e, i.id, i.name)}
-          onTouchEnd={handleTouchEnd}
-          onTouchMove={handleTouchMove}
+          onTouchEnd={e => handleTouchEnd(e, i.id)}
+          onTouchMove={e => handleTouchMove(e, i.id)}
           onPointerDown={e => onPointerDown(e, index, i.id)}
           onPointerUp={e => onPointerUp(e, index, i.id)}
           onPointerMove={e => onPointerMove(e, index, i.id)}

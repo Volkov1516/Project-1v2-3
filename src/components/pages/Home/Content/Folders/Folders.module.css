@@ -10,6 +10,9 @@
   justify-content: space-between;
   padding: 4px 8px 4px 16px;
   border: 1px solid transparent;
+  /* touch-action: pan-y; */
+  /* touch-action: pan-x pan-y; */
+  touch-action: none;
 }
 
 .start {
