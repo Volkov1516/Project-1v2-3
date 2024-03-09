@@ -10,7 +10,8 @@ export const FolderNavigation = ({ name }) => {
 
   const { path } = useSelector(state => state.user);
 
-  const handleBack = () => {
+  const handleBack = (e) => {
+    e.stopPropagation();
     let newArr = JSON.parse(JSON.stringify(path));
     newArr.pop();
 
@@ -20,7 +21,7 @@ export const FolderNavigation = ({ name }) => {
   if (!name) return null;
 
   return (
-    <div className={css.container}>
+    <div className={css.container} onPointerDown={e => e.stopPropagation()}>
       <IconButton onClick={handleBack} path="m276.846-460 231.693 231.692L480-200 200-480l280-280 28.539 28.308L276.846-500H760v40H276.846Z" />
       {name}
     </div>

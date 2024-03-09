@@ -14,7 +14,7 @@ import css from './Folders.module.css';
 
 import { findFolder } from 'utils/findFolder';
 
-export const Folders = ({ folders, isDraggable, onPointerDown, onPointerUp, onPointerMove }) => {
+export const Folders = ({ folders, onPointerDown, onPointerUp, onPointerMove }) => {
   let timeout;
 
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ export const Folders = ({ folders, isDraggable, onPointerDown, onPointerUp, onPo
   const [folderDeleteValue, setFolderDeleteValue] = useState('');
   const [folderDeleteInputValue, setFolderDeleteInputValue] = useState('');
 
-  const handleOpenFolder = (id) => dispatch(updatePath([...path, id]));
+  // const handleOpenFolder = (id) => dispatch(updatePath([...path, id]));
 
   const handleOpenEditFodlerModal = (e, id, name) => {
     e.stopPropagation();
@@ -118,20 +118,35 @@ export const Folders = ({ folders, isDraggable, onPointerDown, onPointerUp, onPo
     clearTimeout(timeout);
   };
 
+  const handleOnPointerDown = (e, index, id) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dispatch(updatePath([...path, id]));
+  };
+
+  const handleOnPointerUp = (e, index, id) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
     <div className={css.container}>
       {folders?.map((i, index) => (
         <div
-          data-index={index}
           key={i.id}
           id={i.id}
           className={css.folder}
-          onClick={() => handleOpenFolder(i.id)}
+          data-index={index}
+          onPointerDown={e => handleOnPointerDown(e, index, i.id)}
+          onPointerUp={e => handleOnPointerUp(e, i.id)}
+
+
+          // onClick={() => handleOpenFolder(i.id)}
           onTouchStart={(e) => handleTouchStart(e, i.id, i.name)}
           onTouchEnd={handleTouchEnd}
           onTouchMove={handleTouchMove}
-          onPointerDown={e => onPointerDown(e, index, i.id)}
-          onPointerUp={e => onPointerUp(e, i.id)}
+          // onPointerDown={e => onPointerDown(e, index, i.id)}
+          // onPointerUp={e => onPointerUp(e, i.id)}
           onPointerMove={e => onPointerMove(e, i.id)}
         >
           <div data-index={index} className={css.start}>
