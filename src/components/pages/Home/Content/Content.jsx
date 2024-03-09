@@ -92,7 +92,7 @@ export const Content = memo(function MemoizedContent({
   const handleOnPointerMove = (e, index, id) => {
     e.preventDefault();
 
-    clearTimeout(pointerTimer);
+    // clearTimeout(pointerTimer);
     console.log('pointer move');
   };
 
@@ -107,7 +107,7 @@ export const Content = memo(function MemoizedContent({
   };
 
   return (
-    <div className={css.container}>
+    <div className={css.container} onScroll={() => clearTimeout(pointerTimer)}>
       <FolderNavigation name={folder?.name} />
       <Folders
         folders={folder?.folders}
