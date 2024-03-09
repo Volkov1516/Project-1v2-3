@@ -27,7 +27,7 @@ export const Folders = ({ folders, onPointerDown, onPointerUp, onPointerMove }) 
   const [folderDeleteValue, setFolderDeleteValue] = useState('');
   const [folderDeleteInputValue, setFolderDeleteInputValue] = useState('');
 
-  // const handleOpenFolder = (id) => dispatch(updatePath([...path, id]));
+  const handleOpenFolder = (id) => dispatch(updatePath([...path, id]));
 
   const handleOpenEditFodlerModal = (e, id, name) => {
     e.stopPropagation();
@@ -118,17 +118,6 @@ export const Folders = ({ folders, onPointerDown, onPointerUp, onPointerMove }) 
     clearTimeout(timeout);
   };
 
-  const handleOnPointerDown = (e, index, id) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dispatch(updatePath([...path, id]));
-  };
-
-  const handleOnPointerUp = (e, index, id) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
   return (
     <div className={css.container}>
       {folders?.map((i, index) => (
@@ -137,17 +126,13 @@ export const Folders = ({ folders, onPointerDown, onPointerUp, onPointerMove }) 
           id={i.id}
           className={css.folder}
           data-index={index}
-          onPointerDown={e => handleOnPointerDown(e, index, i.id)}
-          onPointerUp={e => handleOnPointerUp(e, i.id)}
-
-
-          // onClick={() => handleOpenFolder(i.id)}
+          onClick={() => handleOpenFolder(i.id)}
           onTouchStart={(e) => handleTouchStart(e, i.id, i.name)}
           onTouchEnd={handleTouchEnd}
           onTouchMove={handleTouchMove}
-          // onPointerDown={e => onPointerDown(e, index, i.id)}
-          // onPointerUp={e => onPointerUp(e, i.id)}
-          onPointerMove={e => onPointerMove(e, i.id)}
+          onPointerDown={e => onPointerDown(e, index, i.id)}
+          onPointerUp={e => onPointerUp(e, index, i.id)}
+          onPointerMove={e => onPointerMove(e, index, i.id)}
         >
           <div data-index={index} className={css.start}>
             <svg data-index={index} className={css.svg} viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">

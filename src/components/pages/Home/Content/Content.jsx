@@ -89,14 +89,14 @@ export const Content = memo(function MemoizedContent({
     // findFolder(newDocuments, path[path.length - 1], getSiblingPosition);
   };
 
-  const handleOnPointerMove = (e, id) => {
+  const handleOnPointerMove = (e, index, id) => {
     e.preventDefault();
 
-    clearTimeout(pointerTimer);
+    // clearTimeout(pointerTimer);
     console.log('pointer move');
   };
 
-  const handleOnPointerUp = (e, id) => {
+  const handleOnPointerUp = (e, index, id) => {
     e.preventDefault();
 
     clearTimeout(pointerTimer);
