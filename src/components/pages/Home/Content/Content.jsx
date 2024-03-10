@@ -8,19 +8,8 @@ import { Tasks } from './Tasks/Tasks';
 
 import css from './Content.module.css';
 
-export const Content = memo(function MemoizedContent({
-  isDraggable,
-  setIsDraggable,
-  setDraggableId,
-  setDraggableIndex,
-  setDraggableOffsetX,
-  setDraggableOffsetY,
-}) {
-  let pointerTimer;
-
+export const Content = memo(function MemoizedContent() {
   const { documents, path } = useSelector(state => state.user);
-
-  const [initialScrollY, setInitialScrollY] = useState(null);
 
   const [folder, setFolder] = useState(null);
 
@@ -45,83 +34,10 @@ export const Content = memo(function MemoizedContent({
     setFolder(res);
   }, [documents, path]);
 
-  const handleOnPointerDown = (e, index, id) => {
-    e.preventDefault();
-
-    pointerTimer = setTimeout(() => {
-      // STEP 1: Get draggable element props
-      setIsDraggable(true);
-      setDraggableIndex(index);
-      setDraggableId(id);
-
-      // STEP 2: Remove draggable element from the list and make it following the pointer
-      const draggableElement = document.getElementById(id);
-
-      // Положение указателя относительно верхнего левого угла draggable
-      const offsetX = e.clientX - draggableElement.getBoundingClientRect().left;
-      const offsetY = e.clientY - draggableElement.getBoundingClientRect().top;
-
-      setDraggableOffsetX(offsetX);
-      setDraggableOffsetY(offsetY);
-
-      // draggableElement.style.touchAction = 'none';
-      draggableElement.style.position = 'absolute';
-      draggableElement.style.left = (e.clientX - offsetX) + 'px';
-      draggableElement.style.top = (e.clientY - offsetY) + 'px';
-      draggableElement.style.backgroundColor = 'gray';
-      draggableElement.style.opacity = 0.5;
-      draggableElement.style.zIndex = 2;
-    }, 200);
-
-
-    // const newDocuments = JSON.parse(JSON.stringify(documents));
-
-    // const getSiblingPosition = (targetFolder) => {
-    //   const next = targetFolder.folders[index + 1];
-
-    //   setPrevMargin(next.id);
-    //   const nextElement = document.getElementById(next.id);
-    //   nextElement.style.marginTop = '34px';
-    //   // nextElement.style.marginLeft = '50%';
-    // };
-
-    // findFolder(newDocuments, path[path.length - 1], getSiblingPosition);
-  };
-
-  const handleOnPointerUp = (e, index, id) => {
-    clearTimeout(pointerTimer);
-
-    setInitialScrollY(null);
-  };
-
-  const handleOnPointerMove = (e, index, id) => {
-    clearTimeout(pointerTimer);
-
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    if (isMobile) {
-      if (!isDraggable) {
-        if (!initialScrollY) {
-          setInitialScrollY(Math.round(e.clientY));
-        }
-        else {
-          const managerElement = document.getElementById('manager');
-          managerElement.scrollTop = initialScrollY - e.clientY;
-        }
-      }
-    }
-  };
-
   return (
-    <div id="manager" className={css.container} onScroll={() => clearTimeout(pointerTimer)}>
+    <div className={css.container}>
       <FolderNavigation name={folder?.name} />
-      <Folders
-        folders={folder?.folders}
-        isDraggable={isDraggable}
-        onPointerDown={handleOnPointerDown}
-        onPointerUp={handleOnPointerUp}
-        onPointerMove={handleOnPointerMove}
-      />
+      <Folders folders={folder?.folders} />
       <Notes notes={folder?.notes} />
       <Tasks tasks={folder?.tasks} />
     </div>

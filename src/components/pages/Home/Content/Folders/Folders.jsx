@@ -14,7 +14,7 @@ import css from './Folders.module.css';
 
 import { findFolder } from 'utils/findFolder';
 
-export const Folders = ({ folders, onPointerDown, onPointerUp, onPointerMove }) => {
+export const Folders = ({ folders }) => {
   let timeout;
 
   const dispatch = useDispatch();
@@ -26,6 +26,13 @@ export const Folders = ({ folders, onPointerDown, onPointerUp, onPointerMove }) 
   const [folderInputValue, setFolderInputValue] = useState('');
   const [folderDeleteValue, setFolderDeleteValue] = useState('');
   const [folderDeleteInputValue, setFolderDeleteInputValue] = useState('');
+
+  const [isDraggable, setIsDraggable] = useState(null);
+  const [draggableOffsetX, setDraggableOffsetX] = useState(null);
+  const [draggableOffsetY, setDraggableOffsetY] = useState(null);
+  // const [draggableId, setDraggableId] = useState(null);
+  const [draggableIndex, setDraggableIndex] = useState(null);
+  const [targetIndex, setTargetIndex] = useState(null);
 
   const handleOpenFolder = (id) => dispatch(updatePath([...path, id]));
 
@@ -100,22 +107,85 @@ export const Folders = ({ folders, onPointerDown, onPointerUp, onPointerMove }) 
     setOpenEditFolderModal(false);
   };
 
-  const handleTouchStart = (e, id, name) => {
+  const handleTouchStart = (e, index, id) => {
     const element = e.currentTarget;
     element.classList.add(css.touch);
 
-    // timeout = setTimeout(() => handleOpenEditFodlerModal(e, id, name), 1000);
+    timeout = setTimeout(() => {
+      setIsDraggable(true);
+      setDraggableIndex(index);
+
+      const draggableElement = document.getElementById(id);
+
+      const offsetX = e.touches[0].clientX - draggableElement.getBoundingClientRect().left;
+      const offsetY = e.touches[0].clientY - draggableElement.getBoundingClientRect().top;
+
+      setDraggableOffsetX(offsetX);
+      setDraggableOffsetY(offsetY);
+
+      draggableElement.style.position = 'absolute';
+      draggableElement.style.left = (e.touches[0].clientX - offsetX) + 'px';
+      draggableElement.style.top = (e.touches[0].clientY - offsetY) + 'px';
+      draggableElement.style.backgroundColor = 'gray';
+      draggableElement.style.opacity = 0.5;
+      draggableElement.style.zIndex = -0;
+    }, 200);
   };
 
   const handleTouchEnd = (e, id) => {
+    clearTimeout(timeout);
+
+    console.log(targetIndex);
+
     const element = e.currentTarget;
     element.classList.remove(css.touch);
 
-    clearTimeout(timeout);
+    if (isDraggable) {
+      const draggableElement = document.getElementById(id);
+      draggableElement.style.position = 'initial';
+      draggableElement.style.left = 'initial';
+      draggableElement.style.top = 'initial';
+      draggableElement.style.backgroundColor = 'initial';
+      draggableElement.style.opacity = 1;
+      draggableElement.style.zIndex = 'initial';
+
+      const newDocuments = JSON.parse(JSON.stringify(documents));
+
+      const changeFolderPosition = (targetFolder) => {
+        const folderCopy = targetFolder.folders;
+        const filteredFolderItem = folderCopy.splice(draggableIndex, 1);
+
+        const newFolders = [
+          ...folderCopy.slice(0, targetIndex),
+          ...filteredFolderItem,
+          ...folderCopy.slice(targetIndex)
+        ];
+
+        targetFolder.folders = newFolders;
+      };
+
+      findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+      dispatch(updateDocuments(newDocuments));
+
+      setIsDraggable(false);
+    }
   };
 
   const handleTouchMove = (e, id) => {
     clearTimeout(timeout);
+
+    if (isDraggable) {
+      const draggableElement = document.getElementById(id);
+      draggableElement.style.left = (e.touches[0].clientX - draggableOffsetX) + 'px';
+      draggableElement.style.top = (e.touches[0].clientY - draggableOffsetY) + 'px';
+
+      const elementBelow = document?.elementsFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+      elementBelow.forEach(i => {
+        if (i.getAttribute('data-index')) {
+          setTargetIndex(i.getAttribute('data-index'));
+        }
+      });
+    }
   };
 
   return (
@@ -127,12 +197,9 @@ export const Folders = ({ folders, onPointerDown, onPointerUp, onPointerMove }) 
           className={css.folder}
           data-index={index}
           onClick={() => handleOpenFolder(i.id)}
-          onTouchStart={(e) => handleTouchStart(e, i.id, i.name)}
+          onTouchStart={e => handleTouchStart(e, index, i.id)}
           onTouchEnd={e => handleTouchEnd(e, i.id)}
           onTouchMove={e => handleTouchMove(e, i.id)}
-          onPointerDown={e => onPointerDown(e, index, i.id)}
-          onPointerUp={e => onPointerUp(e, index, i.id)}
-          onPointerMove={e => onPointerMove(e, index, i.id)}
         >
           <div data-index={index} className={css.start}>
             <svg data-index={index} className={css.svg} viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
