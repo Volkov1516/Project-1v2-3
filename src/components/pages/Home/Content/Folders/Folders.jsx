@@ -152,6 +152,7 @@ export const Folders = ({ folders }) => {
 
   const handleTouchEnd = (e, id) => {
     clearTimeout(timeout);
+    clearTimeout(timerId);
 
     const element = e.currentTarget;
     element.classList.remove(css.touch);

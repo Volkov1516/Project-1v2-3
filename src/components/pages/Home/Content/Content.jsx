@@ -27,6 +27,9 @@ export const Content = memo(function MemoizedContent() {
         }
       }
 
+      const managerElement = document.getElementById('manager');
+      managerElement.scrollTo(0, 0);
+
       return null;
     }
 

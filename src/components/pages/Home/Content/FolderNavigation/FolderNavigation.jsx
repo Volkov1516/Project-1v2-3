@@ -16,6 +16,9 @@ export const FolderNavigation = ({ name }) => {
     newArr.pop();
 
     dispatch(updatePath([...newArr]));
+
+    const managerElement = document.getElementById('manager');
+    managerElement.scrollTo(0, 0);
   };
 
   if (!name) return null;
