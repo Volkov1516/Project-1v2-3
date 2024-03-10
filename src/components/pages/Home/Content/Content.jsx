@@ -35,7 +35,7 @@ export const Content = memo(function MemoizedContent() {
   }, [documents, path]);
 
   return (
-    <div className={css.container}>
+    <div id="manager" className={css.container}>
       <FolderNavigation name={folder?.name} />
       <Folders folders={folder?.folders} />
       <Notes notes={folder?.notes} />

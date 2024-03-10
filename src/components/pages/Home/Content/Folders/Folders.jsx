@@ -112,6 +112,9 @@ export const Folders = ({ folders }) => {
     element.classList.add(css.touch);
 
     timeout = setTimeout(() => {
+      const managerElement = document.getElementById('manager');
+      managerElement.scrollTop += 1;
+
       setIsDraggable(true);
       setDraggableIndex(index);
 
