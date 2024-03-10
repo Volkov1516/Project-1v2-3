@@ -17,14 +17,11 @@ import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 
-import { RefreshStatePlugin } from './plugins/RefreshStatePlugin/RefreshStatePlugin';
 import { ToolbarBlockPlugin } from './plugins/ToolbarBlockPlugin/ToolbarBlockPlugin';
 import { ToolbarTextPlugin } from './plugins/ToolbarTextPlugin/ToolbarTextPlugin';
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
-import { SetEditablePlugin } from './plugins/SetEditablePlugin/SetEditablePlugin';
-import { SyncStatePlugin } from './plugins/SyncStatePlugin/SyncStatePlagin';
 
 import { MainTheme } from './themes/MainTheme';
 
@@ -135,9 +132,6 @@ export const Editor = ({ editorRef, titleRef, saving, setSaving }) => {
         <OnChangePlugin ignoreSelectionChange={true} onChange={handleEditorChange} />
         <ToolbarBlockPlugin modalEditorContentRef={editorRef} titleRef={titleRef} />
         <ToolbarTextPlugin modalEditorContentRef={editorRef} />
-        <RefreshStatePlugin />
-        <SyncStatePlugin />
-        <SetEditablePlugin />
         <ListPlugin />
         <CheckListPlugin />
         <HorizontalRulePlugin />

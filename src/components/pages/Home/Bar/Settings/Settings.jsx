@@ -73,7 +73,13 @@ export const Settings = ({ open, setOpen }) => {
       dispatch(setTheme(null));
       dispatch(setUser(null, null, null, null, null));
       dispatch(updateNotesCache(null));
-      dispatch(setActiveNote(null, null, null, null, null));
+      dispatch(setActiveNote({
+        isOpen: null,
+        isNew: null,
+        id: null,
+        title: null,
+        content: null,
+      }));
     } catch (error) {
       dispatch(setSnackbar('Faild to log out'));
     }

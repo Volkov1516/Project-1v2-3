@@ -70,8 +70,8 @@ export const Notes = ({ notes }) => {
 
     // STEP 4: Open Editor with targetNote data
     dispatch(setActiveNote({
+      isOpen: true,
       isNew: false,
-      mode: 'edit',
       id: targetNote?.id,
       title: targetNote?.title,
       content: targetNote?.content,
@@ -187,8 +187,8 @@ export const Notes = ({ notes }) => {
     // STEP 4: Reset activeNote... (Redux) and inputs
     if (activeNoteId === noteIdEditNoteModal) {
       dispatch(setActiveNote({
+        isOpen: null,
         isNew: null,
-        mode: null,
         id: null,
         title: null,
         content: null,

@@ -31,8 +31,8 @@ export const Bar = () => {
 
   const handleCreateNote = () => {
     dispatch(setActiveNote({
+      isOpen: true,
       isNew: true,
-      mode: 'edit',
       id: uuidv4(),
       title: '',
       content: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',

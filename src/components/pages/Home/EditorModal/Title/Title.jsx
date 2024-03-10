@@ -14,7 +14,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
   const dispatch = useDispatch();
 
   const { userId, documents, path } = useSelector(state => state.user);
-  const { notesCache, isNewNote, activeNoteMode, activeNoteId, activeNoteTitle } = useSelector(state => state.note);
+  const { notesCache, isNewNote, activeNoteId, activeNoteTitle } = useSelector(state => state.note);
 
   useEffect(() => {
     if (ref?.current) {
@@ -88,8 +88,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
         placeholder="Untitled"
         rows={1}
         spellCheck={false}
-        readOnly={activeNoteMode === "preview"}
-        value={activeNoteMode === "preview" ? (activeNoteTitle || "Untitled") : activeNoteTitle}
+        value={activeNoteTitle}
         onKeyDown={handleEnter}
         onChange={handleTitleChange}
         onBlur={handleTitleBlur}
