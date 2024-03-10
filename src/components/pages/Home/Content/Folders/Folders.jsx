@@ -33,6 +33,7 @@ export const Folders = ({ folders }) => {
   // const [draggableId, setDraggableId] = useState(null);
   const [draggableIndex, setDraggableIndex] = useState(null);
   const [targetIndex, setTargetIndex] = useState(null);
+  const [timerId, setTimerId] = useState(null);
 
   const handleOpenFolder = (id) => dispatch(updatePath([...path, id]));
 
@@ -107,7 +108,7 @@ export const Folders = ({ folders }) => {
     setOpenEditFolderModal(false);
   };
 
-  const handleTouchStart = (e, index, id) => {
+  const handleTouchStart = (e, index, id, name) => {
     const element = e.currentTarget;
     element.classList.add(css.touch);
 
@@ -132,13 +133,25 @@ export const Folders = ({ folders }) => {
       draggableElement.style.backgroundColor = 'gray';
       draggableElement.style.opacity = 0.5;
       draggableElement.style.zIndex = -0;
+
+      const timer2 = setTimeout(() => {
+
+        draggableElement.style.position = 'initial';
+        draggableElement.style.left = 'initial';
+        draggableElement.style.top = 'initial';
+        draggableElement.style.backgroundColor = 'initial';
+        draggableElement.style.opacity = 1;
+        draggableElement.style.zIndex = 'initial';
+        setIsDraggable(false);
+
+        handleOpenEditFodlerModal(e, id, name);
+      }, 500);
+      setTimerId(timer2);
     }, 200);
   };
 
   const handleTouchEnd = (e, id) => {
     clearTimeout(timeout);
-
-    console.log(targetIndex);
 
     const element = e.currentTarget;
     element.classList.remove(css.touch);
@@ -176,6 +189,7 @@ export const Folders = ({ folders }) => {
 
   const handleTouchMove = (e, id) => {
     clearTimeout(timeout);
+    clearTimeout(timerId);
 
     if (isDraggable) {
       const draggableElement = document.getElementById(id);
@@ -200,7 +214,7 @@ export const Folders = ({ folders }) => {
           className={css.folder}
           data-index={index}
           onClick={() => handleOpenFolder(i.id)}
-          onTouchStart={e => handleTouchStart(e, index, i.id)}
+          onTouchStart={e => handleTouchStart(e, index, i.id, i.name)}
           onTouchEnd={e => handleTouchEnd(e, i.id)}
           onTouchMove={e => handleTouchMove(e, i.id)}
         >
