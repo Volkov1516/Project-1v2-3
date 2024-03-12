@@ -1,9 +1,9 @@
 import { memo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { setSnackbar } from 'redux/features/app/appSlice';
+import { setSnackbar } from 'redux/features/app/appSlice';
 import { updateDocuments } from 'redux/features/user/userSlice';
-// import { db } from 'firebase.js';
-// import { doc, setDoc } from 'firebase/firestore';
+import { db } from 'firebase.js';
+import { doc, setDoc } from 'firebase/firestore';
 
 import { FolderNavigation } from './FolderNavigation/FolderNavigation';
 import { Folders } from './Folders/Folders';
@@ -19,8 +19,7 @@ export const Content = memo(function MemoizedContent() {
 
   const dispatch = useDispatch();
 
-  // const { userId, documents, path } = useSelector(state => state.user);
-  const { documents, path } = useSelector(state => state.user);
+  const { userId, documents, path } = useSelector(state => state.user);
 
   const [folder, setFolder] = useState(null);
   const [isDraggable, setIsDraggable] = useState(false);
@@ -34,8 +33,7 @@ export const Content = memo(function MemoizedContent() {
   // const [targetType, setTargetType] = useState(null);
   const [prevTargetId, setPrevTargetId] = useState(null);
   const [placeholderId, setPlaceholderId] = useState(null);
-  const [updatedDocuments, setUpdatedDocuments] = useState(null);
-  console.log(updatedDocuments);
+  const [updatedFolder, setUpdatedFolder] = useState(null);
 
   useEffect(() => {
     function findFolder(object, id) {
@@ -182,13 +180,19 @@ export const Content = memo(function MemoizedContent() {
       setPlaceholderId(null);
 
       // STEP -: Update folders in user.documents (Firebase)
-      // try {
-      //   await setDoc(doc(db, 'users', userId), { documents: updatedDocuments }, { merge: true });
+      try {
+        const newDocuments = JSON.parse(JSON.stringify(documents));
+        const changeFolderPosition = (targetFolder) => targetFolder.folders = updatedFolder;
+        findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
 
-      //   dispatch(setSnackbar('Changes were applied'));
-      // } catch (error) {
-      //   dispatch(setSnackbar('Something went wrong'));
-      // }
+        dispatch(updateDocuments(newDocuments));
+
+        await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+
+        dispatch(setSnackbar('Changes were applied'));
+      } catch (error) {
+        dispatch(setSnackbar('Something went wrong'));
+      }
     }
   };
 
@@ -205,9 +209,11 @@ export const Content = memo(function MemoizedContent() {
       const elementsBelow = document.elementsFromPoint(e.touches[0].clientX, e.touches[0].clientY);
       elementsBelow.forEach(i => {
         if (i.getAttribute('data-index')) {
-          setTargetIndex(i.getAttribute('data-index'));
-          setTargetId(i.getAttribute('data-id'));
-          // setTargetType(i.getAttribute('data-type'));
+          if (draggableIndex !== Number(i.getAttribute('data-index'))) {
+            setTargetIndex(Number(i.getAttribute('data-index')));
+            setTargetId(i.getAttribute('data-id'));
+            // setTargetType(i.getAttribute('data-type'));
+          }
         }
       });
 
@@ -264,16 +270,7 @@ export const Content = memo(function MemoizedContent() {
             ...afterTarget
           ];
 
-          const newDocuments = JSON.parse(JSON.stringify(documents));
-
-          const changeFolderPosition = (targetFolder) => {
-            targetFolder.folders = newFolders;
-          };
-
-          findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
-          setUpdatedDocuments(newDocuments);
-          setDraggableIndex(Number(targetIndex));
-          dispatch(updateDocuments(newDocuments));
+          setUpdatedFolder(newFolders);
         }
         else if (draggableIndex > targetIndex) {
           if (targetIndex % 2 === 0) {
@@ -304,16 +301,7 @@ export const Content = memo(function MemoizedContent() {
             ...afterDraggable
           ];
 
-          const newDocuments = JSON.parse(JSON.stringify(documents));
-
-          const changeFolderPosition = (targetFolder) => {
-            targetFolder.folders = newFolders;
-          };
-
-          findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
-          setUpdatedDocuments(newDocuments);
-          setDraggableIndex(Number(targetIndex));
-          dispatch(updateDocuments(newDocuments));
+          setUpdatedFolder(newFolders);
         }
       }
     }
