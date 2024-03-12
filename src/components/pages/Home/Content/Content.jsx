@@ -13,7 +13,7 @@ import { Tasks } from './Tasks/Tasks';
 
 import css from './Content.module.css';
 
-// import { findFolder } from 'utils/findFolder';
+import { findFolder } from 'utils/findFolder';
 
 export const Content = memo(function MemoizedContent() {
   let timerDrag;
@@ -261,15 +261,13 @@ export const Content = memo(function MemoizedContent() {
             ...afterTarget
           ];
 
-          console.log(newFolders);
+          const newDocuments = JSON.parse(JSON.stringify(documents));
 
-          // const newDocuments = JSON.parse(JSON.stringify(documents));
+          const changeFolderPosition = (targetFolder) => {
+            targetFolder.folders = newFolders;
+          };
 
-          // const changeFolderPosition = (targetFolder) => {
-          //   targetFolder.folders = newFolders;
-          // };
-
-          // findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+          findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
           // dispatch(updateDocuments(newDocuments));
           // setNewDocuments(newDocuments);
           // setDraggableIndex(Number(targetIndex));
@@ -303,15 +301,13 @@ export const Content = memo(function MemoizedContent() {
             ...afterDraggable
           ];
 
-          console.log(newFolders);
+          const newDocuments = JSON.parse(JSON.stringify(documents));
 
-          // const newDocuments = JSON.parse(JSON.stringify(documents));
+          const changeFolderPosition = (targetFolder) => {
+            targetFolder.folders = newFolders;
+          };
 
-          // const changeFolderPosition = (targetFolder) => {
-          //   targetFolder.folders = newFolders;
-          // };
-
-          // findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+          findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
           // dispatch(updateDocuments(newDocuments));
           // setNewDocuments(newDocuments);
           // setDraggableIndex(Number(targetIndex));
