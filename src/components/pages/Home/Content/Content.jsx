@@ -271,9 +271,9 @@ export const Content = memo(function MemoizedContent() {
           };
 
           findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
-          dispatch(updateDocuments(newDocuments));
           setUpdatedDocuments(newDocuments);
           setDraggableIndex(Number(targetIndex));
+          dispatch(updateDocuments(newDocuments));
         }
         else if (draggableIndex > targetIndex) {
           if (targetIndex % 2 === 0) {
@@ -311,9 +311,9 @@ export const Content = memo(function MemoizedContent() {
           };
 
           findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
-          dispatch(updateDocuments(newDocuments));
           setUpdatedDocuments(newDocuments);
           setDraggableIndex(Number(targetIndex));
+          dispatch(updateDocuments(newDocuments));
         }
       }
     }
