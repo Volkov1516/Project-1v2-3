@@ -245,21 +245,23 @@ export const Content = memo(function MemoizedContent() {
           }
 
           // STEP -: Swap index
-          // const foldersCopy = folder.folders;
-          // const draggableFolder = foldersCopy[draggableIndex];
-          // const targetFolder = foldersCopy[targetIndex];
+          const foldersCopy = folder.folders;
+          const draggableFolder = foldersCopy[draggableIndex];
+          const targetFolder = foldersCopy[targetIndex];
 
-          // const beforeDraggable = foldersCopy.slice(0, draggableIndex);
-          // const elementsBetween = foldersCopy.slice(Number(draggableIndex) + 1, targetIndex);
-          // const afterTarget = foldersCopy.slice(Number(targetIndex) + 1);
+          const beforeDraggable = foldersCopy.slice(0, draggableIndex);
+          const elementsBetween = foldersCopy.slice(Number(draggableIndex) + 1, targetIndex);
+          const afterTarget = foldersCopy.slice(Number(targetIndex) + 1);
 
-          // const newFolders = [
-          //   ...beforeDraggable,
-          //   ...elementsBetween,
-          //   targetFolder,
-          //   draggableFolder,
-          //   ...afterTarget
-          // ];
+          const newFolders = [
+            ...beforeDraggable,
+            ...elementsBetween,
+            targetFolder,
+            draggableFolder,
+            ...afterTarget
+          ];
+
+          console.log(newFolders);
 
           // const newDocuments = JSON.parse(JSON.stringify(documents));
 
@@ -285,21 +287,23 @@ export const Content = memo(function MemoizedContent() {
           }
 
           // STEP -: Swap index
-          // const foldersCopy = folder.folders;
-          // const draggableFolder = foldersCopy[draggableIndex];
-          // const targetFolder = foldersCopy[targetIndex];
+          const foldersCopy = folder.folders;
+          const draggableFolder = foldersCopy[draggableIndex];
+          const targetFolder = foldersCopy[targetIndex];
 
-          // const afterDraggable = foldersCopy.slice(Number(draggableIndex) + 1);
-          // const elementsBetween = foldersCopy.slice(Number(targetIndex) + 1, draggableIndex);
-          // const beforeTarget = foldersCopy.slice(0, targetIndex);
+          const afterDraggable = foldersCopy.slice(Number(draggableIndex) + 1);
+          const elementsBetween = foldersCopy.slice(Number(targetIndex) + 1, draggableIndex);
+          const beforeTarget = foldersCopy.slice(0, targetIndex);
 
-          // const newFolders = [
-          //   ...beforeTarget,
-          //   draggableFolder,
-          //   targetFolder,
-          //   ...elementsBetween,
-          //   ...afterDraggable
-          // ];
+          const newFolders = [
+            ...beforeTarget,
+            draggableFolder,
+            targetFolder,
+            ...elementsBetween,
+            ...afterDraggable
+          ];
+
+          console.log(newFolders);
 
           // const newDocuments = JSON.parse(JSON.stringify(documents));
 
