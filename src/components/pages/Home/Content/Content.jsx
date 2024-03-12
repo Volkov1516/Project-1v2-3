@@ -34,8 +34,8 @@ export const Content = memo(function MemoizedContent() {
   // const [targetType, setTargetType] = useState(null);
   const [prevTargetId, setPrevTargetId] = useState(null);
   const [placeholderId, setPlaceholderId] = useState(null);
-  const [newDocuments, setNewDocuments] = useState(null);
-  console.log(newDocuments);
+  const [updatedDocuments, setUpdatedDocuments] = useState(null);
+  console.log(updatedDocuments);
 
   useEffect(() => {
     function findFolder(object, id) {
@@ -183,7 +183,7 @@ export const Content = memo(function MemoizedContent() {
 
       // STEP -: Update folders in user.documents (Firebase)
       // try {
-      //   await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+      //   await setDoc(doc(db, 'users', userId), { documents: updatedDocuments }, { merge: true });
 
       //   dispatch(setSnackbar('Changes were applied'));
       // } catch (error) {
@@ -272,8 +272,8 @@ export const Content = memo(function MemoizedContent() {
 
           findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
           dispatch(updateDocuments(newDocuments));
-          setNewDocuments(newDocuments);
-          // setDraggableIndex(Number(targetIndex));
+          setUpdatedDocuments(newDocuments);
+          setDraggableIndex(Number(targetIndex));
         }
         else if (draggableIndex > targetIndex) {
           if (targetIndex % 2 === 0) {
@@ -312,8 +312,8 @@ export const Content = memo(function MemoizedContent() {
 
           findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
           dispatch(updateDocuments(newDocuments));
-          setNewDocuments(newDocuments);
-          // setDraggableIndex(Number(targetIndex));
+          setUpdatedDocuments(newDocuments);
+          setDraggableIndex(Number(targetIndex));
         }
       }
     }
