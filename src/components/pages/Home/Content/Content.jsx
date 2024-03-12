@@ -1,9 +1,10 @@
 import { memo, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setSnackbar } from 'redux/features/app/appSlice';
-import { updateDocuments } from 'redux/features/user/userSlice';
-import { db } from 'firebase.js';
-import { doc, setDoc } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { setSnackbar } from 'redux/features/app/appSlice';
+// import { updateDocuments } from 'redux/features/user/userSlice';
+// import { db } from 'firebase.js';
+// import { doc, setDoc } from 'firebase/firestore';
 
 import { FolderNavigation } from './FolderNavigation/FolderNavigation';
 import { Folders } from './Folders/Folders';
@@ -12,14 +13,15 @@ import { Tasks } from './Tasks/Tasks';
 
 import css from './Content.module.css';
 
-import { findFolder } from 'utils/findFolder';
+// import { findFolder } from 'utils/findFolder';
 
 export const Content = memo(function MemoizedContent() {
   let timerDrag;
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const { userId, documents, path } = useSelector(state => state.user);
+  // const { userId, documents, path } = useSelector(state => state.user);
+  const { documents, path } = useSelector(state => state.user);
 
   const [folder, setFolder] = useState(null);
   const [isDraggable, setIsDraggable] = useState(false);
@@ -33,7 +35,7 @@ export const Content = memo(function MemoizedContent() {
   // const [targetType, setTargetType] = useState(null);
   const [prevTargetId, setPrevTargetId] = useState(null);
   const [placeholderId, setPlaceholderId] = useState(null);
-  const [newDocuments, setNewDocuments] = useState(null);
+  // const [newDocuments, setNewDocuments] = useState(null);
 
   useEffect(() => {
     function findFolder(object, id) {
@@ -177,13 +179,13 @@ export const Content = memo(function MemoizedContent() {
       setPlaceholderId(null);
 
       // STEP -: Update folders in user.documents (Firebase)
-      try {
-        await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+      // try {
+      //   await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
 
-        dispatch(setSnackbar('Changes were applied'));
-      } catch (error) {
-        dispatch(setSnackbar('Something went wrong'));
-      }
+      //   dispatch(setSnackbar('Changes were applied'));
+      // } catch (error) {
+      //   dispatch(setSnackbar('Something went wrong'));
+      // }
     }
   };
 
@@ -243,32 +245,32 @@ export const Content = memo(function MemoizedContent() {
           }
 
           // STEP -: Swap index
-          const foldersCopy = folder.folders;
-          const draggableFolder = foldersCopy[draggableIndex];
-          const targetFolder = foldersCopy[targetIndex];
+          // const foldersCopy = folder.folders;
+          // const draggableFolder = foldersCopy[draggableIndex];
+          // const targetFolder = foldersCopy[targetIndex];
 
-          const beforeDraggable = foldersCopy.slice(0, draggableIndex);
-          const elementsBetween = foldersCopy.slice(Number(draggableIndex) + 1, targetIndex);
-          const afterTarget = foldersCopy.slice(Number(targetIndex) + 1);
+          // const beforeDraggable = foldersCopy.slice(0, draggableIndex);
+          // const elementsBetween = foldersCopy.slice(Number(draggableIndex) + 1, targetIndex);
+          // const afterTarget = foldersCopy.slice(Number(targetIndex) + 1);
 
-          const newFolders = [
-            ...beforeDraggable,
-            ...elementsBetween,
-            targetFolder,
-            draggableFolder,
-            ...afterTarget
-          ];
+          // const newFolders = [
+          //   ...beforeDraggable,
+          //   ...elementsBetween,
+          //   targetFolder,
+          //   draggableFolder,
+          //   ...afterTarget
+          // ];
 
-          const newDocuments = JSON.parse(JSON.stringify(documents));
+          // const newDocuments = JSON.parse(JSON.stringify(documents));
 
-          const changeFolderPosition = (targetFolder) => {
-            targetFolder.folders = newFolders;
-          };
+          // const changeFolderPosition = (targetFolder) => {
+          //   targetFolder.folders = newFolders;
+          // };
 
-          findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
-          dispatch(updateDocuments(newDocuments));
-          setNewDocuments(newDocuments);
-          setDraggableIndex(Number(targetIndex));
+          // findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+          // dispatch(updateDocuments(newDocuments));
+          // setNewDocuments(newDocuments);
+          // setDraggableIndex(Number(targetIndex));
         }
         else if (draggableIndex > targetIndex) {
           if (targetIndex % 2 === 0) {
@@ -283,32 +285,32 @@ export const Content = memo(function MemoizedContent() {
           }
 
           // STEP -: Swap index
-          const foldersCopy = folder.folders;
-          const draggableFolder = foldersCopy[draggableIndex];
-          const targetFolder = foldersCopy[targetIndex];
+          // const foldersCopy = folder.folders;
+          // const draggableFolder = foldersCopy[draggableIndex];
+          // const targetFolder = foldersCopy[targetIndex];
 
-          const afterDraggable = foldersCopy.slice(Number(draggableIndex) + 1);
-          const elementsBetween = foldersCopy.slice(Number(targetIndex) + 1, draggableIndex);
-          const beforeTarget = foldersCopy.slice(0, targetIndex);
+          // const afterDraggable = foldersCopy.slice(Number(draggableIndex) + 1);
+          // const elementsBetween = foldersCopy.slice(Number(targetIndex) + 1, draggableIndex);
+          // const beforeTarget = foldersCopy.slice(0, targetIndex);
 
-          const newFolders = [
-            ...beforeTarget,
-            draggableFolder,
-            targetFolder,
-            ...elementsBetween,
-            ...afterDraggable
-          ];
+          // const newFolders = [
+          //   ...beforeTarget,
+          //   draggableFolder,
+          //   targetFolder,
+          //   ...elementsBetween,
+          //   ...afterDraggable
+          // ];
 
-          const newDocuments = JSON.parse(JSON.stringify(documents));
+          // const newDocuments = JSON.parse(JSON.stringify(documents));
 
-          const changeFolderPosition = (targetFolder) => {
-            targetFolder.folders = newFolders;
-          };
+          // const changeFolderPosition = (targetFolder) => {
+          //   targetFolder.folders = newFolders;
+          // };
 
-          findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
-          dispatch(updateDocuments(newDocuments));
-          setNewDocuments(newDocuments);
-          setDraggableIndex(Number(targetIndex));
+          // findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+          // dispatch(updateDocuments(newDocuments));
+          // setNewDocuments(newDocuments);
+          // setDraggableIndex(Number(targetIndex));
         }
       }
     }
