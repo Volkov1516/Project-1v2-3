@@ -1,8 +1,7 @@
 import { memo, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import { setSnackbar } from 'redux/features/app/appSlice';
-// import { updateDocuments } from 'redux/features/user/userSlice';
+import { updateDocuments } from 'redux/features/user/userSlice';
 // import { db } from 'firebase.js';
 // import { doc, setDoc } from 'firebase/firestore';
 
@@ -18,7 +17,7 @@ import { findFolder } from 'utils/findFolder';
 export const Content = memo(function MemoizedContent() {
   let timerDrag;
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // const { userId, documents, path } = useSelector(state => state.user);
   const { documents, path } = useSelector(state => state.user);
@@ -70,6 +69,9 @@ export const Content = memo(function MemoizedContent() {
 
     // STEP 2: Run timer for Drag And Drop (clear timer on touch move)
     timerDrag = setTimeout(() => {
+      const managerElement = document.getElementById('manager');
+      managerElement.scrollTop += 1;
+
       // STEP 3: Set isDraggable and draggable data
       setIsDraggable(true);
       setDraggableIndex(index);
@@ -269,7 +271,7 @@ export const Content = memo(function MemoizedContent() {
           };
 
           findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
-          // dispatch(updateDocuments(newDocuments));
+          dispatch(updateDocuments(newDocuments));
           setNewDocuments(newDocuments);
           // setDraggableIndex(Number(targetIndex));
         }
@@ -309,7 +311,7 @@ export const Content = memo(function MemoizedContent() {
           };
 
           findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
-          // dispatch(updateDocuments(newDocuments));
+          dispatch(updateDocuments(newDocuments));
           setNewDocuments(newDocuments);
           // setDraggableIndex(Number(targetIndex));
         }
