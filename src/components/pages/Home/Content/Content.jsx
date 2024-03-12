@@ -35,7 +35,8 @@ export const Content = memo(function MemoizedContent() {
   // const [targetType, setTargetType] = useState(null);
   const [prevTargetId, setPrevTargetId] = useState(null);
   const [placeholderId, setPlaceholderId] = useState(null);
-  // const [newDocuments, setNewDocuments] = useState(null);
+  const [newDocuments, setNewDocuments] = useState(null);
+  console.log(newDocuments);
 
   useEffect(() => {
     function findFolder(object, id) {
@@ -269,7 +270,7 @@ export const Content = memo(function MemoizedContent() {
 
           findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
           // dispatch(updateDocuments(newDocuments));
-          // setNewDocuments(newDocuments);
+          setNewDocuments(newDocuments);
           // setDraggableIndex(Number(targetIndex));
         }
         else if (draggableIndex > targetIndex) {
@@ -309,7 +310,7 @@ export const Content = memo(function MemoizedContent() {
 
           findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
           // dispatch(updateDocuments(newDocuments));
-          // setNewDocuments(newDocuments);
+          setNewDocuments(newDocuments);
           // setDraggableIndex(Number(targetIndex));
         }
       }
