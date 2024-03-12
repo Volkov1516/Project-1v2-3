@@ -15,7 +15,7 @@ import css from './Notes.module.css';
 
 import { findFolder } from 'utils/findFolder';
 
-export const Notes = ({ notes }) => {
+export const Notes = ({ notes, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   let timeout;
 
   const dispatch = useDispatch();
@@ -204,37 +204,41 @@ export const Notes = ({ notes }) => {
     setOpenEditNoteModal(false);
   };
 
-  const handleTouchStart = (e, id, title) => {
-    const element = e.currentTarget;
-    element.classList.add(css.touch);
+  // const handleTouchStart = (e, id, title) => {
+  //   const element = e.currentTarget;
+  //   element.classList.add(css.touch);
 
-    timeout = setTimeout(() => handleOpenEditNoteModal(e, id, title), 1000);
-  };
+  //   timeout = setTimeout(() => handleOpenEditNoteModal(e, id, title), 1000);
+  // };
 
-  const handleTouchEnd = (e) => {
-    const element = e.currentTarget;
-    element.classList.remove(css.touch);
+  // const handleTouchEnd = (e) => {
+  //   const element = e.currentTarget;
+  //   element.classList.remove(css.touch);
 
-    clearTimeout(timeout);
-  };
+  //   clearTimeout(timeout);
+  // };
 
-  const handleTouchMove = () => {
-    clearTimeout(timeout);
-  };
+  // const handleTouchMove = () => {
+  //   clearTimeout(timeout);
+  // };
 
   return (
     <div className={css.container}>
-      {notes?.map((i) => (
+      {notes?.map((i, index) => (
         <div
           key={i.id}
           className={css.note}
+          id={i.id}
+          data-index={index}
+          data-id={i.id}
+          data-type="note"
           onClick={() => handleOpenNote(i.id)}
-          onTouchStart={(e) => handleTouchStart(e, i.id, i.title)}
-          onTouchEnd={handleTouchEnd}
-          onTouchMove={handleTouchMove}
+          onTouchStart={e => handleTouchStart(e, index, i.id, i.title, "note")}
+          onTouchEnd={e => handleTouchEnd(e, index, i.id, i.title, "note")}
+          onTouchMove={e => handleTouchMove(e, index, i.id, i.title, "note")}
         >
           {i.title}
-          <span className={css.settings}>
+          <span className={css.settings} data-index={index} data-id={i.id} data-type="note">
             <IconButton onClick={(e) => handleOpenEditNoteModal(e, i.id, i.title)} small path="M480-218.461q-16.5 0-28.25-11.75T440-258.461q0-16.501 11.75-28.251t28.25-11.75q16.5 0 28.25 11.75T520-258.461q0 16.5-11.75 28.25T480-218.461ZM480-440q-16.5 0-28.25-11.75T440-480q0-16.5 11.75-28.25T480-520q16.5 0 28.25 11.75T520-480q0 16.5-11.75 28.25T480-440Zm0-221.538q-16.5 0-28.25-11.75T440-701.539q0-16.5 11.75-28.25t28.25-11.75q16.5 0 28.25 11.75t11.75 28.25q0 16.501-11.75 28.251T480-661.538Z" />
           </span>
         </div>
