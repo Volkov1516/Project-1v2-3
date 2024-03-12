@@ -16,7 +16,7 @@ import css from './Notes.module.css';
 import { findFolder } from 'utils/findFolder';
 
 export const Notes = ({ notes, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
-  let timeout;
+  // let timeout;
 
   const dispatch = useDispatch();
 
