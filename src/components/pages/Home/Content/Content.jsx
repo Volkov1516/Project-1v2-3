@@ -209,8 +209,6 @@ export const Content = memo(function MemoizedContent() {
       currentElement.style.left = `${e.touches[0].clientX - draggableOffsetX}px`;
       currentElement.style.top = `${e.touches[0].clientY - draggableOffsetY}px`;
 
-      console.log(offsetSide)
-
       // STEP 2: Get target element
       document.elementsFromPoint(e.touches[0].clientX, e.touches[0].clientY).forEach(i => {
         if (i.getAttribute('data-draggable') && draggableId !== i.getAttribute('data-id')) {
@@ -228,8 +226,6 @@ export const Content = memo(function MemoizedContent() {
           const targetElement = document.getElementById(targetElementId);
 
           if (targetIndex !== targetElementIndex) {
-
-
             if (draggableIndex < targetElementIndex) {
               if (targetElementIndex % 2 === 0) {
                 if (targetElementIndex === folder?.folders?.length - 1) {
@@ -250,8 +246,6 @@ export const Content = memo(function MemoizedContent() {
                 setOffsetSide('right');
               }
             }
-
-
             else if (draggableIndex > targetElementIndex) {
               if (targetElementIndex % 2 === 0) {
                 targetElement.style.marginLeft = '50%';
@@ -266,8 +260,6 @@ export const Content = memo(function MemoizedContent() {
               }
             }
           }
-
-
           else {
             if (draggableIndex < targetElementIndex) {
               if (offsetSide === 'right') {
@@ -285,9 +277,6 @@ export const Content = memo(function MemoizedContent() {
               }
               else if (offsetSide === 'left') {
                 if (targetElementIndex % 2 === 0) {
-                  console.log(draggableIndex)
-                  console.log(targetElementIndex)
-                  console.log(draggableIndex + 1 === targetElementIndex)
                   if (draggableIndex + 1 === targetElementIndex) {
                     const offsetElement = document.getElementById(folder?.folders[targetElementIndex - 2].id);
                     offsetElement.style.marginRight = '50%';
@@ -304,6 +293,48 @@ export const Content = memo(function MemoizedContent() {
                 else if (targetElementIndex % 2 !== 0) {
                   targetElement.style.marginRight = '50%';
                   setPlaceholderId(targetElementId);
+                  setOffsetSide('right');
+                }
+              }
+            }
+            else if (draggableIndex > targetElementIndex) {
+              if (offsetSide === 'right') {
+                if (targetElementIndex % 2 === 0) {
+                  targetElement.style.marginRight = '50%';
+                  setPlaceholderId(targetElementId);
+                  setOffsetSide('left');
+                }
+                else if (targetElementIndex % 2 !== 0) {
+                  if (draggableIndex === folder.folders.length - 1) {
+                    const containerElement = document.getElementById('folders');
+                    containerElement.style.paddingBottom = currentElement.offsetHeight + 'px';
+                  }
+                  else {
+                    if (draggableIndex - 1 === targetElementIndex) {
+                      const offsetElement = document.getElementById(folder?.folders[targetElementIndex + 2].id);
+                      offsetElement.style.marginLeft = '50%';
+                      setPlaceholderId(folder?.folders[targetElementIndex + 2].id);
+                    }
+                    else {
+                      const offsetElement = document.getElementById(folder?.folders[targetElementIndex + 1].id);
+                      offsetElement.style.marginLeft = '50%';
+                      setPlaceholderId(folder?.folders[targetElementIndex + 1].id);
+                    }
+                  }
+
+                  setOffsetSide('left');
+                }
+              }
+              else if (offsetSide === 'left') {
+                if (targetElementIndex % 2 === 0) {
+                  targetElement.style.marginLeft = '50%';
+                  setPlaceholderId(targetElementId);
+                  setOffsetSide('right');
+                }
+                else if (targetElementIndex % 2 !== 0) {
+                  const offsetElement = document.getElementById(folder?.folders[targetElementIndex - 1].id);
+                  offsetElement.style.marginRight = '50%';
+                  setPlaceholderId(folder?.folders[targetElementIndex - 1].id);
                   setOffsetSide('right');
                 }
               }
