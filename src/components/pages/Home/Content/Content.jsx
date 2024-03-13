@@ -1,9 +1,9 @@
 import { memo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
-import { updateDocuments } from 'redux/features/user/userSlice';
-import { db } from 'firebase.js';
-import { doc, setDoc } from 'firebase/firestore';
+// import { updateDocuments } from 'redux/features/user/userSlice';
+// import { db } from 'firebase.js';
+// import { doc, setDoc } from 'firebase/firestore';
 
 import { FolderNavigation } from './FolderNavigation/FolderNavigation';
 import { Folders } from './Folders/Folders';
@@ -12,14 +12,15 @@ import { Tasks } from './Tasks/Tasks';
 
 import css from './Content.module.css';
 
-import { findFolder } from 'utils/findFolder';
+// import { findFolder } from 'utils/findFolder';
 
 export const Content = memo(function MemoizedContent() {
   let timerDrag;
 
   const dispatch = useDispatch();
 
-  const { userId, documents, path } = useSelector(state => state.user);
+  // const { userId, documents, path } = useSelector(state => state.user);
+  const { documents, path } = useSelector(state => state.user);
 
   const [folder, setFolder] = useState(null);
   const [isDraggable, setIsDraggable] = useState(false);
@@ -33,7 +34,10 @@ export const Content = memo(function MemoizedContent() {
   // const [targetType, setTargetType] = useState(null);
   const [prevTargetId, setPrevTargetId] = useState(null);
   const [placeholderId, setPlaceholderId] = useState(null);
-  const [updatedFolder, setUpdatedFolder] = useState(null);
+  // const [updatedFolder, setUpdatedFolder] = useState(null);
+  console.log(prevTargetId);
+
+  const [offsetSide, setOffsetSide] = useState(null);
 
   useEffect(() => {
     function findFolder(object, id) {
@@ -58,7 +62,6 @@ export const Content = memo(function MemoizedContent() {
     let res = findFolder(documents, path[path.length - 1]);
     setFolder(res);
   }, [documents, path]);
-
 
   const handleTouchStart = (e, index, id, name, type) => {
     // STEP 1: Get current element + set touch effect
@@ -178,16 +181,17 @@ export const Content = memo(function MemoizedContent() {
       // setTargetType(null);
       setPrevTargetId(null);
       setPlaceholderId(null);
+      setOffsetSide(null);
 
       // STEP -: Update folders in user.documents (Firebase)
       try {
-        const newDocuments = JSON.parse(JSON.stringify(documents));
-        const changeFolderPosition = (targetFolder) => targetFolder.folders = updatedFolder;
-        findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+        // const newDocuments = JSON.parse(JSON.stringify(documents));
+        // const changeFolderPosition = (targetFolder) => targetFolder.folders = updatedFolder;
+        // findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
 
-        dispatch(updateDocuments(newDocuments));
+        // dispatch(updateDocuments(newDocuments));
 
-        await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+        // await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
 
         dispatch(setSnackbar('Changes were applied'));
       } catch (error) {
@@ -196,7 +200,7 @@ export const Content = memo(function MemoizedContent() {
     }
   };
 
-  const handleTouchMove = (e) => {
+  const handleTouchMoveNew = e => {
     const currentElement = e.currentTarget;
     clearTimeout(timerDrag);
 
@@ -205,107 +209,225 @@ export const Content = memo(function MemoizedContent() {
       currentElement.style.left = `${e.touches[0].clientX - draggableOffsetX}px`;
       currentElement.style.top = `${e.touches[0].clientY - draggableOffsetY}px`;
 
-      // STEP 2: Get and set target element
-      const elementsBelow = document.elementsFromPoint(e.touches[0].clientX, e.touches[0].clientY);
-      elementsBelow.forEach(i => {
-        if (i.getAttribute('data-index')) {
-          if (draggableIndex !== Number(i.getAttribute('data-index'))) {
-            setTargetIndex(Number(i.getAttribute('data-index')));
-            setTargetId(i.getAttribute('data-id'));
-            // setTargetType(i.getAttribute('data-type'));
+      console.log(offsetSide)
+
+      // STEP 2: Get target element
+      document.elementsFromPoint(e.touches[0].clientX, e.touches[0].clientY).forEach(i => {
+        if (i.getAttribute('data-draggable') && draggableId !== i.getAttribute('data-id')) {
+          const targetElementIndex = Number(i.getAttribute('data-index'));
+          const targetElementId = i.getAttribute('data-id');
+
+          setTargetIndex(targetElementIndex);
+          setTargetId(targetElementId);
+
+          if (placeholderId) {
+            const placeholderElement = document.getElementById(placeholderId);
+            placeholderElement.style.margin = '0px';
+          }
+
+          const targetElement = document.getElementById(targetElementId);
+
+          if (targetIndex !== targetElementIndex) {
+
+
+            if (draggableIndex < targetElementIndex) {
+              if (targetElementIndex % 2 === 0) {
+                if (targetElementIndex === folder?.folders?.length - 1) {
+                  const containerElement = document.getElementById('folders');
+                  containerElement.style.paddingBottom = currentElement.offsetHeight + 'px';
+                }
+                else {
+                  const offsetElement = document.getElementById(folder?.folders[targetElementIndex + 1].id);
+                  offsetElement.style.marginLeft = '50%';
+                  setPlaceholderId(folder?.folders[targetElementIndex + 1].id);
+                }
+
+                setOffsetSide('left');
+              }
+              else if (targetElementIndex % 2 !== 0) {
+                targetElement.style.marginRight = '50%';
+                setPlaceholderId(targetElementId);
+                setOffsetSide('right');
+              }
+            }
+
+
+            else if (draggableIndex > targetElementIndex) {
+              if (targetElementIndex % 2 === 0) {
+                targetElement.style.marginLeft = '50%';
+                setPlaceholderId(targetElementId);
+                setOffsetSide('left');
+              }
+              else if (targetElementIndex % 2 !== 0) {
+                const offsetElement = document.getElementById(folder?.folders[targetElementIndex - 1].id);
+                offsetElement.style.marginRight = '50%';
+                setPlaceholderId(folder?.folders[targetElementIndex - 1].id);
+                setOffsetSide('right');
+              }
+            }
+          }
+
+
+          else {
+            if (draggableIndex < targetElementIndex) {
+              if (offsetSide === 'right') {
+                if (targetElementIndex % 2 === 0) {
+                  const offsetElement = document.getElementById(folder?.folders[targetElementIndex - 2].id);
+                  offsetElement.style.marginRight = '0px';
+                  setPlaceholderId(folder?.folders[targetElementIndex - 2].id);
+                  setOffsetSide('left');
+                }
+                else if (targetElementIndex % 2 !== 0) {
+                  targetElement.style.marginLeft = '50%';
+                  setPlaceholderId(targetElementId);
+                  setOffsetSide('left');
+                }
+              }
+              else if (offsetSide === 'left') {
+                if (targetElementIndex % 2 === 0) {
+                  console.log(draggableIndex)
+                  console.log(targetElementIndex)
+                  console.log(draggableIndex + 1 === targetElementIndex)
+                  if (draggableIndex + 1 === targetElementIndex) {
+                    const offsetElement = document.getElementById(folder?.folders[targetElementIndex - 2].id);
+                    offsetElement.style.marginRight = '50%';
+                    setPlaceholderId(folder?.folders[targetElementIndex - 2].id);
+                  }
+                  else {
+                    const offsetElement = document.getElementById(folder?.folders[targetElementIndex - 1].id);
+                    offsetElement.style.marginRight = '50%';
+                    setPlaceholderId(folder?.folders[targetElementIndex - 1].id);
+                  }
+
+                  setOffsetSide('right');
+                }
+                else if (targetElementIndex % 2 !== 0) {
+                  targetElement.style.marginRight = '50%';
+                  setPlaceholderId(targetElementId);
+                  setOffsetSide('right');
+                }
+              }
+            }
           }
         }
       });
-
-      if (targetId && prevTargetId && targetId !== prevTargetId) {
-        const targetElement = document.getElementById(prevTargetId);
-        targetElement.style.backgroundColor = 'transparent';
-      }
-
-      if (targetId && targetId !== draggableId) {
-        const targetElement = document.getElementById(targetId);
-        targetElement.style.backgroundColor = '#EEEEEE';
-
-        setPrevTargetId(targetId);
-
-        // Remove prev placeholder
-        if (placeholderId) {
-          const placeholderElement = document.getElementById(placeholderId);
-          placeholderElement.style.margin = '0px';
-        }
-
-        if (draggableIndex < targetIndex) {
-          // STEP -: Display placeholder
-          if (targetIndex % 2 === 0) {
-            if (Number(targetIndex) === folder?.folders?.length - 1) {
-              const containerElement = document.getElementById('folders');
-              containerElement.style.paddingBottom = currentElement.offsetHeight + 'px';
-            }
-            else {
-              const nextElement = document.getElementById(folder?.folders[Number(targetIndex) + 1].id);
-              nextElement.style.marginLeft = '50%';
-              setPlaceholderId(folder?.folders[Number(targetIndex) + 1].id);
-            }
-          }
-          else if (targetIndex % 2 !== 0) {
-            const nextElement = document.getElementById(targetId);
-            nextElement.style.marginRight = '50%';
-            setPlaceholderId(targetId);
-          }
-
-          // STEP -: Swap index
-          const foldersCopy = folder.folders;
-          const draggableFolder = foldersCopy[draggableIndex];
-          const targetFolder = foldersCopy[targetIndex];
-
-          const beforeDraggable = foldersCopy.slice(0, draggableIndex);
-          const elementsBetween = foldersCopy.slice(Number(draggableIndex) + 1, targetIndex);
-          const afterTarget = foldersCopy.slice(Number(targetIndex) + 1);
-
-          const newFolders = [
-            ...beforeDraggable,
-            ...elementsBetween,
-            targetFolder,
-            draggableFolder,
-            ...afterTarget
-          ];
-
-          setUpdatedFolder(newFolders);
-        }
-        else if (draggableIndex > targetIndex) {
-          if (targetIndex % 2 === 0) {
-            const prevElement = document.getElementById(targetId);
-            prevElement.style.marginLeft = '50%';
-            setPlaceholderId(targetId);
-          }
-          else if (targetIndex % 2 !== 0) {
-            const nextElement = document.getElementById(folder?.folders[Number(targetIndex) - 1].id);
-            nextElement.style.marginRight = '50%';
-            setPlaceholderId(folder?.folders[Number(targetIndex) - 1].id);
-          }
-
-          // STEP -: Swap index
-          const foldersCopy = folder.folders;
-          const draggableFolder = foldersCopy[draggableIndex];
-          const targetFolder = foldersCopy[targetIndex];
-
-          const afterDraggable = foldersCopy.slice(Number(draggableIndex) + 1);
-          const elementsBetween = foldersCopy.slice(Number(targetIndex) + 1, draggableIndex);
-          const beforeTarget = foldersCopy.slice(0, targetIndex);
-
-          const newFolders = [
-            ...beforeTarget,
-            draggableFolder,
-            targetFolder,
-            ...elementsBetween,
-            ...afterDraggable
-          ];
-
-          setUpdatedFolder(newFolders);
-        }
-      }
     }
   };
+
+  // const handleTouchMove = (e) => {
+  //   const currentElement = e.currentTarget;
+  //   clearTimeout(timerDrag);
+
+  //   if (isDraggable) {
+  //     // STEP 1: Moving draggable
+  //     currentElement.style.left = `${e.touches[0].clientX - draggableOffsetX}px`;
+  //     currentElement.style.top = `${e.touches[0].clientY - draggableOffsetY}px`;
+
+  //     // STEP 2: Get and set target element
+  //     const elementsBelow = document.elementsFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+  //     elementsBelow.forEach(i => {
+  //       if (i.getAttribute('data-index')) {
+  //         if (draggableIndex !== Number(i.getAttribute('data-index'))) {
+  //           setTargetIndex(Number(i.getAttribute('data-index')));
+  //           setTargetId(i.getAttribute('data-id'));
+  //           // setTargetType(i.getAttribute('data-type'));
+
+  //           if (i.getAttribute('data-id') === placeholderId) {
+  //             console.log('test')
+  //           }
+  //         }
+  //       }
+  //     });
+
+  //     if (targetId && prevTargetId && targetId !== prevTargetId) {
+  //       const targetElement = document.getElementById(prevTargetId);
+  //       targetElement.style.backgroundColor = 'transparent';
+  //     }
+
+  //     if (targetId && targetId !== draggableId) {
+  //       const targetElement = document.getElementById(targetId);
+  //       targetElement.style.backgroundColor = '#EEEEEE';
+
+  //       setPrevTargetId(targetId);
+
+  //       // Remove prev placeholder
+  //       if (placeholderId) {
+  //         const placeholderElement = document.getElementById(placeholderId);
+  //         placeholderElement.style.margin = '0px';
+  //       }
+
+  //       if (draggableIndex < targetIndex) {
+  //         // STEP -: Display placeholder
+  //         if (targetIndex % 2 === 0) {
+  //           if (Number(targetIndex) === folder?.folders?.length - 1) {
+  //             const containerElement = document.getElementById('folders');
+  //             containerElement.style.paddingBottom = currentElement.offsetHeight + 'px';
+  //           }
+  //           else {
+  //             const nextElement = document.getElementById(folder?.folders[Number(targetIndex) + 1].id);
+  //             nextElement.style.marginLeft = '50%';
+  //             setPlaceholderId(folder?.folders[Number(targetIndex) + 1].id);
+  //           }
+  //         }
+  //         else if (targetIndex % 2 !== 0) {
+  //           const nextElement = document.getElementById(targetId);
+  //           nextElement.style.marginRight = '50%';
+  //           setPlaceholderId(targetId);
+  //         }
+
+  //         // STEP -: Swap index
+  //         const foldersCopy = folder.folders;
+  //         const draggableFolder = foldersCopy[draggableIndex];
+  //         const targetFolder = foldersCopy[targetIndex];
+
+  //         const beforeDraggable = foldersCopy.slice(0, draggableIndex);
+  //         const elementsBetween = foldersCopy.slice(Number(draggableIndex) + 1, targetIndex);
+  //         const afterTarget = foldersCopy.slice(Number(targetIndex) + 1);
+
+  //         const newFolders = [
+  //           ...beforeDraggable,
+  //           ...elementsBetween,
+  //           targetFolder,
+  //           draggableFolder,
+  //           ...afterTarget
+  //         ];
+
+  //         setUpdatedFolder(newFolders);
+  //       }
+  //       else if (draggableIndex > targetIndex) {
+  //         if (targetIndex % 2 === 0) {
+  //           const prevElement = document.getElementById(targetId);
+  //           prevElement.style.marginLeft = '50%';
+  //           setPlaceholderId(targetId);
+  //         }
+  //         else if (targetIndex % 2 !== 0) {
+  //           const nextElement = document.getElementById(folder?.folders[Number(targetIndex) - 1].id);
+  //           nextElement.style.marginRight = '50%';
+  //           setPlaceholderId(folder?.folders[Number(targetIndex) - 1].id);
+  //         }
+
+  //         // STEP -: Swap index
+  //         const foldersCopy = folder.folders;
+  //         const draggableFolder = foldersCopy[draggableIndex];
+  //         const targetFolder = foldersCopy[targetIndex];
+
+  //         const afterDraggable = foldersCopy.slice(Number(draggableIndex) + 1);
+  //         const elementsBetween = foldersCopy.slice(Number(targetIndex) + 1, draggableIndex);
+  //         const beforeTarget = foldersCopy.slice(0, targetIndex);
+
+  //         const newFolders = [
+  //           ...beforeTarget,
+  //           draggableFolder,
+  //           targetFolder,
+  //           ...elementsBetween,
+  //           ...afterDraggable
+  //         ];
+
+  //         setUpdatedFolder(newFolders);
+  //       }
+  //     }
+  //   }
+  // };
 
   return (
     <div id="manager" className={css.container}>
@@ -314,13 +436,13 @@ export const Content = memo(function MemoizedContent() {
         folders={folder?.folders}
         handleTouchStart={handleTouchStart}
         handleTouchEnd={handleTouchEnd}
-        handleTouchMove={handleTouchMove}
+        handleTouchMove={handleTouchMoveNew}
       />
       <Notes
         notes={folder?.notes}
         handleTouchStart={handleTouchStart}
         handleTouchEnd={handleTouchEnd}
-        handleTouchMove={handleTouchMove}
+        handleTouchMove={handleTouchMoveNew}
       />
       <Tasks tasks={folder?.tasks} />
     </div>
