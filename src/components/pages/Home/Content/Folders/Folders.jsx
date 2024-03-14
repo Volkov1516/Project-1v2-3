@@ -110,7 +110,7 @@ export const Folders = ({ folders, handleTouchStart, handleTouchEnd, handleTouch
           data-draggable={true}
           data-type="folder"
           onClick={() => handleOpenFolder(i.id)}
-          onTouchStart={e => handleTouchStart(e, index, i.id, i.name, "folder")}
+          onTouchStart={e => handleTouchStart(e, index, i.id, i.name, "folder", handleOpenEditFodlerModal)}
           onTouchEnd={e => handleTouchEnd(e)}
           onTouchMove={e => handleTouchMove(e, index, i.id, i.name, "folder")}
         >

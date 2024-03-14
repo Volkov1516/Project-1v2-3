@@ -1,3 +1,10 @@
+// GOAL: Finish DnD for Folders on mobile
+// [x] Open settings on long press
+// [] Nest folder inside another one
+// [] Move from folder
+// [] Triger scroll on move
+// [] Save data
+
 import { memo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
@@ -37,6 +44,8 @@ export const Content = memo(function MemoizedContent() {
   const [placeholderPosition, setPlaceholderPosition] = useState(null);
   // const [updatedFolder, setUpdatedFolder] = useState(null);
 
+  const [timerIdSettings, setTimerIdSettings] = useState(null);
+
   useEffect(() => {
     function findFolder(object, id) {
       if (object?.id === id) {
@@ -61,7 +70,7 @@ export const Content = memo(function MemoizedContent() {
     setFolder(res);
   }, [documents, path]);
 
-  const handleTouchStart = (e, index, id, name, type) => {
+  const handleTouchStart = (e, index, id, name, type, handleOpenSettongsModal) => {
     // STEP 1: Get current element + set touch effect
     const currentElement = e.currentTarget;
     currentElement.classList.add(css.touch);
@@ -128,15 +137,62 @@ export const Content = memo(function MemoizedContent() {
           }
         }
       }
+
+      const timerSettings = setTimeout(() => {
+        setIsDraggable(false);
+
+        // STEP 1: Reset styles
+        currentElement.style.position = 'initial';
+        currentElement.style.left = 'initial';
+        currentElement.style.top = 'initial';
+        currentElement.style.padding = '0px';
+        currentElement.style.backgroundColor = 'initial';
+        currentElement.style.opacity = 1;
+
+        // STEP 1: Reset placeholder
+        if (elementsLength === 1) {
+          containerElement.style.paddingBottom = '0px';
+        }
+        else {
+          if (index === 0) {
+            document.getElementById(folder.folders[index + 1].id).style.marginLeft = '0px';
+          }
+          else if (index === folder.folders.length - 1) {
+            if (index % 2 === 0) {
+              containerElement.style.paddingBottom = currentElement.offsetHeight + 'px';
+            }
+            else if (index % 2 !== 0) {
+              document.getElementById(folder.folders[folder.folders.length - 2].id).style.marginRight = '0px';
+            }
+          }
+          else {
+            if (index % 2 === 0) {
+              document.getElementById(folder.folders[index + 1].id).style.marginLeft = '0px';
+            }
+            else if (index % 2 !== 0) {
+              document.getElementById(folder.folders[index - 1].id).style.marginRight = '0px';
+            }
+          }
+        }
+
+        setPlaceholderId(null);
+
+        console.log('settings');
+        handleOpenSettongsModal(e, id, name);
+      }, 500);
+      setTimerIdSettings(timerSettings);
     }, 200);
   };
 
   const handleTouchEnd = async e => {
     clearTimeout(timerDrag);
+    clearTimeout(timerIdSettings);
 
     // STEP 1: Get current element + remove touch effect
     const currentElement = e.currentTarget;
     currentElement.classList.remove(css.touch);
+
+    // if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
 
     if (isDraggable) {
       // STEP -: Reset styles (draggable + target + placeholder + container)
@@ -299,6 +355,7 @@ export const Content = memo(function MemoizedContent() {
 
   const handleTouchMove = e => {
     clearTimeout(timerDrag);
+    clearTimeout(timerIdSettings);
 
     if (isDraggable) {
       const currentElement = e.currentTarget;
@@ -322,7 +379,7 @@ export const Content = memo(function MemoizedContent() {
 
           if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
 
-          if(draggableType === 'folder') {
+          if (draggableType === 'folder') {
             handleTouchMoveFolders(targetElement, targetIndex, targetElementIndex, targetElementId);
           }
         }
