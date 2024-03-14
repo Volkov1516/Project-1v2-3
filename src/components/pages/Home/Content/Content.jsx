@@ -159,7 +159,7 @@ export const Content = memo(function MemoizedContent() {
           }
           else if (index === folder.folders.length - 1) {
             if (index % 2 === 0) {
-              containerElement.style.paddingBottom = currentElement.offsetHeight + 'px';
+              containerElement.style.paddingBottom = '0px';
             }
             else if (index % 2 !== 0) {
               document.getElementById(folder.folders[folder.folders.length - 2].id).style.marginRight = '0px';
