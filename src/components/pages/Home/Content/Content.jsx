@@ -427,15 +427,19 @@ export const Content = memo(function MemoizedContent() {
 
   return (
     <div id="manager" className={css.container}>
-      <FolderNavigation name={folder?.name} />
-      <Folders
-        folders={folder?.folders}
-        handleTouchStart={handleTouchStart}
-        handleTouchEnd={handleTouchEnd}
-        handleTouchMove={handleTouchMove}
-      />
-      <Notes notes={folder?.notes} />
-      <Tasks tasks={folder?.tasks} />
+      <div className={css.header}>
+        <FolderNavigation name={folder?.name} />
+      </div>
+      <div className={`${css.content} ${folder?.name && css.contentOffset}`}>
+        <Folders
+          folders={folder?.folders}
+          handleTouchStart={handleTouchStart}
+          handleTouchEnd={handleTouchEnd}
+          handleTouchMove={handleTouchMove}
+        />
+        <Notes notes={folder?.notes} />
+        <Tasks tasks={folder?.tasks} />
+      </div>
     </div>
   );
 });

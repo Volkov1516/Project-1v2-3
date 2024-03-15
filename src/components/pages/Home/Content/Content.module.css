@@ -8,11 +8,24 @@
   padding-bottom: 50vh;
 }
 
+.header {
+  position: fixed;
+  width: 239px;
+}
+
+.contentOffset {
+  margin-top: 57px;
+}
+
 @media (max-width: 639px) {
   .container {
     width: 100%;
     border-right: none;
     background-color: var(--backgroundPrimary);
+  }
+
+  .header {
+    width: 100%;
   }
 
   .touch {
