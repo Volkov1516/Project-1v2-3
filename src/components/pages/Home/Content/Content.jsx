@@ -376,6 +376,10 @@ export const Content = memo(function MemoizedContent() {
         const targetElementId = i.getAttribute('data-id');
         // const targetElementType = i.getAttribute('data-type');
 
+        if (targetElementId === 'navigation') {
+          console.log('Ready to move from the fodler on drop')
+        }
+
         if (targetElementDraggable && draggableId !== targetElementId) {
           const targetElement = document.getElementById(targetElementId);
 
