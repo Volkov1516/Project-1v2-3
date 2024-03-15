@@ -45,7 +45,10 @@ export const Content = memo(function MemoizedContent() {
   // const [updatedFolder, setUpdatedFolder] = useState(null);
 
   const [timerIdSettings, setTimerIdSettings] = useState(null);
-  const [isNestingFolder, setIsNestingFolder] = useState(null);
+  const [timerIdNest, setTimerIdNest] = useState(null);
+
+  const [isAllowNest, setIsAllowNest] = useState(true);
+  const [nestFolderId, setNestFolderId] = useState(null);
 
   useEffect(() => {
     function findFolder(object, id) {
@@ -187,6 +190,8 @@ export const Content = memo(function MemoizedContent() {
   const handleTouchEnd = async e => {
     clearTimeout(timerDrag);
     clearTimeout(timerIdSettings);
+    clearTimeout(timerIdNest);
+    setIsAllowNest(true);
 
     // STEP 1: Get current element + remove touch effect
     const currentElement = e.currentTarget;
@@ -377,18 +382,39 @@ export const Content = memo(function MemoizedContent() {
           setTargetIndex(targetElementIndex);
           setTargetId(targetElementId);
 
-          if (!isNestingFolder) {
-            setIsNestingFolder(true);
+          // NEST STEP 1: Define if folder is already nesting to prevent multiple timers
+          if (isAllowNest) {
+            setIsAllowNest(false);
+            setNestFolderId(targetElementId);
 
-            setTimeout(() => {
+            const timerNest = setTimeout(() => {
               if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
 
               if (draggableType === 'folder') {
                 handleTouchMoveFolders(targetElement, targetIndex, targetElementIndex, targetElementId);
               }
 
-              setIsNestingFolder(false);
+              setIsAllowNest(true);
+              setNestFolderId(null);
             }, 500);
+            setTimerIdNest(timerNest);
+          }
+          else if (!isAllowNest && nestFolderId && nestFolderId !== targetElementId) {
+            clearTimeout(timerIdNest);
+            setIsAllowNest(false);
+            setNestFolderId(targetElementId);
+
+            const timerNest = setTimeout(() => {
+              if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
+
+              if (draggableType === 'folder') {
+                handleTouchMoveFolders(targetElement, targetIndex, targetElementIndex, targetElementId);
+              }
+
+              setIsAllowNest(true);
+              setNestFolderId(null);
+            }, 500);
+            setTimerIdNest(timerNest);
           }
         }
       });
