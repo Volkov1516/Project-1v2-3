@@ -45,6 +45,7 @@ export const Content = memo(function MemoizedContent() {
   // const [updatedFolder, setUpdatedFolder] = useState(null);
 
   const [timerIdSettings, setTimerIdSettings] = useState(null);
+  const [isNestingFolder, setIsNestingFolder] = useState(null);
 
   useEffect(() => {
     function findFolder(object, id) {
@@ -177,7 +178,6 @@ export const Content = memo(function MemoizedContent() {
 
         setPlaceholderId(null);
 
-        console.log('settings');
         handleOpenSettongsModal(e, id, name);
       }, 500);
       setTimerIdSettings(timerSettings);
@@ -377,10 +377,18 @@ export const Content = memo(function MemoizedContent() {
           setTargetIndex(targetElementIndex);
           setTargetId(targetElementId);
 
-          if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
+          if (!isNestingFolder) {
+            setIsNestingFolder(true);
 
-          if (draggableType === 'folder') {
-            handleTouchMoveFolders(targetElement, targetIndex, targetElementIndex, targetElementId);
+            setTimeout(() => {
+              if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
+
+              if (draggableType === 'folder') {
+                handleTouchMoveFolders(targetElement, targetIndex, targetElementIndex, targetElementId);
+              }
+
+              setIsNestingFolder(false);
+            }, 500);
           }
         }
       });
