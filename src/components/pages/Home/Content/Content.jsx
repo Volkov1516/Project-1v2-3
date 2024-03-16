@@ -1,8 +1,8 @@
 // GOAL: Finish DnD for Folders on mobile
 // [x] Open settings on long press
-// [] Nest folder inside another one
-// [] Move from folder
-// [] Triger scroll on move
+// [x] Nest folder inside another one
+// [x] Move from folder
+// [x] Triger scroll on move
 // [] Save data
 
 import { memo, useState, useEffect } from 'react';
@@ -46,9 +46,34 @@ export const Content = memo(function MemoizedContent() {
 
   const [timerIdSettings, setTimerIdSettings] = useState(null);
   const [timerIdNest, setTimerIdNest] = useState(null);
+  const [timerIdScroll, setTimerIdScroll] = useState(null);
 
   const [isAllowNest, setIsAllowNest] = useState(true);
   const [nestFolderId, setNestFolderId] = useState(null);
+
+  const [isAllowScroll, setIsAllowScroll] = useState(false);
+
+  useEffect(() => {
+    const managerElement = document.getElementById('manager');
+
+    if (isAllowScroll === 'bottom') {
+      const isScrolling = setInterval(function () {
+        managerElement.scrollTop += 4;
+      }, 10);
+      setTimerIdScroll(isScrolling);
+    }
+    else if (isAllowScroll === 'top') {
+      const isScrolling = setInterval(function () {
+        managerElement.scrollTop -= 4;
+      }, 10);
+      setTimerIdScroll(isScrolling);
+    }
+    else if (!isAllowScroll) {
+      clearInterval(timerIdScroll);
+      setTimerIdScroll(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAllowScroll]);
 
   useEffect(() => {
     function findFolder(object, id) {
@@ -192,6 +217,7 @@ export const Content = memo(function MemoizedContent() {
     clearTimeout(timerIdSettings);
     clearTimeout(timerIdNest);
     setIsAllowNest(true);
+    setIsAllowScroll(false);
 
     // STEP 1: Get current element + remove touch effect
     const currentElement = e.currentTarget;
@@ -422,6 +448,20 @@ export const Content = memo(function MemoizedContent() {
           }
         }
       });
+
+      let viewportHeight = window.innerHeight;
+      let scrollThresholdBottom = 0.8 * viewportHeight;
+      let scrollThresholdTop = 0.2 * viewportHeight;
+
+      if (e.touches[0].clientY > scrollThresholdBottom) {
+        setIsAllowScroll('bottom');
+      }
+      else if (e.touches[0].clientY < scrollThresholdTop) {
+        setIsAllowScroll('top');
+      }
+      else if (e.touches[0].clientY < scrollThresholdBottom || e.touches[0].clientY > scrollThresholdTop) {
+        setIsAllowScroll(false);
+      }
     }
   };
 
