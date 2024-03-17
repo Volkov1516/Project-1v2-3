@@ -263,6 +263,7 @@ export const Content = memo(function MemoizedContent() {
 
           dispatch(updateDocuments(newDocuments));
 
+          await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
           dispatch(setSnackbar('Changes were applied'));
         } catch (error) {
           dispatch(setSnackbar('Something went wrong'));
