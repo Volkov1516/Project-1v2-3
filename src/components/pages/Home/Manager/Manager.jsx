@@ -10,11 +10,11 @@ import { Folders } from './Folders/Folders';
 import { Notes } from './Notes/Notes';
 import { Tasks } from './Tasks/Tasks';
 
-import css from './Content.module.css';
+import css from './Manager.module.css';
 
 import { findFolder } from 'utils/findFolder';
 
-export const Content = memo(function MemoizedContent() {
+export const Manager = memo(function MemoizedComponent() {
   let timerDrag;
 
   const dispatch = useDispatch();

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setTheme } from 'redux/features/app/appSlice';
 
 import { Bar } from './Bar/Bar';
-import { Content } from './Content/Content';
+import { Manager } from './Manager/Manager';
 import { EditorModal } from './EditorModal/EditorModal';
 import { Snackbar } from 'components/atoms/Snackbar/Snackbar';
 
@@ -42,7 +42,7 @@ export const Home = () => {
   return (
     <div className={css.container}>
       <Bar />
-      <Content />
+      <Manager />
       <EditorModal />
       <Snackbar />
     </div>
