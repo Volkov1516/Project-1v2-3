@@ -2,8 +2,8 @@ import { memo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
 import { updateDocuments } from 'redux/features/user/userSlice';
-// import { db } from 'firebase.js';
-// import { doc, setDoc } from 'firebase/firestore';
+import { db } from 'firebase.js';
+import { doc, setDoc } from 'firebase/firestore';
 
 import { FolderNavigation } from './FolderNavigation/FolderNavigation';
 import { Folders } from './Folders/Folders';
@@ -19,7 +19,7 @@ export const Content = memo(function MemoizedContent() {
 
   const dispatch = useDispatch();
 
-  const { documents, path } = useSelector(state => state.user);
+  const { userId, documents, path } = useSelector(state => state.user);
 
   const [folder, setFolder] = useState(null);
   const [isDraggable, setIsDraggable] = useState(false);
@@ -293,14 +293,49 @@ export const Content = memo(function MemoizedContent() {
               const afterTarget = foldersCopy.slice(Number(targetIndex) + 1);
 
               // Define side of the placeholder
+              let newFolders;
 
-              const newFolders = [
-                ...beforeDraggable,
-                ...elementsBetween,
-                targetFolder,
-                draggableFolder,
-                ...afterTarget
-              ];
+              if (targetIndex % 2 === 0) {
+                if (placeholderPosition === 'left') {
+                  newFolders = [
+                    ...beforeDraggable,
+                    ...elementsBetween,
+                    targetFolder,
+                    draggableFolder,
+                    ...afterTarget
+                  ];
+                }
+                else if (placeholderPosition === 'right') {
+                  newFolders = [
+                    ...beforeDraggable,
+                    ...elementsBetween,
+                    draggableFolder,
+                    targetFolder,
+                    ...afterTarget
+                  ];
+                }
+              }
+              else if (targetIndex % 2 !== 0) {
+                if (placeholderPosition === 'left') {
+                  newFolders = [
+                    ...beforeDraggable,
+                    ...elementsBetween,
+                    draggableFolder,
+                    targetFolder,
+                    ...afterTarget
+                  ];
+                }
+                else if (placeholderPosition === 'right') {
+                  newFolders = [
+                    ...beforeDraggable,
+                    ...elementsBetween,
+                    targetFolder,
+                    draggableFolder,
+                    ...afterTarget
+                  ];
+                }
+              }
+
 
               const changeFolderPosition = (targetFolder) => targetFolder.folders = newFolders;
               findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
@@ -314,13 +349,48 @@ export const Content = memo(function MemoizedContent() {
               const elementsBetween = foldersCopy.slice(Number(targetIndex) + 1, draggableIndex);
               const beforeTarget = foldersCopy.slice(0, targetIndex);
 
-              const newFolders = [
-                ...beforeTarget,
-                draggableFolder,
-                targetFolder,
-                ...elementsBetween,
-                ...afterDraggable
-              ];
+              let newFolders;
+
+              if (targetIndex % 2 === 0) {
+                if (placeholderPosition === 'left') {
+                  newFolders = [
+                    ...beforeTarget,
+                    draggableFolder,
+                    targetFolder,
+                    ...elementsBetween,
+                    ...afterDraggable
+                  ];
+                }
+                else if (placeholderPosition === 'right') {
+                  newFolders = [
+                    ...beforeTarget,
+                    targetFolder,
+                    draggableFolder,
+                    ...elementsBetween,
+                    ...afterDraggable
+                  ];
+                }
+              }
+              else if (targetIndex % 2 !== 0) {
+                if (placeholderPosition === 'left') {
+                  newFolders = [
+                    ...beforeTarget,
+                    targetFolder,
+                    draggableFolder,
+                    ...elementsBetween,
+                    ...afterDraggable
+                  ];
+                }
+                else if (placeholderPosition === 'right') {
+                  newFolders = [
+                    ...beforeTarget,
+                    draggableFolder,
+                    targetFolder,
+                    ...elementsBetween,
+                    ...afterDraggable
+                  ];
+                }
+              }
 
               const changeFolderPosition = (targetFolder) => targetFolder.folders = newFolders;
               findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
@@ -329,7 +399,7 @@ export const Content = memo(function MemoizedContent() {
             dispatch(updateDocuments(newDocuments));
           }
 
-          // await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+          await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
 
           dispatch(setSnackbar('Changes were applied'));
         } catch (error) {
