@@ -34,7 +34,6 @@ export const Content = memo(function MemoizedContent() {
   // const [prevTargetId, setPrevTargetId] = useState(null);
   const [placeholderId, setPlaceholderId] = useState(null);
   const [placeholderPosition, setPlaceholderPosition] = useState(null);
-  // const [updatedFolder, setUpdatedFolder] = useState(null);
 
   const [timerIdSettings, setTimerIdSettings] = useState(null);
   const [timerIdNest, setTimerIdNest] = useState(null);
@@ -280,6 +279,52 @@ export const Content = memo(function MemoizedContent() {
 
             const changeFolderPosition = (targetFolder) => targetFolder.folders = targetFolderFoldersCopy;
             findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+
+            dispatch(updateDocuments(newDocuments));
+          }
+          else {
+            if (draggableIndex < targetIndex) {
+              const foldersCopy = folder.folders;
+              const draggableFolder = foldersCopy[draggableIndex];
+              const targetFolder = foldersCopy[targetIndex];
+
+              const beforeDraggable = foldersCopy.slice(0, draggableIndex);
+              const elementsBetween = foldersCopy.slice(Number(draggableIndex) + 1, targetIndex);
+              const afterTarget = foldersCopy.slice(Number(targetIndex) + 1);
+
+              // Define side of the placeholder
+
+              const newFolders = [
+                ...beforeDraggable,
+                ...elementsBetween,
+                targetFolder,
+                draggableFolder,
+                ...afterTarget
+              ];
+
+              const changeFolderPosition = (targetFolder) => targetFolder.folders = newFolders;
+              findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+            }
+            else {
+              const foldersCopy = folder.folders;
+              const draggableFolder = foldersCopy[draggableIndex];
+              const targetFolder = foldersCopy[targetIndex];
+
+              const afterDraggable = foldersCopy.slice(Number(draggableIndex) + 1);
+              const elementsBetween = foldersCopy.slice(Number(targetIndex) + 1, draggableIndex);
+              const beforeTarget = foldersCopy.slice(0, targetIndex);
+
+              const newFolders = [
+                ...beforeTarget,
+                draggableFolder,
+                targetFolder,
+                ...elementsBetween,
+                ...afterDraggable
+              ];
+
+              const changeFolderPosition = (targetFolder) => targetFolder.folders = newFolders;
+              findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+            }
 
             dispatch(updateDocuments(newDocuments));
           }
