@@ -1,14 +1,7 @@
-// GOAL: Finish DnD for Folders on mobile
-// [x] Open settings on long press
-// [x] Nest folder inside another one
-// [x] Move from folder
-// [x] Triger scroll on move
-// [] Save data
-
 import { memo, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
-// import { updateDocuments } from 'redux/features/user/userSlice';
+import { updateDocuments } from 'redux/features/user/userSlice';
 // import { db } from 'firebase.js';
 // import { doc, setDoc } from 'firebase/firestore';
 
@@ -19,14 +12,13 @@ import { Tasks } from './Tasks/Tasks';
 
 import css from './Content.module.css';
 
-// import { findFolder } from 'utils/findFolder';
+import { findFolder } from 'utils/findFolder';
 
 export const Content = memo(function MemoizedContent() {
   let timerDrag;
 
   const dispatch = useDispatch();
 
-  // const { userId, documents, path } = useSelector(state => state.user);
   const { documents, path } = useSelector(state => state.user);
 
   const [folder, setFolder] = useState(null);
@@ -223,8 +215,6 @@ export const Content = memo(function MemoizedContent() {
     const currentElement = e.currentTarget;
     currentElement.classList.remove(css.touch);
 
-    // if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
-
     if (isDraggable) {
       // STEP -: Reset styles (draggable + target + placeholder + container)
       currentElement.style.position = 'initial';
@@ -234,7 +224,7 @@ export const Content = memo(function MemoizedContent() {
       currentElement.style.backgroundColor = 'initial';
       currentElement.style.opacity = 1;
 
-      if (targetId) document.getElementById(targetId).style.backgroundColor = 'transparent';
+      if (targetId && targetId !== 'navigation') document.getElementById(targetId).style.backgroundColor = 'transparent';
 
       if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
 
@@ -254,14 +244,45 @@ export const Content = memo(function MemoizedContent() {
       setPlaceholderId(null);
       setPlaceholderPosition(null);
 
-      if (targetIndex) {
-        // STEP -: Update folders in user.documents (Firebase)
+      if (targetId === 'navigation') {
         try {
-          // const newDocuments = JSON.parse(JSON.stringify(documents));
-          // const changeFolderPosition = (targetFolder) => targetFolder.folders = updatedFolder;
-          // findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+          const newDocuments = JSON.parse(JSON.stringify(documents));
 
-          // dispatch(updateDocuments(newDocuments));
+          const targetFolderFoldersCopy = JSON.parse(JSON.stringify(folder.folders));
+          const draggableFolderCopy = targetFolderFoldersCopy[draggableIndex];
+          targetFolderFoldersCopy.splice(draggableIndex, 1);
+
+          const changeFolderPosition = (targetFolder) => {
+            targetFolder.folders = targetFolderFoldersCopy;
+          };
+          findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+
+          const moveFromFolder = (targetFolder) => {
+            targetFolder.folders.push(draggableFolderCopy);
+          };
+          findFolder(newDocuments, path[path.length - 2], moveFromFolder);
+
+          dispatch(updateDocuments(newDocuments));
+
+          dispatch(setSnackbar('Changes were applied'));
+        } catch (error) {
+          dispatch(setSnackbar('Something went wrong'));
+        }
+      }
+      else if (targetIndex !== null) {
+        try {
+          const newDocuments = JSON.parse(JSON.stringify(documents));
+
+          if (!isAllowNest) {
+            const targetFolderFoldersCopy = JSON.parse(JSON.stringify(folder.folders));
+            targetFolderFoldersCopy[targetIndex].folders.push(targetFolderFoldersCopy[draggableIndex]);
+            targetFolderFoldersCopy.splice(draggableIndex, 1);
+
+            const changeFolderPosition = (targetFolder) => targetFolder.folders = targetFolderFoldersCopy;
+            findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+
+            dispatch(updateDocuments(newDocuments));
+          }
 
           // await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
 
@@ -402,15 +423,15 @@ export const Content = memo(function MemoizedContent() {
         const targetElementId = i.getAttribute('data-id');
         // const targetElementType = i.getAttribute('data-type');
 
-        if (targetElementId === 'navigation') {
-          console.log('Ready to move from the fodler on drop')
-        }
-
         if (targetElementDraggable && draggableId !== targetElementId) {
           const targetElement = document.getElementById(targetElementId);
 
           setTargetIndex(targetElementIndex);
           setTargetId(targetElementId);
+
+          if (targetElementId === 'navigation') {
+            return;
+          }
 
           // NEST STEP 1: Define if folder is already nesting to prevent multiple timers
           if (isAllowNest) {
