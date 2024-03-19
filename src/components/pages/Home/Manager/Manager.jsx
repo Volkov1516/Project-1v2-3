@@ -491,7 +491,7 @@ export const Manager = memo(function MemoizedComponent() {
 
 
 
-  const handleTouchMoveFolders = (targetElement, targetIndex, targetElementIndex, targetElementId) => {
+  const touchMoveFolder = (targetElement, targetIndex, targetElementIndex, targetElementId) => {
     // STEP 3: Define the first or all other moves
     if (targetIndex !== targetElementIndex) {
       // STEP 4: Define if draggable position is higher or lower than target
@@ -570,7 +570,8 @@ export const Manager = memo(function MemoizedComponent() {
           }
           else if (targetElementIndex % 2 !== 0) {
             if (draggableIndex === folder.folders.length - 1) {
-              document.getElementById('folders').style.paddingBottom = targetElement.offsetHeight + 'px';
+              document.getElementById(folder?.folders[targetElementIndex + 1].id).style.marginLeft = '50%';
+              setPlaceholderId(folder?.folders[targetElementIndex + 1].id);
             }
             else {
               if (draggableIndex - 1 === targetElementIndex) {
@@ -613,7 +614,22 @@ export const Manager = memo(function MemoizedComponent() {
       currentElement.style.left = `${e.touches[0].clientX - draggableOffsetX}px`;
       currentElement.style.top = `${e.touches[0].clientY - draggableOffsetY}px`;
 
-      // STEP 2: Get target element
+      // STEP 2: Autoscroll
+      let viewportHeight = window.innerHeight;
+      let scrollThresholdBottom = 0.8 * viewportHeight;
+      let scrollThresholdTop = 0.2 * viewportHeight;
+
+      if (e.touches[0].clientY > scrollThresholdBottom) {
+        setIsAllowScroll('bottom');
+      }
+      else if (e.touches[0].clientY < scrollThresholdTop) {
+        setIsAllowScroll('top');
+      }
+      else if (e.touches[0].clientY < scrollThresholdBottom || e.touches[0].clientY > scrollThresholdTop) {
+        setIsAllowScroll(false);
+      }
+
+      // STEP 3: Get target element
       document.elementsFromPoint(e.touches[0].clientX, e.touches[0].clientY).forEach(i => {
         const targetElementDraggable = i.getAttribute('data-draggable');
         const targetElementIndex = Number(i.getAttribute('data-index'));
@@ -632,56 +648,37 @@ export const Manager = memo(function MemoizedComponent() {
           setTargetId(targetElementId);
           setTargetType(targetElementType);
 
-          // NEST STEP 1: Define if folder is already nesting to prevent multiple timers
-          if (isAllowNest) {
-            setIsAllowNest(false);
-            setNestFolderId(targetElementId);
+          if (draggableType === 'folder') {
+            if (isAllowNest) {
+              setIsAllowNest(false);
+              setNestFolderId(targetElementId);
 
-            const timerNest = setTimeout(() => {
-              if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
+              const timerNest = setTimeout(() => {
+                if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
+                if (draggableType === 'folder') touchMoveFolder(targetElement, targetIndex, targetElementIndex, targetElementId);
 
-              if (draggableType === 'folder') {
-                handleTouchMoveFolders(targetElement, targetIndex, targetElementIndex, targetElementId);
-              }
+                setIsAllowNest(true);
+                setNestFolderId(null);
+              }, 500);
+              setTimerIdNest(timerNest);
+            }
+            else if (!isAllowNest && nestFolderId && nestFolderId !== targetElementId) {
+              clearTimeout(timerIdNest);
+              setIsAllowNest(false);
+              setNestFolderId(targetElementId);
 
-              setIsAllowNest(true);
-              setNestFolderId(null);
-            }, 500);
-            setTimerIdNest(timerNest);
-          }
-          else if (!isAllowNest && nestFolderId && nestFolderId !== targetElementId) {
-            clearTimeout(timerIdNest);
-            setIsAllowNest(false);
-            setNestFolderId(targetElementId);
+              const timerNest = setTimeout(() => {
+                if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
+                if (draggableType === 'folder') touchMoveFolder(targetElement, targetIndex, targetElementIndex, targetElementId);
 
-            const timerNest = setTimeout(() => {
-              if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
-
-              if (draggableType === 'folder') {
-                handleTouchMoveFolders(targetElement, targetIndex, targetElementIndex, targetElementId);
-              }
-
-              setIsAllowNest(true);
-              setNestFolderId(null);
-            }, 500);
-            setTimerIdNest(timerNest);
+                setIsAllowNest(true);
+                setNestFolderId(null);
+              }, 500);
+              setTimerIdNest(timerNest);
+            }
           }
         }
       });
-
-      let viewportHeight = window.innerHeight;
-      let scrollThresholdBottom = 0.8 * viewportHeight;
-      let scrollThresholdTop = 0.2 * viewportHeight;
-
-      if (e.touches[0].clientY > scrollThresholdBottom) {
-        setIsAllowScroll('bottom');
-      }
-      else if (e.touches[0].clientY < scrollThresholdTop) {
-        setIsAllowScroll('top');
-      }
-      else if (e.touches[0].clientY < scrollThresholdBottom || e.touches[0].clientY > scrollThresholdTop) {
-        setIsAllowScroll(false);
-      }
     }
   };
 
