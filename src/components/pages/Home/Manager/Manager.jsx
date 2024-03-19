@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from 'react';
+import { memo, useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
 import { updateDocuments } from 'redux/features/user/userSlice';
@@ -15,56 +15,35 @@ import css from './Manager.module.css';
 import { findFolder } from 'utils/findFolder';
 
 export const Manager = memo(function MemoizedComponent() {
-  let timerDrag;
-
   const dispatch = useDispatch();
 
   const { userId, documents, path } = useSelector(state => state.user);
 
-  const [folder, setFolder] = useState(null);
-  const [isDraggable, setIsDraggable] = useState(false);
-  const [draggableIndex, setDraggableIndex] = useState(null);
-  const [draggableId, setDraggableId] = useState(null);
-  const [draggableType, setDraggableType] = useState(null);
-  const [draggableOffsetX, setDraggableOffsetX] = useState(null);
-  const [draggableOffsetY, setDraggableOffsetY] = useState(null);
-  const [targetIndex, setTargetIndex] = useState(null);
-  const [targetId, setTargetId] = useState(null);
-  // const [targetType, setTargetType] = useState(null);
-  // const [prevTargetId, setPrevTargetId] = useState(null);
-  const [placeholderId, setPlaceholderId] = useState(null);
-  const [placeholderPosition, setPlaceholderPosition] = useState(null);
+  const managerRef = useRef(null);
 
+  const [timerIdDrag, setTimerIdDrag] = useState(null);
   const [timerIdSettings, setTimerIdSettings] = useState(null);
   const [timerIdNest, setTimerIdNest] = useState(null);
   const [timerIdScroll, setTimerIdScroll] = useState(null);
+
+  const [folder, setFolder] = useState(null);
+  const [isDraggable, setIsDraggable] = useState(false);
+  const [draggableOffsetX, setDraggableOffsetX] = useState(null);
+  const [draggableOffsetY, setDraggableOffsetY] = useState(null);
+  const [draggableIndex, setDraggableIndex] = useState(null);
+  const [draggableId, setDraggableId] = useState(null);
+  const [draggableType, setDraggableType] = useState(null);
+
+  const [targetIndex, setTargetIndex] = useState(null);
+  const [targetId, setTargetId] = useState(null);
+  const [targetType, setTargetType] = useState(null);
+  const [placeholderId, setPlaceholderId] = useState(null);
+  const [placeholderPosition, setPlaceholderPosition] = useState(null);
 
   const [isAllowNest, setIsAllowNest] = useState(true);
   const [nestFolderId, setNestFolderId] = useState(null);
 
   const [isAllowScroll, setIsAllowScroll] = useState(false);
-
-  useEffect(() => {
-    const managerElement = document.getElementById('manager');
-
-    if (isAllowScroll === 'bottom') {
-      const isScrolling = setInterval(function () {
-        managerElement.scrollTop += 4;
-      }, 10);
-      setTimerIdScroll(isScrolling);
-    }
-    else if (isAllowScroll === 'top') {
-      const isScrolling = setInterval(function () {
-        managerElement.scrollTop -= 4;
-      }, 10);
-      setTimerIdScroll(isScrolling);
-    }
-    else if (!isAllowScroll) {
-      clearInterval(timerIdScroll);
-      setTimerIdScroll(null);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAllowScroll]);
 
   useEffect(() => {
     function findFolder(object, id) {
@@ -90,132 +69,115 @@ export const Manager = memo(function MemoizedComponent() {
     setFolder(res);
   }, [documents, path]);
 
-  const handleTouchStart = (e, index, id, name, type, handleOpenSettongsModal) => {
-    // STEP 1: Get current element + set touch effect
-    const currentElement = e.currentTarget;
-    currentElement.classList.add(css.touch);
+  useEffect(() => {
+    const managerElement = document.getElementById('manager');
 
-    // STEP 2: Run timer for Drag And Drop (clear timer on touch move)
-    timerDrag = setTimeout(() => {
-      const managerElement = document.getElementById('manager');
-      const containerElement = document.getElementById('folders');
-      managerElement.scrollTop += 1;
+    if (isAllowScroll === 'bottom') {
+      const isScrolling = setInterval(function () {
+        managerElement.scrollTop += 4;
+      }, 10);
+      setTimerIdScroll(isScrolling);
+    }
+    else if (isAllowScroll === 'top') {
+      const isScrolling = setInterval(function () {
+        managerElement.scrollTop -= 4;
+      }, 10);
+      setTimerIdScroll(isScrolling);
+    }
+    else if (!isAllowScroll) {
+      clearInterval(timerIdScroll);
+      setTimerIdScroll(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAllowScroll]);
 
-      // STEP 3: Set isDraggable and draggable data
-      setIsDraggable(true);
-      setDraggableIndex(index);
-      setDraggableId(id);
-      setDraggableType(type);
 
-      // STEP 4: Set element offsets to sycn with pointer move
-      const offsetX = e.touches[0].clientX - currentElement.getBoundingClientRect().left;
-      const offsetY = e.touches[0].clientY - currentElement.getBoundingClientRect().top;
-      setDraggableOffsetX(offsetX);
-      setDraggableOffsetY(offsetY);
 
-      // STEP 5: Set styles
-      currentElement.style.position = 'absolute';
-      currentElement.style.left = `${e.touches[0].clientX - offsetX}px`;
-      currentElement.style.top = `${e.touches[0].clientY - offsetY}px`;
-      currentElement.style.padding = '16px';
-      currentElement.style.backgroundColor = 'transparent';
-      currentElement.style.opacity = 0.5;
 
-      // STEP 6: Set placeholder
-      const elementsLength = folder.folders.length;
 
-      if (elementsLength === 1) {
-        // If only one element
-        containerElement.style.paddingBottom = currentElement.offsetHeight + 'px';
+  const touchStartFolder = (e, index, type, currentElement, offsetX, offsetY, folders) => {
+    // STEP 1: Set styles
+    currentElement.style.position = 'absolute';
+    currentElement.style.left = `${e.touches[0].clientX - offsetX}px`;
+    currentElement.style.top = `${e.touches[0].clientY - offsetY}px`;
+    currentElement.style.padding = '16px';
+    currentElement.style.backgroundColor = 'transparent';
+    currentElement.style.opacity = 0.5;
+
+    // STEP 2: Set placeholder
+    if (folders.length === 1) {
+      document.getElementById(type).style.paddingBottom = currentElement.offsetHeight + 'px';
+    }
+    else {
+      if (index === 0) {
+        const nextElementId = folders[index + 1].id;
+        document.getElementById(nextElementId).style.marginLeft = '50%';
+        setPlaceholderId(nextElementId);
+      }
+      else if (index === folders.length - 1) {
+        if (index % 2 === 0) {
+          document.getElementById(type).style.paddingBottom = currentElement.offsetHeight + 'px';
+        }
+        else if (index % 2 !== 0) {
+          const prevElementId = folders[folders.length - 2].id;
+          document.getElementById(prevElementId).style.marginRight = '50%';
+          setPlaceholderId(prevElementId);
+        }
       }
       else {
-        // If more than one element
-        if (index === 0) {
-          // If draggable - first element
-          document.getElementById(folder.folders[index + 1].id).style.marginLeft = '50%';
-          setPlaceholderId(folder.folders[index + 1].id);
+        if (index % 2 === 0) {
+          const nextElement = folders[index + 1].id;
+          document.getElementById(nextElement).style.marginLeft = '50%';
+          setPlaceholderId(nextElement);
         }
-        else if (index === folder.folders.length - 1) {
-          // If draggable - last element
-          if (index % 2 === 0) {
-            containerElement.style.paddingBottom = currentElement.offsetHeight + 'px';
-          }
-          else if (index % 2 !== 0) {
-            document.getElementById(folder.folders[folder.folders.length - 2].id).style.marginRight = '50%';
-            setPlaceholderId(folder.folders[folder.folders.length - 2].id);
-          }
-        }
-        else {
-          // If element is any from inside
-          if (index % 2 === 0) {
-            document.getElementById(folder.folders[index + 1].id).style.marginLeft = '50%';
-            setPlaceholderId(folder.folders[index + 1].id);
-          }
-          else if (index % 2 !== 0) {
-            document.getElementById(folder.folders[index - 1].id).style.marginRight = '50%';
-            setPlaceholderId(folder.folders[index - 1].id);
-          }
+        else if (index % 2 !== 0) {
+          const prevElementId = folders[index - 1].id;
+          document.getElementById(prevElementId).style.marginRight = '50%';
+          setPlaceholderId(prevElementId);
         }
       }
-
-      const timerSettings = setTimeout(() => {
-        setIsDraggable(false);
-
-        // STEP 1: Reset styles
-        currentElement.style.position = 'initial';
-        currentElement.style.left = 'initial';
-        currentElement.style.top = 'initial';
-        currentElement.style.padding = '0px';
-        currentElement.style.backgroundColor = 'initial';
-        currentElement.style.opacity = 1;
-
-        // STEP 1: Reset placeholder
-        if (elementsLength === 1) {
-          containerElement.style.paddingBottom = '0px';
-        }
-        else {
-          if (index === 0) {
-            document.getElementById(folder.folders[index + 1].id).style.marginLeft = '0px';
-          }
-          else if (index === folder.folders.length - 1) {
-            if (index % 2 === 0) {
-              containerElement.style.paddingBottom = '0px';
-            }
-            else if (index % 2 !== 0) {
-              document.getElementById(folder.folders[folder.folders.length - 2].id).style.marginRight = '0px';
-            }
-          }
-          else {
-            if (index % 2 === 0) {
-              document.getElementById(folder.folders[index + 1].id).style.marginLeft = '0px';
-            }
-            else if (index % 2 !== 0) {
-              document.getElementById(folder.folders[index - 1].id).style.marginRight = '0px';
-            }
-          }
-        }
-
-        setPlaceholderId(null);
-
-        handleOpenSettongsModal(e, id, name);
-      }, 500);
-      setTimerIdSettings(timerSettings);
-    }, 200);
+    }
   };
 
-  const handleTouchEnd = async e => {
-    clearTimeout(timerDrag);
-    clearTimeout(timerIdSettings);
-    clearTimeout(timerIdNest);
-    setIsAllowNest(true);
-    setIsAllowScroll(false);
+  const touchStartUniversal = (e, index, type, currentElement, offsetX, offsetY, contentArray) => {
+    const currentElementHeight = currentElement.offsetHeight + 'px';
 
-    // STEP 1: Get current element + remove touch effect
-    const currentElement = e.currentTarget;
-    currentElement.classList.remove(css.touch);
+    // STEP 1: Define styles
+    currentElement.style.position = 'absolute';
+    currentElement.style.left = `${e.touches[0].clientX - offsetX}px`;
+    currentElement.style.top = `${e.touches[0].clientY - offsetY}px`;
+    currentElement.style.width = '100%';
+    currentElement.style.backgroundColor = '#EEEEEE';
+    currentElement.style.opacity = 0.5;
 
-    if (isDraggable) {
-      // STEP -: Reset styles (draggable + target + placeholder + container)
+    // STEP 2: Set placeholder
+    if (contentArray.length === 1) {
+      document.getElementById(type).style.paddingBottom = currentElementHeight;
+    }
+    else {
+      if (index === 0) {
+        const nextElementId = contentArray[index + 1].id;
+        document.getElementById(nextElementId).style.marginTop = currentElementHeight;
+        setPlaceholderId(nextElementId);
+      }
+      else if (index === contentArray.length - 1) {
+        const prevElementId = contentArray[contentArray.length - 2].id;
+        document.getElementById(prevElementId).style.marginBottom = currentElementHeight;
+        setPlaceholderId(prevElementId);
+      }
+      else {
+        const nextElementId = contentArray[index + 1].id;
+        document.getElementById(nextElementId).style.marginTop = currentElementHeight;
+        setPlaceholderId(nextElementId);
+      }
+    }
+  };
+
+  const touchStartOpenModal = (e, index, id, name, type, openSettingsModal, currentElement, contentArray) => {
+    const timerOpenModal = setTimeout(() => {
+      setIsDraggable(false);
+
+      // STEP 1: Reset styles
       currentElement.style.position = 'initial';
       currentElement.style.left = 'initial';
       currentElement.style.top = 'initial';
@@ -223,190 +185,224 @@ export const Manager = memo(function MemoizedComponent() {
       currentElement.style.backgroundColor = 'initial';
       currentElement.style.opacity = 1;
 
-      if (targetId && targetId !== 'navigation') document.getElementById(targetId).style.backgroundColor = 'transparent';
-
-      if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
-
-      document.getElementById('folders').style.paddingBottom = '0px';
-
-      // STEP -: Reset data
-      setIsDraggable(false);
-      setDraggableIndex(null);
-      setDraggableId(null);
-      // setDraggableType(null);
-      setDraggableOffsetX(null);
-      setDraggableOffsetY(null);
-      setTargetIndex(null);
-      setTargetId(null);
-      // setTargetType(null);
-      // setPrevTargetId(null);
-      setPlaceholderId(null);
-      setPlaceholderPosition(null);
-
-      if (targetId === 'navigation') {
-        try {
-          const newDocuments = JSON.parse(JSON.stringify(documents));
-
-          const targetFolderFoldersCopy = JSON.parse(JSON.stringify(folder.folders));
-          const draggableFolderCopy = targetFolderFoldersCopy[draggableIndex];
-          targetFolderFoldersCopy.splice(draggableIndex, 1);
-
-          const changeFolderPosition = (targetFolder) => {
-            targetFolder.folders = targetFolderFoldersCopy;
-          };
-          findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
-
-          const moveFromFolder = (targetFolder) => {
-            targetFolder.folders.push(draggableFolderCopy);
-          };
-          findFolder(newDocuments, path[path.length - 2], moveFromFolder);
-
-          dispatch(updateDocuments(newDocuments));
-
-          await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
-          dispatch(setSnackbar('Changes were applied'));
-        } catch (error) {
-          dispatch(setSnackbar('Something went wrong'));
-        }
+      // STEP 2: Reset placeholder
+      if (contentArray.length === 1) {
+        document.getElementById(type).style.paddingBottom = '0px';
       }
-      else if (targetIndex !== null) {
-        try {
-          const newDocuments = JSON.parse(JSON.stringify(documents));
-
-          if (!isAllowNest) {
-            const targetFolderFoldersCopy = JSON.parse(JSON.stringify(folder.folders));
-            targetFolderFoldersCopy[targetIndex].folders.push(targetFolderFoldersCopy[draggableIndex]);
-            targetFolderFoldersCopy.splice(draggableIndex, 1);
-
-            const changeFolderPosition = (targetFolder) => targetFolder.folders = targetFolderFoldersCopy;
-            findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
-
-            dispatch(updateDocuments(newDocuments));
+      else {
+        if (type === 'folder') {
+          if (index === 0) {
+            document.getElementById(contentArray[index + 1].id).style.marginLeft = '0px';
+          }
+          else if (index === contentArray.length - 1) {
+            if (index % 2 === 0) {
+              document.getElementById(type).style.paddingBottom = '0px';
+            }
+            else if (index % 2 !== 0) {
+              document.getElementById(contentArray[contentArray.length - 2].id).style.marginRight = '0px';
+            }
           }
           else {
-            if (draggableIndex < targetIndex) {
-              const foldersCopy = folder.folders;
-              const draggableFolder = foldersCopy[draggableIndex];
-              const targetFolder = foldersCopy[targetIndex];
-
-              const beforeDraggable = foldersCopy.slice(0, draggableIndex);
-              const elementsBetween = foldersCopy.slice(Number(draggableIndex) + 1, targetIndex);
-              const afterTarget = foldersCopy.slice(Number(targetIndex) + 1);
-
-              // Define side of the placeholder
-              let newFolders;
-
-              if (targetIndex % 2 === 0) {
-                if (placeholderPosition === 'left') {
-                  newFolders = [
-                    ...beforeDraggable,
-                    ...elementsBetween,
-                    targetFolder,
-                    draggableFolder,
-                    ...afterTarget
-                  ];
-                }
-                else if (placeholderPosition === 'right') {
-                  newFolders = [
-                    ...beforeDraggable,
-                    ...elementsBetween,
-                    draggableFolder,
-                    targetFolder,
-                    ...afterTarget
-                  ];
-                }
-              }
-              else if (targetIndex % 2 !== 0) {
-                if (placeholderPosition === 'left') {
-                  newFolders = [
-                    ...beforeDraggable,
-                    ...elementsBetween,
-                    draggableFolder,
-                    targetFolder,
-                    ...afterTarget
-                  ];
-                }
-                else if (placeholderPosition === 'right') {
-                  newFolders = [
-                    ...beforeDraggable,
-                    ...elementsBetween,
-                    targetFolder,
-                    draggableFolder,
-                    ...afterTarget
-                  ];
-                }
-              }
-
-
-              const changeFolderPosition = (targetFolder) => targetFolder.folders = newFolders;
-              findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+            if (index % 2 === 0) {
+              document.getElementById(contentArray[index + 1].id).style.marginLeft = '0px';
             }
-            else {
-              const foldersCopy = folder.folders;
-              const draggableFolder = foldersCopy[draggableIndex];
-              const targetFolder = foldersCopy[targetIndex];
-
-              const afterDraggable = foldersCopy.slice(Number(draggableIndex) + 1);
-              const elementsBetween = foldersCopy.slice(Number(targetIndex) + 1, draggableIndex);
-              const beforeTarget = foldersCopy.slice(0, targetIndex);
-
-              let newFolders;
-
-              if (targetIndex % 2 === 0) {
-                if (placeholderPosition === 'left') {
-                  newFolders = [
-                    ...beforeTarget,
-                    draggableFolder,
-                    targetFolder,
-                    ...elementsBetween,
-                    ...afterDraggable
-                  ];
-                }
-                else if (placeholderPosition === 'right') {
-                  newFolders = [
-                    ...beforeTarget,
-                    targetFolder,
-                    draggableFolder,
-                    ...elementsBetween,
-                    ...afterDraggable
-                  ];
-                }
-              }
-              else if (targetIndex % 2 !== 0) {
-                if (placeholderPosition === 'left') {
-                  newFolders = [
-                    ...beforeTarget,
-                    targetFolder,
-                    draggableFolder,
-                    ...elementsBetween,
-                    ...afterDraggable
-                  ];
-                }
-                else if (placeholderPosition === 'right') {
-                  newFolders = [
-                    ...beforeTarget,
-                    draggableFolder,
-                    targetFolder,
-                    ...elementsBetween,
-                    ...afterDraggable
-                  ];
-                }
-              }
-
-              const changeFolderPosition = (targetFolder) => targetFolder.folders = newFolders;
-              findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+            else if (index % 2 !== 0) {
+              document.getElementById(contentArray[index - 1].id).style.marginRight = '0px';
             }
-
-            dispatch(updateDocuments(newDocuments));
           }
-
-          await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
-
-          dispatch(setSnackbar('Changes were applied'));
-        } catch (error) {
-          dispatch(setSnackbar('Something went wrong'));
+        }
+        else {
+          if (index === contentArray.length - 1) {
+            const prevElementId = contentArray[contentArray.length - 2].id;
+            document.getElementById(prevElementId).style.marginBottom = '0px';
+          }
+          else {
+            const nextElementId = contentArray[index + 1].id;
+            document.getElementById(nextElementId).style.marginTop = '0px';
+          }
         }
       }
+
+      // STEP 3: Open settings modal
+      openSettingsModal(e, id, name);
+    }, 500);
+
+    setTimerIdSettings(timerOpenModal);
+  };
+
+  const moveInFolder = async () => {
+    try {
+      const documentsCopy = JSON.parse(JSON.stringify(documents));
+      const draggableArrayCopy = JSON.parse(JSON.stringify(folder[`${draggableType}s`]));
+      const draggableObject = draggableArrayCopy[draggableIndex];
+      draggableArrayCopy.splice(draggableIndex, 1);
+
+      const removeDraggable = targetFolder => targetFolder[`${draggableType}s`] = draggableArrayCopy;
+      findFolder(documentsCopy, path[path.length - 1], removeDraggable);
+
+      const changeFolderPosition = (targetFolder) => targetFolder.folders[targetIndex][`${draggableType}s`].push(draggableObject);
+      findFolder(documentsCopy, path[path.length - 1], changeFolderPosition);
+
+      dispatch(updateDocuments(documentsCopy));
+
+      // await setDoc(doc(db, 'users', userId), { documents: documentsCopy }, { merge: true });
+
+      dispatch(setSnackbar('Changes were applied'));
+    } catch (error) {
+      dispatch(setSnackbar('Something went wrong'));
+    }
+  };
+
+  const moveFromFolder = async () => {
+    try {
+      const documentsCopy = JSON.parse(JSON.stringify(documents));
+      const draggableArrayCopy = JSON.parse(JSON.stringify(folder[`${draggableType}s`]));
+      const draggableObject = draggableArrayCopy[draggableIndex];
+      draggableArrayCopy.splice(draggableIndex, 1);
+
+      const removeDraggable = targetFolder => targetFolder[`${draggableType}s`] = draggableArrayCopy;
+      findFolder(documentsCopy, path[path.length - 1], removeDraggable);
+
+      const moveDraggableOutside = (targetFolder) => targetFolder[`${draggableType}s`].push(draggableObject);
+      findFolder(documentsCopy, path[path.length - 2], moveDraggableOutside);
+
+      dispatch(updateDocuments(documentsCopy));
+
+      // await setDoc(doc(db, 'users', userId), { documents: documentsCopy }, { merge: true });
+
+      dispatch(setSnackbar('Changes were applied'));
+    } catch (error) {
+      dispatch(setSnackbar('Something went wrong'));
+    }
+  };
+
+
+
+
+
+  const handlePositionFolder = async () => {
+    try {
+      const newDocuments = JSON.parse(JSON.stringify(documents));
+
+      if (draggableIndex < targetIndex) {
+        const foldersCopy = folder.folders;
+        const draggableFolder = foldersCopy[draggableIndex];
+        const targetFolder = foldersCopy[targetIndex];
+
+        const beforeDraggable = foldersCopy.slice(0, draggableIndex);
+        const elementsBetween = foldersCopy.slice(Number(draggableIndex) + 1, targetIndex);
+        const afterTarget = foldersCopy.slice(Number(targetIndex) + 1);
+
+        let newFolders;
+
+        if (targetIndex % 2 === 0) {
+          if (placeholderPosition === 'left') {
+            newFolders = [
+              ...beforeDraggable,
+              ...elementsBetween,
+              targetFolder,
+              draggableFolder,
+              ...afterTarget
+            ];
+          }
+          else if (placeholderPosition === 'right') {
+            newFolders = [
+              ...beforeDraggable,
+              ...elementsBetween,
+              draggableFolder,
+              targetFolder,
+              ...afterTarget
+            ];
+          }
+        }
+        else if (targetIndex % 2 !== 0) {
+          if (placeholderPosition === 'left') {
+            newFolders = [
+              ...beforeDraggable,
+              ...elementsBetween,
+              draggableFolder,
+              targetFolder,
+              ...afterTarget
+            ];
+          }
+          else if (placeholderPosition === 'right') {
+            newFolders = [
+              ...beforeDraggable,
+              ...elementsBetween,
+              targetFolder,
+              draggableFolder,
+              ...afterTarget
+            ];
+          }
+        }
+
+
+        const changeFolderPosition = (targetFolder) => targetFolder.folders = newFolders;
+        findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+      }
+      else {
+        const foldersCopy = folder.folders;
+        const draggableFolder = foldersCopy[draggableIndex];
+        const targetFolder = foldersCopy[targetIndex];
+
+        const afterDraggable = foldersCopy.slice(Number(draggableIndex) + 1);
+        const elementsBetween = foldersCopy.slice(Number(targetIndex) + 1, draggableIndex);
+        const beforeTarget = foldersCopy.slice(0, targetIndex);
+
+        let newFolders;
+
+        if (targetIndex % 2 === 0) {
+          if (placeholderPosition === 'left') {
+            newFolders = [
+              ...beforeTarget,
+              draggableFolder,
+              targetFolder,
+              ...elementsBetween,
+              ...afterDraggable
+            ];
+          }
+          else if (placeholderPosition === 'right') {
+            newFolders = [
+              ...beforeTarget,
+              targetFolder,
+              draggableFolder,
+              ...elementsBetween,
+              ...afterDraggable
+            ];
+          }
+        }
+        else if (targetIndex % 2 !== 0) {
+          if (placeholderPosition === 'left') {
+            newFolders = [
+              ...beforeTarget,
+              targetFolder,
+              draggableFolder,
+              ...elementsBetween,
+              ...afterDraggable
+            ];
+          }
+          else if (placeholderPosition === 'right') {
+            newFolders = [
+              ...beforeTarget,
+              draggableFolder,
+              targetFolder,
+              ...elementsBetween,
+              ...afterDraggable
+            ];
+          }
+        }
+
+        const changeFolderPosition = (targetFolder) => targetFolder.folders = newFolders;
+        findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+      }
+
+      dispatch(updateDocuments(newDocuments));
+
+      await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+
+      dispatch(setSnackbar('Changes were applied'));
+    } catch (error) {
+      dispatch(setSnackbar('Something went wrong'));
     }
   };
 
@@ -521,8 +517,48 @@ export const Manager = memo(function MemoizedComponent() {
     }
   };
 
+
+
+
+
+  const handleTouchStart = (e, index, id, name, type, openSettingsModal) => {
+    // STEP 1: Get current element + set touch effect
+    const currentElement = e.currentTarget;
+    currentElement.classList.add(css.touch);
+
+    // STEP 2: Run timer for Drag And Drop (clear timer on touch move)
+    const timerDrag = setTimeout(() => {
+      // STEP 3: Set isDraggable and draggable data
+      setIsDraggable(true);
+      setDraggableIndex(index);
+      setDraggableId(id);
+      setDraggableType(type);
+
+      // STEP 4: Set element offsets to sycn with pointer move
+      const offsetX = e.touches[0].clientX - currentElement.getBoundingClientRect().left;
+      const offsetY = e.touches[0].clientY - currentElement.getBoundingClientRect().top;
+      setDraggableOffsetX(offsetX);
+      setDraggableOffsetY(offsetY);
+
+      // Prevent draggable lagging on touch if move down
+      managerRef.current.scrollTop += 1;
+
+      // STEP 5: Define draggable type to set placeholder
+      if (type === 'folder') {
+        touchStartFolder(e, index, type, currentElement, offsetX, offsetY, folder[`${type}s`]);
+      }
+      else {
+        touchStartUniversal(e, index, type, currentElement, offsetX, offsetY, folder[`${type}s`]);
+      }
+
+      // STEP 6: Run timer for modal function
+      if (type !== 'task') touchStartOpenModal(e, index, id, name, type, openSettingsModal, currentElement, folder[`${type}s`]);
+    }, 200);
+    setTimerIdDrag(timerDrag);
+  };
+
   const handleTouchMove = e => {
-    clearTimeout(timerDrag);
+    clearTimeout(timerIdDrag);
     clearTimeout(timerIdSettings);
 
     if (isDraggable) {
@@ -537,17 +573,19 @@ export const Manager = memo(function MemoizedComponent() {
         const targetElementDraggable = i.getAttribute('data-draggable');
         const targetElementIndex = Number(i.getAttribute('data-index'));
         const targetElementId = i.getAttribute('data-id');
-        // const targetElementType = i.getAttribute('data-type');
+        const targetElementType = i.getAttribute('data-type');
+
+        if (targetElementType === 'navigation' && draggableId !== targetElementId) {
+          setTargetType(targetElementType);
+          return;
+        };
 
         if (targetElementDraggable && draggableId !== targetElementId) {
           const targetElement = document.getElementById(targetElementId);
 
           setTargetIndex(targetElementIndex);
           setTargetId(targetElementId);
-
-          if (targetElementId === 'navigation') {
-            return;
-          }
+          setTargetType(targetElementType);
 
           // NEST STEP 1: Define if folder is already nesting to prevent multiple timers
           if (isAllowNest) {
@@ -602,8 +640,59 @@ export const Manager = memo(function MemoizedComponent() {
     }
   };
 
+  const handleTouchEnd = async e => {
+    clearTimeout(timerIdDrag);
+    clearTimeout(timerIdSettings);
+    clearTimeout(timerIdNest);
+    setIsAllowNest(true);
+    setIsAllowScroll(false);
+
+    const currentElement = e.currentTarget;
+    currentElement.classList.remove(css.touch);
+
+    if (isDraggable) {
+      currentElement.style.position = 'initial';
+      currentElement.style.left = 'initial';
+      currentElement.style.top = 'initial';
+      currentElement.style.padding = '0px';
+      currentElement.style.backgroundColor = 'initial';
+      currentElement.style.opacity = 1;
+
+      setIsDraggable(false);
+      setDraggableOffsetX(null);
+      setDraggableOffsetY(null);
+      setDraggableIndex(null);
+      setDraggableId(null);
+      setTargetIndex(null);
+      setTargetId(null);
+      setTargetType(null);
+      setPlaceholderId(null);
+      setPlaceholderPosition(null);
+
+      document.getElementById(draggableType).style.paddingBottom = '0px';
+
+      if (targetId && targetId !== 'navigation') document.getElementById(targetId).style.backgroundColor = 'transparent';
+      if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
+
+
+      if (!isAllowNest && targetIndex !== null) {
+        moveInFolder();
+      }
+      else if (targetType === 'navigation') {
+        moveFromFolder();
+      }
+      else if (targetType === 'folder' && targetIndex !== null) {
+        handlePositionFolder();
+      }
+    }
+  };
+
+
+
+
+
   return (
-    <div id="manager" className={css.container}>
+    <div ref={managerRef} id="manager" className={css.container}>
       <div className={css.header}>
         <FolderNavigation name={folder?.name} />
       </div>
@@ -614,8 +703,16 @@ export const Manager = memo(function MemoizedComponent() {
           handleTouchEnd={handleTouchEnd}
           handleTouchMove={handleTouchMove}
         />
-        <Notes notes={folder?.notes} />
-        <Tasks tasks={folder?.tasks} />
+        <Notes notes={folder?.notes}
+          handleTouchStart={handleTouchStart}
+          handleTouchEnd={handleTouchEnd}
+          handleTouchMove={handleTouchMove}
+        />
+        <Tasks tasks={folder?.tasks}
+          handleTouchStart={handleTouchStart}
+          handleTouchEnd={handleTouchEnd}
+          handleTouchMove={handleTouchMove}
+        />
       </div>
     </div>
   );

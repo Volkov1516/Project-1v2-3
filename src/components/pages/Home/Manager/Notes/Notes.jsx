@@ -15,9 +15,7 @@ import css from './Notes.module.css';
 
 import { findFolder } from 'utils/findFolder';
 
-export const Notes = ({ notes }) => {
-  let timeout;
-
+export const Notes = ({ notes, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
 
   const { userId, documents, path } = useSelector(state => state.user);
@@ -204,35 +202,21 @@ export const Notes = ({ notes }) => {
     setOpenEditNoteModal(false);
   };
 
-  const handleTouchStart = (e, id, title) => {
-    const element = e.currentTarget;
-    element.classList.add(css.touch);
-
-    timeout = setTimeout(() => handleOpenEditNoteModal(e, id, title), 1000);
-  };
-
-  const handleTouchEnd = (e) => {
-    const element = e.currentTarget;
-    element.classList.remove(css.touch);
-
-    clearTimeout(timeout);
-  };
-
-  const handleTouchMove = () => {
-    clearTimeout(timeout);
-  };
-
   return (
-    <div className={css.container}>
+    <div id="note" className={css.container}>
       {notes?.map((i, index) => (
         <div
           key={i.id}
           className={css.note}
           id={i.id}
+          data-index={index}
+          data-id={i.id}
+          data-draggable={true}
+          data-type="note"
           onClick={() => handleOpenNote(i.id)}
-          onTouchStart={e => handleTouchStart(e, i.id, i.title)}
+          onTouchStart={e => handleTouchStart(e, index, i.id, i.title, "note", handleOpenEditNoteModal)}
           onTouchEnd={e => handleTouchEnd(e)}
-          onTouchMove={e => handleTouchMove(e)}
+          onTouchMove={e => handleTouchMove(e, index, i.id, i.title, "note")}
         >
           {i.title}
           <span className={css.settings}>

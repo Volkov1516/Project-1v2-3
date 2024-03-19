@@ -99,7 +99,7 @@ export const Folders = ({ folders, handleTouchStart, handleTouchEnd, handleTouch
   };
 
   return (
-    <div id="folders" className={css.container}>
+    <div id="folder" className={css.container}>
       {folders?.map((i, index) => (
         <div
           key={i.id}

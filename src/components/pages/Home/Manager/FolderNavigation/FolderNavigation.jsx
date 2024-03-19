@@ -16,15 +16,12 @@ export const FolderNavigation = ({ name }) => {
     newArr.pop();
 
     dispatch(updatePath([...newArr]));
-
-    const managerElement = document.getElementById('manager');
-    managerElement.scrollTo(0, 0);
   };
 
   if (!name) return null;
 
   return (
-    <div data-draggable={true} data-id="navigation" className={css.container} onPointerDown={e => e.stopPropagation()}>
+    <div data-draggable={true} data-type="navigation" className={css.container} onPointerDown={e => e.stopPropagation()}>
       <IconButton onClick={handleBack} path="m276.846-460 231.693 231.692L480-200 200-480l280-280 28.539 28.308L276.846-500H760v40H276.846Z" />
       {name}
     </div>
