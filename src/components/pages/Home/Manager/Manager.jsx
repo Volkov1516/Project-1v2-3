@@ -55,8 +55,7 @@ export const Manager = memo(function MemoizedComponent() {
         }
       }
 
-      const managerElement = document.getElementById('manager');
-      managerElement.scrollTo(0, 0);
+      managerRef.current.scrollTo(0, 0);
 
       return null;
     }
@@ -66,17 +65,15 @@ export const Manager = memo(function MemoizedComponent() {
   }, [documents, path]);
 
   useEffect(() => {
-    const managerElement = document.getElementById('manager');
-
     if (isAllowScroll === 'bottom') {
       const isScrolling = setInterval(function () {
-        managerElement.scrollTop += 4;
+        managerRef.current.scrollTop += 4;
       }, 10);
       setTimerIdScroll(isScrolling);
     }
     else if (isAllowScroll === 'top') {
       const isScrolling = setInterval(function () {
-        managerElement.scrollTop -= 4;
+        managerRef.current.scrollTop -= 4;
       }, 10);
       setTimerIdScroll(isScrolling);
     }
@@ -450,7 +447,7 @@ export const Manager = memo(function MemoizedComponent() {
         const beforeDraggable = draggableTypeArrayCopy.slice(0, draggableIndex);
         const elementsBetween = draggableTypeArrayCopy.slice(Number(draggableIndex) + 1, targetIndex);
         const afterTarget = draggableTypeArrayCopy.slice(Number(targetIndex) + 1);
-        
+
         if (placeholderPosition === 'top') {
           newTypeArray = [
             ...beforeDraggable,
@@ -559,7 +556,7 @@ export const Manager = memo(function MemoizedComponent() {
       else if (draggableType === 'task' && targetType === 'task' && targetIndex !== null) {
         touchEndDropUniversal();
       }
-      else if((draggableType === 'note' || 'task') && targetType === 'folder' && targetIndex !== null) {
+      else if ((draggableType === 'note' || 'task') && targetType === 'folder' && targetIndex !== null) {
         touchEndDropInFolder();
       }
     }
@@ -808,7 +805,7 @@ export const Manager = memo(function MemoizedComponent() {
 
 
   return (
-    <div ref={managerRef} id="manager" className={css.container}>
+    <div ref={managerRef} className={css.container}>
       <div className={css.header}>
         <FolderNavigation name={folder?.name} />
       </div>
