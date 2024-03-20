@@ -113,9 +113,9 @@ export const Folders = ({ folders, handleTouchStart, handleTouchEnd, handleTouch
           onTouchStart={e => handleTouchStart(e, index, i.id, i.name, "folder", handleOpenEditFodlerModal)}
           onTouchEnd={e => handleTouchEnd(e)}
           onTouchMove={e => handleTouchMove(e, index, i.id, i.name, "folder")}
-          onMouseDown={e => handleTouchStart(e, index, i.id, i.name, "folder", handleOpenEditFodlerModal)}
-          onMouseUp={e => handleTouchEnd(e)}
-          onMouseMove={e => handleTouchMove(e, index, i.id, i.name, "folder")}
+          // onMouseDown={e => handleTouchStart(e, index, i.id, i.name, "folder", handleOpenEditFodlerModal)}
+          // onMouseUp={e => handleTouchEnd(e)}
+          // onMouseMove={e => handleTouchMove(e, index, i.id, i.name, "folder")}
         >
           <div className={css.start}>
             <svg className={css.svg} viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
