@@ -41,7 +41,6 @@ export const Manager = memo(function MemoizedComponent() {
   const [timerIdNest, setTimerIdNest] = useState(null);
   const [timerIdScroll, setTimerIdScroll] = useState(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  console.log(windowWidth);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -97,11 +96,18 @@ export const Manager = memo(function MemoizedComponent() {
   const touchStartFolder = (e, index, type, currentElement, offsetX, offsetY, folders) => {
     // STEP 1: Set styles
     currentElement.style.position = 'absolute';
-    currentElement.style.left = `${e.touches[0].clientX - offsetX}px`;
-    currentElement.style.top = `${e.touches[0].clientY - offsetY}px`;
     currentElement.style.padding = '16px';
     currentElement.style.backgroundColor = 'transparent';
     currentElement.style.opacity = 0.5;
+
+    if (windowWidth < 639) {
+      currentElement.style.left = `${e.touches[0].clientX - offsetX}px`;
+      currentElement.style.top = `${e.touches[0].clientY - offsetY}px`;
+    }
+    else {
+      currentElement.style.left = `${e.clientX - offsetX}px`;
+      currentElement.style.top = `${e.clientY - offsetY}px`;
+    }
 
     // STEP 2: Set placeholder
     if (folders.length === 1) {
@@ -239,7 +245,8 @@ export const Manager = memo(function MemoizedComponent() {
   const handleTouchStart = (e, index, id, name, type, openSettingsModal) => {
     // STEP 1: Get current element + set touch effect
     const currentElement = e.currentTarget;
-    currentElement.classList.add(css.touch);
+
+    if (type !== 'task') currentElement.classList.add(css.touch);
 
     // STEP 2: Run timer for Drag And Drop (clear timer on touch move)
     const timerDrag = setTimeout(() => {
@@ -270,7 +277,12 @@ export const Manager = memo(function MemoizedComponent() {
 
       // STEP 5: Define draggable type to set placeholder
       if (type === 'folder') {
-        touchStartFolder(e, index, type, currentElement, offsetX, offsetY, folder[`${type}s`]);
+        if (windowWidth < 639) {
+          touchStartFolder(e, index, type, currentElement, offsetX, offsetY, folder[`${type}s`]);
+        }
+        else {
+          touchStartUniversal(e, index, type, currentElement, offsetX, offsetY, folder[`${type}s`]);
+        }
       }
       else {
         touchStartUniversal(e, index, type, currentElement, offsetX, offsetY, folder[`${type}s`]);
@@ -758,7 +770,7 @@ export const Manager = memo(function MemoizedComponent() {
         }
       }
     }
-  }
+  };
 
   const handleTouchMove = e => {
     clearTimeout(timerIdDrag);
@@ -781,8 +793,13 @@ export const Manager = memo(function MemoizedComponent() {
       }
 
       if (draggableType === 'folder') {
-        currentElement.style.left = `${clientX - draggableOffsetX}px`;
-        currentElement.style.top = `${clientY - draggableOffsetY}px`;
+        if (windowWidth < 639) {
+          currentElement.style.left = `${clientX - draggableOffsetX}px`;
+          currentElement.style.top = `${clientY - draggableOffsetY}px`;
+        }
+        else {
+          currentElement.style.top = `${clientY - draggableOffsetY}px`;
+        }
       }
       else {
         currentElement.style.top = `${clientY - draggableOffsetY}px`;
@@ -792,18 +809,20 @@ export const Manager = memo(function MemoizedComponent() {
 
 
       // STEP 2: Autoscroll
-      let viewportHeight = window.innerHeight;
-      let scrollThresholdBottom = 0.8 * viewportHeight;
-      let scrollThresholdTop = 0.2 * viewportHeight;
+      if (windowWidth < 639) {
+        let viewportHeight = window.innerHeight;
+        let scrollThresholdBottom = 0.8 * viewportHeight;
+        let scrollThresholdTop = 0.2 * viewportHeight;
 
-      if (clientY > scrollThresholdBottom) {
-        setIsAllowScroll('bottom');
-      }
-      else if (clientY < scrollThresholdTop) {
-        setIsAllowScroll('top');
-      }
-      else if (clientY < scrollThresholdBottom || clientY > scrollThresholdTop) {
-        setIsAllowScroll(false);
+        if (clientY > scrollThresholdBottom) {
+          setIsAllowScroll('bottom');
+        }
+        else if (clientY < scrollThresholdTop) {
+          setIsAllowScroll('top');
+        }
+        else if (clientY < scrollThresholdBottom || clientY > scrollThresholdTop) {
+          setIsAllowScroll(false);
+        }
       }
 
       // STEP 3: Get target element
@@ -829,14 +848,24 @@ export const Manager = memo(function MemoizedComponent() {
               setIsAllowNest(false);
               setNestFolderId(targetElementId);
 
-              touchMoveFolder(targetElement, targetIndex, targetElementIndex, targetElementId);
+              if (windowWidth < 639) {
+                touchMoveFolder(targetElement, targetIndex, targetElementIndex, targetElementId);
+              }
+              else {
+                touchMoveUniversal(targetElement, targetIndex, targetElementIndex, targetElementId);
+              }
             }
             else if (!isAllowNest && nestFolderId && nestFolderId !== targetElementId) {
               clearTimeout(timerIdNest);
               setIsAllowNest(false);
               setNestFolderId(targetElementId);
 
-              touchMoveFolder(targetElement, targetIndex, targetElementIndex, targetElementId);
+              if (windowWidth < 639) {
+                touchMoveFolder(targetElement, targetIndex, targetElementIndex, targetElementId);
+              }
+              else {
+                touchMoveUniversal(targetElement, targetIndex, targetElementIndex, targetElementId);
+              }
             }
           }
           else if (draggableType === 'note' && targetElementType === 'note') {
