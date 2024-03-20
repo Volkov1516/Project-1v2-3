@@ -559,6 +559,9 @@ export const Manager = memo(function MemoizedComponent() {
       else if (draggableType === 'task' && targetType === 'task' && targetIndex !== null) {
         touchEndDropUniversal();
       }
+      else if((draggableType === 'note' || 'task') && targetType === 'folder' && targetIndex !== null) {
+        touchEndDropInFolder();
+      }
     }
   };
 
@@ -794,6 +797,7 @@ export const Manager = memo(function MemoizedComponent() {
           else if (draggableType === 'task' && targetElementType === 'task') {
             touchMoveUniversal(targetElement, targetIndex, targetElementIndex, targetElementId);
           }
+
         }
       });
     }
