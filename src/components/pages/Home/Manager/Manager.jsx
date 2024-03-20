@@ -40,6 +40,16 @@ export const Manager = memo(function MemoizedComponent() {
   const [timerIdSettings, setTimerIdSettings] = useState(null);
   const [timerIdNest, setTimerIdNest] = useState(null);
   const [timerIdScroll, setTimerIdScroll] = useState(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  console.log(windowWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     function findFolder(object, id) {
@@ -132,10 +142,17 @@ export const Manager = memo(function MemoizedComponent() {
     const currentElementHeight = currentElement.offsetHeight + 'px';
 
     // STEP 1: Define styles
+    if (windowWidth < 639) {
+      currentElement.style.left = `${e.touches[0].clientX - offsetX}px`;
+      currentElement.style.top = `${e.touches[0].clientY - offsetY}px`;
+      currentElement.style.width = '100%';
+    }
+    else {
+      currentElement.style.left = `${e.clientX - offsetX}px`;
+      currentElement.style.top = `${e.clientY - offsetY}px`;
+      currentElement.style.width = '240px';
+    }
     currentElement.style.position = 'absolute';
-    currentElement.style.left = `${e.touches[0].clientX - offsetX}px`;
-    currentElement.style.top = `${e.touches[0].clientY - offsetY}px`;
-    currentElement.style.width = '100%';
     currentElement.style.backgroundColor = '#EEEEEE';
     currentElement.style.opacity = 0.5;
 
@@ -233,8 +250,18 @@ export const Manager = memo(function MemoizedComponent() {
       setDraggableType(type);
 
       // STEP 4: Set element offsets to sycn with pointer move
-      const offsetX = e.touches[0].clientX - currentElement.getBoundingClientRect().left;
-      const offsetY = e.touches[0].clientY - currentElement.getBoundingClientRect().top;
+      let offsetX;
+      let offsetY;
+
+      if (windowWidth < 639) {
+        offsetX = e.touches[0].clientX - currentElement.getBoundingClientRect().left;
+        offsetY = e.touches[0].clientY - currentElement.getBoundingClientRect().top;
+      }
+      else {
+        offsetX = e.clientX - currentElement.getBoundingClientRect().left;
+        offsetY = e.clientY - currentElement.getBoundingClientRect().top;
+      }
+
       setDraggableOffsetX(offsetX);
       setDraggableOffsetY(offsetY);
 
@@ -523,6 +550,10 @@ export const Manager = memo(function MemoizedComponent() {
       currentElement.style.backgroundColor = 'initial';
       currentElement.style.opacity = 1;
 
+      if (draggableType === 'note') {
+        currentElement.style.padding = '4px 8px 4px 16px';
+      }
+
       setIsDraggable(false);
       setDraggableOffsetX(null);
       setDraggableOffsetY(null);
@@ -736,27 +767,47 @@ export const Manager = memo(function MemoizedComponent() {
     if (isDraggable) {
       const currentElement = e.currentTarget;
 
+      let clientX;
+      let clientY;
+
       // STEP 1: Moving draggable
-      currentElement.style.left = `${e.touches[0].clientX - draggableOffsetX}px`;
-      currentElement.style.top = `${e.touches[0].clientY - draggableOffsetY}px`;
+      if (windowWidth < 639) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      }
+      else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+
+      if (draggableType === 'folder') {
+        currentElement.style.left = `${clientX - draggableOffsetX}px`;
+        currentElement.style.top = `${clientY - draggableOffsetY}px`;
+      }
+      else {
+        currentElement.style.top = `${clientY - draggableOffsetY}px`;
+      }
+
+
+
 
       // STEP 2: Autoscroll
       let viewportHeight = window.innerHeight;
       let scrollThresholdBottom = 0.8 * viewportHeight;
       let scrollThresholdTop = 0.2 * viewportHeight;
 
-      if (e.touches[0].clientY > scrollThresholdBottom) {
+      if (clientY > scrollThresholdBottom) {
         setIsAllowScroll('bottom');
       }
-      else if (e.touches[0].clientY < scrollThresholdTop) {
+      else if (clientY < scrollThresholdTop) {
         setIsAllowScroll('top');
       }
-      else if (e.touches[0].clientY < scrollThresholdBottom || e.touches[0].clientY > scrollThresholdTop) {
+      else if (clientY < scrollThresholdBottom || clientY > scrollThresholdTop) {
         setIsAllowScroll(false);
       }
 
       // STEP 3: Get target element
-      document.elementsFromPoint(e.touches[0].clientX, e.touches[0].clientY).forEach(i => {
+      document.elementsFromPoint(clientX, clientY).forEach(i => {
         const targetElementIndex = Number(i.getAttribute('data-index'));
         const targetElementId = i.getAttribute('data-id');
         const targetElementType = i.getAttribute('data-type');

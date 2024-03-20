@@ -217,6 +217,9 @@ export const Notes = ({ notes, handleTouchStart, handleTouchEnd, handleTouchMove
           onTouchStart={e => handleTouchStart(e, index, i.id, i.title, "note", handleOpenEditNoteModal)}
           onTouchEnd={e => handleTouchEnd(e)}
           onTouchMove={e => handleTouchMove(e, index, i.id, i.title, "note")}
+          onMouseDown={e => handleTouchStart(e, index, i.id, i.title, "note", handleOpenEditNoteModal)}
+          onMouseUp={e => handleTouchEnd(e)}
+          onMouseMove={e => handleTouchMove(e, index, i.id, i.title, "note")}
         >
           {i.title}
           <span className={css.settings}>
