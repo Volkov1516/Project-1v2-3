@@ -437,6 +437,77 @@ export const Manager = memo(function MemoizedComponent() {
     }
   };
 
+  const touchEndDropUniversal = async () => {
+    try {
+      const newDocuments = JSON.parse(JSON.stringify(documents));
+      const draggableTypeArrayCopy = folder[`${draggableType}s`];
+      const draggableElement = draggableTypeArrayCopy[draggableIndex];
+      const targetElement = draggableTypeArrayCopy[targetIndex];
+
+      let newTypeArray;
+
+      if (draggableIndex < targetIndex) {
+        const beforeDraggable = draggableTypeArrayCopy.slice(0, draggableIndex);
+        const elementsBetween = draggableTypeArrayCopy.slice(Number(draggableIndex) + 1, targetIndex);
+        const afterTarget = draggableTypeArrayCopy.slice(Number(targetIndex) + 1);
+        
+        if (placeholderPosition === 'top') {
+          newTypeArray = [
+            ...beforeDraggable,
+            ...elementsBetween,
+            draggableElement,
+            targetElement,
+            ...afterTarget
+          ];
+        }
+        else if (placeholderPosition === 'bottom') {
+          newTypeArray = [
+            ...beforeDraggable,
+            ...elementsBetween,
+            targetElement,
+            draggableElement,
+            ...afterTarget
+          ];
+        }
+      }
+      else if (draggableIndex > targetIndex) {
+        const afterDraggable = draggableTypeArrayCopy.slice(Number(draggableIndex) + 1);
+        const elementsBetween = draggableTypeArrayCopy.slice(Number(targetIndex) + 1, draggableIndex);
+        const beforeTarget = draggableTypeArrayCopy.slice(0, targetIndex);
+
+        if (placeholderPosition === 'top') {
+          newTypeArray = [
+            ...beforeTarget,
+            draggableElement,
+            targetElement,
+            ...elementsBetween,
+            ...afterDraggable
+          ];
+        }
+        else if (placeholderPosition === 'bottom') {
+          newTypeArray = [
+            ...beforeTarget,
+            targetElement,
+            draggableElement,
+            ...elementsBetween,
+            ...afterDraggable
+          ];
+        }
+      }
+
+      const changeElementPosition = (targetFolder) => targetFolder[`${draggableType}s`] = newTypeArray;
+      findFolder(newDocuments, path[path.length - 1], changeElementPosition);
+
+      dispatch(updateDocuments(newDocuments));
+
+      await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+
+      dispatch(setSnackbar('Changes were applied'));
+    } catch (error) {
+      dispatch(setSnackbar('Something went wrong'));
+    }
+  };
+
   const handleTouchEnd = async e => {
     const currentElement = e.currentTarget;
     currentElement.classList.remove(css.touch);
@@ -454,7 +525,6 @@ export const Manager = memo(function MemoizedComponent() {
       currentElement.style.padding = '0px';
       currentElement.style.backgroundColor = 'initial';
       currentElement.style.opacity = 1;
-
 
       setIsDraggable(false);
       setDraggableOffsetX(null);
@@ -480,10 +550,15 @@ export const Manager = memo(function MemoizedComponent() {
       else if (targetType === 'navigation') {
         touchEndDropFromFolder();
       }
-      else if (targetType === 'folder' && targetIndex !== null) {
+      else if (draggableType === 'folder' && targetType === 'folder' && targetIndex !== null) {
         touchEndDropFolder();
       }
-
+      else if (draggableType === 'note' && targetType === 'note' && targetIndex !== null) {
+        touchEndDropUniversal();
+      }
+      else if (draggableType === 'task' && targetType === 'task' && targetIndex !== null) {
+        touchEndDropUniversal();
+      }
     }
   };
 
@@ -492,106 +567,36 @@ export const Manager = memo(function MemoizedComponent() {
 
 
   const touchMoveFolder = (targetElement, targetIndex, targetElementIndex, targetElementId) => {
-    // STEP 3: Define the first or all other moves
-    if (targetIndex !== targetElementIndex) {
-      // STEP 4: Define if draggable position is higher or lower than target
-      if (draggableIndex < targetElementIndex) {
-        // STEP 5: Define the spot side of the target
-        if (targetElementIndex % 2 === 0) {
-          if (targetElementIndex === folder?.folders?.length - 1) {
-            document.getElementById('folders').style.paddingBottom = targetElement.offsetHeight + 'px';
-          }
-          else {
-            document.getElementById(folder?.folders[targetElementIndex + 1].id).style.marginLeft = '50%';
-            setPlaceholderId(folder?.folders[targetElementIndex + 1].id);
-          }
+    const timerMoveFolder = setTimeout(() => {
+      if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
 
-          setPlaceholderPosition('left');
-        }
-        else if (targetElementIndex % 2 !== 0) {
-          targetElement.style.marginRight = '50%';
-          setPlaceholderId(targetElementId);
-          setPlaceholderPosition('right');
-        }
-      }
-      else if (draggableIndex > targetElementIndex) {
-        if (targetElementIndex % 2 === 0) {
-          targetElement.style.marginLeft = '50%';
-          setPlaceholderId(targetElementId);
-          setPlaceholderPosition('left');
-        }
-        else if (targetElementIndex % 2 !== 0) {
-          document.getElementById(folder?.folders[targetElementIndex - 1].id).style.marginRight = '50%';
-          setPlaceholderId(folder?.folders[targetElementIndex - 1].id);
-          setPlaceholderPosition('right');
-        }
-      }
-    }
-    else {
-      if (draggableIndex < targetElementIndex) {
-        if (placeholderPosition === 'right') {
+      // STEP 3: Define the first or all other moves
+      if (targetIndex !== targetElementIndex) {
+        // STEP 4: Define if draggable position is higher or lower than target
+        if (draggableIndex < targetElementIndex) {
+          // STEP 5: Define the spot side of the target
           if (targetElementIndex % 2 === 0) {
-            document.getElementById(folder?.folders[targetElementIndex - 2].id).style.marginRight = '0px';
-            setPlaceholderId(folder?.folders[targetElementIndex - 2].id);
-            setPlaceholderPosition('left');
-          }
-          else if (targetElementIndex % 2 !== 0) {
-            targetElement.style.marginLeft = '50%';
-            setPlaceholderId(targetElementId);
-            setPlaceholderPosition('left');
-          }
-        }
-        else if (placeholderPosition === 'left') {
-          if (targetElementIndex % 2 === 0) {
-            if (draggableIndex + 1 === targetElementIndex) {
-              document.getElementById(folder?.folders[targetElementIndex - 2].id).style.marginRight = '50%';
-              setPlaceholderId(folder?.folders[targetElementIndex - 2].id);
+            if (targetElementIndex === folder?.folders?.length - 1) {
+              document.getElementById('folders').style.paddingBottom = targetElement.offsetHeight + 'px';
             }
             else {
-              document.getElementById(folder?.folders[targetElementIndex - 1].id).style.marginRight = '50%';
-              setPlaceholderId(folder?.folders[targetElementIndex - 1].id);
-            }
-
-            setPlaceholderPosition('right');
-          }
-          else if (targetElementIndex % 2 !== 0) {
-            targetElement.style.marginRight = '50%';
-            setPlaceholderId(targetElementId);
-            setPlaceholderPosition('right');
-          }
-        }
-      }
-      else if (draggableIndex > targetElementIndex) {
-        if (placeholderPosition === 'right') {
-          if (targetElementIndex % 2 === 0) {
-            targetElement.style.marginRight = '50%';
-            setPlaceholderId(targetElementId);
-            setPlaceholderPosition('left');
-          }
-          else if (targetElementIndex % 2 !== 0) {
-            if (draggableIndex === folder.folders.length - 1) {
               document.getElementById(folder?.folders[targetElementIndex + 1].id).style.marginLeft = '50%';
               setPlaceholderId(folder?.folders[targetElementIndex + 1].id);
             }
-            else {
-              if (draggableIndex - 1 === targetElementIndex) {
-                document.getElementById(folder?.folders[targetElementIndex + 2].id).style.marginLeft = '50%';
-                setPlaceholderId(folder?.folders[targetElementIndex + 2].id);
-              }
-              else {
-                document.getElementById(folder?.folders[targetElementIndex + 1].id).style.marginLeft = '50%';
-                setPlaceholderId(folder?.folders[targetElementIndex + 1].id);
-              }
-            }
 
             setPlaceholderPosition('left');
           }
+          else if (targetElementIndex % 2 !== 0) {
+            targetElement.style.marginRight = '50%';
+            setPlaceholderId(targetElementId);
+            setPlaceholderPosition('right');
+          }
         }
-        else if (placeholderPosition === 'left') {
+        else if (draggableIndex > targetElementIndex) {
           if (targetElementIndex % 2 === 0) {
             targetElement.style.marginLeft = '50%';
             setPlaceholderId(targetElementId);
-            setPlaceholderPosition('right');
+            setPlaceholderPosition('left');
           }
           else if (targetElementIndex % 2 !== 0) {
             document.getElementById(folder?.folders[targetElementIndex - 1].id).style.marginRight = '50%';
@@ -600,8 +605,129 @@ export const Manager = memo(function MemoizedComponent() {
           }
         }
       }
-    }
+      else {
+        if (draggableIndex < targetElementIndex) {
+          if (placeholderPosition === 'right') {
+            if (targetElementIndex % 2 === 0) {
+              document.getElementById(folder?.folders[targetElementIndex - 2].id).style.marginRight = '0px';
+              setPlaceholderId(folder?.folders[targetElementIndex - 2].id);
+              setPlaceholderPosition('left');
+            }
+            else if (targetElementIndex % 2 !== 0) {
+              targetElement.style.marginLeft = '50%';
+              setPlaceholderId(targetElementId);
+              setPlaceholderPosition('left');
+            }
+          }
+          else if (placeholderPosition === 'left') {
+            if (targetElementIndex % 2 === 0) {
+              if (draggableIndex + 1 === targetElementIndex) {
+                document.getElementById(folder?.folders[targetElementIndex - 2].id).style.marginRight = '50%';
+                setPlaceholderId(folder?.folders[targetElementIndex - 2].id);
+              }
+              else {
+                document.getElementById(folder?.folders[targetElementIndex - 1].id).style.marginRight = '50%';
+                setPlaceholderId(folder?.folders[targetElementIndex - 1].id);
+              }
+
+              setPlaceholderPosition('right');
+            }
+            else if (targetElementIndex % 2 !== 0) {
+              targetElement.style.marginRight = '50%';
+              setPlaceholderId(targetElementId);
+              setPlaceholderPosition('right');
+            }
+          }
+        }
+        else if (draggableIndex > targetElementIndex) {
+          if (placeholderPosition === 'right') {
+            if (targetElementIndex % 2 === 0) {
+              targetElement.style.marginRight = '50%';
+              setPlaceholderId(targetElementId);
+              setPlaceholderPosition('left');
+            }
+            else if (targetElementIndex % 2 !== 0) {
+              if (draggableIndex === folder.folders.length - 1) {
+                document.getElementById(folder?.folders[targetElementIndex + 1].id).style.marginLeft = '50%';
+                setPlaceholderId(folder?.folders[targetElementIndex + 1].id);
+              }
+              else {
+                if (draggableIndex - 1 === targetElementIndex) {
+                  document.getElementById(folder?.folders[targetElementIndex + 2].id).style.marginLeft = '50%';
+                  setPlaceholderId(folder?.folders[targetElementIndex + 2].id);
+                }
+                else {
+                  document.getElementById(folder?.folders[targetElementIndex + 1].id).style.marginLeft = '50%';
+                  setPlaceholderId(folder?.folders[targetElementIndex + 1].id);
+                }
+              }
+
+              setPlaceholderPosition('left');
+            }
+          }
+          else if (placeholderPosition === 'left') {
+            if (targetElementIndex % 2 === 0) {
+              targetElement.style.marginLeft = '50%';
+              setPlaceholderId(targetElementId);
+              setPlaceholderPosition('right');
+            }
+            else if (targetElementIndex % 2 !== 0) {
+              document.getElementById(folder?.folders[targetElementIndex - 1].id).style.marginRight = '50%';
+              setPlaceholderId(folder?.folders[targetElementIndex - 1].id);
+              setPlaceholderPosition('right');
+            }
+          }
+        }
+      }
+
+      setIsAllowNest(true);
+      setNestFolderId(null);
+    }, 500);
+    setTimerIdNest(timerMoveFolder);
   };
+
+  const touchMoveUniversal = (targetElement, targetIndex, targetElementIndex, targetElementId) => {
+    if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
+
+    if (targetIndex !== targetElementIndex) {
+      if (draggableIndex < targetElementIndex) {
+        document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = targetElement.offsetHeight + 'px';
+        setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
+        setPlaceholderPosition('bottom');
+      }
+      else if (draggableIndex > targetElementIndex) {
+        document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginTop = targetElement.offsetHeight + 'px';
+        setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
+        setPlaceholderPosition('top');
+      }
+    }
+    else {
+      if (draggableIndex < targetElementIndex) {
+        if (placeholderPosition === 'bottom') {
+          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginTop = targetElement.offsetHeight + 'px';
+          setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
+          setPlaceholderPosition('top');
+        }
+        else if (placeholderPosition === 'top') {
+          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = targetElement.offsetHeight + 'px';
+          setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
+          setPlaceholderPosition('bottom');
+        }
+      }
+      else if (draggableIndex > targetElementIndex) {
+        if (placeholderPosition === 'bottom') {
+          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginTop = targetElement.offsetHeight + 'px';
+          setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
+          setPlaceholderPosition('top');
+        }
+        else if (placeholderPosition === 'top') {
+          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = targetElement.offsetHeight + 'px';
+          setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
+          setPlaceholderPosition('bottom');
+        }
+      }
+    }
+  }
 
   const handleTouchMove = e => {
     clearTimeout(timerIdDrag);
@@ -631,51 +757,42 @@ export const Manager = memo(function MemoizedComponent() {
 
       // STEP 3: Get target element
       document.elementsFromPoint(e.touches[0].clientX, e.touches[0].clientY).forEach(i => {
-        const targetElementDraggable = i.getAttribute('data-draggable');
         const targetElementIndex = Number(i.getAttribute('data-index'));
         const targetElementId = i.getAttribute('data-id');
         const targetElementType = i.getAttribute('data-type');
 
-        if (targetElementType === 'navigation' && draggableId !== targetElementId) {
+        if (targetElementType === 'navigation') {
           setTargetType(targetElementType);
           return;
         };
 
-        if (targetElementDraggable && draggableId !== targetElementId) {
-          const targetElement = document.getElementById(targetElementId);
-
+        if (targetElementId && targetElementId !== draggableId) {
           setTargetIndex(targetElementIndex);
           setTargetId(targetElementId);
           setTargetType(targetElementType);
 
-          if (draggableType === 'folder') {
+          const targetElement = document.getElementById(targetElementId);
+
+          if (draggableType === 'folder' && targetElementType === 'folder') {
             if (isAllowNest) {
               setIsAllowNest(false);
               setNestFolderId(targetElementId);
 
-              const timerNest = setTimeout(() => {
-                if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
-                if (draggableType === 'folder') touchMoveFolder(targetElement, targetIndex, targetElementIndex, targetElementId);
-
-                setIsAllowNest(true);
-                setNestFolderId(null);
-              }, 500);
-              setTimerIdNest(timerNest);
+              touchMoveFolder(targetElement, targetIndex, targetElementIndex, targetElementId);
             }
             else if (!isAllowNest && nestFolderId && nestFolderId !== targetElementId) {
               clearTimeout(timerIdNest);
               setIsAllowNest(false);
               setNestFolderId(targetElementId);
 
-              const timerNest = setTimeout(() => {
-                if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
-                if (draggableType === 'folder') touchMoveFolder(targetElement, targetIndex, targetElementIndex, targetElementId);
-
-                setIsAllowNest(true);
-                setNestFolderId(null);
-              }, 500);
-              setTimerIdNest(timerNest);
+              touchMoveFolder(targetElement, targetIndex, targetElementIndex, targetElementId);
             }
+          }
+          else if (draggableType === 'note' && targetElementType === 'note') {
+            touchMoveUniversal(targetElement, targetIndex, targetElementIndex, targetElementId);
+          }
+          else if (draggableType === 'task' && targetElementType === 'task') {
+            touchMoveUniversal(targetElement, targetIndex, targetElementIndex, targetElementId);
           }
         }
       });
