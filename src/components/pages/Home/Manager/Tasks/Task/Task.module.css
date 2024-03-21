@@ -16,6 +16,10 @@
   animation: render 0.2s ease-in;
 }
 
+.content {
+  user-select: none;
+}
+
 .textarea {
   display: block;
   min-height: 18px;

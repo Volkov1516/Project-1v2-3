@@ -11,7 +11,7 @@ import css from './Task.module.css';
 
 import { findFolder } from 'utils/findFolder';
 
-export const Task = ({ id, content }) => {
+export const Task = ({ id, content, isDraggable }) => {
   const dispatch = useDispatch();
 
   const textareaRef = useRef(null);
@@ -21,9 +21,11 @@ export const Task = ({ id, content }) => {
   const [value, setValue] = useState(content);
 
   useEffect(() => {
-    textareaRef.current.style.height = 'auto';
-    textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
-  }, [id]);
+    // if(!isDraggable) {
+    //   textareaRef.current.style.height = 'auto';
+    //   textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+    // }
+  }, [id, isDraggable]);
 
   const handleDeleteTask = async () => {
     try {
@@ -95,16 +97,22 @@ export const Task = ({ id, content }) => {
   return (
     <div className={css.container}>
       <IconButton onClick={handleDeleteTask} path="M480.134-120q-74.673 0-140.41-28.339-65.737-28.34-114.365-76.922-48.627-48.582-76.993-114.257Q120-405.194 120-479.866q0-74.673 28.339-140.41 28.34-65.737 76.922-114.365 48.582-48.627 114.257-76.993Q405.194-840 479.866-840q74.673 0 140.41 28.339 65.737 28.34 114.365 76.922 48.627 48.582 76.993 114.257Q840-554.806 840-480.134q0 74.673-28.339 140.41-28.34 65.737-76.922 114.365-48.582 48.627-114.257 76.993Q554.806-120 480.134-120ZM480-160q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-      <textarea
-        ref={textareaRef}
-        className={css.textarea}
-        name="task"
-        autoFocus={id === activeTaskId}
-        rows={1}
-        value={value}
-        onChange={handleOnChange}
-        onBlur={handleOnBlur}
-      />
+      {/* {isDraggable
+        ? (<p>{value}</p>)
+        : (<textarea
+          ref={textareaRef}
+          className={css.textarea}
+          name="task"
+          autoFocus={id === activeTaskId}
+          rows={1}
+          value={value}
+          onChange={handleOnChange}
+          onBlur={handleOnBlur}
+        />)
+      } */}
+      <div onSelect={e => e.preventDefault()} className={css.content} contentEditable>
+        {value}
+      </div>
     </div>
   );
 };

@@ -242,24 +242,6 @@ export const Manager = memo(function MemoizedComponent() {
     setTimerIdSettings(timerOpenModal);
   };
 
-
-  const touchStartPreventTask = (e, index, id, name, type, currentElement, contentArray) => {
-    const timerOpenModal = setTimeout(() => {
-      setIsDraggable(false);
-
-      currentElement.style.position = 'initial';
-      currentElement.style.left = 'initial';
-      currentElement.style.top = 'initial';
-      currentElement.style.padding = '0px';
-      currentElement.style.backgroundColor = 'initial';
-      currentElement.style.opacity = 1;
-
-      if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
-    }, 500);
-
-    setTimerIdSettings(timerOpenModal);
-  }
-
   const handleTouchStart = (e, index, id, name, type, openSettingsModal) => {
     // STEP 1: Get current element + set touch effect
     const currentElement = e.currentTarget;
@@ -308,12 +290,7 @@ export const Manager = memo(function MemoizedComponent() {
 
       // STEP 6: Run timer for modal function
 
-      if (type === 'task') {
-        touchStartPreventTask(e, index, id, name, type, currentElement, folder[`${type}s`])
-      }
-      else {
-        touchStartOpenModal(e, index, id, name, type, openSettingsModal, currentElement, folder[`${type}s`]);
-      }
+      if (type !== 'task') touchStartOpenModal(e, index, id, name, type, openSettingsModal, currentElement, folder[`${type}s`]);
     }, 200);
     setTimerIdDrag(timerDrag);
   };
@@ -906,8 +883,6 @@ export const Manager = memo(function MemoizedComponent() {
 
 
 
-
-
   return (
     <div ref={managerRef} className={css.container}>
       <div className={css.header}>
@@ -925,7 +900,9 @@ export const Manager = memo(function MemoizedComponent() {
           handleTouchEnd={handleTouchEnd}
           handleTouchMove={handleTouchMove}
         />
-        <Tasks tasks={folder?.tasks}
+        <Tasks
+          tasks={folder?.tasks}
+          isDraggable={isDraggable}
           handleTouchStart={handleTouchStart}
           handleTouchEnd={handleTouchEnd}
           handleTouchMove={handleTouchMove}
