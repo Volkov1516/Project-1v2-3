@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+// import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
-import { setActiveTaskId, updateDocuments } from 'redux/features/user/userSlice';
+// import { setActiveTaskId, updateDocuments } from 'redux/features/user/userSlice';
+import { updateDocuments } from 'redux/features/user/userSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 
@@ -14,18 +15,19 @@ import { findFolder } from 'utils/findFolder';
 export const Task = ({ id, content, isDraggable }) => {
   const dispatch = useDispatch();
 
-  const textareaRef = useRef(null);
+  // const textareaRef = useRef(null);
 
-  const { userId, documents, path, activeTaskId } = useSelector(state => state.user);
+  // const { userId, documents, path, activeTaskId } = useSelector(state => state.user);
+  const { userId, documents, path } = useSelector(state => state.user);
 
-  const [value, setValue] = useState(content);
+  // const [value, setValue] = useState(content);
 
-  useEffect(() => {
-    // if(!isDraggable) {
-    //   textareaRef.current.style.height = 'auto';
-    //   textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
-    // }
-  }, [id, isDraggable]);
+  // useEffect(() => {
+  //   if(!isDraggable) {
+  //     textareaRef.current.style.height = 'auto';
+  //     textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+  //   }
+  // }, [id, isDraggable]);
 
   const handleDeleteTask = async () => {
     try {
@@ -54,45 +56,45 @@ export const Task = ({ id, content, isDraggable }) => {
     }
   };
 
-  const handleOnChange = (e) => {
-    setValue(e.target.value);
+  // const handleOnChange = (e) => {
+  //   setValue(e.target.value);
 
-    e.target.style.height = 'auto';
-    e.target.style.height = e.target.scrollHeight + 'px';
-  };
+  //   e.target.style.height = 'auto';
+  //   e.target.style.height = e.target.scrollHeight + 'px';
+  // };
 
-  const handleOnBlur = async (e) => {
-    if (!value) {
-      handleDeleteTask();
-    }
-    else {
-      try {
-        const newDocuments = JSON.parse(JSON.stringify(documents));
+  // const handleOnBlur = async (e) => {
+  //   if (!value) {
+  //     handleDeleteTask();
+  //   }
+  //   else {
+  //     try {
+  //       const newDocuments = JSON.parse(JSON.stringify(documents));
 
-        const createTask = (targetFolder) => {
-          if (targetFolder.tasks && targetFolder.tasks.length > 0) {
-            for (let i = 0; i < targetFolder.tasks.length; i++) {
-              if (targetFolder.tasks[i].id === id) {
-                targetFolder.tasks[i].content = e.target.value;
-              }
-            }
-          }
-        };
+  //       const createTask = (targetFolder) => {
+  //         if (targetFolder.tasks && targetFolder.tasks.length > 0) {
+  //           for (let i = 0; i < targetFolder.tasks.length; i++) {
+  //             if (targetFolder.tasks[i].id === id) {
+  //               targetFolder.tasks[i].content = e.target.value;
+  //             }
+  //           }
+  //         }
+  //       };
 
-        findFolder(newDocuments, path[path.length - 1], createTask);
+  //       findFolder(newDocuments, path[path.length - 1], createTask);
 
-        dispatch(updateDocuments(newDocuments));
+  //       dispatch(updateDocuments(newDocuments));
 
-        await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
+  //       await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
 
-        dispatch(setSnackbar('Task was saved'));
-      } catch (error) {
-        dispatch(setSnackbar('Failed to save the task'));
-      }
-    }
+  //       dispatch(setSnackbar('Task was saved'));
+  //     } catch (error) {
+  //       dispatch(setSnackbar('Failed to save the task'));
+  //     }
+  //   }
 
-    dispatch(setActiveTaskId(null));
-  };
+  //   dispatch(setActiveTaskId(null));
+  // };
 
   return (
     <div className={css.container}>
@@ -111,7 +113,7 @@ export const Task = ({ id, content, isDraggable }) => {
         />)
       } */}
       <div className={css.content} contentEditable={!isDraggable}>
-        {value}
+        {content}
       </div>
     </div>
   );
