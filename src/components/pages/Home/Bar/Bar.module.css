@@ -8,6 +8,7 @@
   padding: 8px;
   border-right: 1px solid var(--borderColor);
   background-color: var(--backgroundPrimary);
+  z-index: 2;
 }
 
 .start,
