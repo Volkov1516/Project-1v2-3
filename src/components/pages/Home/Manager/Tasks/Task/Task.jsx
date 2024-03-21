@@ -110,7 +110,7 @@ export const Task = ({ id, content, isDraggable }) => {
           onBlur={handleOnBlur}
         />)
       } */}
-      <div onSelect={e => e.preventDefault()} className={css.content} contentEditable>
+      <div onSelect={e => e.preventDefault()} className={css.content} contentEditable={!isDraggable}>
         {value}
       </div>
     </div>
