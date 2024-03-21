@@ -11,7 +11,7 @@ import css from './Task.module.css';
 
 import { findFolder } from 'utils/findFolder';
 
-export const Task = ({ id, content}) => {
+export const Task = ({ id, content }) => {
   const dispatch = useDispatch();
 
   const textareaRef = useRef(null);
@@ -46,7 +46,7 @@ export const Task = ({ id, content}) => {
 
       await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
 
-      dispatch(setSnackbar('Task was deleted'));
+      dispatch(setSnackbar('Task was completed'));
     } catch (error) {
       dispatch(setSnackbar('Failed to delete the task'));
     }
@@ -98,6 +98,7 @@ export const Task = ({ id, content}) => {
       <textarea
         ref={textareaRef}
         className={css.textarea}
+        name="task"
         autoFocus={id === activeTaskId}
         rows={1}
         value={value}
