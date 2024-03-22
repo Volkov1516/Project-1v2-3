@@ -53,9 +53,7 @@ export const Task = ({ id, content, isDraggable }) => {
     }
   };
 
-  const handleOnClick = e => {
-    setInitialContent(e.target.innerText);
-  };
+  const handleOnClick = e => setInitialContent(e.target.innerText);
 
   const handleOnBlur = async e => {
     if (!e.target.innerText) {
@@ -97,7 +95,6 @@ export const Task = ({ id, content, isDraggable }) => {
   const handleOnKeyDown = e => {
     if (e.key === 'Enter') {
       e.preventDefault();
-
       e.target.blur();
     }
   };

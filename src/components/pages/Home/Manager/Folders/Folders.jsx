@@ -14,7 +14,7 @@ import css from './Folders.module.css';
 
 import { findFolder } from 'utils/findFolder';
 
-export const Folders = ({ folders, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
+export const Folders = ({ folders, preventOnClick, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
   const { userId, documents, path } = useSelector(state => state.user);
 
@@ -25,7 +25,11 @@ export const Folders = ({ folders, handleTouchStart, handleTouchEnd, handleTouch
   const [folderDeleteValue, setFolderDeleteValue] = useState('');
   const [folderDeleteInputValue, setFolderDeleteInputValue] = useState('');
 
-  const handleOpenFolder = (id) => dispatch(updatePath([...path, id]));
+  const handleOpenFolder = (id) => {
+    if (preventOnClick) return;
+
+    dispatch(updatePath([...path, id]));
+  };
 
   const handleOpenEditFodlerModal = (e, id, name) => {
     e.stopPropagation();

@@ -15,7 +15,7 @@ import css from './Notes.module.css';
 
 import { findFolder } from 'utils/findFolder';
 
-export const Notes = ({ notes, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
+export const Notes = ({ notes, preventOnClick, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
 
   const { userId, documents, path } = useSelector(state => state.user);
@@ -29,6 +29,9 @@ export const Notes = ({ notes, handleTouchStart, handleTouchEnd, handleTouchMove
   const [titleDeleteInputValue, setTitleDeleteInputValue] = useState('');
 
   const handleOpenNote = async (id) => {
+    // Prevent onClick after mouseUp
+    if (preventOnClick) return;
+
     // STEP 1: Return if this note is openned (need to clean up activeNoteId after close!)
     if (activeNoteId === id) return;
 

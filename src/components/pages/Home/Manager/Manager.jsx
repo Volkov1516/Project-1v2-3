@@ -42,6 +42,7 @@ export const Manager = memo(function MemoizedComponent() {
   const [timerIdNest, setTimerIdNest] = useState(null);
   const [timerIdScroll, setTimerIdScroll] = useState(null);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [preventOnClick, setPreventOnClick] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -254,6 +255,7 @@ export const Manager = memo(function MemoizedComponent() {
       setDraggableIndex(index);
       setDraggableId(id);
       setDraggableType(type);
+      setPreventOnClick(true);
 
       let offsetX;
       let offsetY;
@@ -285,7 +287,7 @@ export const Manager = memo(function MemoizedComponent() {
         touchStartUniversal(e, index, type, currentElement, offsetX, offsetY, folder[`${type}s`]);
       }
 
-      if (type !== 'task') touchStartOpenModal(e, index, id, name, type, openSettingsModal, currentElement, folder[`${type}s`]);
+      if (type !== 'task' && windowWidth < 639) touchStartOpenModal(e, index, id, name, type, openSettingsModal, currentElement, folder[`${type}s`]);
     }, 200);
     setTimerIdDrag(timerDrag);
   };
@@ -853,6 +855,8 @@ export const Manager = memo(function MemoizedComponent() {
       else if ((draggableType === 'note' || 'task') && targetType === 'folder' && targetIndex !== null) {
         touchEndDropInFolder();
       }
+
+    setTimeout(() => setPreventOnClick(false), 0);
     }
   };
 
@@ -864,12 +868,14 @@ export const Manager = memo(function MemoizedComponent() {
       <div className={`${css.content} ${folder?.name && css.contentOffset}`}>
         <Folders
           folders={folder?.folders}
+          preventOnClick={preventOnClick}
           handleTouchStart={handleTouchStart}
           handleTouchEnd={handleTouchEnd}
           handleTouchMove={handleTouchMove}
         />
         <Notes
           notes={folder?.notes}
+          preventOnClick={preventOnClick}
           handleTouchStart={handleTouchStart}
           handleTouchEnd={handleTouchEnd}
           handleTouchMove={handleTouchMove}
