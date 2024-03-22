@@ -17,6 +17,7 @@ import { findFolder } from 'utils/findFolder';
 export const Manager = memo(function MemoizedComponent() {
   const dispatch = useDispatch();
 
+  const { theme } = useSelector(state => state.app);
   const { userId, documents, path } = useSelector(state => state.user);
 
   const managerRef = useRef(null);
@@ -144,47 +145,6 @@ export const Manager = memo(function MemoizedComponent() {
     }
   };
 
-  const touchStartUniversal = (e, index, type, currentElement, offsetX, offsetY, contentArray) => {
-    const currentElementHeight = currentElement.offsetHeight + 'px';
-
-    // STEP 1: Define styles
-    if (windowWidth < 639) {
-      currentElement.style.left = `${e.touches[0].clientX - offsetX}px`;
-      currentElement.style.top = `${e.touches[0].clientY - offsetY}px`;
-      currentElement.style.width = '100%';
-    }
-    else {
-      currentElement.style.left = `${e.clientX - offsetX}px`;
-      currentElement.style.top = `${e.clientY - offsetY}px`;
-      currentElement.style.width = '240px';
-    }
-    currentElement.style.position = 'absolute';
-    currentElement.style.backgroundColor = '#EEEEEE';
-    currentElement.style.opacity = 0.5;
-
-    // STEP 2: Set placeholder
-    if (contentArray.length === 1) {
-      document.getElementById(type).style.paddingBottom = currentElementHeight;
-    }
-    else {
-      if (index === 0) {
-        const nextElementId = contentArray[index + 1].id;
-        document.getElementById(nextElementId).style.marginTop = currentElementHeight;
-        setPlaceholderId(nextElementId);
-      }
-      else if (index === contentArray.length - 1) {
-        const prevElementId = contentArray[contentArray.length - 2].id;
-        document.getElementById(prevElementId).style.marginBottom = currentElementHeight;
-        setPlaceholderId(prevElementId);
-      }
-      else {
-        const nextElementId = contentArray[index + 1].id;
-        document.getElementById(nextElementId).style.marginTop = currentElementHeight;
-        setPlaceholderId(nextElementId);
-      }
-    }
-  };
-
   const touchStartOpenModal = (e, index, id, name, type, openSettingsModal, currentElement, contentArray) => {
     const timerOpenModal = setTimeout(() => {
       setIsDraggable(false);
@@ -242,21 +202,62 @@ export const Manager = memo(function MemoizedComponent() {
     setTimerIdSettings(timerOpenModal);
   };
 
-  const handleTouchStart = (e, index, id, name, type, openSettingsModal) => {
-    // STEP 1: Get current element + set touch effect
+
+// POLISHED
+
+  const touchStartUniversal = (e, index, type, currentElement, offsetX, offsetY, contentArray) => {
+    const currentElementHeight = currentElement.offsetHeight + 'px';
+    let scrollWidth = managerRef.current.offsetWidth - managerRef.current.clientWidth;
+    let managerWidthWithoutScroll = managerRef.current.getBoundingClientRect().width - scrollWidth;
+
+    currentElement.style.position = 'absolute';
+    currentElement.style.opacity = 0.5;
+
+    if (windowWidth < 639) {
+      currentElement.style.left = `${e.touches[0].clientX - offsetX}px`;
+      currentElement.style.top = `${e.touches[0].clientY - offsetY}px`;
+      currentElement.style.width = '100%';
+    }
+    else {
+      currentElement.style.left = `${e.clientX - offsetX}px`;
+      currentElement.style.top = `${e.clientY - offsetY}px`;
+      currentElement.style.width = managerWidthWithoutScroll + 'px';
+    }
+
+    if (theme === 'dark') {
+      currentElement.style.backgroundColor = '#333333';
+    }
+    else {
+      currentElement.style.backgroundColor = '#EEEEEE';
+    }
+
+    // Set placeholder
+    if (contentArray.length === 1) {
+      document.getElementById(type).style.paddingBottom = currentElementHeight;
+    }
+    else {
+      if (index === contentArray.length - 1) {
+        document.getElementById(contentArray[contentArray.length - 2].id).style.marginBottom = currentElementHeight;
+        setPlaceholderId(contentArray[contentArray.length - 2].id);
+      }
+      else {
+        document.getElementById(contentArray[index + 1].id).style.marginTop = currentElementHeight;
+        setPlaceholderId(contentArray[index + 1].id);
+      }
+    }
+  };
+
+  const handleTouchStart = (e, index, id, type, name, openSettingsModal) => {
     const currentElement = e.currentTarget;
 
     if (type !== 'task') currentElement.classList.add(css.touch);
 
-    // STEP 2: Run timer for Drag And Drop (clear timer on touch move)
     const timerDrag = setTimeout(() => {
-      // STEP 3: Set isDraggable and draggable data
       setIsDraggable(true);
       setDraggableIndex(index);
       setDraggableId(id);
       setDraggableType(type);
 
-      // STEP 4: Set element offsets to sycn with pointer move
       let offsetX;
       let offsetY;
 
@@ -275,7 +276,6 @@ export const Manager = memo(function MemoizedComponent() {
       // Prevent draggable lagging on touch if move down
       managerRef.current.scrollTop += 1;
 
-      // STEP 5: Define draggable type to set placeholder
       if (type === 'folder') {
         if (windowWidth < 639) {
           touchStartFolder(e, index, type, currentElement, offsetX, offsetY, folder[`${type}s`]);
@@ -287,8 +287,6 @@ export const Manager = memo(function MemoizedComponent() {
       else {
         touchStartUniversal(e, index, type, currentElement, offsetX, offsetY, folder[`${type}s`]);
       }
-
-      // STEP 6: Run timer for modal function
 
       if (type !== 'task') touchStartOpenModal(e, index, id, name, type, openSettingsModal, currentElement, folder[`${type}s`]);
     }, 200);
@@ -895,7 +893,8 @@ export const Manager = memo(function MemoizedComponent() {
           handleTouchEnd={handleTouchEnd}
           handleTouchMove={handleTouchMove}
         />
-        <Notes notes={folder?.notes}
+        <Notes
+          notes={folder?.notes}
           handleTouchStart={handleTouchStart}
           handleTouchEnd={handleTouchEnd}
           handleTouchMove={handleTouchMove}

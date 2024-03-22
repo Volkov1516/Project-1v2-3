@@ -214,12 +214,12 @@ export const Notes = ({ notes, handleTouchStart, handleTouchEnd, handleTouchMove
           data-draggable={true}
           data-type="note"
           onClick={() => handleOpenNote(i.id)}
-          onTouchStart={e => handleTouchStart(e, index, i.id, i.title, "note", handleOpenEditNoteModal)}
+          onTouchStart={e => handleTouchStart(e, index, i.id, "note", i.title, handleOpenEditNoteModal)}
           onTouchEnd={e => handleTouchEnd(e)}
-          onTouchMove={e => handleTouchMove(e, index, i.id, i.title, "note")}
-          onMouseDown={e => handleTouchStart(e, index, i.id, i.title, "note", handleOpenEditNoteModal)}
+          onTouchMove={e => handleTouchMove(e, index, i.id, "note", i.title)}
+          onMouseDown={e => handleTouchStart(e, index, i.id, "note", i.title, handleOpenEditNoteModal)}
           onMouseUp={e => handleTouchEnd(e)}
-          onMouseMove={e => handleTouchMove(e, index, i.id, i.title, "note")}
+          onMouseMove={e => handleTouchMove(e, index, i.id, "note", i.title)}
         >
           {i.title}
           <span className={css.settings}>

@@ -110,12 +110,12 @@ export const Folders = ({ folders, handleTouchStart, handleTouchEnd, handleTouch
           data-draggable={true}
           data-type="folder"
           onClick={() => handleOpenFolder(i.id)}
-          onTouchStart={e => handleTouchStart(e, index, i.id, i.name, "folder", handleOpenEditFodlerModal)}
+          onTouchStart={e => handleTouchStart(e, index, i.id, "folder", i.name, handleOpenEditFodlerModal)}
           onTouchEnd={e => handleTouchEnd(e)}
-          onTouchMove={e => handleTouchMove(e, index, i.id, i.name, "folder")}
-          onMouseDown={e => handleTouchStart(e, index, i.id, i.name, "folder", handleOpenEditFodlerModal)}
+          onTouchMove={e => handleTouchMove(e, index, i.id, "folder", i.name)}
+          onMouseDown={e => handleTouchStart(e, index, i.id, "folder", i.name, handleOpenEditFodlerModal)}
           onMouseUp={e => handleTouchEnd(e)}
-          onMouseMove={e => handleTouchMove(e, index, i.id, i.name, "folder")}
+          onMouseMove={e => handleTouchMove(e, index, i.id, "folder", i.name)}
         >
           <div className={css.start}>
             <svg className={css.svg} viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">

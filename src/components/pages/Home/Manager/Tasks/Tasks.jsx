@@ -11,14 +11,13 @@ export const Tasks = ({ tasks, isDraggable, handleTouchStart, handleTouchEnd, ha
           id={i.id}
           data-index={index}
           data-id={i.id}
-          data-draggable={true}
           data-type="task"
-          onTouchStart={e => handleTouchStart(e, index, i.id, i.content, "task")}
-          onTouchEnd={e => handleTouchEnd(e)}
-          onTouchMove={e => handleTouchMove(e, index, i.id, i.content, "task")}
-        onMouseDown={e => handleTouchStart(e, index, i.id, i.content, "task")}
-        onMouseUp={e => handleTouchEnd(e)}
-        onMouseMove={e => handleTouchMove(e, index, i.id, i.content, "task")}
+          onTouchStart={e => handleTouchStart(e, index, i.id, "task")}
+          onTouchEnd={handleTouchEnd}
+          onTouchMove={handleTouchMove}
+          onMouseDown={e => handleTouchStart(e, index, i.id, "task")}
+          onMouseUp={handleTouchEnd}
+          onMouseMove={handleTouchMove}
         >
           <Task id={i?.id} content={i?.content} isDraggable={isDraggable} />
         </div>
