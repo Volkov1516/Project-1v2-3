@@ -729,18 +729,16 @@ export const Manager = memo(function MemoizedComponent() {
   };
 
   const touchMoveUniversal = (targetElement, targetIndex, targetElementIndex, targetElementId) => {
-    const draggableElement = document.getElementById(draggableId);
-
     if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
 
     if (targetIndex !== targetElementIndex) {
       if (draggableIndex < targetElementIndex) {
-        document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = draggableElement.offsetHeight + 'px';
+        document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = targetElement.offsetHeight + 'px';
         setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
         setPlaceholderPosition('bottom');
       }
       else if (draggableIndex > targetElementIndex) {
-        document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginTop = draggableElement.offsetHeight + 'px';
+        document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginTop = targetElement.offsetHeight + 'px';
         setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
         setPlaceholderPosition('top');
       }
@@ -748,24 +746,24 @@ export const Manager = memo(function MemoizedComponent() {
     else {
       if (draggableIndex < targetElementIndex) {
         if (placeholderPosition === 'bottom') {
-          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginTop = draggableElement.offsetHeight + 'px';
+          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginTop = targetElement.offsetHeight + 'px';
           setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
           setPlaceholderPosition('top');
         }
         else if (placeholderPosition === 'top') {
-          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = draggableElement.offsetHeight + 'px';
+          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = targetElement.offsetHeight + 'px';
           setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
           setPlaceholderPosition('bottom');
         }
       }
       else if (draggableIndex > targetElementIndex) {
         if (placeholderPosition === 'bottom') {
-          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginTop = draggableElement.offsetHeight + 'px';
+          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginTop = targetElement.offsetHeight + 'px';
           setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
           setPlaceholderPosition('top');
         }
         else if (placeholderPosition === 'top') {
-          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = draggableElement.offsetHeight + 'px';
+          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = targetElement.offsetHeight + 'px';
           setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
           setPlaceholderPosition('bottom');
         }
