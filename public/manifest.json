@@ -10,7 +10,7 @@
   "start_url": "/",
   "lang": "en",
   "orientation": "portrait",
-  "display": "fullscreen",
+  "display": "standalone",
   "shortcuts": [
     {
       "name": "Home",

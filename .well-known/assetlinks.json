@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.web.journalisto_aae0f.twa",
+      "sha256_cert_fingerprints": [
+        "C9:50:8B:BC:A7:EB:5D:06:70:4B:7E:34:D8:0B:C4:0B:A7:AE:11:C8:7F:6B:E8:89:AE:F6:23:61:44:DE:A1:0D"
+      ]
+    }
+  }
+]
