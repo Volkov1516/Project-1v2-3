@@ -8,6 +8,7 @@
     "productivity"
   ],
   "start_url": "/",
+  "scope": "/index.html",
   "lang": "en",
   "orientation": "portrait",
   "display": "standalone",
