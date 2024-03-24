@@ -22,7 +22,7 @@
 }
 
 .logoText {
-  font-size: 24px;
+  font-size: var(--fontSizeLarge);
 }
 
 .content {
@@ -35,7 +35,7 @@
 
 .title {
   margin-bottom: 24px;
-  font-size: 48px;
+  font-size: var(--fontSizeTitle);
   font-weight: 700;
 }
 
@@ -92,23 +92,23 @@
 
 .label {
   margin-bottom: 4px;
-  color: gray;
-  font-size: 14px;
+  color: var(--fontColorPrimary);
+  font-size: 12px;
   user-select: none;
 }
 
 .input {
-  width: 100%;
-  padding: 8px;
-  border: none;
-  font-size: 16px;
-  color: gray;
-  background-color: #e8eddf !important;
+  padding: 4px 8px;
+  outline: none;
+  border: 1px solid var(--borderColor);
+  background-color: var(--backgroundSecondary);
+  color: var(--fontColorPrimary);
+  font-size: var(--fontSizeMedium);
 }
 
 .input::placeholder {
   user-select: none;
-  font-size: 16px;
+  font-size: var(--fontSizeMedium);
 }
 
 .input:focus {

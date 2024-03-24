@@ -4,6 +4,7 @@ export const Button = ({
   type,
   children,
   disabled,
+  submit,
   onClick
 }) => {
   const handleTouchStart = (e) => {
@@ -20,6 +21,7 @@ export const Button = ({
     <button
       className={`${css.button} ${css[type]}`}
       disabled={disabled}
+      type={submit && "submit"}
       onClick={onClick}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}

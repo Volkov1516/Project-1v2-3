@@ -8,6 +8,8 @@ import {
   sendPasswordResetEmail
 } from 'firebase/auth';
 
+import { Button } from 'components/atoms/Button/Button';
+
 import css from './Auth.module.css';
 
 import logo from 'assets/logo.png';
@@ -154,19 +156,19 @@ export const Auth = () => {
                 />
                 <span className={css.error}>Password must contain minimum 6 characters</span>
               </div>
-              <button className={css.submitBtn} type="submit">Continue with email</button>
-              {authType === "Log in" && <button className={css.forgotPasswordButton} onClick={handleOpenReset}>Forgot password</button>}
+              <Button type="contained" submit>Continue with email</Button>
+              {authType === "Log in" && <Button type="outlined" onClick={handleOpenReset}>Forgot password</Button>}
               <hr className={css.divider} />
-              <button className={css.googleBtn} onClick={handleGoogle}><img className={css.buttonImg} src={google} alt="google" />Continue with Google</button>
+              <Button type="outlined" onClick={handleGoogle}><img className={css.buttonImg} src={google} alt="google" />Continue with Google</Button>
             </form>
             {authType === "Log in"
               ? <>
                 <span className={css.alternativeText}>Don't have an account?</span>
-                <button className={css.toggleBtn} onClick={() => handleToggleAuth("Sing up")}>Create account</button>
+                <Button type="outlined" onClick={() => handleToggleAuth("Sing up")}>Create account</Button>
               </>
               : <>
                 <span className={css.alternativeText}>Already have an account?</span>
-                <button className={css.toggleBtn} onClick={() => handleToggleAuth("Log in")}>Log in</button>
+                <Button type="outlined" onClick={() => handleToggleAuth("Log in")}>Log in</Button>
               </>
             }
           </div>
@@ -178,10 +180,10 @@ export const Auth = () => {
             <div className={css.errorContainer}>{errorMessage}</div>
             <div className={css.resetForm}>
               <input className={css.input} type="email" placeholder="Enter your email" value={resetEmail} onChange={(e) => setResetEmail(e.target.value)} />
-              <button className={css.resetButton} onClick={handleResetPassword}>Send email</button>
+              <Button type="contained" onClick={handleResetPassword}>Send email</Button>
             </div>
             {resetMessage && <p className={css.resetMessage}>Check your email to proceed password reset.</p>}
-            <button className={css.resetBackButton} onClick={handleCloseReset}>Back to Login</button>
+            <Button type="outlined" onClick={handleCloseReset}>Back to Login</Button>
           </div>
         )
       }
