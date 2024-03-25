@@ -15,7 +15,7 @@ import css from './Notes.module.css';
 
 import { findFolder } from 'utils/findFolder';
 
-export const Notes = ({ notes, preventOnClick, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
+export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
 
   const { userId, documents, path } = useSelector(state => state.user);
@@ -207,29 +207,48 @@ export const Notes = ({ notes, preventOnClick, handleTouchStart, handleTouchEnd,
 
   return (
     <div id="note" className={css.container}>
-      {notes?.map((i, index) => (
-        <div
-          key={i.id}
-          className={css.note}
-          id={i.id}
-          data-index={index}
-          data-id={i.id}
-          data-draggable={true}
-          data-type="note"
-          onClick={() => handleOpenNote(i.id)}
-          onTouchStart={e => handleTouchStart(e, index, i.id, "note", i.title, handleOpenEditNoteModal)}
-          onTouchEnd={e => handleTouchEnd(e)}
-          onTouchMove={e => handleTouchMove(e, index, i.id, "note", i.title)}
-          onMouseDown={e => handleTouchStart(e, index, i.id, "note", i.title, handleOpenEditNoteModal)}
-          onMouseUp={e => handleTouchEnd(e)}
-          onMouseMove={e => handleTouchMove(e, index, i.id, "note", i.title)}
-        >
-          {i.title}
-          <span className={css.settings}>
-            <IconButton onClick={(e) => handleOpenEditNoteModal(e, i.id, i.title)} small path="M480-218.461q-16.5 0-28.25-11.75T440-258.461q0-16.501 11.75-28.251t28.25-11.75q16.5 0 28.25 11.75T520-258.461q0 16.5-11.75 28.25T480-218.461ZM480-440q-16.5 0-28.25-11.75T440-480q0-16.5 11.75-28.25T480-520q16.5 0 28.25 11.75T520-480q0 16.5-11.75 28.25T480-440Zm0-221.538q-16.5 0-28.25-11.75T440-701.539q0-16.5 11.75-28.25t28.25-11.75q16.5 0 28.25 11.75t11.75 28.25q0 16.501-11.75 28.251T480-661.538Z" />
-          </span>
-        </div>
-      ))}
+      {windowWidth < 639
+        ? notes?.map((i, index) => (
+          <div
+            key={i.id}
+            className={css.note}
+            id={i.id}
+            data-index={index}
+            data-id={i.id}
+            data-draggable={true}
+            data-type="note"
+            onClick={() => handleOpenNote(i.id)}
+            onTouchStart={e => handleTouchStart(e, index, i.id, "note", i.title, handleOpenEditNoteModal)}
+            onTouchEnd={e => handleTouchEnd(e)}
+            onTouchMove={e => handleTouchMove(e, index, i.id, "note", i.title)}
+          >
+            {i.title}
+            <span className={css.settings}>
+              <IconButton onClick={(e) => handleOpenEditNoteModal(e, i.id, i.title)} small path="M480-218.461q-16.5 0-28.25-11.75T440-258.461q0-16.501 11.75-28.251t28.25-11.75q16.5 0 28.25 11.75T520-258.461q0 16.5-11.75 28.25T480-218.461ZM480-440q-16.5 0-28.25-11.75T440-480q0-16.5 11.75-28.25T480-520q16.5 0 28.25 11.75T520-480q0 16.5-11.75 28.25T480-440Zm0-221.538q-16.5 0-28.25-11.75T440-701.539q0-16.5 11.75-28.25t28.25-11.75q16.5 0 28.25 11.75t11.75 28.25q0 16.501-11.75 28.251T480-661.538Z" />
+            </span>
+          </div>
+        ))
+        : notes?.map((i, index) => (
+          <div
+            key={i.id}
+            className={css.note}
+            id={i.id}
+            data-index={index}
+            data-id={i.id}
+            data-draggable={true}
+            data-type="note"
+            onClick={() => handleOpenNote(i.id)}
+            onMouseDown={e => handleTouchStart(e, index, i.id, "note", i.title, handleOpenEditNoteModal)}
+            onMouseUp={e => handleTouchEnd(e)}
+            onMouseMove={e => handleTouchMove(e, index, i.id, "note", i.title)}
+          >
+            {i.title}
+            <span className={css.settings}>
+              <IconButton onClick={(e) => handleOpenEditNoteModal(e, i.id, i.title)} small path="M480-218.461q-16.5 0-28.25-11.75T440-258.461q0-16.501 11.75-28.251t28.25-11.75q16.5 0 28.25 11.75T520-258.461q0 16.5-11.75 28.25T480-218.461ZM480-440q-16.5 0-28.25-11.75T440-480q0-16.5 11.75-28.25T480-520q16.5 0 28.25 11.75T520-480q0 16.5-11.75 28.25T480-440Zm0-221.538q-16.5 0-28.25-11.75T440-701.539q0-16.5 11.75-28.25t28.25-11.75q16.5 0 28.25 11.75t11.75 28.25q0 16.501-11.75 28.251T480-661.538Z" />
+            </span>
+          </div>
+        ))
+      }
       <Modal
         loading={loadingEditNoteModal}
         open={openEditNoteModal}

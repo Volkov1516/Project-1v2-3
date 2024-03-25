@@ -53,6 +53,10 @@ export const Manager = memo(function MemoizedComponent() {
   }, []);
 
   useEffect(() => {
+    managerRef.current.scrollTo(0, 0);
+  }, [path]);
+
+  useEffect(() => {
     function findFolder(object, id) {
       if (object?.id === id) {
         return object;
@@ -65,8 +69,6 @@ export const Manager = memo(function MemoizedComponent() {
           }
         }
       }
-
-      managerRef.current.scrollTo(0, 0);
 
       return null;
     }
@@ -870,6 +872,7 @@ export const Manager = memo(function MemoizedComponent() {
         <Folders
           folders={folder?.folders}
           preventOnClick={preventOnClick}
+          windowWidth={windowWidth}
           handleTouchStart={handleTouchStart}
           handleTouchEnd={handleTouchEnd}
           handleTouchMove={handleTouchMove}
@@ -877,6 +880,7 @@ export const Manager = memo(function MemoizedComponent() {
         <Notes
           notes={folder?.notes}
           preventOnClick={preventOnClick}
+          windowWidth={windowWidth}
           handleTouchStart={handleTouchStart}
           handleTouchEnd={handleTouchEnd}
           handleTouchMove={handleTouchMove}
