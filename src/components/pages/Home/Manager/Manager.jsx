@@ -257,7 +257,6 @@ export const Manager = memo(function MemoizedComponent() {
       setDraggableIndex(index);
       setDraggableId(id);
       setDraggableType(type);
-      setPreventOnClick(true);
 
       let offsetX;
       let offsetY;
@@ -267,6 +266,7 @@ export const Manager = memo(function MemoizedComponent() {
         offsetY = e.touches[0].clientY - currentElement.getBoundingClientRect().top;
       }
       else {
+        setPreventOnClick(true);
         offsetX = e.clientX - currentElement.getBoundingClientRect().left;
         offsetY = e.clientY - currentElement.getBoundingClientRect().top;
       }
