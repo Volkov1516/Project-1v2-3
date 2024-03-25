@@ -415,6 +415,55 @@ export const Manager = memo(function MemoizedComponent() {
     setTimerIdNest(timerMoveFolder);
   };
 
+  const touchMoveFolderDesktop = (targetElement, targetIndex, targetElementIndex, targetElementId) => {
+    const timerMoveFolder = setTimeout(() => {
+      if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
+      
+      if (targetIndex !== targetElementIndex) {
+        if (draggableIndex < targetElementIndex) {
+          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = targetElement.offsetHeight + 'px';
+          setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
+          setPlaceholderPosition('bottom');
+        }
+        else if (draggableIndex > targetElementIndex) {
+          document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginTop = targetElement.offsetHeight + 'px';
+          setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
+          setPlaceholderPosition('top');
+        }
+      }
+      else {
+        if (draggableIndex < targetElementIndex) {
+          if (placeholderPosition === 'bottom') {
+            document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginTop = targetElement.offsetHeight + 'px';
+            setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
+            setPlaceholderPosition('top');
+          }
+          else if (placeholderPosition === 'top') {
+            document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = targetElement.offsetHeight + 'px';
+            setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
+            setPlaceholderPosition('bottom');
+          }
+        }
+        else if (draggableIndex > targetElementIndex) {
+          if (placeholderPosition === 'bottom') {
+            document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginTop = targetElement.offsetHeight + 'px';
+            setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
+            setPlaceholderPosition('top');
+          }
+          else if (placeholderPosition === 'top') {
+            document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = targetElement.offsetHeight + 'px';
+            setPlaceholderId(folder[`${draggableType}s`][targetElementIndex].id);
+            setPlaceholderPosition('bottom');
+          }
+        }
+      }
+
+      setIsAllowNest(true);
+      setNestFolderId(null);
+    }, 500);
+    setTimerIdNest(timerMoveFolder);
+  };
+
   const touchMoveUniversal = (targetElement, targetIndex, targetElementIndex, targetElementId) => {
     if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
 
@@ -527,7 +576,7 @@ export const Manager = memo(function MemoizedComponent() {
                 touchMoveFolder(targetElement, targetIndex, targetElementIndex, targetElementId);
               }
               else {
-                touchMoveUniversal(targetElement, targetIndex, targetElementIndex, targetElementId);
+                touchMoveFolderDesktop(targetElement, targetIndex, targetElementIndex, targetElementId);
               }
             }
             else if (!isAllowNest && nestFolderId && nestFolderId !== targetElementId) {
@@ -539,7 +588,7 @@ export const Manager = memo(function MemoizedComponent() {
                 touchMoveFolder(targetElement, targetIndex, targetElementIndex, targetElementId);
               }
               else {
-                touchMoveUniversal(targetElement, targetIndex, targetElementIndex, targetElementId);
+                touchMoveFolderDesktop(targetElement, targetIndex, targetElementIndex, targetElementId);
               }
             }
           }
@@ -822,6 +871,10 @@ export const Manager = memo(function MemoizedComponent() {
         currentElement.style.padding = '4px 8px 4px 16px';
       }
 
+      if (windowWidth > 639 && draggableType === 'folder') {
+        currentElement.style.padding = '4px 8px 4px 16px';
+      }
+
       setIsDraggable(false);
       setDraggableOffsetX(null);
       setDraggableOffsetY(null);
@@ -847,7 +900,12 @@ export const Manager = memo(function MemoizedComponent() {
         touchEndDropInFolder();
       }
       else if (draggableType === 'folder' && targetType === 'folder' && targetIndex !== null) {
-        touchEndDropFolder();
+        if(windowWidth < 639) {
+          touchEndDropFolder();
+        }
+        else {
+          touchEndDropUniversal();
+        }
       }
       else if (draggableType === 'note' && targetType === 'note' && targetIndex !== null) {
         touchEndDropUniversal();
@@ -859,7 +917,7 @@ export const Manager = memo(function MemoizedComponent() {
         touchEndDropInFolder();
       }
 
-    setTimeout(() => setPreventOnClick(false), 0);
+      setTimeout(() => setPreventOnClick(false), 0);
     }
   };
 
