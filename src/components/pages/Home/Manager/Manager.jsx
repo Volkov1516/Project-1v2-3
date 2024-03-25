@@ -370,25 +370,26 @@ export const Manager = memo(function MemoizedComponent() {
             if (targetElementIndex % 2 === 0) {
               targetElement.style.marginRight = '50%';
               setPlaceholderId(targetElementId);
-              setPlaceholderPosition('left');
+              setPlaceholderPosition('right');
             }
             else if (targetElementIndex % 2 !== 0) {
               if (draggableIndex === folder.folders.length - 1) {
                 document.getElementById(folder?.folders[targetElementIndex + 1].id).style.marginLeft = '50%';
                 setPlaceholderId(folder?.folders[targetElementIndex + 1].id);
+                setPlaceholderPosition('left');
               }
               else {
                 if (draggableIndex - 1 === targetElementIndex) {
                   document.getElementById(folder?.folders[targetElementIndex + 2].id).style.marginLeft = '50%';
                   setPlaceholderId(folder?.folders[targetElementIndex + 2].id);
+                  setPlaceholderPosition('left');
                 }
                 else {
                   document.getElementById(folder?.folders[targetElementIndex + 1].id).style.marginLeft = '50%';
                   setPlaceholderId(folder?.folders[targetElementIndex + 1].id);
+                  setPlaceholderPosition('left');
                 }
               }
-
-              setPlaceholderPosition('left');
             }
           }
           else if (placeholderPosition === 'left') {
