@@ -8,6 +8,7 @@ import { EditorModal } from './EditorModal/EditorModal';
 import { Snackbar } from 'components/atoms/Snackbar/Snackbar';
 
 import css from './Home.module.css';
+import { Route } from 'components/atoms/Navigation/Route';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,9 @@ export const Home = () => {
     <div className={css.container}>
       <Bar />
       <Manager />
-      <EditorModal />
+      <Route path="/editor">
+        <EditorModal />
+      </Route>
       <Snackbar />
     </div>
   );

@@ -18,7 +18,7 @@ import logo from '../../../../../assets/logo.png';
 import googlePlay from '../../../../../assets/google-play.svg';
 import patreon from '../../../../../assets/patreon.svg';
 
-export const Settings = ({ open, setOpen }) => {
+export const Settings = () => {
   const dispatch = useDispatch();
 
   const { theme } = useSelector(state => state.app);
@@ -85,11 +85,15 @@ export const Settings = ({ open, setOpen }) => {
     }
   };
 
+  const handleClose = e => {
+    window.history.back();
+  };
+
   return createPortal(
-    <div className={css.container} onClick={() => setOpen(false)}>
+    <div className={css.container} onClick={handleClose}>
       <div className={css.content} onClick={e => e.stopPropagation()}>
         <nav className={css.navigation}>
-          <IconButton onClick={() => setOpen(false)} path="M256-227.692 227.692-256l224-224-224-224L256-732.308l224 224 224-224L732.308-704l-224 224 224 224L704-227.692l-224-224-224 224Z" />
+          <IconButton onClick={handleClose} path="M256-227.692 227.692-256l224-224-224-224L256-732.308l224 224 224-224L732.308-704l-224 224 224 224L704-227.692l-224-224-224 224Z" />
         </nav>
         <div className={css.sections}>
           <section className={css.section}>

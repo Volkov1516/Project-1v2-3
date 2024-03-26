@@ -9,6 +9,9 @@ export const Link = ({className, href, children}) => {
     }
     // prevent full page reload
     e.preventDefault();
+    // prevent opent note/folder on settings click
+    e.stopPropagation();
+    
     // update url
     window.history.pushState({}, '', href);
     // communicate to Routes that URL has changed

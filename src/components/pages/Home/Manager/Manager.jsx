@@ -194,6 +194,16 @@ export const Manager = memo(function MemoizedComponent() {
     const timerOpenModal = setTimeout(() => {
       setIsDraggable(false);
 
+      if(type === 'note') {
+        window.history.pushState({}, '', 'editNote');
+      }
+      else if(type === 'folder') {
+        window.history.pushState({}, '', 'editFolder');
+      }
+      
+      const navEvent = new PopStateEvent('popstate');
+      window.dispatchEvent(navEvent);
+
       // STEP 1: Reset styles
       currentElement.style.position = 'initial';
       currentElement.style.left = 'initial';

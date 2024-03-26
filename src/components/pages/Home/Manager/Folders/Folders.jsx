@@ -13,12 +13,13 @@ import { Modal } from 'components/atoms/Modal/Modal';
 import css from './Folders.module.css';
 
 import { findFolder } from 'utils/findFolder';
+import { Route } from 'components/atoms/Navigation/Route';
+import { Link } from 'components/atoms/Navigation/Link';
 
 export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
   const { userId, documents, path } = useSelector(state => state.user);
 
-  const [openEditFolderModal, setOpenEditFolderModal] = useState(false);
   const [loadingEditFolderModal, setLoadingEditFolderModal] = useState(false);
   const [folderIdEditFolderModal, setFoldeIdEditFolderModal] = useState(null);
   const [folderInputValue, setFolderInputValue] = useState('');
@@ -32,11 +33,15 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
   };
 
   const handleOpenEditFodlerModal = (e, id, name) => {
-    e.stopPropagation();
+    // e.stopPropagation();
     setFoldeIdEditFolderModal(id);
     setFolderInputValue(name);
     setFolderDeleteValue(name);
-    setOpenEditFolderModal(true);
+    // setOpenEditFolderModal(true);
+
+    // window.history.pushState({}, '', 'editFolder');
+    // const navEvent = new PopStateEvent('popstate');
+    // window.dispatchEvent(navEvent);
   };
 
   const handleEditFolderName = async () => {
@@ -99,7 +104,7 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
     setFolderDeleteValue('');
     setFolderDeleteInputValue('');
     setLoadingEditFolderModal(false);
-    setOpenEditFolderModal(false);
+    window.history.back();
   };
 
   return (
@@ -125,9 +130,11 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
               </svg>
               {i.name}
             </div>
-            <span className={css.settings}>
-              <IconButton onClick={(e) => handleOpenEditFodlerModal(e, i.id, i.name)} small path="M480-218.461q-16.5 0-28.25-11.75T440-258.461q0-16.501 11.75-28.251t28.25-11.75q16.5 0 28.25 11.75T520-258.461q0 16.5-11.75 28.25T480-218.461ZM480-440q-16.5 0-28.25-11.75T440-480q0-16.5 11.75-28.25T480-520q16.5 0 28.25 11.75T520-480q0 16.5-11.75 28.25T480-440Zm0-221.538q-16.5 0-28.25-11.75T440-701.539q0-16.5 11.75-28.25t28.25-11.75q16.5 0 28.25 11.75t11.75 28.25q0 16.501-11.75 28.251T480-661.538Z" />
-            </span>
+            {/* <span className={css.settings}>
+              <Link href="editFolder">
+                <IconButton onClick={(e) => handleOpenEditFodlerModal(e, i.id, i.name)} small path="M480-218.461q-16.5 0-28.25-11.75T440-258.461q0-16.501 11.75-28.251t28.25-11.75q16.5 0 28.25 11.75T520-258.461q0 16.5-11.75 28.25T480-218.461ZM480-440q-16.5 0-28.25-11.75T440-480q0-16.5 11.75-28.25T480-520q16.5 0 28.25 11.75T520-480q0 16.5-11.75 28.25T480-440Zm0-221.538q-16.5 0-28.25-11.75T440-701.539q0-16.5 11.75-28.25t28.25-11.75q16.5 0 28.25 11.75t11.75 28.25q0 16.501-11.75 28.251T480-661.538Z" />
+              </Link>
+            </span> */}
           </div>
         ))
         : folders?.map((i, index) => (
@@ -151,23 +158,23 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
               {i.name}
             </div>
             <span className={css.settings}>
-              <IconButton onClick={(e) => handleOpenEditFodlerModal(e, i.id, i.name)} small path="M480-218.461q-16.5 0-28.25-11.75T440-258.461q0-16.501 11.75-28.251t28.25-11.75q16.5 0 28.25 11.75T520-258.461q0 16.5-11.75 28.25T480-218.461ZM480-440q-16.5 0-28.25-11.75T440-480q0-16.5 11.75-28.25T480-520q16.5 0 28.25 11.75T520-480q0 16.5-11.75 28.25T480-440Zm0-221.538q-16.5 0-28.25-11.75T440-701.539q0-16.5 11.75-28.25t28.25-11.75q16.5 0 28.25 11.75t11.75 28.25q0 16.501-11.75 28.251T480-661.538Z" />
+              <Link href="editFolder">
+                <IconButton onClick={(e) => handleOpenEditFodlerModal(e, i.id, i.name)} small path="M480-218.461q-16.5 0-28.25-11.75T440-258.461q0-16.501 11.75-28.251t28.25-11.75q16.5 0 28.25 11.75T520-258.461q0 16.5-11.75 28.25T480-218.461ZM480-440q-16.5 0-28.25-11.75T440-480q0-16.5 11.75-28.25T480-520q16.5 0 28.25 11.75T520-480q0 16.5-11.75 28.25T480-440Zm0-221.538q-16.5 0-28.25-11.75T440-701.539q0-16.5 11.75-28.25t28.25-11.75q16.5 0 28.25 11.75t11.75 28.25q0 16.501-11.75 28.251T480-661.538Z" />
+              </Link>
             </span>
           </div>
         ))
       }
-      <Modal
-        loading={loadingEditFolderModal}
-        open={openEditFolderModal}
-        setOpen={setOpenEditFolderModal}
-      >
-        <div className={css.eiditFolderModalContent}>
-          <Input id="folderNameId" label="Edit folder name" placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderInputValue(e.target.value)} />
-          <Button type="outlined" disabled={!folderInputValue} onClick={handleEditFolderName}>Rename folder</Button>
-          <Input id="folderDleteId" label={`Enter ${folderDeleteValue} to delete the folder`} placeholder="Enter folder name" value={folderDeleteInputValue} onChange={e => setFolderDeleteInputValue(e.target.value)} />
-          <Button type="outlined" disabled={folderDeleteValue !== folderDeleteInputValue} onClick={handleDeleteFolder}>Delete folder</Button>
-        </div>
-      </Modal>
+      <Route path="/editFolder">
+        <Modal loading={loadingEditFolderModal}>
+          <div className={css.eiditFolderModalContent}>
+            <Input id="folderNameId" label="Edit folder name" placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderInputValue(e.target.value)} />
+            <Button type="outlined" disabled={!folderInputValue} onClick={handleEditFolderName}>Rename folder</Button>
+            <Input id="folderDleteId" label={`Enter ${folderDeleteValue} to delete the folder`} placeholder="Enter folder name" value={folderDeleteInputValue} onChange={e => setFolderDeleteInputValue(e.target.value)} />
+            <Button type="outlined" disabled={folderDeleteValue !== folderDeleteInputValue} onClick={handleDeleteFolder}>Delete folder</Button>
+          </div>
+        </Modal>
+      </Route>
     </div>
   );
 };

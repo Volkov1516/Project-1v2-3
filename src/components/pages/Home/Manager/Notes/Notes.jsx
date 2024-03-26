@@ -14,6 +14,8 @@ import { Modal } from 'components/atoms/Modal/Modal';
 import css from './Notes.module.css';
 
 import { findFolder } from 'utils/findFolder';
+import { Route } from 'components/atoms/Navigation/Route';
+import { Link } from 'components/atoms/Navigation/Link';
 
 export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
@@ -21,7 +23,6 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
   const { userId, documents, path } = useSelector(state => state.user);
   const { notesCache, activeNoteId } = useSelector(state => state.note);
 
-  const [openEditNoteModal, setOpenEditNoteModal] = useState(false);
   const [loadingEditNoteModal, setLoadingEditNoteModal] = useState(false);
   const [noteIdEditNoteModal, setNoteIdEditNoteModal] = useState(null);
   const [titleInputValue, setTitleInputValue] = useState('');
@@ -77,14 +78,22 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
       title: targetNote?.title,
       content: targetNote?.content,
     }));
+
+    if(window.location.pathname === '/editor') return;
+
+    window.history.pushState({}, '', 'editor');
+    const navEvent = new PopStateEvent('popstate');
+    window.dispatchEvent(navEvent);
   };
 
   const handleOpenEditNoteModal = (e, id, title) => {
-    e.stopPropagation();
     setNoteIdEditNoteModal(id);
     setTitleInputValue(title);
     setTitleDeleteValue(title);
-    setOpenEditNoteModal(true);
+
+    // window.history.pushState({}, '', 'editNote');
+    // const navEvent = new PopStateEvent('popstate');
+    // window.dispatchEvent(navEvent);
   };
 
   const handleEditNoteTitle = async () => {
@@ -202,7 +211,7 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
 
     // STEP 5: Close modal
     setLoadingEditNoteModal(false);
-    setOpenEditNoteModal(false);
+    window.history.back();
   };
 
   return (
@@ -223,9 +232,11 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
             onTouchMove={e => handleTouchMove(e, index, i.id, "note", i.title)}
           >
             {i.title}
-            <span className={css.settings}>
-              <IconButton onClick={(e) => handleOpenEditNoteModal(e, i.id, i.title)} small path="M480-218.461q-16.5 0-28.25-11.75T440-258.461q0-16.501 11.75-28.251t28.25-11.75q16.5 0 28.25 11.75T520-258.461q0 16.5-11.75 28.25T480-218.461ZM480-440q-16.5 0-28.25-11.75T440-480q0-16.5 11.75-28.25T480-520q16.5 0 28.25 11.75T520-480q0 16.5-11.75 28.25T480-440Zm0-221.538q-16.5 0-28.25-11.75T440-701.539q0-16.5 11.75-28.25t28.25-11.75q16.5 0 28.25 11.75t11.75 28.25q0 16.501-11.75 28.251T480-661.538Z" />
-            </span>
+            {/* <span className={css.settings}>
+              <Link href="editNote">
+                <IconButton onClick={(e) => handleOpenEditNoteModal(e, i.id, i.title)} small path="M480-218.461q-16.5 0-28.25-11.75T440-258.461q0-16.501 11.75-28.251t28.25-11.75q16.5 0 28.25 11.75T520-258.461q0 16.5-11.75 28.25T480-218.461ZM480-440q-16.5 0-28.25-11.75T440-480q0-16.5 11.75-28.25T480-520q16.5 0 28.25 11.75T520-480q0 16.5-11.75 28.25T480-440Zm0-221.538q-16.5 0-28.25-11.75T440-701.539q0-16.5 11.75-28.25t28.25-11.75q16.5 0 28.25 11.75t11.75 28.25q0 16.501-11.75 28.251T480-661.538Z" />
+              </Link>
+            </span> */}
           </div>
         ))
         : notes?.map((i, index) => (
@@ -244,23 +255,23 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
           >
             {i.title}
             <span className={css.settings}>
-              <IconButton onClick={(e) => handleOpenEditNoteModal(e, i.id, i.title)} small path="M480-218.461q-16.5 0-28.25-11.75T440-258.461q0-16.501 11.75-28.251t28.25-11.75q16.5 0 28.25 11.75T520-258.461q0 16.5-11.75 28.25T480-218.461ZM480-440q-16.5 0-28.25-11.75T440-480q0-16.5 11.75-28.25T480-520q16.5 0 28.25 11.75T520-480q0 16.5-11.75 28.25T480-440Zm0-221.538q-16.5 0-28.25-11.75T440-701.539q0-16.5 11.75-28.25t28.25-11.75q16.5 0 28.25 11.75t11.75 28.25q0 16.501-11.75 28.251T480-661.538Z" />
+              <Link href="editNote">
+                <IconButton onClick={(e) => handleOpenEditNoteModal(e, i.id, i.title)} small path="M480-218.461q-16.5 0-28.25-11.75T440-258.461q0-16.501 11.75-28.251t28.25-11.75q16.5 0 28.25 11.75T520-258.461q0 16.5-11.75 28.25T480-218.461ZM480-440q-16.5 0-28.25-11.75T440-480q0-16.5 11.75-28.25T480-520q16.5 0 28.25 11.75T520-480q0 16.5-11.75 28.25T480-440Zm0-221.538q-16.5 0-28.25-11.75T440-701.539q0-16.5 11.75-28.25t28.25-11.75q16.5 0 28.25 11.75t11.75 28.25q0 16.501-11.75 28.251T480-661.538Z" />
+              </Link>
             </span>
           </div>
         ))
       }
-      <Modal
-        loading={loadingEditNoteModal}
-        open={openEditNoteModal}
-        setOpen={setOpenEditNoteModal}
-      >
-        <div className={css.eiditNoteModalContent}>
-          <Input id="noteTitleId" label="Edit note title" placeholder="Enter note name" value={titleInputValue} onChange={e => setTitleInputValue(e.target.value)} />
-          <Button type="outlined" disabled={!titleInputValue} onClick={handleEditNoteTitle}>Rename note</Button>
-          <Input id="noteDeleteTitleId" label={`Enter ${titleDeleteValue} to delete the note`} placeholder="Enter note name" value={titleDeleteInputValue} onChange={e => setTitleDeleteInputValue(e.target.value)} />
-          <Button type="outlined" disabled={titleDeleteValue !== titleDeleteInputValue} onClick={handleDeleteNote}>Delete note</Button>
-        </div>
-      </Modal>
+      <Route path="/editNote">
+        <Modal loading={loadingEditNoteModal}>
+          <div className={css.eiditNoteModalContent}>
+            <Input id="noteTitleId" label="Edit note title" placeholder="Enter note name" value={titleInputValue} onChange={e => setTitleInputValue(e.target.value)} />
+            <Button type="outlined" disabled={!titleInputValue} onClick={handleEditNoteTitle}>Rename note</Button>
+            <Input id="noteDeleteTitleId" label={`Enter ${titleDeleteValue} to delete the note`} placeholder="Enter note name" value={titleDeleteInputValue} onChange={e => setTitleDeleteInputValue(e.target.value)} />
+            <Button type="outlined" disabled={titleDeleteValue !== titleDeleteInputValue} onClick={handleDeleteNote}>Delete note</Button>
+          </div>
+        </Modal>
+      </Route>
     </div>
   );
 };

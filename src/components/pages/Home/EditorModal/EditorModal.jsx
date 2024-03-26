@@ -11,7 +11,7 @@ import css from './EditorModal.module.css';
 export const EditorModal = memo(function MemoizedEditorModal() {
   const dispatch = useDispatch();
 
-  const { isOpenNote, activeNoteId } = useSelector(state => state.note);
+  const { activeNoteId } = useSelector(state => state.note);
 
   const editorRef = useRef(null);
   const titleRef = useRef(null);
@@ -26,9 +26,11 @@ export const EditorModal = memo(function MemoizedEditorModal() {
       title: null,
       content: null,
     }));
+
+    window.history.back();
   };
 
-  return isOpenNote && (
+  return (
     <div id="editorModalContainer" key={activeNoteId} className={css.container} onClick={handleClose}>
       <div className={css.edit} onClick={(e) => e.stopPropagation()}>
         <Header handleClose={handleClose} />
