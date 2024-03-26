@@ -85,7 +85,7 @@ export const Settings = ({ open, setOpen }) => {
     }
   };
 
-  return open && createPortal(
+  return createPortal(
     <div className={css.container} onClick={() => setOpen(false)}>
       <div className={css.content} onClick={e => e.stopPropagation()}>
         <nav className={css.navigation}>
