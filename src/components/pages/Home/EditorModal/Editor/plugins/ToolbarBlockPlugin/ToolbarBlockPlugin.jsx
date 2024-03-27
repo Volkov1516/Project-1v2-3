@@ -12,7 +12,6 @@ import {
 import { $setBlocksType } from '@lexical/selection';
 import { $createHeadingNode, $createQuoteNode } from '@lexical/rich-text';
 import { INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND, INSERT_CHECK_LIST_COMMAND } from '@lexical/list';
-import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
 
 import css from './ToolbarBlockPlugin.module.css';
 
@@ -23,7 +22,6 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef, titleRef }) => {
   const h2Ref = useRef(null);
   const h3Ref = useRef(null);
   const quoteRef = useRef(null);
-  const dividerRef = useRef(null);
   const bulletListRef = useRef(null);
   const numberListRef = useRef(null);
   const checkListRef = useRef(null);
@@ -127,9 +125,6 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef, titleRef }) => {
       case 6:
         quoteRef.current?.focus();
         break;
-      case 7:
-        dividerRef.current?.focus();
-        break;
       default:
         return;
     }
@@ -151,7 +146,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef, titleRef }) => {
       editor.focus();
     }
     else if (e.keyCode === 39) {
-      if (selectedTool === 7) return;
+      if (selectedTool === 6) return;
 
       setSelectedTool(selectedTool + 1);
     }
@@ -193,7 +188,6 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef, titleRef }) => {
         <button ref={bulletListRef} id="tool" className={css.tool} onClick={() => editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined)}>bullet list</button>
         <button ref={numberListRef} id="tool" className={css.tool} onClick={() => editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined)}>number list</button>
         <button ref={quoteRef} id="tool" className={css.tool} onClick={() => formatQuote()}>quote</button>
-        <button ref={dividerRef} id="tool" className={css.tool} onClick={() => editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined)}>divider</button>
       </div>
     </div>,
     modalEditorContentRef?.current
