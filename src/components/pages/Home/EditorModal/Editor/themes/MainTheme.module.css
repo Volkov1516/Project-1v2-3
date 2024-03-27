@@ -83,9 +83,7 @@
   margin: 0 0 8px;
   padding-left: 16px;
   border-left: 4px solid var(--fontColorPrimary);;
-  color: var(--gray400);
-
-  color: var(--fontColorPrimary);
+  color: var(--fontColorQuote);
 }
 
 .listItem {

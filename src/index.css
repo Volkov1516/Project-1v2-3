@@ -55,6 +55,7 @@
     --buttonHoverSecondary: var(--gray100);
     --buttonActiveSecondary: var(--gray200);
     --fontColorPrimary: var(--black);
+    --fontColorQuote: var(--gray600);
   }
 }
 
@@ -72,6 +73,7 @@
     --buttonHoverSecondary: var(--gray1200);
     --buttonActiveSecondary: var(--gray1400);
     --fontColorPrimary: var(--gray200);
+    --fontColorQuote: var(--gray600);
   }
 }
 
@@ -88,6 +90,7 @@ body.light-theme {
   --buttonHoverSecondary: var(--gray100);
   --buttonActiveSecondary: var(--gray200);
   --fontColorPrimary: var(--black);
+  --fontColorQuote: var(--gray600);
 }
 
 body.dark-theme {
@@ -103,6 +106,7 @@ body.dark-theme {
   --buttonHoverSecondary: var(--gray1200);
   --buttonActiveSecondary: var(--gray1400);
   --fontColorPrimary: var(--gray200);
+  --fontColorQuote: var(--gray600);
 }
 
 body {
