@@ -114,7 +114,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             const top = rect?.top - textRect?.top + modalEditorContentRef?.current?.scrollTop - 48;
 
             setTop(top);
-            setLeft(rect?.left);
+            setLeft(rect?.left - textRect?.left);
           }
           else {
             const top = rect?.top - textRect?.top + modalEditorContentRef?.current?.scrollTop - 62;
