@@ -3,12 +3,12 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyD7KdT95B3MThJ0A-ZyKOskkFixTPHsHIA',
-  authDomain: 'journalisto-aae0f.firebaseapp.com',
-  projectId: 'journalisto-aae0f',
-  storageBucket: 'journalisto-aae0f.appspot.com',
-  messagingSenderId: '255587758716',
-  appId: '1:255587758716:web:f98ed7b7bfece484820ff9'
+  apiKey: "AIzaSyDQuCXvFFXPl6lTFEGvv8yuULlXX-MiHK4",
+  authDomain: "project-1-e93b8.firebaseapp.com",
+  projectId: "project-1-e93b8",
+  storageBucket: "project-1-e93b8.appspot.com",
+  messagingSenderId: "278998425236",
+  appId: "1:278998425236:web:55ed2508b7669722871e81"
 };
 
 const app = initializeApp(firebaseConfig);
