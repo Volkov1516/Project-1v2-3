@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTheme, setSnackbar } from 'redux/features/app/appSlice';
-import { updateDocuments, setActiveTaskId } from 'redux/features/user/userSlice';
+import { setTheme } from 'redux/features/app/appSlice';
+import { updateDocuments, setActiveTaskId, createFolder } from 'redux/features/user/userSlice';
 import { setActiveNote } from 'redux/features/note/noteSlice';
-import { db } from 'firebase.js';
-import { doc, setDoc } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
+import { Settings } from './Settings/Settings';
+import { Link } from 'components/atoms/Navigation/Link';
+import { Route } from 'components/atoms/Navigation/Route';
 import { Tooltip } from 'components/atoms/Tooltip/Tooltip';
 import { IconButton } from 'components/atoms/IconButton/IconButton';
 import { Modal } from 'components/atoms/Modal/Modal';
@@ -16,18 +17,14 @@ import { Button } from 'components/atoms/Button/Button';
 import css from './Bar.module.css';
 
 import { findFolder } from 'utils/findFolder';
-import { Settings } from './Settings/Settings';
-import { Link } from 'components/atoms/Navigation/Link';
-import { Route } from 'components/atoms/Navigation/Route';
 
 export const Bar = () => {
   const dispatch = useDispatch();
 
   const { theme } = useSelector(state => state.app);
-  const { userEmail, userPhoto, userName, userId, documents, path } = useSelector(state => state.user);
+  const { userEmail, userPhoto, userName, documents, path, folderLoading } = useSelector(state => state.user);
 
   const [folderInputValue, setFolderNameInput] = useState('');
-  const [loadingCreateFolderModal, setLoadingCreateFolderModal] = useState(false);
 
   const handleCreateNote = () => {
     dispatch(setActiveNote({
@@ -39,36 +36,9 @@ export const Bar = () => {
     }));
   };
 
-  const handleCreateFolder = async () => {
-    setLoadingCreateFolderModal(true);
+  const handleCreateFolder = () => {
+    dispatch(createFolder(folderInputValue));
 
-    const newDocuments = JSON.parse(JSON.stringify(documents));
-
-    const createFolder = (targetFolder) => {
-      const newFolder = {
-        id: uuidv4(),
-        name: folderInputValue,
-        folders: [],
-        notes: [],
-        tasks: []
-      };
-
-      targetFolder.folders.push(newFolder);
-    };
-
-    findFolder(newDocuments, path[path.length - 1], createFolder);
-
-    try {
-      await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
-
-      dispatch(updateDocuments(newDocuments));
-      dispatch(setSnackbar('Folder was created'));
-    } catch (error) {
-      dispatch(setSnackbar('Failed to add the folder'));
-    }
-
-    setFolderNameInput('');
-    setLoadingCreateFolderModal(false);
     window.history.back();
   };
 
@@ -157,7 +127,7 @@ export const Bar = () => {
         }
       </div>
       <Route path="/addFolder">
-        <Modal loading={loadingCreateFolderModal}>
+        <Modal loading={folderLoading}>
           <div className={css.createFolderModalContent}>
             <Input id="folderNameId" label="Folder name" autofocus placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderNameInput(e.target.value)} />
             <Button type="outlined" disabled={!folderInputValue} onClick={handleCreateFolder}>Create folder</Button>

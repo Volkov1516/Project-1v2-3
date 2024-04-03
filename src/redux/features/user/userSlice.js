@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { setSnackbar } from '../app/appSlice.js';
+import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 
-import { db, auth } from '../../../firebase.js';
-import { doc, getDoc } from 'firebase/firestore';
-import { onAuthStateChanged } from 'firebase/auth';
+import { db } from '../../../firebase.js';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+
+import { findFolder } from 'utils/findFolder.js';
 
 const initialState = {
   userId: null,
@@ -15,7 +15,8 @@ const initialState = {
   activeTaskId: null,
   logged: false,
   loading: true,
-  error: null
+  error: null,
+  folderLoading: false
 };
 
 export const userSlice = createSlice({
@@ -53,43 +54,80 @@ export const userSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.userId = action.payload.id;
+        state.userEmail = action.payload.email;
+        state.userName = action.payload.name;
+        state.userPhoto = action.payload.photo;
+        state.documents = action.payload.documents;
+        state.logged = true;
+        state.loading = false;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.error = action.error;
+        state.loading = false;
+      })
+      .addCase(createFolder.pending, (state) => {
+        state.folderLoading = true;
+      })
+      .addCase(createFolder.fulfilled, (state, action) => {
+        state.documents = action.payload;
+        state.folderLoading = false;
+      })
+      .addCase(createFolder.rejected, (state, action) => {
+        state.error = action.error;
+        state.loading = false;
+      })
   }
 });
 
-export const observeAuthState = () => dispatch => {
-  const unsubscribe = onAuthStateChanged(auth, async user => {
-    if (user) {
-      try {
-        const docRef = doc(db, 'users', user?.uid);
-        const docSnap = await getDoc(docRef);
+export const fetchUser = createAsyncThunk('user/fetchUser', async (user) => {
+  const docRef = doc(db, 'users', user?.uid);
+  const docSnap = await getDoc(docRef);
 
-        dispatch(setUser({
-          id: user?.uid,
-          email: user?.email,
-          name: docSnap?.data()?.name || user?.displayName || null,
-          photo: docSnap?.data()?.photo || user?.photoURL || null,
-          documents: docSnap?.data()?.documents || {
-            id: 'root',
-            folders: [],
-            notes: [],
-            tasks: []
-          }
-        }));
-        dispatch(setLogged(true));
-      } catch (error) {
-        dispatch(setLogged(false));
-        dispatch(setSnackbar('Error receiving data'));
-        dispatch(setError(error));
-      }
-    } else {
-      dispatch(setLogged(false));
+  return {
+    id: user?.uid,
+    email: user?.email,
+    name: docSnap?.data()?.name || user?.displayName || null,
+    photo: docSnap?.data()?.photo || user?.photoURL || null,
+    documents: docSnap?.data()?.documents || {
+      id: 'root',
+      folders: [],
+      notes: [],
+      tasks: []
     }
+  };
+});
 
-    dispatch(setLoading(false));
-  });
+export const createFolder = createAsyncThunk('user/createFolder', async (folderInputValue, thunkAPI) => {
+  const state = thunkAPI.getState();
 
-  return () => unsubscribe();
-};
+  const newDocuments = JSON.parse(JSON.stringify(state.user.documents));
+
+    const createFolder = (targetFolder) => {
+      const newFolder = {
+        id: nanoid(),
+        name: folderInputValue,
+        folders: [],
+        notes: [],
+        tasks: []
+      };
+
+      targetFolder.folders.push(newFolder);
+    };
+
+    findFolder(newDocuments, state.user.path[state.user.path.length - 1], createFolder);
+
+    await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
+
+    return newDocuments;
+});
 
 export const {
   setUser,

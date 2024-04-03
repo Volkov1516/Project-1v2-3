@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme } from 'redux/features/app/appSlice';
-import { observeAuthState } from 'redux/features/user/userSlice';
+import { fetchUser, setLoading, setLogged } from 'redux/features/user/userSlice';
+import { auth } from 'firebase.js';
+import { onAuthStateChanged } from 'firebase/auth';
 
 import { Auth } from 'components/pages/Auth/Auth';
 import { Home } from 'components/pages/Home/Home';
@@ -14,7 +16,17 @@ export const App = () => {
   const { logged, loading } = useSelector(state => state.user);
 
   useEffect(() => {
-    dispatch(observeAuthState());
+    const unsubscribe = onAuthStateChanged(auth, async user => {
+      if (user) {
+        dispatch(fetchUser(user));
+      }
+      else {
+        dispatch(setLogged(false));
+        dispatch(setLoading(false));
+      }
+    });
+
+    return () => unsubscribe();
   }, [dispatch]);
 
   useEffect(() => {
