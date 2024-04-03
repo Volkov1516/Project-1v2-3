@@ -24,3 +24,19 @@
   border-radius: 50%;
   animation: spinner 1s linear infinite;
 }
+
+.errorContainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--backgroundPrimary);
+  color: var(--fontColorPrimary);
+}
+
+.errorTitle {
+  font-size: var(--fontSizeTitle);
+  font-weight: var(--fontWeightTitle);
+}

@@ -13,7 +13,6 @@ const initialState = {
   documents: null,
   path: ['root'],
   activeTaskId: null,
-  logged: false,
   loading: true,
   error: null,
   folderLoading: false
@@ -45,15 +44,9 @@ export const userSlice = createSlice({
     setActiveTaskId: (state, action) => {
       state.activeTaskId = action.payload;
     },
-    setLogged: (state, action) => {
-      state.logged = action.payload;
-    },
     setLoading: (state, action) => {
       state.loading = action.payload;
-    },
-    setError: (state, action) => {
-      state.error = action.payload;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -66,7 +59,6 @@ export const userSlice = createSlice({
         state.userName = action.payload.name;
         state.userPhoto = action.payload.photo;
         state.documents = action.payload.documents;
-        state.logged = true;
         state.loading = false;
       })
       .addCase(fetchUser.rejected, (state, action) => {
@@ -136,8 +128,6 @@ export const {
   updateDocuments,
   updatePath,
   setActiveTaskId,
-  setLogged,
   setLoading,
-  setError
 } = userSlice.actions;
 export default userSlice.reducer;

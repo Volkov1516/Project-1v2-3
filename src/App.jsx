@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme } from 'redux/features/app/appSlice';
-import { fetchUser, setLoading, setLogged } from 'redux/features/user/userSlice';
+import { fetchUser, setLoading } from 'redux/features/user/userSlice';
 import { auth } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -13,17 +13,11 @@ import css from './App.module.css';
 export const App = () => {
   const dispatch = useDispatch();
 
-  const { logged, loading } = useSelector(state => state.user);
+  const { userId, loading, error } = useSelector(state => state.user);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async user => {
-      if (user) {
-        dispatch(fetchUser(user));
-      }
-      else {
-        dispatch(setLogged(false));
-        dispatch(setLoading(false));
-      }
+      user ? dispatch(fetchUser(user)) : dispatch(setLoading(false));
     });
 
     return () => unsubscribe();
@@ -64,5 +58,14 @@ export const App = () => {
     );
   }
 
-  return logged ? <Home /> : <Auth />;
+  if (error) {
+    return (
+      <div className={css.errorContainer}>
+        <div className={css.errorTitle}>Oops!</div>
+        <p>{error?.message}</p>
+      </div>
+    );
+  }
+
+  return userId ? <Home /> : <Auth />;
 };
