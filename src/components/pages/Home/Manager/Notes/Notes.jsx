@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
-import { updateDocuments } from 'redux/features/user/userSlice';
+import { updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
@@ -13,17 +13,14 @@ import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Notes.module.css';
 
-import { findFolder } from 'utils/findFolder';
 import { Route } from 'components/atoms/Navigation/Route';
 import { Link } from 'components/atoms/Navigation/Link';
 
 export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
 
-  const { userId, documents, path } = useSelector(state => state.user);
   const { notesCache, activeNoteId } = useSelector(state => state.note);
 
-  const [loadingEditNoteModal, setLoadingEditNoteModal] = useState(false);
   const [noteIdEditNoteModal, setNoteIdEditNoteModal] = useState(null);
   const [titleInputValue, setTitleInputValue] = useState('');
   const [titleDeleteValue, setTitleDeleteValue] = useState('');
@@ -79,7 +76,7 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
       content: targetNote?.content,
     }));
 
-    if(window.location.pathname === '/editor') return;
+    if (window.location.pathname === '/editor') return;
 
     window.history.pushState({}, '', 'editor');
     const navEvent = new PopStateEvent('popstate');
@@ -90,10 +87,6 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
     setNoteIdEditNoteModal(id);
     setTitleInputValue(title);
     setTitleDeleteValue(title);
-
-    // window.history.pushState({}, '', 'editNote');
-    // const navEvent = new PopStateEvent('popstate');
-    // window.dispatchEvent(navEvent);
   };
 
   const handleEditNoteTitle = async () => {
@@ -101,27 +94,9 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
     if (titleInputValue === titleDeleteValue) return;
 
     if (titleInputValue && titleInputValue.length > 0) {
-      setLoadingEditNoteModal(true);
-
       try {
         // STEP 2: Update title in user.documents (Redux, Firebase)
-        const documentsCopy = JSON.parse(JSON.stringify(documents));
-
-        const editNoteTitle = (targetFolder) => {
-          if (targetFolder.notes && targetFolder.notes.length > 0) {
-            for (let i = 0; i < targetFolder?.notes?.length; i++) {
-              if (targetFolder.notes[i].id === noteIdEditNoteModal) {
-                targetFolder.notes[i].title = titleInputValue;
-              }
-            }
-          }
-        };
-
-        findFolder(documentsCopy, path[path.length - 1], editNoteTitle);
-
-        await setDoc(doc(db, 'users', userId), { documents: documentsCopy }, { merge: true });
-
-        dispatch(updateDocuments(documentsCopy));
+        dispatch(updateInDocuments({ type: 'notes', id: noteIdEditNoteModal, name: 'title', value: titleInputValue }));
 
         // STEP 3: Update title in notes (Firebase) and notesCache (Redux)
         await setDoc(doc(db, 'notes', noteIdEditNoteModal), { title: titleInputValue }, { merge: true });
@@ -146,7 +121,6 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
       // STEP 4: Update title in activeNoteTitle (Redux) and titleDeleteValue
       dispatch(updateActiveNoteTitle(titleInputValue));
       setTitleDeleteValue(titleInputValue);
-      setLoadingEditNoteModal(false);
     }
   };
 
@@ -154,28 +128,9 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
     // STEP 1: Check if titleDeleteValue === titleDeleteInputValue
     if (titleDeleteValue !== titleDeleteInputValue) return;
 
-    setLoadingEditNoteModal(true);
-
     try {
       // STEP 2: Delete Note from user.documents (Firebase and Redux)
-      const documentsCopy = JSON.parse(JSON.stringify(documents));
-
-      const deleteNote = (targetFodler) => {
-        if (targetFodler.notes && targetFodler.notes.length > 0) {
-          for (let i = 0; i < targetFodler.notes.length; i++) {
-            if (targetFodler.notes[i].id === noteIdEditNoteModal) {
-              targetFodler.notes.splice(i, 1);
-              return;
-            }
-          }
-        }
-      };
-
-      findFolder(documentsCopy, path[path.length - 1], deleteNote);
-
-      await setDoc(doc(db, 'users', userId), { documents: documentsCopy }, { merge: true });
-
-      dispatch(updateDocuments(documentsCopy));
+      dispatch(deleteFromDocuments({ type: 'notes', id: noteIdEditNoteModal }));
 
       // STEP 3: Delete Note from notes (Firebase) and notesCache (Redux)
       await deleteDoc(doc(db, 'notes', noteIdEditNoteModal));
@@ -210,7 +165,6 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
     setTitleDeleteInputValue('');
 
     // STEP 5: Close modal
-    setLoadingEditNoteModal(false);
     window.history.back();
   };
 
@@ -263,7 +217,7 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
         ))
       }
       <Route path="/editNote">
-        <Modal loading={loadingEditNoteModal}>
+        <Modal>
           <div className={css.eiditNoteModalContent}>
             <Input id="noteTitleId" label="Edit note title" placeholder="Enter note name" value={titleInputValue} onChange={e => setTitleInputValue(e.target.value)} />
             <Button type="outlined" disabled={!titleInputValue} onClick={handleEditNoteTitle}>Rename note</Button>

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme } from 'redux/features/app/appSlice';
-import { updateDocuments, setActiveTaskId, createFolder } from 'redux/features/user/userSlice';
+import { createInDocuments, setActiveTaskId } from 'redux/features/user/userSlice';
 import { setActiveNote } from 'redux/features/note/noteSlice';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -16,15 +16,27 @@ import { Button } from 'components/atoms/Button/Button';
 
 import css from './Bar.module.css';
 
-import { findFolder } from 'utils/findFolder';
-
 export const Bar = () => {
   const dispatch = useDispatch();
 
   const { theme } = useSelector(state => state.app);
-  const { userEmail, userPhoto, userName, documents, path, folderLoading } = useSelector(state => state.user);
+  const { userEmail, userPhoto, userName } = useSelector(state => state.user);
 
   const [folderInputValue, setFolderNameInput] = useState('');
+
+  const handleCreateFolder = () => {
+    const newFolder = {
+      id: uuidv4(),
+      name: folderInputValue,
+      folders: [],
+      notes: [],
+      tasks: []
+    };
+
+    dispatch(createInDocuments({ type: 'folders', obj: newFolder }));
+
+    window.history.back();
+  };
 
   const handleCreateNote = () => {
     dispatch(setActiveNote({
@@ -36,28 +48,16 @@ export const Bar = () => {
     }));
   };
 
-  const handleCreateFolder = () => {
-    dispatch(createFolder(folderInputValue));
-
-    window.history.back();
-  };
-
   const handleCreateTask = () => {
     const newTaskId = uuidv4();
-    const newDocuments = JSON.parse(JSON.stringify(documents));
 
-    const createTask = (targetFolder) => {
-      const newFolder = {
-        id: newTaskId,
-        content: ''
-      };
-
-      targetFolder.tasks.unshift(newFolder);
+    const newTask = {
+      id: newTaskId,
+      content: ''
     };
 
-    findFolder(newDocuments, path[path.length - 1], createTask);
-
-    dispatch(updateDocuments(newDocuments));
+    // Creates only localy! Saving on task blur
+    dispatch(createInDocuments({ type: 'tasks', obj: newTask }));
     dispatch(setActiveTaskId(newTaskId));
   };
 
@@ -127,7 +127,7 @@ export const Bar = () => {
         }
       </div>
       <Route path="/addFolder">
-        <Modal loading={folderLoading}>
+        <Modal>
           <div className={css.createFolderModalContent}>
             <Input id="folderNameId" label="Folder name" autofocus placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderNameInput(e.target.value)} />
             <Button type="outlined" disabled={!folderInputValue} onClick={handleCreateFolder}>Create folder</Button>

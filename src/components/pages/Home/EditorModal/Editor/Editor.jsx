@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
-import { updateDocuments } from 'redux/features/user/userSlice';
+import { createInDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, updateIsNewNote } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
@@ -27,14 +27,11 @@ import { MainTheme } from './themes/MainTheme';
 
 import css from './Editor.module.css';
 
-import { findFolder } from 'utils/findFolder';
-
 export const Editor = ({ editorRef, titleRef, saving, setSaving }) => {
   let editorStateAutoSaveTimeout;
 
   const dispatch = useDispatch();
 
-  const { userId, documents, path } = useSelector(state => state.user);
   const { notesCache, isNewNote, activeNoteId, activeNoteContent } = useSelector(state => state.note);
 
   const initialConfig = {
@@ -78,15 +75,7 @@ export const Editor = ({ editorRef, titleRef, saving, setSaving }) => {
               title: 'Untitled'
             };
 
-            const newDocuments = JSON.parse(JSON.stringify(documents));
-
-            const editContent = (targetNote) => targetNote.notes.push(newNote);
-
-            findFolder(newDocuments, path[path.length - 1], editContent);
-
-            await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
-
-            dispatch(updateDocuments(newDocuments));
+            dispatch(createInDocuments({type: 'notes', obj: newNote}));
 
             await setDoc(doc(db, 'notes', activeNoteId), { content: state }, { merge: true });
 

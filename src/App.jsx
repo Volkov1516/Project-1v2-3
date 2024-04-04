@@ -13,7 +13,7 @@ import css from './App.module.css';
 export const App = () => {
   const dispatch = useDispatch();
 
-  const { userId, loading, error } = useSelector(state => state.user);
+  const { userId, authLoading, authError } = useSelector(state => state.user);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async user => {
@@ -50,7 +50,7 @@ export const App = () => {
     }
   }, [dispatch]);
 
-  if (loading) {
+  if (authLoading) {
     return (
       <div className={css.spinnerContainer}>
         <div className={css.spinnerIcon} />
@@ -58,11 +58,11 @@ export const App = () => {
     );
   }
 
-  if (error) {
+  if (authError) {
     return (
       <div className={css.errorContainer}>
         <div className={css.errorTitle}>Oops!</div>
-        <p>{error?.message}</p>
+        <p>{authError?.message}</p>
       </div>
     );
   }

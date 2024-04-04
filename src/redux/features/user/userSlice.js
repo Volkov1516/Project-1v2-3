@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, nanoid } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit';
 
 import { db } from '../../../firebase.js';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -13,9 +13,10 @@ const initialState = {
   documents: null,
   path: ['root'],
   activeTaskId: null,
-  loading: true,
-  error: null,
-  folderLoading: false
+  authLoading: true,
+  authError: null,
+  documentsLoading: false,
+  documentsError: null,
 };
 
 export const userSlice = createSlice({
@@ -45,13 +46,13 @@ export const userSlice = createSlice({
       state.activeTaskId = action.payload;
     },
     setLoading: (state, action) => {
-      state.loading = action.payload;
+      state.authLoading = action.payload;
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.pending, (state) => {
-        state.loading = true;
+        state.authLoading = true;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.userId = action.payload.id;
@@ -59,23 +60,27 @@ export const userSlice = createSlice({
         state.userName = action.payload.name;
         state.userPhoto = action.payload.photo;
         state.documents = action.payload.documents;
-        state.loading = false;
+        state.authLoading = false;
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.error = action.error;
-        state.loading = false;
+        state.authLoading = false;
       })
-      .addCase(createFolder.pending, (state) => {
-        state.folderLoading = true;
+      .addMatcher(isAnyOf(createInDocuments.pending, updateInDocuments.pending, deleteFromDocuments.pending), (state) => {
+        state.documentsLoading = true;
       })
-      .addCase(createFolder.fulfilled, (state, action) => {
-        state.documents = action.payload;
-        state.folderLoading = false;
-      })
-      .addCase(createFolder.rejected, (state, action) => {
-        state.error = action.error;
-        state.loading = false;
-      })
+      .addMatcher(isAnyOf(createInDocuments.fulfilled, updateInDocuments.fulfilled, deleteFromDocuments.fulfilled),
+        (state, action) => {
+          state.documents = action.payload;
+          state.documentsLoading = false;
+        }
+      )
+      .addMatcher(isAnyOf(createInDocuments.rejected, updateInDocuments.rejected, deleteFromDocuments.rejected),
+        (state, action) => {
+          state.documentsError = action.error;
+          state.documentsLoading = false;
+        }
+      )
   }
 });
 
@@ -97,28 +102,77 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async (user) => {
   };
 });
 
-export const createFolder = createAsyncThunk('user/createFolder', async (folderInputValue, thunkAPI) => {
+export const createInDocuments = createAsyncThunk('user/createInDocuments', async (props, thunkAPI) => {
   const state = thunkAPI.getState();
+
+  const { type, obj } = props;
 
   const newDocuments = JSON.parse(JSON.stringify(state.user.documents));
 
-    const createFolder = (targetFolder) => {
-      const newFolder = {
-        id: nanoid(),
-        name: folderInputValue,
-        folders: [],
-        notes: [],
-        tasks: []
-      };
+  const createObj = (targetFolder) => {
+    if (type === 'tasks') {
+      targetFolder[type].unshift(obj);
+    }
+    else {
+      targetFolder[type].push(obj);
+    }
+  };
 
-      targetFolder.folders.push(newFolder);
-    };
+  findFolder(newDocuments, state.user.path[state.user.path.length - 1], createObj);
 
-    findFolder(newDocuments, state.user.path[state.user.path.length - 1], createFolder);
-
+  if (type !== 'tasks') {
     await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
+  }
 
-    return newDocuments;
+  return newDocuments;
+});
+
+export const updateInDocuments = createAsyncThunk('user/updateInDocuments', async (props, thunkAPI) => {
+  const state = thunkAPI.getState();
+
+  const { type, id, name, value } = props;
+
+  const newDocuments = JSON.parse(JSON.stringify(state.user.documents));
+
+  const editObj = (targetFolder) => {
+    if (targetFolder[type] && targetFolder[type].length > 0) {
+      for (let i = 0; i < targetFolder[type].length; i++) {
+        if (targetFolder[type][i].id === id) {
+          targetFolder[type][i][name] = value;
+        }
+      }
+    }
+  };
+
+  findFolder(newDocuments, state.user.path[state.user.path.length - 1], editObj);
+
+  await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
+
+  return newDocuments;
+});
+
+export const deleteFromDocuments = createAsyncThunk('user/deleteFromDocuments', async (props, thunkAPI) => {
+  const state = thunkAPI.getState();
+  const { type, id } = props;
+
+  const newDocuments = JSON.parse(JSON.stringify(state.user.documents));
+
+  const deleteObj = (targetFolder) => {
+    if (targetFolder[type] && targetFolder[type].length > 0) {
+      for (let i = 0; i < targetFolder[type].length; i++) {
+        if (targetFolder[type][i].id === id) {
+          targetFolder[type].splice(i, 1);
+          return;
+        }
+      }
+    }
+  };
+
+  findFolder(newDocuments, state.user.path[state.user.path.length - 1], deleteObj);
+
+  await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
+
+  return newDocuments;
 });
 
 export const {
@@ -128,6 +182,6 @@ export const {
   updateDocuments,
   updatePath,
   setActiveTaskId,
-  setLoading,
+  setLoading
 } = userSlice.actions;
 export default userSlice.reducer;

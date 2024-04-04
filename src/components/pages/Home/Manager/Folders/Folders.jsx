@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSnackbar } from 'redux/features/app/appSlice';
-import { updateDocuments, updatePath } from 'redux/features/user/userSlice';
-import { db } from 'firebase.js';
-import { doc, setDoc } from 'firebase/firestore';
+import { deleteFromDocuments, updateInDocuments, updatePath } from 'redux/features/user/userSlice';
 
 import { IconButton } from 'components/atoms/IconButton/IconButton';
 import { Input } from 'components/atoms/Input/Input';
@@ -12,15 +9,13 @@ import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Folders.module.css';
 
-import { findFolder } from 'utils/findFolder';
 import { Route } from 'components/atoms/Navigation/Route';
 import { Link } from 'components/atoms/Navigation/Link';
 
 export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
-  const { userId, documents, path } = useSelector(state => state.user);
+  const { path } = useSelector(state => state.user);
 
-  const [loadingEditFolderModal, setLoadingEditFolderModal] = useState(false);
   const [folderIdEditFolderModal, setFoldeIdEditFolderModal] = useState(null);
   const [folderInputValue, setFolderInputValue] = useState('');
   const [folderDeleteValue, setFolderDeleteValue] = useState('');
@@ -33,77 +28,29 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
   };
 
   const handleOpenEditFodlerModal = (e, id, name) => {
-    // e.stopPropagation();
     setFoldeIdEditFolderModal(id);
     setFolderInputValue(name);
     setFolderDeleteValue(name);
-    // setOpenEditFolderModal(true);
-
-    // window.history.pushState({}, '', 'editFolder');
-    // const navEvent = new PopStateEvent('popstate');
-    // window.dispatchEvent(navEvent);
   };
 
   const handleEditFolderName = async () => {
     if (folderInputValue === folderDeleteValue) return;
 
     if (folderInputValue && folderInputValue.length > 0) {
-      setLoadingEditFolderModal(true);
-
-      const newDocuments = JSON.parse(JSON.stringify(documents));
-
-      const editFolderName = (targetFolder) => targetFolder.name = folderInputValue;
-
-      findFolder(newDocuments, folderIdEditFolderModal, editFolderName);
-
-      try {
-        await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
-
-        dispatch(updateDocuments(newDocuments));
-        dispatch(setSnackbar('Folder was renamed'));
-      } catch (error) {
-        dispatch(setSnackbar('Failed to rename the folder'));
-      }
+      dispatch(updateInDocuments({type: 'folders', id: folderIdEditFolderModal, name: 'name', value: folderInputValue}));
 
       setFolderDeleteValue(folderInputValue);
-      setLoadingEditFolderModal(false);
     }
   }
 
   const handleDeleteFolder = async () => {
     if (folderDeleteValue !== folderDeleteInputValue) return;
 
-    setLoadingEditFolderModal(true);
-
-    const newDocuments = JSON.parse(JSON.stringify(documents));
-
-    function deleteObjectById(id, folders) {
-      for (let i = 0; i < folders.length; i++) {
-        if (folders[i].id === id) {
-          folders.splice(i, 1);
-          return;
-        }
-        if (folders[i].folders && folders[i].folders.length > 0) {
-          deleteObjectById(id, folders[i].folders);
-        }
-      }
-    }
-
-    deleteObjectById(folderIdEditFolderModal, newDocuments.folders);
-
-    try {
-      await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
-
-      dispatch(updateDocuments(newDocuments));
-      dispatch(setSnackbar('Folder was deleted'));
-    } catch (error) {
-      dispatch(setSnackbar('Failed to delete the folder'));
-    }
+    dispatch(deleteFromDocuments({type: 'folders', id: folderIdEditFolderModal}));
 
     setFolderInputValue('');
     setFolderDeleteValue('');
     setFolderDeleteInputValue('');
-    setLoadingEditFolderModal(false);
     window.history.back();
   };
 
@@ -166,7 +113,7 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
         ))
       }
       <Route path="/editFolder">
-        <Modal loading={loadingEditFolderModal}>
+        <Modal>
           <div className={css.eiditFolderModalContent}>
             <Input id="folderNameId" label="Edit folder name" placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderInputValue(e.target.value)} />
             <Button type="outlined" disabled={!folderInputValue} onClick={handleEditFolderName}>Rename folder</Button>

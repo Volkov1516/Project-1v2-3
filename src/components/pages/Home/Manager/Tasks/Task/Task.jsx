@@ -1,20 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSnackbar } from 'redux/features/app/appSlice';
-import { setActiveTaskId, updateDocuments } from 'redux/features/user/userSlice';
-import { db } from 'firebase.js';
-import { doc, setDoc } from 'firebase/firestore';
+import { setActiveTaskId, updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
 
 import { IconButton } from 'components/atoms/IconButton/IconButton';
 
 import css from './Task.module.css';
 
-import { findFolder } from 'utils/findFolder';
-
 export const Task = ({ id, content, isDraggable }) => {
   const dispatch = useDispatch();
 
-  const { userId, documents, path, activeTaskId } = useSelector(state => state.user);
+  const { activeTaskId } = useSelector(state => state.user);
 
   const contentEditableRef = useRef(null);
 
@@ -26,32 +21,6 @@ export const Task = ({ id, content, isDraggable }) => {
     }
   }, [id, activeTaskId]);
 
-  const handleDeleteTask = async () => {
-    try {
-      const newDocuments = JSON.parse(JSON.stringify(documents));
-
-      const deleteTask = (targetFolder) => {
-        if (targetFolder.tasks && targetFolder.tasks.length > 0) {
-          for (let i = 0; i < targetFolder.tasks.length; i++) {
-            if (targetFolder.tasks[i].id === id) {
-              targetFolder.tasks.splice(i, 1);
-              return;
-            }
-          }
-        }
-      };
-
-      findFolder(newDocuments, path[path.length - 1], deleteTask);
-
-      dispatch(updateDocuments(newDocuments));
-
-      await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
-
-      dispatch(setSnackbar('Task was completed'));
-    } catch (error) {
-      dispatch(setSnackbar('Failed to delete the task'));
-    }
-  };
 
   const handleOnClick = e => setInitialContent(e.target.innerText);
 
@@ -63,34 +32,14 @@ export const Task = ({ id, content, isDraggable }) => {
       return;
     }
     else {
-      try {
-        const newDocuments = JSON.parse(JSON.stringify(documents));
-
-        const createTask = (targetFolder) => {
-          if (targetFolder.tasks && targetFolder.tasks.length > 0) {
-            for (let i = 0; i < targetFolder.tasks.length; i++) {
-              if (targetFolder.tasks[i].id === id) {
-                targetFolder.tasks[i].content = e.target.innerText;
-              }
-            }
-          }
-        };
-
-        findFolder(newDocuments, path[path.length - 1], createTask);
-
-        dispatch(updateDocuments(newDocuments));
-
-        await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
-
-        dispatch(setSnackbar('Task was saved'));
-      } catch (error) {
-        dispatch(setSnackbar('Failed to save the task'));
-      }
+      dispatch(updateInDocuments({ type: 'tasks', id, name: 'content', value: e.target.innerText }));
     }
 
     setInitialContent('');
     dispatch(setActiveTaskId(null));
   };
+
+  const handleDeleteTask = () => dispatch(deleteFromDocuments({ type: 'tasks', id }));
 
   const handleOnKeyDown = e => {
     if (e.key === 'Enter') {

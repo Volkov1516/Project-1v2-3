@@ -1,19 +1,16 @@
 import { useEffect, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
-import { updateDocuments } from 'redux/features/user/userSlice';
+import { createInDocuments, updateInDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, updateIsNewNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 
 import css from './Title.module.css';
 
-import { findFolder } from 'utils/findFolder';
-
 export const Title = forwardRef(function MyTitle(props, ref) {
   const dispatch = useDispatch();
 
-  const { userId, documents, path } = useSelector(state => state.user);
   const { notesCache, isNewNote, activeNoteId, activeNoteTitle } = useSelector(state => state.note);
 
   useEffect(() => {
@@ -35,26 +32,12 @@ export const Title = forwardRef(function MyTitle(props, ref) {
 
     try {
       // STEP 1: Create/Update title in user.documents (Firestore, Redux)
-      const newDocuments = JSON.parse(JSON.stringify(documents));
-
-      const editTitle = (targetFodler) => {
-        if (isNewNote) {
-          targetFodler.notes.push(newNote);
-        }
-        else {
-          for (let i = 0; i < targetFodler?.notes?.length; i++) {
-            if (targetFodler.notes[i].id === activeNoteId) {
-              targetFodler.notes[i].title = activeNoteTitle;
-            }
-          }
-        }
-      };
-
-      findFolder(newDocuments, path[path.length - 1], editTitle);
-
-      await setDoc(doc(db, 'users', userId), { documents: newDocuments }, { merge: true });
-
-      dispatch(updateDocuments(newDocuments));
+      if (isNewNote) {
+        dispatch(createInDocuments({ type: 'notes', obj: newNote }));
+      }
+      else {
+        dispatch(updateInDocuments({ type: 'notes', id: activeNoteId, name: 'title', value: activeNoteTitle }));
+      }
 
       // STEP 2: Update title in notes and notesCache
       await setDoc(doc(db, 'notes', activeNoteId), { title: activeNoteTitle || 'Untitled' }, { merge: true });
