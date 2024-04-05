@@ -119,14 +119,14 @@ export const createInDocuments = createAsyncThunk('user/createInDocuments', asyn
 
   findFolder(newDocuments, state.user.path[state.user.path.length - 1], createObj);
 
-  if (type !== 'tasks') {
-    try {
+  try {
+    if (type !== 'tasks') {
       await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
-
-      return newDocuments;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
     }
+
+    return newDocuments;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
