@@ -13,7 +13,7 @@ import css from './App.module.css';
 export const App = () => {
   const dispatch = useDispatch();
 
-  const { userId, authLoading, authError } = useSelector(state => state.user);
+  const { userId, authLoading, error } = useSelector(state => state.user);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async user => {
@@ -58,11 +58,11 @@ export const App = () => {
     );
   }
 
-  if (authError) {
+  if (error) {
     return (
       <div className={css.errorContainer}>
         <div className={css.errorTitle}>Oops!</div>
-        <p>{authError?.message}</p>
+        <p>{error?.message}</p>
       </div>
     );
   }

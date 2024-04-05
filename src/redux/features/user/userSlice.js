@@ -14,9 +14,8 @@ const initialState = {
   path: ['root'],
   activeTaskId: null,
   authLoading: true,
-  authError: null,
   documentsLoading: false,
-  documentsError: null,
+  error: null
 };
 
 export const userSlice = createSlice({
@@ -77,7 +76,7 @@ export const userSlice = createSlice({
       )
       .addMatcher(isAnyOf(createInDocuments.rejected, updateInDocuments.rejected, deleteFromDocuments.rejected),
         (state, action) => {
-          state.documentsError = action.error;
+          state.error = action.error;
           state.documentsLoading = false;
         }
       )
@@ -121,10 +120,14 @@ export const createInDocuments = createAsyncThunk('user/createInDocuments', asyn
   findFolder(newDocuments, state.user.path[state.user.path.length - 1], createObj);
 
   if (type !== 'tasks') {
-    await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
-  }
+    try {
+      await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
 
-  return newDocuments;
+      return newDocuments;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
 });
 
 export const updateInDocuments = createAsyncThunk('user/updateInDocuments', async (props, thunkAPI) => {
@@ -146,9 +149,13 @@ export const updateInDocuments = createAsyncThunk('user/updateInDocuments', asyn
 
   findFolder(newDocuments, state.user.path[state.user.path.length - 1], editObj);
 
-  await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
+  try {
+    await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
 
-  return newDocuments;
+    return newDocuments;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
 });
 
 export const deleteFromDocuments = createAsyncThunk('user/deleteFromDocuments', async (props, thunkAPI) => {
@@ -170,9 +177,13 @@ export const deleteFromDocuments = createAsyncThunk('user/deleteFromDocuments', 
 
   findFolder(newDocuments, state.user.path[state.user.path.length - 1], deleteObj);
 
-  await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
+  try {
+    await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
 
-  return newDocuments;
+    return newDocuments;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
 });
 
 export const {

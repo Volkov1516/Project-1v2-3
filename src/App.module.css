@@ -34,6 +34,7 @@
   gap: 8px;
   background-color: var(--backgroundPrimary);
   color: var(--fontColorPrimary);
+  text-align: center;
 }
 
 .errorTitle {
