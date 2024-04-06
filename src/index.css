@@ -110,6 +110,7 @@ body.dark-theme {
 }
 
 body {
+  overscroll-behavior-y: contain;
   color: var(--fontColorPrimary);
 }
 
