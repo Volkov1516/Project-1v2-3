@@ -50,7 +50,9 @@ export const Settings = () => {
       body.classList.remove('light-theme');
       body.classList.add('dark-theme');
 
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#191919');
+      const themeTag = document.querySelector('meta[name="theme-color"]');
+      themeTag.setAttribute('content', '#191919');
+      // themeTag[1].setAttribute('content', '#191919');
     }
     else if (theme === 'dark') {
       localStorage.setItem('theme', 'light');
@@ -59,7 +61,9 @@ export const Settings = () => {
       body.classList.remove('dark-theme');
       body.classList.add('light-theme');
 
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#FFFFFF');
+      const themeTag = document.querySelector('meta[name="theme-color"]');
+      themeTag.setAttribute('content', '#FFFFFF');
+      // themeTag[1].setAttribute('content', '#FFFFFF');
     }
   };
 
