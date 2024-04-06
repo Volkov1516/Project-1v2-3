@@ -49,6 +49,8 @@ export const Settings = () => {
 
       body.classList.remove('light-theme');
       body.classList.add('dark-theme');
+
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#191919');
     }
     else if (theme === 'dark') {
       localStorage.setItem('theme', 'light');
@@ -56,6 +58,8 @@ export const Settings = () => {
 
       body.classList.remove('dark-theme');
       body.classList.add('light-theme');
+
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#FFFFFF');
     }
   };
 
