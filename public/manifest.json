@@ -1,4 +1,7 @@
 {
+  "id": "/",
+  "scope": "/",
+  "start_url": "/",
   "name": "Journal X",
   "short_name": "Journal X",
   "description": "Note taking application.",
@@ -7,16 +10,26 @@
     "lifestyle",
     "productivity"
   ],
-  "start_url": "/",
-  "scope": "/",
   "lang": "en",
+  "dir": "ltr",
   "orientation": "portrait",
   "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
   "shortcuts": [
     {
-      "name": "Home",
-      "url": "/",
-      "description": "Starting page."
+      "name": "Settings Page",
+      "short_name": "Settings",
+      "description": "Settings Page",
+      "url": "/settings",
+      "icons": [
+        {
+          "src": "https://i.pinimg.com/564x/27/8c/7f/278c7f0e1cc63b71bad4a820ff72cb89.jpg",
+          "type": "image/png",
+          "sizes": "192x192",
+          "purpose": "any"
+        }
+      ]
     }
   ],
   "icons": [
@@ -33,5 +46,6 @@
       "purpose": "maskable"
     }
   ],
-  "dir": "ltr"
+  "related_applications": [],
+  "prefer_related_applications": false
 }
