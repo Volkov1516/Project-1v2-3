@@ -14,11 +14,11 @@
   "dir": "ltr",
   "orientation": "portrait",
   "display": "standalone",
-  "background_color": "#ff0000",
-  "theme_color": "#ff0000",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "shortcuts": [
     {
-      "name": "Settings Page",
+      "name": "Settings",
       "short_name": "Settings",
       "description": "Settings Page",
       "url": "/settings",

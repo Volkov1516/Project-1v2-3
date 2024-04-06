@@ -41,42 +41,6 @@
   --editorInputWidth: 700px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --backgroundPrimary: var(--white);
-    --backgroundSecondary: var(--gray50);
-    --borderColor: var(--gray200);
-    --buttonColorPrimary: var(--white);
-    --buttonBackgroundPrimary: var(--black);
-    --buttonHoverPrimary: var(--gray1400);
-    --buttonActivePrimary: var(--gray1300);
-    --buttonColorSecondary: var(--black);
-    --buttonBackgroundSecondary: var(--transparent);
-    --buttonHoverSecondary: var(--gray100);
-    --buttonActiveSecondary: var(--gray200);
-    --fontColorPrimary: var(--black);
-    --fontColorQuote: var(--gray600);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --backgroundPrimary: var(--gray1350);
-    --backgroundSecondary: var(--gray1300);
-    --borderColor: var(--gray1200);
-    --buttonColorPrimary: var(--black);
-    --buttonBackgroundPrimary: var(--white);
-    --buttonHoverPrimary: var(--gray100);
-    --buttonActivePrimary: var(--gray200);
-    --buttonColorSecondary: var(--white);
-    --buttonBackgroundSecondary: var(--transparent);
-    --buttonHoverSecondary: var(--gray1200);
-    --buttonActiveSecondary: var(--gray1400);
-    --fontColorPrimary: var(--gray200);
-    --fontColorQuote: var(--gray600);
-  }
-}
-
 body.light-theme {
   --backgroundPrimary: var(--white);
   --backgroundSecondary: var(--gray50);
@@ -112,7 +76,6 @@ body.dark-theme {
 body {
   overscroll-behavior-y: contain;
   color: var(--fontColorPrimary);
-  background-color: #ff0000;
 }
 
 hr {

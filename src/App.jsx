@@ -24,51 +24,49 @@ export const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    // Test
-    const themeTag = document.querySelectorAll('meta[name="theme-color"]');
-    themeTag[0].setAttribute('content', '#FFFFFF');
-    themeTag[1].setAttribute('content', '#FFFFFF');
-  }, []);
-
-  useEffect(() => {
     const body = document.body;
     const theme = localStorage.getItem('theme');
-
-    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const lightModeQuery = window.matchMedia('(prefers-color-scheme: light)');
-    console.log(darkModeQuery);
-    console.log(lightModeQuery);
+ 
+    const newThemeTag = document.createElement('meta');
+    newThemeTag.setAttribute('name', 'theme-color');
 
     if (theme) {
       if (theme === 'light') {
+        newThemeTag.setAttribute('content', '#FFFFFF');
+
         body.classList.remove('dark-theme');
         body.classList.add('light-theme');
-
-        // const themeTag = document.querySelectorAll('meta[name="theme-color"]');
-        // themeTag[0].setAttribute('content', '#FFFFFF');
-        // themeTag[1].setAttribute('content', '#FFFFFF');
 
         dispatch(setTheme('light'));
       }
       else if (theme === 'dark') {
+        newThemeTag.setAttribute('content', '#191919');
+
         body.classList.remove('light-theme');
         body.classList.add('dark-theme');
 
         dispatch(setTheme('dark'));
-        // const themeTag = document.querySelectorAll('meta[name="theme-color"]');
-        // themeTag[0].setAttribute('content', '#191919');
-        // themeTag[1].setAttribute('content', '#191919');
       }
     }
     else {
       if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        newThemeTag.setAttribute('content', '#191919');
+
+        body.classList.remove('light-theme');
+        body.classList.add('dark-theme');
+
         dispatch(setTheme('dark'));
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#191919');
       } else {
+        newThemeTag.setAttribute('content', '#FFFFFF');
+
+        body.classList.remove('dark-theme');
+        body.classList.add('light-theme');
+
         dispatch(setTheme('light'));
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#FFFFFF');
       }
     }
+
+    document.head.appendChild(newThemeTag);
   }, [dispatch]);
 
   if (authLoading) {
