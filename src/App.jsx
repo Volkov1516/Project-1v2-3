@@ -33,14 +33,18 @@ export const App = () => {
         body.classList.add('light-theme');
 
         dispatch(setTheme('light'));
-        // document.querySelector('meta[name="theme-color"]').setAttribute('content', '#FFFFFF');
+        const themeTag = document.querySelectorAll('meta[name="theme-color"]');
+        themeTag[0].setAttribute('content', '#FFFFFF');
+        themeTag[1].setAttribute('content', '#FFFFFF');
       }
       else if (theme === 'dark') {
         body.classList.remove('light-theme');
         body.classList.add('dark-theme');
 
         dispatch(setTheme('dark'));
-        // document.querySelector('meta[name="theme-color"]').setAttribute('content', '#191919');
+        const themeTag = document.querySelectorAll('meta[name="theme-color"]');
+        themeTag[0].setAttribute('content', '#191919');
+        themeTag[1].setAttribute('content', '#191919');
       }
     }
     else {

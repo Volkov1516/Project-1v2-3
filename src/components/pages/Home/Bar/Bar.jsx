@@ -70,6 +70,10 @@ export const Bar = () => {
 
       body.classList.remove('light-theme');
       body.classList.add('dark-theme');
+
+      const themeTag = document.querySelectorAll('meta[name="theme-color"]');
+      themeTag[0].setAttribute('content', '#191919');
+      themeTag[1].setAttribute('content', '#191919');
     }
     else if (theme === 'dark') {
       localStorage.setItem('theme', 'light');
@@ -77,6 +81,10 @@ export const Bar = () => {
 
       body.classList.remove('dark-theme');
       body.classList.add('light-theme');
+
+      const themeTag = document.querySelectorAll('meta[name="theme-color"]');
+      themeTag[0].setAttribute('content', '#FFFFFF');
+      themeTag[1].setAttribute('content', '#FFFFFF');
     }
   };
 
