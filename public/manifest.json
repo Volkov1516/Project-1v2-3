@@ -21,18 +21,19 @@
       "name": "Settings Page",
       "short_name": "Settings",
       "description": "Settings Page",
-      "url": "/settings"
+      "url": "/settings",
+      "icons": [{"src": "settings96.png", "type": "image/png", "sizes": "96x96"}]
     }
   ],
   "icons": [
     {
-      "src": "logo.png",
+      "src": "logo192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "logo.png",
+      "src": "logo512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
