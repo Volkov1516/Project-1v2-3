@@ -24,18 +24,31 @@ export const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    // Test
+    const themeTag = document.querySelectorAll('meta[name="theme-color"]');
+    themeTag[0].setAttribute('content', '#FFFFFF');
+    themeTag[1].setAttribute('content', '#FFFFFF');
+  }, []);
+
+  useEffect(() => {
     const body = document.body;
     const theme = localStorage.getItem('theme');
+
+    const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const lightModeQuery = window.matchMedia('(prefers-color-scheme: light)');
+    console.log(darkModeQuery);
+    console.log(lightModeQuery);
 
     if (theme) {
       if (theme === 'light') {
         body.classList.remove('dark-theme');
         body.classList.add('light-theme');
 
-        dispatch(setTheme('light'));
         // const themeTag = document.querySelectorAll('meta[name="theme-color"]');
         // themeTag[0].setAttribute('content', '#FFFFFF');
         // themeTag[1].setAttribute('content', '#FFFFFF');
+
+        dispatch(setTheme('light'));
       }
       else if (theme === 'dark') {
         body.classList.remove('light-theme');
