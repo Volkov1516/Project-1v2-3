@@ -15,14 +15,14 @@
   "orientation": "portrait",
   "display": "standalone",
   "background_color": "#000000",
-  "theme_color": "#FFFFFF",
+  "theme_color": "#000000",
   "shortcuts": [
     {
       "name": "Settings Page",
       "short_name": "Settings",
       "description": "Settings Page",
       "url": "/settings",
-      "icons": [{"src": "settings96.png", "type": "image/png", "sizes": "96x96"}]
+      "icons": [{"src": "logo96.png", "type": "image/png", "sizes": "96x96"}]
     }
   ],
   "icons": [
