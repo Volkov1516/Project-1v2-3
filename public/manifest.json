@@ -14,8 +14,8 @@
   "dir": "ltr",
   "orientation": "portrait",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "shortcuts": [
     {
       "name": "Settings",
