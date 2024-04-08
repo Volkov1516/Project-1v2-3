@@ -75,10 +75,7 @@ body.dark-theme {
 
 body {
   overscroll-behavior-y: contain;
-  color: var(--fontColorPrimary);
-  background-color: var(--black);
-  min-height: 100vh;
-  height: 100vh;
+  /* background-color: var(--black); */
 }
 
 hr {
