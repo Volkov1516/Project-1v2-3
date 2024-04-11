@@ -16,6 +16,8 @@ export const FolderNavigation = ({ name }) => {
     newArr.pop();
 
     dispatch(updatePath([...newArr]));
+
+    window.history.back();
   };
 
   if (!name) return null;

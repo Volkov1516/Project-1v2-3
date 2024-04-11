@@ -17,7 +17,7 @@ import { findFolder } from 'utils/findFolder';
 export const Manager = memo(function MemoizedComponent() {
   const dispatch = useDispatch();
 
-  const { theme } = useSelector(state => state.app);
+  const { theme, navigationPath } = useSelector(state => state.app);
   const { userId, documents, path } = useSelector(state => state.user);
 
   const managerRef = useRef(null);
@@ -57,6 +57,27 @@ export const Manager = memo(function MemoizedComponent() {
   }, [path]);
 
   useEffect(() => {
+    let activePathId;
+
+    if (navigationPath) {
+      let navPathCopy = navigationPath;
+      let newNavPath = navPathCopy?.split('/');
+
+      if (navPathCopy.includes('folder')) {
+        newNavPath?.forEach(i => {
+          if (i.includes('folder')) {
+            activePathId = i.split('=')[1];
+          }
+        });
+      }
+      else {
+        activePathId = 'root';
+      }
+    }
+    else {
+      activePathId = 'root';
+    }
+
     function findFolder(object, id) {
       if (object?.id === id) {
         return object;
@@ -73,9 +94,9 @@ export const Manager = memo(function MemoizedComponent() {
       return null;
     }
 
-    let res = findFolder(documents, path[path.length - 1]);
+    let res = findFolder(documents, activePathId);
     setFolder(res);
-  }, [documents, path]);
+  }, [documents, path, navigationPath]);
 
   useEffect(() => {
     if (isAllowScroll === 'bottom') {
@@ -194,13 +215,13 @@ export const Manager = memo(function MemoizedComponent() {
     const timerOpenModal = setTimeout(() => {
       setIsDraggable(false);
 
-      if(type === 'note') {
+      if (type === 'note') {
         window.history.pushState({}, '', 'editNote');
       }
-      else if(type === 'folder') {
+      else if (type === 'folder') {
         window.history.pushState({}, '', 'editFolder');
       }
-      
+
       const navEvent = new PopStateEvent('popstate');
       window.dispatchEvent(navEvent);
 
@@ -428,7 +449,7 @@ export const Manager = memo(function MemoizedComponent() {
   const touchMoveFolderDesktop = (targetElement, targetIndex, targetElementIndex, targetElementId) => {
     const timerMoveFolder = setTimeout(() => {
       if (placeholderId) document.getElementById(placeholderId).style.margin = '0px';
-      
+
       if (targetIndex !== targetElementIndex) {
         if (draggableIndex < targetElementIndex) {
           document.getElementById(folder[`${draggableType}s`][targetElementIndex].id).style.marginBottom = targetElement.offsetHeight + 'px';
@@ -910,7 +931,7 @@ export const Manager = memo(function MemoizedComponent() {
         touchEndDropInFolder();
       }
       else if (draggableType === 'folder' && targetType === 'folder' && targetIndex !== null) {
-        if(windowWidth < 639) {
+        if (windowWidth < 639) {
           touchEndDropFolder();
         }
         else {

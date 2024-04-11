@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { setNavigationPath } from 'redux/features/app/appSlice';
 import { deleteFromDocuments, updateInDocuments, updatePath } from 'redux/features/user/userSlice';
 
 import { IconButton } from 'components/atoms/IconButton/IconButton';
@@ -25,6 +26,20 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
     if (preventOnClick) return;
 
     dispatch(updatePath([...path, id]));
+
+    const pathname = window.location.pathname;
+
+    if (pathname.includes('folder')) {
+      let newPathname = pathname.split('/');
+      newPathname[1] = newPathname[1].split('=')[1] = `folder=${id}`;
+
+      window.history.pushState({}, '', newPathname.join('/'));
+      dispatch(setNavigationPath(newPathname.join('/')));
+    }
+    else {
+      window.history.pushState({}, '', `folder=${id}${pathname}`);
+      dispatch(setNavigationPath(`folder=${id}${pathname}`));
+    }
   };
 
   const handleOpenEditFodlerModal = (e, id, name) => {
@@ -37,7 +52,7 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
     if (folderInputValue === folderDeleteValue) return;
 
     if (folderInputValue && folderInputValue.length > 0) {
-      dispatch(updateInDocuments({type: 'folders', id: folderIdEditFolderModal, name: 'name', value: folderInputValue}));
+      dispatch(updateInDocuments({ type: 'folders', id: folderIdEditFolderModal, name: 'name', value: folderInputValue }));
 
       setFolderDeleteValue(folderInputValue);
     }
@@ -46,7 +61,7 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
   const handleDeleteFolder = async () => {
     if (folderDeleteValue !== folderDeleteInputValue) return;
 
-    dispatch(deleteFromDocuments({type: 'folders', id: folderIdEditFolderModal}));
+    dispatch(deleteFromDocuments({ type: 'folders', id: folderIdEditFolderModal }));
 
     setFolderInputValue('');
     setFolderDeleteValue('');

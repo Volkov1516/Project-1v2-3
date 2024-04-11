@@ -91,9 +91,7 @@ export const Settings = () => {
     }
   };
 
-  const handleClose = e => {
-    window.history.back();
-  };
+  const handleClose = () => window.history.back();
 
   return createPortal(
     <div className={css.container} onClick={handleClose}>

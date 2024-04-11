@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+
 import { Bar } from './Bar/Bar';
 import { Manager } from './Manager/Manager';
 import { EditorModal } from './EditorModal/EditorModal';
@@ -7,13 +9,13 @@ import { Route } from 'components/atoms/Navigation/Route';
 import css from './Home.module.css';
 
 export const Home = () => {
+  const { navigationPath } = useSelector(state => state.app);
+
   return (
     <div className={css.container}>
       <Bar />
       <Manager />
-      <Route path="/editor">
-        <EditorModal />
-      </Route>
+      {navigationPath?.includes('editor') && <EditorModal />}
       <Snackbar />
     </div>
   );

@@ -5,9 +5,7 @@ import { IconButton } from '../IconButton/IconButton';
 import css from './Modal.module.css';
 
 export const Modal = ({ loading, children }) => {
-  const handleClose = e => {
-    window.history.back();
-  };
+  const handleClose = () => window.history.back();
 
   return createPortal(
     <div className={css.container} onClick={handleClose}>
