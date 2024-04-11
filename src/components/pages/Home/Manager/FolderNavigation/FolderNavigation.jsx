@@ -1,21 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { updatePath } from 'redux/features/user/userSlice';
-
 import { IconButton } from 'components/atoms/IconButton/IconButton';
 
 import css from './FolderNavigation.module.css';
 
 export const FolderNavigation = ({ name }) => {
-  const dispatch = useDispatch();
-
-  const { path } = useSelector(state => state.user);
-
   const handleBack = (e) => {
     e.stopPropagation();
-    let newArr = JSON.parse(JSON.stringify(path));
-    newArr.pop();
-
-    dispatch(updatePath([...newArr]));
 
     window.history.back();
   };

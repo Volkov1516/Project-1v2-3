@@ -38,9 +38,6 @@ export const userSlice = createSlice({
     updateDocuments: (state, action) => {
       state.documents = action.payload;
     },
-    updatePath: (state, action) => {
-      state.path = action.payload;
-    },
     setActiveTaskId: (state, action) => {
       state.activeTaskId = action.payload;
     },
@@ -191,7 +188,6 @@ export const {
   updateUserName,
   updateUserPhoto,
   updateDocuments,
-  updatePath,
   setActiveTaskId,
   setLoading
 } = userSlice.actions;

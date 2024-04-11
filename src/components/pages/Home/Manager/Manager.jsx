@@ -53,10 +53,6 @@ export const Manager = memo(function MemoizedComponent() {
   }, []);
 
   useEffect(() => {
-    managerRef.current.scrollTo(0, 0);
-  }, [path]);
-
-  useEffect(() => {
     let activePathId;
 
     if (navigationPath) {
@@ -96,7 +92,7 @@ export const Manager = memo(function MemoizedComponent() {
 
     let res = findFolder(documents, activePathId);
     setFolder(res);
-  }, [documents, path, navigationPath]);
+  }, [documents, navigationPath]);
 
   useEffect(() => {
     if (isAllowScroll === 'bottom') {
