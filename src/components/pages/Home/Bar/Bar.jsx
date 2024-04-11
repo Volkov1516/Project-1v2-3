@@ -6,8 +6,6 @@ import { setActiveNote } from 'redux/features/note/noteSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Settings } from './Settings/Settings';
-import { Link } from 'components/atoms/Navigation/Link';
-import { Route } from 'components/atoms/Navigation/Route';
 import { Tooltip } from 'components/atoms/Tooltip/Tooltip';
 import { IconButton } from 'components/atoms/IconButton/IconButton';
 import { Modal } from 'components/atoms/Modal/Modal';
