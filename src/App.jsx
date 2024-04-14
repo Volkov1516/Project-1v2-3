@@ -80,10 +80,10 @@ export const App = () => {
   }, []);
 
   useEffect(() => {
-    const handlePopstate = (e) => {
+    const handlePopstate = () => {
       // dispatch(setNavigationPath(window.location.pathname));
       // e.preventDefault();
-      window.history.replaceState(null, null, '/');
+      window.history.pushState(null, null, '/');
       dispatch(setSettingsModal(false));
     };
 
