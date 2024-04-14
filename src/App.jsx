@@ -83,6 +83,7 @@ export const App = () => {
     const handlePopstate = (e) => {
       // dispatch(setNavigationPath(window.location.pathname));
       e.preventDefault();
+      window.history.replaceState(null, null, window.location.pathname);
       dispatch(setSettingsModal(false));
     };
 
