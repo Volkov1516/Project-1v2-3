@@ -13,12 +13,13 @@ import { Tasks } from './Tasks/Tasks';
 import css from './Manager.module.css';
 
 import { findFolder } from 'utils/findFolder';
+import { getNavigationPathId } from 'utils/getNavigationId';
 
 export const Manager = memo(function MemoizedComponent() {
   const dispatch = useDispatch();
 
   const { theme, navigationPath } = useSelector(state => state.app);
-  const { userId, documents, path } = useSelector(state => state.user);
+  const { userId, documents } = useSelector(state => state.user);
 
   const managerRef = useRef(null);
 
@@ -208,7 +209,6 @@ export const Manager = memo(function MemoizedComponent() {
   };
 
   const touchStartOpenModal = (e, index, id, name, type, openSettingsModal, currentElement, contentArray) => {
-    console.log('asd')
     const timerOpenModal = setTimeout(() => {
       setIsDraggable(false);
 
@@ -635,6 +635,8 @@ export const Manager = memo(function MemoizedComponent() {
     setPlaceholderId(null);
 
     try {
+      const navigationPathId = getNavigationPathId(navigationPath, 'folder');
+
       const documentsCopy = JSON.parse(JSON.stringify(documents));
 
       const removeDraggable = targetFolder => {
@@ -643,7 +645,7 @@ export const Manager = memo(function MemoizedComponent() {
         // Delete draggable from current place
         targetFolder[`${draggableType}s`].splice(draggableIndex, 1);
       };
-      findFolder(documentsCopy, path[path.length - 1], removeDraggable);
+      findFolder(documentsCopy, navigationPathId, removeDraggable);
 
       dispatch(updateDocuments(documentsCopy));
 
@@ -663,12 +665,13 @@ export const Manager = memo(function MemoizedComponent() {
       const draggableArrayCopy = JSON.parse(JSON.stringify(folder[`${draggableType}s`]));
       const draggableObject = draggableArrayCopy[draggableIndex];
       draggableArrayCopy.splice(draggableIndex, 1);
+      const navigationPathId = getNavigationPathId(navigationPath, 'folder');
 
       const removeDraggable = targetFolder => targetFolder[`${draggableType}s`] = draggableArrayCopy;
-      findFolder(documentsCopy, path[path.length - 1], removeDraggable);
+      findFolder(documentsCopy, navigationPathId, removeDraggable);
 
       const moveDraggableOutside = (targetFolder) => targetFolder[`${draggableType}s`].push(draggableObject);
-      findFolder(documentsCopy, path[path.length - 2], moveDraggableOutside);
+      findFolder(documentsCopy, 'root', moveDraggableOutside);
 
       dispatch(updateDocuments(documentsCopy));
 
@@ -736,9 +739,9 @@ export const Manager = memo(function MemoizedComponent() {
           }
         }
 
-
+        const navigationPathId = getNavigationPathId(navigationPath, 'folder');
         const changeFolderPosition = (targetFolder) => targetFolder.folders = newFolders;
-        findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+        findFolder(newDocuments, navigationPathId, changeFolderPosition);
       }
       else {
         const foldersCopy = folder.folders;
@@ -792,8 +795,9 @@ export const Manager = memo(function MemoizedComponent() {
           }
         }
 
+        const navigationPathId = getNavigationPathId(navigationPath, 'folder');
         const changeFolderPosition = (targetFolder) => targetFolder.folders = newFolders;
-        findFolder(newDocuments, path[path.length - 1], changeFolderPosition);
+        findFolder(newDocuments, navigationPathId, changeFolderPosition);
       }
 
       dispatch(updateDocuments(newDocuments));
@@ -864,8 +868,9 @@ export const Manager = memo(function MemoizedComponent() {
         }
       }
 
+      const navigationPathId = getNavigationPathId(navigationPath, 'folder');
       const changeElementPosition = (targetFolder) => targetFolder[`${draggableType}s`] = newTypeArray;
-      findFolder(newDocuments, path[path.length - 1], changeElementPosition);
+      findFolder(newDocuments, navigationPathId, changeElementPosition);
 
       dispatch(updateDocuments(newDocuments));
 

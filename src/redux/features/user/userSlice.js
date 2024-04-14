@@ -4,6 +4,7 @@ import { db } from '../../../firebase.js';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 import { findFolder } from 'utils/findFolder.js';
+import { getNavigationPathId } from 'utils/getNavigationId.js';
 
 const initialState = {
   userId: null,
@@ -11,7 +12,6 @@ const initialState = {
   userName: null,
   userPhoto: null,
   documents: null,
-  path: ['root'],
   activeTaskId: null,
   authLoading: true,
   documentsLoading: false,
@@ -103,26 +103,7 @@ export const createInDocuments = createAsyncThunk('user/createInDocuments', asyn
 
   const { type, obj } = props;
 
-  let activePathId;
-
-  if (state.app.navigationPath) {
-    let navPathCopy = state.app.navigationPath;
-    let newNavPath = navPathCopy?.split('/');
-
-    if (navPathCopy.includes('folder')) {
-      newNavPath?.forEach(i => {
-        if (i.includes('folder')) {
-          activePathId = i.split('=')[1];
-        }
-      });
-    }
-    else {
-      activePathId = 'root';
-    }
-  }
-  else {
-    activePathId = 'root';
-  }
+  const navigationPathId = getNavigationPathId(state.app.navigationPath, 'folder');
 
   const newDocuments = JSON.parse(JSON.stringify(state.user.documents));
 
@@ -135,7 +116,7 @@ export const createInDocuments = createAsyncThunk('user/createInDocuments', asyn
     }
   };
 
-  findFolder(newDocuments, activePathId, createObj);
+  findFolder(newDocuments, navigationPathId, createObj);
 
   try {
     if (type !== 'tasks') {
@@ -153,6 +134,8 @@ export const updateInDocuments = createAsyncThunk('user/updateInDocuments', asyn
 
   const { type, id, name, value } = props;
 
+  const navigationPathId = getNavigationPathId(state.app.navigationPath, 'folder');
+
   const newDocuments = JSON.parse(JSON.stringify(state.user.documents));
 
   const editObj = (targetFolder) => {
@@ -165,7 +148,7 @@ export const updateInDocuments = createAsyncThunk('user/updateInDocuments', asyn
     }
   };
 
-  findFolder(newDocuments, state.user.path[state.user.path.length - 1], editObj);
+  findFolder(newDocuments, navigationPathId, editObj);
 
   try {
     await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
@@ -180,6 +163,8 @@ export const deleteFromDocuments = createAsyncThunk('user/deleteFromDocuments', 
   const state = thunkAPI.getState();
   const { type, id } = props;
 
+  const navigationPathId = getNavigationPathId(state.app.navigationPath, 'folder');
+
   const newDocuments = JSON.parse(JSON.stringify(state.user.documents));
 
   const deleteObj = (targetFolder) => {
@@ -193,7 +178,7 @@ export const deleteFromDocuments = createAsyncThunk('user/deleteFromDocuments', 
     }
   };
 
-  findFolder(newDocuments, state.user.path[state.user.path.length - 1], deleteObj);
+  findFolder(newDocuments, navigationPathId, deleteObj);
 
   try {
     await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
