@@ -268,7 +268,6 @@ export const Manager = memo(function MemoizedComponent() {
         }
       }
 
-      console.log('213123')
       // STEP 3: Open settings modal
       openSettingsModal(e, id, name);
     }, 500);

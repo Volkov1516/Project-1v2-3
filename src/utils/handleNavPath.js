@@ -1,6 +1,6 @@
 import { setNavigationPath } from 'redux/features/app/appSlice';
 
-export const handleNavPath = (dispatch, path, type) => {
+export const handleNavPath = (dispatch, path) => {
   const pathname = window.location.pathname;
 
   if (pathname.includes(path)) return;
