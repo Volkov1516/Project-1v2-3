@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   notesCache: null,
-  isOpenNote: null,
   isNewNote: null,
   activeNoteId: null,
   activeNoteTitle: null,
@@ -16,8 +15,10 @@ export const noteSlice = createSlice({
     updateNotesCache: (state, action) => {
       state.notesCache = action.payload;
     },
+    updateIsNewNote: (state, action) => {
+      state.isNewNote = action.payload;
+    },
     setActiveNote: (state, action) => {
-      state.isOpenNote = action.payload?.isOpen;
       state.isNewNote = action.payload?.isNew;
       state.activeNoteId = action.payload?.id;
       state.activeNoteTitle = action.payload?.title;
@@ -25,9 +26,6 @@ export const noteSlice = createSlice({
     },
     updateActiveNoteTitle: (state, action) => {
       state.activeNoteTitle = action.payload;
-    },
-    updateIsNewNote: (state, action) => {
-      state.isNewNote = action.payload;
     }
   }
 });

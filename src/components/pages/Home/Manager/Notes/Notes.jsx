@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSnackbar, setNavigationPath } from 'redux/features/app/appSlice';
+import { setSnackbar } from 'redux/features/app/appSlice';
 import { updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
@@ -12,6 +12,8 @@ import { Button } from 'components/atoms/Button/Button';
 import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Notes.module.css';
+
+import { handleNavPath } from 'utils/handleNavPath';
 
 export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
@@ -29,7 +31,29 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
     if (preventOnClick) return;
 
     // STEP 1: Return if this note is openned (need to clean up activeNoteId after close!)
-    if (activeNoteId === id) return;
+    // if (activeNoteId === id) return;
+    let pathname = window.location.pathname;
+
+    if (pathname.includes('note')) {
+      let newPathname = pathname.split('/');
+      let pathnameId;
+
+      for (let i = 0; i < newPathname.length; i++) {
+        if (newPathname[i].includes('note')) {
+          pathnameId = newPathname[i].split('=')[1];
+        }
+      }
+
+      if (pathnameId === id) {
+        return;
+      }
+      else {
+
+      }
+    }
+    else {
+      handleNavPath(dispatch, `note=${id}`);
+    }
 
     // STEP 2: Check if Note is in the Redux
     let targetNote = notesCache?.find(i => i.id === id);
@@ -67,26 +91,21 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
 
     // STEP 4: Open Editor with targetNote data
     dispatch(setActiveNote({
-      isOpen: true,
       isNew: false,
       id: targetNote?.id,
       title: targetNote?.title,
       content: targetNote?.content,
     }));
-
-    if (window.location.pathname === '/editor') return;
-
-    window.history.pushState({}, '', 'editor');
-    const navEvent = new PopStateEvent('popstate');
-    window.dispatchEvent(navEvent);
   };
 
   const handleOpenEditNoteModal = (e, id, title) => {
+    e.stopPropagation();
+
     setNoteIdEditNoteModal(id);
     setTitleInputValue(title);
     setTitleDeleteValue(title);
 
-    handlePathname('editNote');
+    handleNavPath(dispatch, 'editNote');
   };
 
   const handleEditNoteTitle = async () => {
@@ -152,7 +171,6 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
     // STEP 4: Reset activeNote... (Redux) and inputs
     if (activeNoteId === noteIdEditNoteModal) {
       dispatch(setActiveNote({
-        isOpen: null,
         isNew: null,
         id: null,
         title: null,
@@ -166,23 +184,6 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
 
     // STEP 5: Close modal
     window.history.back();
-  };
-
-  const handlePathname = (path) => {
-    const pathname = window.location.pathname;
-
-    if (pathname.includes(path)) {
-      return;
-    }
-
-    if (window.location.pathname === '/') {
-      window.history.pushState({}, '', `${pathname}${path}`);
-      dispatch(setNavigationPath(`${pathname}${path}`));
-    }
-    else {
-      window.history.pushState({}, '', `${pathname}/${path}`);
-      dispatch(setNavigationPath(`${pathname}/${path}`));
-    }
   };
 
   return (

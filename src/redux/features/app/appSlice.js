@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   theme: null,
   snackbar: null,
-  navigationPath: null
+  navigationPath: null,
+  settingsModal: false,
 };
 
 export const appSlice = createSlice({
@@ -18,9 +19,12 @@ export const appSlice = createSlice({
     },
     setNavigationPath: (state, action) => {
       state.navigationPath = action.payload;
+    },
+    setSettingsModal: (state, action) => {
+      state.settingsModal = action.payload;
     }
   }
 });
 
-export const { setTheme, setSnackbar, setNavigationPath } = appSlice.actions;
+export const { setTheme, setSnackbar, setNavigationPath, setSettingsModal } = appSlice.actions;
 export default appSlice.reducer;

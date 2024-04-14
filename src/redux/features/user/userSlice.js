@@ -103,6 +103,27 @@ export const createInDocuments = createAsyncThunk('user/createInDocuments', asyn
 
   const { type, obj } = props;
 
+  let activePathId;
+
+  if (state.app.navigationPath) {
+    let navPathCopy = state.app.navigationPath;
+    let newNavPath = navPathCopy?.split('/');
+
+    if (navPathCopy.includes('folder')) {
+      newNavPath?.forEach(i => {
+        if (i.includes('folder')) {
+          activePathId = i.split('=')[1];
+        }
+      });
+    }
+    else {
+      activePathId = 'root';
+    }
+  }
+  else {
+    activePathId = 'root';
+  }
+
   const newDocuments = JSON.parse(JSON.stringify(state.user.documents));
 
   const createObj = (targetFolder) => {
@@ -114,7 +135,7 @@ export const createInDocuments = createAsyncThunk('user/createInDocuments', asyn
     }
   };
 
-  findFolder(newDocuments, state.user.path[state.user.path.length - 1], createObj);
+  findFolder(newDocuments, activePathId, createObj);
 
   try {
     if (type !== 'tasks') {

@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { setTheme, setSnackbar } from 'redux/features/app/appSlice';
+import { setTheme, setSnackbar, setSettingsModal } from 'redux/features/app/appSlice';
 import { setUser, updateUserName, updateUserPhoto } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote } from 'redux/features/note/noteSlice';
 import { db, auth } from 'firebase.js';
@@ -80,7 +80,6 @@ export const Settings = () => {
       dispatch(setUser(null, null, null, null, null));
       dispatch(updateNotesCache(null));
       dispatch(setActiveNote({
-        isOpen: null,
         isNew: null,
         id: null,
         title: null,
@@ -91,7 +90,8 @@ export const Settings = () => {
     }
   };
 
-  const handleClose = () => window.history.back();
+  // const handleClose = () => window.history.back();
+  const handleClose = () => dispatch(setSettingsModal(false));
 
   return createPortal(
     <div className={css.container} onClick={handleClose}>

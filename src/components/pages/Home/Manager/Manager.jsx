@@ -208,6 +208,7 @@ export const Manager = memo(function MemoizedComponent() {
   };
 
   const touchStartOpenModal = (e, index, id, name, type, openSettingsModal, currentElement, contentArray) => {
+    console.log('asd')
     const timerOpenModal = setTimeout(() => {
       setIsDraggable(false);
 
@@ -267,6 +268,7 @@ export const Manager = memo(function MemoizedComponent() {
         }
       }
 
+      console.log('213123')
       // STEP 3: Open settings modal
       openSettingsModal(e, id, name);
     }, 500);

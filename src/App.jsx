@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTheme, setNavigationPath } from 'redux/features/app/appSlice';
+import { setTheme, setSettingsModal } from 'redux/features/app/appSlice';
 import { fetchUser, setLoading } from 'redux/features/user/userSlice';
 import { auth } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -70,15 +70,31 @@ export const App = () => {
     document.head.appendChild(newThemeTag);
   }, [dispatch]);
 
+
+
+
+
+  
   useEffect(() => {
-    const handlePopstate = () => {
-      dispatch(setNavigationPath(window.location.pathname));
+    window.history.replaceState(null, '', '/');
+  }, []);
+
+  useEffect(() => {
+    const handlePopstate = (e) => {
+      // dispatch(setNavigationPath(window.location.pathname));
+      e.preventDefault();
+      dispatch(setSettingsModal(false));
     };
 
     window.addEventListener('popstate', handlePopstate);
 
     return () => window.removeEventListener('popstate', handlePopstate);
   }, [dispatch, navigationPath]);
+
+
+
+
+
 
   if (authLoading) {
     return (

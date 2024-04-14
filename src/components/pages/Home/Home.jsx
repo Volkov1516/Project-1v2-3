@@ -14,7 +14,7 @@ export const Home = () => {
     <div className={css.container}>
       <Bar />
       <Manager />
-      {navigationPath?.includes('editor') && <EditorModal />}
+      {navigationPath?.includes('note') && <EditorModal />}
       <Snackbar />
     </div>
   );

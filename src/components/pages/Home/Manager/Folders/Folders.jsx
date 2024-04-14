@@ -10,6 +10,8 @@ import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Folders.module.css';
 
+import { handleNavPath } from 'utils/handleNavPath';
+
 export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
 
@@ -33,8 +35,7 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
       dispatch(setNavigationPath(newPathname.join('/')));
     }
     else {
-      window.history.pushState({}, '', `folder=${id}${pathname}`);
-      dispatch(setNavigationPath(`folder=${id}${pathname}`));
+      handleNavPath(dispatch, `folder=${id}`);
     }
   };
 
@@ -43,7 +44,7 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
     setFolderInputValue(name);
     setFolderDeleteValue(name);
 
-    handlePathname('editFolder');
+    handleNavPath(dispatch, 'editFolder');
   };
 
   const handleEditFolderName = async () => {
@@ -65,23 +66,6 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
     setFolderDeleteValue('');
     setFolderDeleteInputValue('');
     window.history.back();
-  };
-
-  const handlePathname = (path) => {
-    const pathname = window.location.pathname;
-
-    if (pathname.includes(path)) {
-      return;
-    }
-
-    if (window.location.pathname === '/') {
-      window.history.pushState({}, '', `${pathname}${path}`);
-      dispatch(setNavigationPath(`${pathname}${path}`));
-    }
-    else {
-      window.history.pushState({}, '', `${pathname}/${path}`);
-      dispatch(setNavigationPath(`${pathname}/${path}`));
-    }
   };
 
   return (
