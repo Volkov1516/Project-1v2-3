@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setAppPathname } from 'redux/features/app/appSlice';
 import { deleteFromDocuments, updateInDocuments } from 'redux/features/user/userSlice';
 
 import { IconButton } from 'components/atoms/IconButton/IconButton';
@@ -10,7 +9,7 @@ import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Folders.module.css';
 
-import { addNavigationSegment } from 'utils/setNavigation';
+import { addNavigationSegment, addNavigationSegmentFolder } from 'utils/setNavigation';
 
 export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
@@ -25,18 +24,7 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
   const handleOpenFolder = (id) => {
     if (preventOnClick) return;
 
-    const pathname = window.location.pathname;
-
-    if (pathname.includes('folder')) {
-      let newPathname = pathname.split('/');
-      newPathname[1] = newPathname[1].split('=')[1] = `folder=${id}`;
-
-      window.history.pushState({}, '', newPathname.join('/'));
-      dispatch(setAppPathname(newPathname.join('/')));
-    }
-    else {
-      addNavigationSegment(dispatch, `folder=${id}`);
-    }
+    addNavigationSegmentFolder(dispatch, id);
   };
 
   const handleOpenEditFodlerModal = (e, id, name) => {

@@ -6,8 +6,32 @@ export const addNavigationSegment = (dispatch, path) => {
   if (URLPathname.includes(path)) return;
 
   let newPathname;
-  window.location.pathname === '/' ? newPathname = `${URLPathname}${path}` : newPathname = `${URLPathname}/${path}`;
+  URLPathname === '/' ? newPathname = `${URLPathname}${path}` : newPathname = `${URLPathname}/${path}`;
 
   window.history.pushState({}, '', newPathname);
   dispatch(setAppPathname(newPathname));
+};
+
+export const addNavigationSegmentFolder = (dispatch, folderId) => {
+  const URLPathname = window.location.pathname;
+
+  if (URLPathname.includes('folder')) {
+    let newPathname = URLPathname.split('/');
+
+    for (let i = 0; i < newPathname.length; i++) {
+      if (newPathname[i].includes('folder')) {
+        newPathname[i] = `folder=${folderId}`;
+      }
+    }
+
+    window.history.pushState({}, '', newPathname.join('/'));
+    dispatch(setAppPathname(newPathname.join('/')));
+  }
+  else {
+    let newPathname;
+    URLPathname === '/' ? newPathname = `folder=${folderId}` : newPathname = `folder=${folderId}/${URLPathname}`;
+
+    window.history.pushState({}, '', newPathname);
+    dispatch(setAppPathname(newPathname));
+  }
 };
