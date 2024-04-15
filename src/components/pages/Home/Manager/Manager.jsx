@@ -12,7 +12,7 @@ import { Tasks } from './Tasks/Tasks';
 
 import css from './Manager.module.css';
 
-import { findFolder } from 'utils/findFolder';
+import { findFolder, getParentFolder } from 'utils/searchInManager';
 import { getNavigationPathId } from 'utils/getNavigationId';
 
 export const Manager = memo(function MemoizedComponent() {
@@ -665,13 +665,15 @@ export const Manager = memo(function MemoizedComponent() {
       const draggableArrayCopy = JSON.parse(JSON.stringify(folder[`${draggableType}s`]));
       const draggableObject = draggableArrayCopy[draggableIndex];
       draggableArrayCopy.splice(draggableIndex, 1);
+
       const navigationPathId = getNavigationPathId(appPathname, 'folder');
+      const parentFodlerId = getParentFolder(documents, navigationPathId);
 
       const removeDraggable = targetFolder => targetFolder[`${draggableType}s`] = draggableArrayCopy;
       findFolder(documentsCopy, navigationPathId, removeDraggable);
 
       const moveDraggableOutside = (targetFolder) => targetFolder[`${draggableType}s`].push(draggableObject);
-      findFolder(documentsCopy, 'root', moveDraggableOutside);
+      findFolder(documentsCopy, parentFodlerId, moveDraggableOutside);
 
       dispatch(updateDocuments(documentsCopy));
 

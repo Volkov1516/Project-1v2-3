@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit';
 import { db } from '../../../firebase.js';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
-import { findFolder } from 'utils/findFolder.js';
+import { findFolder } from 'utils/searchInManager.js';
 import { getNavigationPathId } from 'utils/getNavigationId.js';
 
 const initialState = {

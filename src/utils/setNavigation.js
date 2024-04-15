@@ -48,7 +48,8 @@ export const addNavigationSegmentNote = (dispatch, noteId) => {
       }
     }
 
-    window.history.pushState({}, '', newPathname.join('/'));
+    // replace - holds only one instance in state, push - holds as many as clicked
+    window.history.replaceState({}, '', newPathname.join('/'));
     dispatch(setAppPathname(newPathname.join('/')));
   }
   else {
