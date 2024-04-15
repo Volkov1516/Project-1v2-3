@@ -35,3 +35,27 @@ export const addNavigationSegmentFolder = (dispatch, folderId) => {
     dispatch(setAppPathname(newPathname));
   }
 };
+
+export const addNavigationSegmentNote = (dispatch, noteId) => {
+  const URLPathname = window.location.pathname;
+
+  if (URLPathname.includes('note')) {
+    let newPathname = URLPathname.split('/');
+
+    for (let i = 0; i < newPathname.length; i++) {
+      if (newPathname[i].includes('note')) {
+        newPathname[i] = `note=${noteId}`;
+      }
+    }
+
+    window.history.pushState({}, '', newPathname.join('/'));
+    dispatch(setAppPathname(newPathname.join('/')));
+  }
+  else {
+    let newPathname;
+    URLPathname === '/' ? newPathname = `note=${noteId}` : newPathname = `${URLPathname}/note=${noteId}`;
+
+    window.history.pushState({}, '', newPathname);
+    dispatch(setAppPathname(newPathname));
+  }
+};

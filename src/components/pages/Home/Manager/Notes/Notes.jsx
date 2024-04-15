@@ -13,7 +13,7 @@ import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Notes.module.css';
 
-import { addNavigationSegment } from 'utils/setNavigation';
+import { addNavigationSegment, addNavigationSegmentNote } from 'utils/setNavigation';
 
 export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
@@ -32,28 +32,6 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
 
     // STEP 1: Return if this note is openned (need to clean up activeNoteId after close!)
     // if (activeNoteId === id) return;
-    let pathname = window.location.pathname;
-
-    if (pathname.includes('note')) {
-      let newPathname = pathname.split('/');
-      let pathnameId;
-
-      for (let i = 0; i < newPathname.length; i++) {
-        if (newPathname[i].includes('note')) {
-          pathnameId = newPathname[i].split('=')[1];
-        }
-      }
-
-      if (pathnameId === id) {
-        return;
-      }
-      else {
-
-      }
-    }
-    else {
-      addNavigationSegment(dispatch, `note=${id}`);
-    }
 
     // STEP 2: Check if Note is in the Redux
     let targetNote = notesCache?.find(i => i.id === id);
@@ -96,6 +74,9 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
       title: targetNote?.title,
       content: targetNote?.content,
     }));
+
+    // STEP 5: Update URL
+    addNavigationSegmentNote(dispatch, id);
   };
 
   const handleOpenEditNoteModal = (e, id, title) => {
