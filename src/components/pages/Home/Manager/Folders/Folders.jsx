@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setNavigationPath } from 'redux/features/app/appSlice';
+import { setAppPathname } from 'redux/features/app/appSlice';
 import { deleteFromDocuments, updateInDocuments } from 'redux/features/user/userSlice';
 
 import { IconButton } from 'components/atoms/IconButton/IconButton';
@@ -10,12 +10,12 @@ import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Folders.module.css';
 
-import { handleNavPath } from 'utils/handleNavPath';
+import { addNavigationSegment } from 'utils/setNavigation';
 
 export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
 
-  const { navigationPath } = useSelector(state => state.app);
+  const { appPathname } = useSelector(state => state.app);
 
   const [folderIdEditFolderModal, setFoldeIdEditFolderModal] = useState(null);
   const [folderInputValue, setFolderInputValue] = useState('');
@@ -32,10 +32,10 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
       newPathname[1] = newPathname[1].split('=')[1] = `folder=${id}`;
 
       window.history.pushState({}, '', newPathname.join('/'));
-      dispatch(setNavigationPath(newPathname.join('/')));
+      dispatch(setAppPathname(newPathname.join('/')));
     }
     else {
-      handleNavPath(dispatch, `folder=${id}`);
+      addNavigationSegment(dispatch, `folder=${id}`);
     }
   };
 
@@ -44,7 +44,7 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
     setFolderInputValue(name);
     setFolderDeleteValue(name);
 
-    handleNavPath(dispatch, 'editFolder');
+    addNavigationSegment(dispatch, 'editFolder');
   };
 
   const handleEditFolderName = async () => {
@@ -119,7 +119,7 @@ export const Folders = ({ folders, preventOnClick, windowWidth, handleTouchStart
           </div>
         ))
       }
-      {navigationPath?.includes('editFolder') && <Modal>
+      {appPathname?.includes('editFolder') && <Modal>
         <div className={css.eiditFolderModalContent}>
           <Input id="folderNameId" label="Edit folder name" placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderInputValue(e.target.value)} />
           <Button type="outlined" disabled={!folderInputValue} onClick={handleEditFolderName}>Rename folder</Button>

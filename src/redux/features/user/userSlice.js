@@ -103,7 +103,7 @@ export const createInDocuments = createAsyncThunk('user/createInDocuments', asyn
 
   const { type, obj } = props;
 
-  const navigationPathId = getNavigationPathId(state.app.navigationPath, 'folder');
+  const navigationPathId = getNavigationPathId(state.app.appPathname, 'folder');
 
   const newDocuments = JSON.parse(JSON.stringify(state.user.documents));
 
@@ -134,7 +134,7 @@ export const updateInDocuments = createAsyncThunk('user/updateInDocuments', asyn
 
   const { type, id, name, value } = props;
 
-  const navigationPathId = getNavigationPathId(state.app.navigationPath, 'folder');
+  const navigationPathId = getNavigationPathId(state.app.appPathname, 'folder');
 
   const newDocuments = JSON.parse(JSON.stringify(state.user.documents));
 
@@ -163,7 +163,7 @@ export const deleteFromDocuments = createAsyncThunk('user/deleteFromDocuments', 
   const state = thunkAPI.getState();
   const { type, id } = props;
 
-  const navigationPathId = getNavigationPathId(state.app.navigationPath, 'folder');
+  const navigationPathId = getNavigationPathId(state.app.appPathname, 'folder');
 
   const newDocuments = JSON.parse(JSON.stringify(state.user.documents));
 

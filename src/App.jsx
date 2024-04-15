@@ -1,8 +1,6 @@
-// [] How to update URL and components based on it
-
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTheme, setNavigationPath } from 'redux/features/app/appSlice';
+import { setTheme, setAppPathname } from 'redux/features/app/appSlice';
 import { fetchUser, setLoading } from 'redux/features/user/userSlice';
 import { auth } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -15,7 +13,7 @@ import css from './App.module.css';
 export const App = () => {
   const dispatch = useDispatch();
 
-  const { navigationPath } = useSelector(state => state.app);
+  const { appPathname } = useSelector(state => state.app);
   const { userId, authLoading, error } = useSelector(state => state.user);
 
   useEffect(() => {
@@ -81,13 +79,13 @@ export const App = () => {
 
   useEffect(() => {
     const handlePopstate = (e) => {
-      dispatch(setNavigationPath(window.location.pathname));
+      dispatch(setAppPathname(window.location.pathname));
     };
 
     window.addEventListener('popstate', handlePopstate);
 
     return () => window.removeEventListener('popstate', handlePopstate);
-  }, [dispatch, navigationPath]);
+  }, [dispatch, appPathname]);
 
 
 

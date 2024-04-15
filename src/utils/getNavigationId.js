@@ -1,21 +1,21 @@
-export const getNavigationPathId = (navigationPath, type) => {
-  let navigationPathId;
+export const getNavigationPathId = (appPathname, type) => {
+  let appPathnameId;
 
-  if (navigationPath) {
-    if (navigationPath.includes(type)) {
-      navigationPath?.split('/')?.forEach(i => {
+  if (appPathname) {
+    if (appPathname.includes(type)) {
+      appPathname?.split('/')?.forEach(i => {
         if (i.includes(type)) {
-          navigationPathId = i.split('=')[1];
+          appPathnameId = i.split('=')[1];
         }
       });
     }
     else {
-      type === 'folder' ? navigationPathId = 'root' : navigationPathId = null;
+      type === 'folder' ? appPathnameId = 'root' : appPathnameId = null;
     }
   }
   else {
-    type === 'folder' ? navigationPathId = 'root' : navigationPathId = null;
+    type === 'folder' ? appPathnameId = 'root' : appPathnameId = null;
   }
 
-  return navigationPathId;
+  return appPathnameId;
 };

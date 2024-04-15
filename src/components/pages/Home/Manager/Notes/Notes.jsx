@@ -13,12 +13,12 @@ import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Notes.module.css';
 
-import { handleNavPath } from 'utils/handleNavPath';
+import { addNavigationSegment } from 'utils/setNavigation';
 
 export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
 
-  const { navigationPath } = useSelector(state => state.app);
+  const { appPathname } = useSelector(state => state.app);
   const { notesCache, activeNoteId } = useSelector(state => state.note);
 
   const [noteIdEditNoteModal, setNoteIdEditNoteModal] = useState(null);
@@ -52,7 +52,7 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
       }
     }
     else {
-      handleNavPath(dispatch, `note=${id}`);
+      addNavigationSegment(dispatch, `note=${id}`);
     }
 
     // STEP 2: Check if Note is in the Redux
@@ -105,7 +105,7 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
     setTitleInputValue(title);
     setTitleDeleteValue(title);
 
-    handleNavPath(dispatch, 'editNote');
+    addNavigationSegment(dispatch, 'editNote');
   };
 
   const handleEditNoteTitle = async () => {
@@ -227,7 +227,7 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
           </div>
         ))
       }
-      {navigationPath?.includes('editNote') && <Modal>
+      {appPathname?.includes('editNote') && <Modal>
         <div className={css.eiditNoteModalContent}>
           <Input id="noteTitleId" label="Edit note title" placeholder="Enter note name" value={titleInputValue} onChange={e => setTitleInputValue(e.target.value)} />
           <Button type="outlined" disabled={!titleInputValue} onClick={handleEditNoteTitle}>Rename note</Button>

@@ -8,13 +8,13 @@ import { Snackbar } from 'components/atoms/Snackbar/Snackbar';
 import css from './Home.module.css';
 
 export const Home = () => {
-  const { navigationPath } = useSelector(state => state.app);
+  const { appPathname } = useSelector(state => state.app);
 
   return (
     <div className={css.container}>
       <Bar />
       <Manager />
-      {navigationPath?.includes('note') && <EditorModal />}
+      {appPathname?.includes('note') && <EditorModal />}
       <Snackbar />
     </div>
   );
