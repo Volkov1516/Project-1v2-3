@@ -72,18 +72,6 @@ export const App = () => {
     document.head.appendChild(newThemeTag);
   }, [dispatch]);
 
-  useEffect(() => {
-    let startX, endX;
-    const threshold = 50;
-    const edgeThreshold = 20;
-
-    document.addEventListener('touchstart', (e) => startX = e.touches[0].clientX);
-
-    document.addEventListener('touchend', (e) => endX = e.changedTouches[0].clientX);
-
-    if (startX < edgeThreshold && startX - endX > threshold) alert('toch');
-  }, []);
-
 
 
 
