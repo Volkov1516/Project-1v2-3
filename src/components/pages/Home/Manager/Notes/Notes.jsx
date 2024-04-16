@@ -166,6 +166,7 @@ export const Notes = ({ notes, preventOnClick, handleTouchStart, handleTouchEnd,
     setTitleDeleteInputValue('');
 
     // STEP 5: Close modal
+    handleCloseEditNote();
   };
 
   return (
