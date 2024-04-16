@@ -21,7 +21,7 @@ import patreon from '../../../../../assets/patreon.svg';
 export const Settings = () => {
   const dispatch = useDispatch();
 
-  const { windowWidth, theme } = useSelector(state => state.app);
+  const { windowWidth, theme, settingsModal } = useSelector(state => state.app);
   const { userId, userEmail, userName, userPhoto } = useSelector(state => state.user);
 
   const handleChangeUserName = (e) => dispatch(updateUserName(e.target.value));
@@ -92,7 +92,7 @@ export const Settings = () => {
 
   const handleClose = () => windowWidth < 639 ? window.history.back() : dispatch(setSettingsModal(false));
 
-  return createPortal(
+  return settingsModal && createPortal(
     <div className={css.container} onClick={handleClose}>
       <div className={css.content} onClick={e => e.stopPropagation()}>
         <nav className={css.navigation}>

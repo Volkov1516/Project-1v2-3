@@ -6,7 +6,8 @@ const initialState = {
   snackbar: null,
   appPathname: null,
   navigationState: null,
-  settingsModal: false
+  settingsModal: false,
+  addFolderModal: false
 };
 
 export const appSlice = createSlice({
@@ -30,9 +31,20 @@ export const appSlice = createSlice({
     },
     setSettingsModal: (state, action) => {
       state.settingsModal = action.payload;
-    }
+    },
+    setAddFolderModal: (state, action) => {
+      state.addFolderModal = action.payload;
+    },
   }
 });
 
-export const { setWindowWidth, setTheme, setSnackbar, setAppPathname, setNavigationState, setSettingsModal } = appSlice.actions;
+export const {
+  setWindowWidth,
+  setTheme,
+  setSnackbar,
+  setAppPathname,
+  setNavigationState,
+  setSettingsModal,
+  setAddFolderModal
+} = appSlice.actions;
 export default appSlice.reducer;

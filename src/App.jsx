@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setWindowWidth, setTheme, setSettingsModal } from 'redux/features/app/appSlice';
+import { setWindowWidth, setTheme, setSettingsModal, setAddFolderModal } from 'redux/features/app/appSlice';
 import { fetchUser, setLoading } from 'redux/features/user/userSlice';
 import { auth } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -84,6 +84,9 @@ export const App = () => {
     const handleHashchange = (e) => {
       if (e.oldURL === `${window.location.href}#settings`) {
         dispatch(setSettingsModal(false));
+      }
+      else if (e.oldURL === `${window.location.href}#addFolder`) {
+        dispatch(setAddFolderModal(false));
       }
     };
 

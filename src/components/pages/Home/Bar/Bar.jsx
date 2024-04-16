@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTheme, setSettingsModal } from 'redux/features/app/appSlice';
+import { setTheme, setSettingsModal, setAddFolderModal } from 'redux/features/app/appSlice';
 import { createInDocuments, setActiveTaskId } from 'redux/features/user/userSlice';
 import { setActiveNote } from 'redux/features/note/noteSlice';
 import { v4 as uuidv4 } from 'uuid';
@@ -19,7 +19,7 @@ import { addNavigationSegment } from 'utils/setNavigation';
 export const Bar = () => {
   const dispatch = useDispatch();
 
-  const { windowWidth, theme, appPathname, settingsModal } = useSelector(state => state.app);
+  const { windowWidth, theme, addFolderModal } = useSelector(state => state.app);
   const { userEmail, userPhoto, userName } = useSelector(state => state.user);
 
   const [folderInputValue, setFolderNameInput] = useState('');
@@ -89,6 +89,13 @@ export const Bar = () => {
     }
   };
 
+  const handleOpenAddFolder = () => {
+    windowWidth < 639 && (window.location.hash = 'addFolder');
+    dispatch(setAddFolderModal(true));
+  };
+
+  const handleCloseAddFolder = () => windowWidth < 639 ? window.history.back() : dispatch(setAddFolderModal(false));
+
   const handleOpenSettings = () => {
     windowWidth < 639 && (window.location.hash = 'settings');
     dispatch(setSettingsModal(true));
@@ -104,7 +111,7 @@ export const Bar = () => {
           <IconButton onClick={handleCreateTask} path="m382-267.692-198.769-198.77L211.769-495 382-324.769 748.231-691l28.538 28.538L382-267.692Z" />
         </Tooltip>
         <Tooltip position="right" text="Add Folder">
-          <IconButton onClick={() => window.location.hash = 'editFolder'} path="M120-200v-560h263.846l80 80H840v480H120Zm40-40h640v-400H447.769l-80-80H160v480Zm0 0v-480 480Z" />
+          <IconButton onClick={handleOpenAddFolder} path="M120-200v-560h263.846l80 80H840v480H120Zm40-40h640v-400H447.769l-80-80H160v480Zm0 0v-480 480Z" />
         </Tooltip>
       </div>
       <div className={css.end}>
@@ -132,13 +139,13 @@ export const Bar = () => {
           </Tooltip>
         }
       </div>
-      {appPathname?.includes('addFolder') && <Modal>
+      <Modal open={addFolderModal} close={handleCloseAddFolder}>
         <div className={css.createFolderModalContent}>
           <Input id="folderNameId" label="Folder name" autofocus placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderNameInput(e.target.value)} />
           <Button type="outlined" disabled={!folderInputValue} onClick={handleCreateFolder}>Create folder</Button>
         </div>
-      </Modal>}
-      {settingsModal && <Settings />}
+      </Modal>
+      <Settings />
     </div >
   );
 };
