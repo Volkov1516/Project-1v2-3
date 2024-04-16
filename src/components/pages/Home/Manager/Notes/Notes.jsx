@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSnackbar } from 'redux/features/app/appSlice';
+import { setSnackbar, setEditNoteModal } from 'redux/features/app/appSlice';
 import { updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
@@ -13,12 +13,12 @@ import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Notes.module.css';
 
-import { addNavigationSegment, addNavigationSegmentNote } from 'utils/setNavigation';
+import { addNavigationSegmentNote } from 'utils/setNavigation';
 
 export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
 
-  const { appPathname } = useSelector(state => state.app);
+  const { editNoteModal } = useSelector(state => state.app);
   const { notesCache, activeNoteId } = useSelector(state => state.note);
 
   const [noteIdEditNoteModal, setNoteIdEditNoteModal] = useState(null);
@@ -86,8 +86,11 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
     setTitleInputValue(title);
     setTitleDeleteValue(title);
 
-    addNavigationSegment(dispatch, 'editNote');
+    windowWidth < 639 && (window.location.hash = 'editNote');
+    dispatch(setEditNoteModal(true));
   };
+
+  const handleCloseEditNote = () => windowWidth < 639 ? window.history.back() : dispatch(setEditNoteModal(false));
 
   const handleEditNoteTitle = async () => {
     // STEP 1: Return if no changes
@@ -208,14 +211,14 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
           </div>
         ))
       }
-      {appPathname?.includes('editNote') && <Modal>
+      <Modal open={editNoteModal} close={handleCloseEditNote}>
         <div className={css.eiditNoteModalContent}>
           <Input id="noteTitleId" label="Edit note title" placeholder="Enter note name" value={titleInputValue} onChange={e => setTitleInputValue(e.target.value)} />
           <Button type="outlined" disabled={!titleInputValue} onClick={handleEditNoteTitle}>Rename note</Button>
           <Input id="noteDeleteTitleId" label={`Enter ${titleDeleteValue} to delete the note`} placeholder="Enter note name" value={titleDeleteInputValue} onChange={e => setTitleDeleteInputValue(e.target.value)} />
           <Button type="outlined" disabled={titleDeleteValue !== titleDeleteInputValue} onClick={handleDeleteNote}>Delete note</Button>
         </div>
-      </Modal>}
+      </Modal>
     </div>
   );
 };

@@ -7,7 +7,9 @@ const initialState = {
   appPathname: null,
   navigationState: null,
   settingsModal: false,
-  addFolderModal: false
+  addFolderModal: false,
+  editFolderModal: false,
+  editNoteModal: false,
 };
 
 export const appSlice = createSlice({
@@ -35,6 +37,12 @@ export const appSlice = createSlice({
     setAddFolderModal: (state, action) => {
       state.addFolderModal = action.payload;
     },
+    setEditFolderModal: (state, action) => {
+      state.editFolderModal = action.payload;
+    },
+    setEditNoteModal: (state, action) => {
+      state.editNoteModal = action.payload;
+    },
   }
 });
 
@@ -45,6 +53,8 @@ export const {
   setAppPathname,
   setNavigationState,
   setSettingsModal,
-  setAddFolderModal
+  setAddFolderModal,
+  setEditFolderModal,
+  setEditNoteModal
 } = appSlice.actions;
 export default appSlice.reducer;

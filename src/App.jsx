@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setWindowWidth, setTheme, setSettingsModal, setAddFolderModal } from 'redux/features/app/appSlice';
+import { setWindowWidth, setTheme, setSettingsModal, setAddFolderModal, setEditFolderModal, setEditNoteModal } from 'redux/features/app/appSlice';
 import { fetchUser, setLoading } from 'redux/features/user/userSlice';
 import { auth } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -87,6 +87,12 @@ export const App = () => {
       }
       else if (e.oldURL === `${window.location.href}#addFolder`) {
         dispatch(setAddFolderModal(false));
+      }
+      else if (e.oldURL === `${window.location.href}#editFolder`) {
+        dispatch(setEditFolderModal(false));
+      }
+      else if (e.oldURL === `${window.location.href}#editNote`) {
+        dispatch(setEditNoteModal(false));
       }
     };
 
