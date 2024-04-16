@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTheme, setSettingsModal, setAddFolderModal } from 'redux/features/app/appSlice';
+import { setTheme, setSettingsModal, setAddFolderModal, setNoteModal } from 'redux/features/app/appSlice';
 import { createInDocuments, setActiveTaskId } from 'redux/features/user/userSlice';
 import { setActiveNote } from 'redux/features/note/noteSlice';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,8 +13,6 @@ import { Input } from 'components/atoms/Input/Input';
 import { Button } from 'components/atoms/Button/Button';
 
 import css from './Bar.module.css';
-
-import { addNavigationSegment } from 'utils/setNavigation';
 
 export const Bar = () => {
   const dispatch = useDispatch();
@@ -48,7 +46,8 @@ export const Bar = () => {
       content: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',
     }));
 
-    addNavigationSegment(dispatch, `note=${newId}`);
+    windowWidth < 639 && (window.location.hash = 'note');
+    dispatch(setNoteModal(true));
   };
 
   const handleCreateTask = () => {

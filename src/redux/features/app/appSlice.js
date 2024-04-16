@@ -9,6 +9,7 @@ const initialState = {
   settingsModal: false,
   addFolderModal: false,
   editFolderModal: false,
+  noteModal: false,
   editNoteModal: false,
 };
 
@@ -40,6 +41,9 @@ export const appSlice = createSlice({
     setEditFolderModal: (state, action) => {
       state.editFolderModal = action.payload;
     },
+    setNoteModal: (state, action) => {
+      state.noteModal = action.payload;
+    },
     setEditNoteModal: (state, action) => {
       state.editNoteModal = action.payload;
     },
@@ -54,6 +58,7 @@ export const {
   setNavigationState,
   setSettingsModal,
   setAddFolderModal,
+  setNoteModal,
   setEditFolderModal,
   setEditNoteModal
 } = appSlice.actions;

@@ -18,7 +18,7 @@ import { getNavigationPathId } from 'utils/getNavigationId';
 export const Manager = memo(function MemoizedComponent() {
   const dispatch = useDispatch();
 
-  const { theme, appPathname } = useSelector(state => state.app);
+  const { windowWidth, theme, appPathname } = useSelector(state => state.app);
   const { userId, documents } = useSelector(state => state.user);
 
   const managerRef = useRef(null);
@@ -42,16 +42,7 @@ export const Manager = memo(function MemoizedComponent() {
   const [timerIdSettings, setTimerIdSettings] = useState(null);
   const [timerIdNest, setTimerIdNest] = useState(null);
   const [timerIdScroll, setTimerIdScroll] = useState(null);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [preventOnClick, setPreventOnClick] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   useEffect(() => {
     let activePathId;
@@ -972,7 +963,6 @@ export const Manager = memo(function MemoizedComponent() {
         <Notes
           notes={folder?.notes}
           preventOnClick={preventOnClick}
-          windowWidth={windowWidth}
           handleTouchStart={handleTouchStart}
           handleTouchEnd={handleTouchEnd}
           handleTouchMove={handleTouchMove}

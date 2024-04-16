@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSnackbar, setEditNoteModal } from 'redux/features/app/appSlice';
+import { setSnackbar, setEditNoteModal, setNoteModal } from 'redux/features/app/appSlice';
 import { updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
 import { db } from 'firebase.js';
@@ -13,12 +13,10 @@ import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Notes.module.css';
 
-import { addNavigationSegmentNote } from 'utils/setNavigation';
-
-export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
+export const Notes = ({ notes, preventOnClick, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
 
-  const { editNoteModal } = useSelector(state => state.app);
+  const { windowWidth, editNoteModal } = useSelector(state => state.app);
   const { notesCache, activeNoteId } = useSelector(state => state.note);
 
   const [noteIdEditNoteModal, setNoteIdEditNoteModal] = useState(null);
@@ -76,7 +74,8 @@ export const Notes = ({ notes, preventOnClick, windowWidth, handleTouchStart, ha
     }));
 
     // STEP 5: Update URL
-    addNavigationSegmentNote(dispatch, id);
+    windowWidth < 639 && (window.location.hash = 'note');
+    dispatch(setNoteModal(true));
   };
 
   const handleOpenEditNoteModal = (e, id, title) => {
