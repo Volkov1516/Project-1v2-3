@@ -24,7 +24,7 @@ export const addNavigationSegmentFolder = (dispatch, folderId) => {
       }
     }
 
-    window.history.pushState({}, '', newPathname.join('/'));
+    window.history.pushState(null, null, newPathname.join('/'));
     dispatch(setAppPathname(newPathname.join('/')));
   }
   else {

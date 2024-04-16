@@ -1,5 +1,6 @@
 import { memo, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNavigationState } from 'redux/features/app/appSlice';
 
 import { Header } from './Header/Header';
 import { Title } from './Title/Title';
@@ -8,6 +9,8 @@ import { Editor } from './Editor/Editor';
 import css from './EditorModal.module.css';
 
 export const EditorModal = memo(function MemoizedEditorModal() {
+  const dispatch = useDispatch();
+
   const { activeNoteId } = useSelector(state => state.note);
 
   const editorRef = useRef(null);
@@ -15,7 +18,10 @@ export const EditorModal = memo(function MemoizedEditorModal() {
 
   const [saving, setSaving] = useState(false);
 
-  const handleClose = () => window.history.back();
+  const handleClose = () => {
+    dispatch(setNavigationState('closeNote'));
+    window.history.back();
+  };
 
   return (
     <div id="editorModalContainer" key={activeNoteId} className={css.container} onClick={handleClose}>
