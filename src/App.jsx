@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setWindowWidth, setTheme, setSettingsModal, setAddFolderModal, setEditFolderModal, setEditNoteModal, setNoteModal } from 'redux/features/app/appSlice';
+import { setWindowWidth, setTheme, setSettingsModal, setAddFolderModal, setEditFolderModal, setEditNoteModal, setNoteModal, setPath } from 'redux/features/app/appSlice';
 import { fetchUser, setLoading } from 'redux/features/user/userSlice';
 import { auth } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -13,7 +13,7 @@ import css from './App.module.css';
 export const App = () => {
   const dispatch = useDispatch();
 
-  const { appPathname, navigationState } = useSelector(state => state.app);
+  const { path } = useSelector(state => state.app);
   const { userId, authLoading, error } = useSelector(state => state.user);
 
   useEffect(() => {
@@ -82,27 +82,46 @@ export const App = () => {
 
   useEffect(() => {
     const handleHashchange = (e) => {
-      if (e.oldURL === `${window.location.href}#settings`) {
+      if (e.oldURL.includes('#settings')) {
         dispatch(setSettingsModal(false));
       }
-      else if (e.oldURL === `${window.location.href}#addFolder`) {
+      else if (e.oldURL.includes('#addFolder')) {
         dispatch(setAddFolderModal(false));
       }
-      else if (e.oldURL === `${window.location.href}#editFolder`) {
+      else if (e.oldURL.includes('#editFolder')) {
         dispatch(setEditFolderModal(false));
       }
-      else if (e.oldURL === `${window.location.href}#editNote`) {
+      else if (e.oldURL.includes('#editNote')) {
         dispatch(setEditNoteModal(false));
       }
-      else if (e.oldURL === `${window.location.href}#note`) {
+      else if (e.oldURL.includes('#note')) {
         dispatch(setNoteModal(false));
+      }
+      else if (e.newURL.includes('#folder')) {
+        let currentHash = window.location.hash.split('/')[1];
+
+        if (!currentHash) {
+          dispatch(setPath(['root']));
+        }
+        else if (path.includes(currentHash)) {
+          let newPath = JSON.parse(JSON.stringify(path));
+          newPath.pop();
+
+          dispatch(setPath([...newPath]));
+        }
+        else {
+          dispatch(setPath([...path, currentHash]));
+        }
+      }
+      else if (e.oldURL.includes('#folder') && !window.location.hash) {
+        dispatch(setPath(['root']));
       }
     };
 
     window.addEventListener('hashchange', handleHashchange);
 
     return () => window.removeEventListener('hashchange', handleHashchange);
-  }, [dispatch, appPathname, navigationState]);
+  }, [dispatch, path]);
 
   if (authLoading) {
     return (

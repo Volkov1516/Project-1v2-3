@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   windowWidth: null,
   theme: null,
+  path: ['root'],
   snackbar: null,
   appPathname: null,
   navigationState: null,
@@ -22,6 +23,9 @@ export const appSlice = createSlice({
     },
     setTheme: (state, action) => {
       state.theme = action.payload;
+    },
+    setPath: (state, action) => {
+      state.path = action.payload;
     },
     setSnackbar: (state, action) => {
       state.snackbar = action.payload;
@@ -53,6 +57,7 @@ export const appSlice = createSlice({
 export const {
   setWindowWidth,
   setTheme,
+  setPath,
   setSnackbar,
   setAppPathname,
   setNavigationState,

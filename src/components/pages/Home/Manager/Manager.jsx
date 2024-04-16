@@ -18,7 +18,7 @@ import { getNavigationPathId } from 'utils/getNavigationId';
 export const Manager = memo(function MemoizedComponent() {
   const dispatch = useDispatch();
 
-  const { windowWidth, theme, appPathname } = useSelector(state => state.app);
+  const { windowWidth, theme, path, appPathname } = useSelector(state => state.app);
   const { userId, documents } = useSelector(state => state.user);
 
   const managerRef = useRef(null);
@@ -45,27 +45,6 @@ export const Manager = memo(function MemoizedComponent() {
   const [preventOnClick, setPreventOnClick] = useState(false);
 
   useEffect(() => {
-    let activePathId;
-
-    if (appPathname) {
-      let navPathCopy = appPathname;
-      let newNavPath = navPathCopy?.split('/');
-
-      if (navPathCopy.includes('folder')) {
-        newNavPath?.forEach(i => {
-          if (i.includes('folder')) {
-            activePathId = i.split('=')[1];
-          }
-        });
-      }
-      else {
-        activePathId = 'root';
-      }
-    }
-    else {
-      activePathId = 'root';
-    }
-
     function findFolder(object, id) {
       if (object?.id === id) {
         return object;
@@ -82,9 +61,9 @@ export const Manager = memo(function MemoizedComponent() {
       return null;
     }
 
-    let res = findFolder(documents, activePathId);
+    let res = findFolder(documents, path[path.length -1]);
     setFolder(res);
-  }, [documents, appPathname]);
+  }, [documents, path]);
 
   useEffect(() => {
     if (isAllowScroll === 'bottom') {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEditFolderModal } from 'redux/features/app/appSlice';
+import { setEditFolderModal, setPath } from 'redux/features/app/appSlice';
 import { deleteFromDocuments, updateInDocuments } from 'redux/features/user/userSlice';
 
 import { IconButton } from 'components/atoms/IconButton/IconButton';
@@ -10,12 +10,10 @@ import { Modal } from 'components/atoms/Modal/Modal';
 
 import css from './Folders.module.css';
 
-import { addNavigationSegmentFolder } from 'utils/setNavigation';
-
 export const Folders = ({ folders, preventOnClick, handleTouchStart, handleTouchEnd, handleTouchMove }) => {
   const dispatch = useDispatch();
 
-  const { windowWidth, editFolderModal } = useSelector(state => state.app);
+  const { windowWidth, path, editFolderModal } = useSelector(state => state.app);
 
   const [folderIdEditFolderModal, setFoldeIdEditFolderModal] = useState(null);
   const [folderInputValue, setFolderInputValue] = useState('');
@@ -25,7 +23,15 @@ export const Folders = ({ folders, preventOnClick, handleTouchStart, handleTouch
   const handleOpenFolder = (id) => {
     if (preventOnClick) return;
 
-    addNavigationSegmentFolder(dispatch, id);
+    // windowWidth < 639 && (window.location.hash = `folder/${id}`);
+    // dispatch(setPath([...path, id]));
+
+    if (windowWidth < 639) {
+      window.location.hash = `folder/${id}`;
+    }
+    else {
+      dispatch(setPath([...path, id]));
+    }
   };
 
   const handleOpenEditFodlerModal = (e, id, name) => {
