@@ -65,7 +65,6 @@ export const Folders = ({ folders, preventOnClick, handleTouchStart, handleTouch
     setFolderInputValue('');
     setFolderDeleteValue('');
     setFolderDeleteInputValue('');
-    window.history.back();
   };
 
   return (

@@ -5,8 +5,6 @@ const initialState = {
   theme: null,
   path: ['root'],
   snackbar: null,
-  appPathname: null,
-  navigationState: null,
   settingsModal: false,
   addFolderModal: false,
   editFolderModal: false,
@@ -29,12 +27,6 @@ export const appSlice = createSlice({
     },
     setSnackbar: (state, action) => {
       state.snackbar = action.payload;
-    },
-    setAppPathname: (state, action) => {
-      state.appPathname = action.payload;
-    },
-    setNavigationState: (state, action) => {
-      state.navigationState = action.payload;
     },
     setSettingsModal: (state, action) => {
       state.settingsModal = action.payload;
@@ -59,8 +51,6 @@ export const {
   setTheme,
   setPath,
   setSnackbar,
-  setAppPathname,
-  setNavigationState,
   setSettingsModal,
   setAddFolderModal,
   setNoteModal,

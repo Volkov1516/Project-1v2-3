@@ -32,8 +32,6 @@ export const Bar = () => {
     };
 
     dispatch(createInDocuments({ type: 'folders', obj: newFolder }));
-
-    window.history.back();
   };
 
   const handleCreateNote = () => {
