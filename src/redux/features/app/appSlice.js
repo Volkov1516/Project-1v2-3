@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  windowWidth: null,
   theme: null,
   snackbar: null,
   appPathname: null,
@@ -12,6 +13,9 @@ export const appSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    setWindowWidth: (state, action) => {
+      state.windowWidth = action.payload;
+    },
     setTheme: (state, action) => {
       state.theme = action.payload;
     },
@@ -30,5 +34,5 @@ export const appSlice = createSlice({
   }
 });
 
-export const { setTheme, setSnackbar, setAppPathname, setNavigationState, setSettingsModal } = appSlice.actions;
+export const { setWindowWidth, setTheme, setSnackbar, setAppPathname, setNavigationState, setSettingsModal } = appSlice.actions;
 export default appSlice.reducer;

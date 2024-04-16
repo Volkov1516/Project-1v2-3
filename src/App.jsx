@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTheme, setSettingsModal } from 'redux/features/app/appSlice';
+import { setWindowWidth, setTheme, setSettingsModal } from 'redux/features/app/appSlice';
 import { fetchUser, setLoading } from 'redux/features/user/userSlice';
 import { auth } from 'firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -15,6 +15,16 @@ export const App = () => {
 
   const { appPathname, navigationState } = useSelector(state => state.app);
   const { userId, authLoading, error } = useSelector(state => state.user);
+
+  useEffect(() => {
+    dispatch(setWindowWidth(window.innerWidth));
+
+    const handleResize = () => dispatch(setWindowWidth(window.innerWidth));
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, [dispatch]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async user => {
@@ -70,60 +80,17 @@ export const App = () => {
     document.head.appendChild(newThemeTag);
   }, [dispatch]);
 
-
-
-
-  // useEffect(() => {
-  //   window.history.pushState(null, '', '/');
-  // }, []);
-
   useEffect(() => {
     const handleHashchange = (e) => {
-      // e.preventDefault();
-      console.log(window.location.hash)
-      console.log(e);
-      console.log('newUrl', e.newURL);
-      console.log('oldUrl', e.oldURL);
-      console.log(window.location.host);
-      console.log(window.location.hostname);
-      console.log(window.location.href);
-      console.log(`${window.location.href}settings`);
-      if(e.oldURL === `${window.location.href}#settings`) {
-        console.log('hre')
+      if (e.oldURL === `${window.location.href}#settings`) {
         dispatch(setSettingsModal(false));
       }
-
-      // if (navigationState === 'closeNote') {
-      //   console.log('s')
-
-      //   const URLPathname = appPathname;
-      //   let newPathname = URLPathname.split('/');
-
-      //   for (let i = 0; i < newPathname.length; i++) {
-      //     if (newPathname[i].includes('note')) {
-      //       newPathname.splice([i], 1);
-      //     }
-      //   }
-
-      //   window.history.pushState({}, '', newPathname.join('/'));
-      //   dispatch(setAppPathname(newPathname.join('/')));
-      //   dispatch(setNavigationState(null));
-      // }
-      // else {
-      //   console.log('e')
-      //   dispatch(setAppPathname(window.location.pathname));
-      // }
     };
 
     window.addEventListener('hashchange', handleHashchange);
 
     return () => window.removeEventListener('hashchange', handleHashchange);
   }, [dispatch, appPathname, navigationState]);
-
-
-
-
-
 
   if (authLoading) {
     return (

@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { setTheme, setSnackbar } from 'redux/features/app/appSlice';
+import { setTheme, setSnackbar, setSettingsModal } from 'redux/features/app/appSlice';
 import { setUser, updateUserName, updateUserPhoto } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote } from 'redux/features/note/noteSlice';
 import { db, auth } from 'firebase.js';
@@ -21,7 +21,7 @@ import patreon from '../../../../../assets/patreon.svg';
 export const Settings = () => {
   const dispatch = useDispatch();
 
-  const { theme } = useSelector(state => state.app);
+  const { windowWidth, theme } = useSelector(state => state.app);
   const { userId, userEmail, userName, userPhoto } = useSelector(state => state.user);
 
   const handleChangeUserName = (e) => dispatch(updateUserName(e.target.value));
@@ -90,7 +90,7 @@ export const Settings = () => {
     }
   };
 
-  const handleClose = () => window.history.back();
+  const handleClose = () => windowWidth < 639 ? window.history.back() : dispatch(setSettingsModal(false));
 
   return createPortal(
     <div className={css.container} onClick={handleClose}>
