@@ -77,7 +77,7 @@ export const Folders = ({ folders }) => {
       {folders?.map((i, index) => (
         <DragAdnDropElement key={index} index={index} id={i.id} type="folder" name={i.name} openSettingsModal={handleOpenEditFodlerModal}>
           <div className={css.folder} onClick={() => handleOpenFolder(i.id)}>
-            <img onTouchStart={(e) => e.preventDefault()} draggable={false} src={folderImg} alt="folder" className={css.folderImg} />
+            <img onContextMenu={(e) => e.preventDefault()} draggable={false} src={folderImg} alt="folder" className={css.folderImg} />
             {i.name}
           </div>
         </DragAdnDropElement>
