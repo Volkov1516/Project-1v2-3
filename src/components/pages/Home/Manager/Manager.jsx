@@ -38,7 +38,7 @@ export const Manager = memo(function MemoizedComponent() {
 
   return (
     <DragAndDropProvider folder={folder} windowWidth={windowWidth}>
-      <div className={css.container}>
+      <div id="manager" className={css.container}>
         <div className={css.header}>
           <FolderNavigation name={folder?.name} />
         </div>

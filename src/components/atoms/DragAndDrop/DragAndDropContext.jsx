@@ -197,8 +197,6 @@ export const DragAndDropProvider = ({ children, folder, windowWidth }) => {
   };
 
   const dragStart = (e, index, id, type, name, openSettingsModal) => {
-    e.preventDefault();
-
     const currentElement = e.currentTarget;
 
     const timerDragStart = setTimeout(() => {
@@ -217,7 +215,7 @@ export const DragAndDropProvider = ({ children, folder, windowWidth }) => {
       setDraggableOffsetY(offsetY);
 
       // Prevent draggable lagging on touch if move down
-      // managerRef.current.scrollTop += 1;
+      document.getElementById('manager').scrollTop += 1;
 
       if (type === 'folder') {
         dragStartFolder(currentElement, offsetLeft, offsetTop, index, type, folder[`${type}s`]);
