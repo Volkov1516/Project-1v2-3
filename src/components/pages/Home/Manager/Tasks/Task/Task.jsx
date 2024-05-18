@@ -4,9 +4,13 @@ import { setActiveTaskId, updateInDocuments, deleteFromDocuments } from 'redux/f
 
 import { IconButton } from 'components/atoms/IconButton/IconButton';
 
+import { useDragAndDrop } from 'components/atoms/DragAndDrop/DragAndDropContext';
+
 import css from './Task.module.css';
 
-export const Task = ({ id, content, isDraggable }) => {
+export const Task = ({ id, content }) => {
+  const { isDraggable } = useDragAndDrop();
+
   const dispatch = useDispatch();
 
   const { activeTaskId } = useSelector(state => state.user);

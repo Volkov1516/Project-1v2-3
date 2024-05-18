@@ -4,35 +4,21 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   font-size: 14px;
-  border-bottom: 1px solid var(--borderColor);
+  /* border-bottom: 1px solid var(--borderColor); */
   user-select: none;
 }
 
 .folder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  padding: 0;
+  width: 120px;
   border: 1px solid transparent;
+  text-align: center;
   transition: background-color 0.1s ease-in;
 }
 
-.start {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0px;
-}
-
-.settings {
-  display: none;
-}
-
-.svg {
+.folderImg {
   width: 100%;
   height: 100%;
-  padding: 0;
+  padding: 0px 8px;
 }
 
 .eiditFolderModalContent {
@@ -46,10 +32,6 @@
     background-color: var(--buttonHoverSecondary);
     border: 1px solid var(--borderColor);
   }
-
-  /* .folder:hover>.settings {
-    display: block;
-  } */
 }
 
 @media (min-width: 639px) {
@@ -62,6 +44,10 @@
   .container {
     border: none;
     font-size: 16px;
+  }
+
+  .folder {
+    width: 50vw;
   }
 
   .folder.touch {

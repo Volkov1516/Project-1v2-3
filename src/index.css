@@ -55,6 +55,8 @@ body.light-theme {
   --buttonActiveSecondary: var(--gray200);
   --fontColorPrimary: var(--black);
   --fontColorQuote: var(--gray600);
+  --selectionFontColor: var(--white);
+  --selectionBackgroundColor: var(--black);
 }
 
 body.dark-theme {
@@ -71,6 +73,8 @@ body.dark-theme {
   --buttonActiveSecondary: var(--gray1400);
   --fontColorPrimary: var(--gray200);
   --fontColorQuote: var(--gray600);
+  --selectionFontColor: var(--gray1350);
+  --selectionBackgroundColor: var(--gray200);
 }
 
 body {
@@ -80,6 +84,11 @@ body {
 
 hr {
   margin: 8px 0px;
+}
+
+::selection {
+  color: var(--selectionFontColor);
+  background-color: var(--selectionBackgroundColor);
 }
 
 ::-webkit-scrollbar {

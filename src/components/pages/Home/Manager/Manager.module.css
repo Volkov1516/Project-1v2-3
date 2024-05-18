@@ -1,20 +1,27 @@
 .container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: 100vh;
-  width: 240px;
-  overflow: auto;
+  /* width: 240px; */
   border-right: 1px solid var(--borderColor);
   background-color: var(--backgroundSecondary);
   color: var(--fontColorPrimary);
+}
+
+.content {
+  flex: 1;
+  overflow: auto;
   padding-bottom: 50vh;
 }
 
-.header {
-  position: fixed;
-  width: 239px;
+.content::-webkit-scrollbar {
+  width: 0px;
+  display: none;
 }
 
-.contentOffset {
-  margin-top: 57px;
+.wrapper {
+  width: 240px;
 }
 
 @media (max-width: 639px) {
@@ -25,6 +32,16 @@
   }
 
   .header {
+    width: 100%;
+  }
+
+  .content {
+    flex: 1;
+    overflow: auto;
+    width: 100%;
+  }
+
+  .wrapper {
     width: 100%;
   }
 

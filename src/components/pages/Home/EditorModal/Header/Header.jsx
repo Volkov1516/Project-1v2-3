@@ -14,7 +14,8 @@ export const Header = ({ handleClose }) => {
     let element = document.getElementById('editorModalContainer');
 
     if (expanded) {
-      element.style.width = 'calc(100vw - 297px)';
+      // element.style.width = 'calc(100vw - 297px)';
+      element.style.width = 'calc(100vw - 298px)';
     }
     else {
       element.style.width = '100vw';
