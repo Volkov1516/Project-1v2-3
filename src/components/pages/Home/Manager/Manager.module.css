@@ -15,15 +15,13 @@
   padding-bottom: 50vh;
 }
 
-.wrapper {
-  width: 240px;
+.content::-webkit-scrollbar {
+  width: 0px;
+  display: none;
 }
 
-@media (min-width: 639px) {
-  .content::-webkit-scrollbar {
-    width: 0px;
-    display: none;
-  }
+.wrapper {
+  width: 240px;
 }
 
 @media (max-width: 639px) {

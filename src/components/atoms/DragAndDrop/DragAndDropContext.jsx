@@ -197,6 +197,8 @@ export const DragAndDropProvider = ({ children, folder, windowWidth }) => {
   };
 
   const dragStart = (e, index, id, type, name, openSettingsModal) => {
+    e.preventDefault();
+
     const currentElement = e.currentTarget;
 
     const timerDragStart = setTimeout(() => {
