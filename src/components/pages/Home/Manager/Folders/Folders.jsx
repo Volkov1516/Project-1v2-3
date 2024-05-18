@@ -4,7 +4,6 @@ import { setEditFolderModal, setPath } from 'redux/features/app/appSlice';
 import { deleteFromDocuments, updateInDocuments } from 'redux/features/user/userSlice';
 
 import { DragAdnDropElement } from 'components/atoms/DragAndDrop/DragAndDropElement';
-import { IconButton } from 'components/atoms/IconButton/IconButton';
 import { Input } from 'components/atoms/Input/Input';
 import { Button } from 'components/atoms/Button/Button';
 import { Modal } from 'components/atoms/Modal/Modal';
