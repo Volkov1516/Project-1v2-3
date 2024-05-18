@@ -66,9 +66,9 @@ export const DragAndDropProvider = ({ children, folder, windowWidth }) => {
 
   const dragStartFolder = (currentElement, offsetLeft, offsetTop, index, type, folders) => {
     const height = currentElement.offsetHeight;
-    const widht = currentElement.offsetWidth;
+    // const widht = currentElement.offsetWidth;
 
-    currentElement.style.width = `${widht}px`;
+    currentElement.style.width = `50%`;
     currentElement.style.height = `${height}px`;
     currentElement.style.position = 'absolute';
     currentElement.style.left = `${offsetLeft}px`;
@@ -83,7 +83,7 @@ export const DragAndDropProvider = ({ children, folder, windowWidth }) => {
     else {
       if (index === 0) {
         const nextElementId = folders[index + 1].id;
-        document.getElementById(nextElementId).style.marginLeft = `${widht}px`;
+        document.getElementById(nextElementId).style.marginLeft = `50%`;
         setPlaceholderId(nextElementId);
       }
       else if (index === folders.length - 1) {
@@ -92,19 +92,19 @@ export const DragAndDropProvider = ({ children, folder, windowWidth }) => {
         }
         else if (index % 2 !== 0) {
           const prevElementId = folders[index - 1].id;
-          document.getElementById(prevElementId).style.marginRight = `${widht}px`;
+          document.getElementById(prevElementId).style.marginRight = `50%`;
           setPlaceholderId(prevElementId);
         }
       }
       else {
         if (index % 2 === 0) {
           const nextElement = folders[index + 1].id;
-          document.getElementById(nextElement).style.marginLeft = `${widht}px`;
+          document.getElementById(nextElement).style.marginLeft = `50%`;
           setPlaceholderId(nextElement);
         }
         else if (index % 2 !== 0) {
           const prevElementId = folders[index - 1].id;
-          document.getElementById(prevElementId).style.marginRight = `${widht}px`;
+          document.getElementById(prevElementId).style.marginRight = `50%`;
           setPlaceholderId(prevElementId);
         }
       }
