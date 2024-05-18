@@ -115,8 +115,8 @@ export const DragAndDropProvider = ({ children, folder, windowWidth }) => {
     const height = currentElement.offsetHeight;
     const widht = currentElement.offsetWidth;
 
-    currentElement.style.width = `${widht}px`;
-    currentElement.style.height = `${height}px`;
+    // currentElement.style.width = `${widht}px`;
+    // currentElement.style.height = `${height}px`;
     currentElement.style.position = 'absolute';
     currentElement.style.left = `${offsetLeft}px`;
     currentElement.style.top = `${offsetTop}px`;
