@@ -10,9 +10,9 @@ export const DragAdnDropElement = ({ children, index, id, type, name, openSettin
       data-index={index}
       data-id={id}
       data-type={type}
-      onMouseDown={(e) => dragStart(e, index, id, type, name, openSettingsModal)}
-      onMouseMove={dragMove}
-      onMouseUp={dragEnd}
+      // onMouseDown={(e) => dragStart(e, index, id, type, name, openSettingsModal)}
+      // onMouseMove={dragMove}
+      // onMouseUp={dragEnd}
       onTouchStart={(e) => dragStart(e, index, id, type, name, openSettingsModal)}
       onTouchMove={dragMove}
       onTouchEnd={dragEnd}
