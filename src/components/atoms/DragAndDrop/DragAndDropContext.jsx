@@ -113,7 +113,7 @@ export const DragAndDropProvider = ({ children, folder, windowWidth }) => {
 
   const dragStartUniversal = (currentElement, offsetLeft, offsetTop, index, type, contentArray) => {
     const height = currentElement.offsetHeight;
-    const widht = currentElement.offsetWidth;
+    // const widht = currentElement.offsetWidth;
 
     // currentElement.style.width = `${widht}px`;
     // currentElement.style.height = `${height}px`;
