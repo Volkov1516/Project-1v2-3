@@ -23,9 +23,9 @@ export const EditorModal = memo(function MemoizedEditorModal() {
 
   return noteModal && (
     <div id="editorModalContainer" key={activeNoteId} className={css.container} onClick={handleClose}>
-      <div className={css.edit} onClick={(e) => e.stopPropagation()}>
+      <div className={css.content} onClick={(e) => e.stopPropagation()}>
         <Header handleClose={handleClose} />
-        <div ref={editorRef} className={css.content}>
+        <div ref={editorRef} className={css.editor}>
           <Title ref={titleRef} />
           <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
         </div>

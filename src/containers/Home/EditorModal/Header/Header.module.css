@@ -1,9 +1,10 @@
 .container {
+  flex: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 58px;
   width: 100%;
-  /* margin-bottom: 5vh; */
   padding: 8px;
   border-bottom: 1px solid var(--borderColor);
 }
