@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit';
 
-import { db } from '../../../firebase.js';
+import { db } from 'services/firebase.js';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 import { findFolder } from 'utils/searchInManager.js';

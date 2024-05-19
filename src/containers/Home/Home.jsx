@@ -1,7 +1,7 @@
 import { Bar } from './Bar/Bar';
 import { Manager } from './Manager/Manager';
 import { EditorModal } from './EditorModal/EditorModal';
-import { Snackbar } from 'components/atoms/Snackbar/Snackbar';
+import { Snackbar } from 'components/Snackbar/Snackbar';
 
 import css from './Home.module.css';
 

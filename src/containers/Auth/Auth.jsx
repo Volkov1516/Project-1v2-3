@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { auth } from 'firebase.js';
+import { auth } from 'services/firebase.js';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -8,12 +8,12 @@ import {
   sendPasswordResetEmail
 } from 'firebase/auth';
 
-import { Button } from 'components/atoms/Button/Button';
+import { Button } from 'components/Button/Button';
 
 import css from './Auth.module.css';
 
-import logo from 'assets/logo.png';
-import google from 'assets/google.svg';
+import logo from 'assets/images/logo.png';
+import google from 'assets/images/google.svg';
 
 export const Auth = () => {
   const [authType, setAuthType] = useState('Log in');

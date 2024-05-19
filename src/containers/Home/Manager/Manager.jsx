@@ -2,7 +2,7 @@ import { memo, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { FolderNavigation } from './FolderNavigation/FolderNavigation';
-import { DragAndDropProvider } from 'components/atoms/DragAndDrop/DragAndDropContext';
+import { DragAndDropProvider } from 'components/DragAndDrop/DragAndDropContext';
 import { Folders } from './Folders/Folders';
 import { Notes } from './Notes/Notes';
 import { Tasks } from './Tasks/Tasks';

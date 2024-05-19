@@ -3,16 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setEditFolderModal, setPath } from 'redux/features/app/appSlice';
 import { deleteFromDocuments, updateInDocuments } from 'redux/features/user/userSlice';
 
-import { DragAdnDropElement } from 'components/atoms/DragAndDrop/DragAndDropElement';
-import { Input } from 'components/atoms/Input/Input';
-import { Button } from 'components/atoms/Button/Button';
-import { Modal } from 'components/atoms/Modal/Modal';
+import { DragAdnDropElement } from 'components/DragAndDrop/DragAndDropElement';
+import { Input } from 'components/Input/Input';
+import { Button } from 'components/Button/Button';
+import { Modal } from 'components/Modal/Modal';
 
-import { useDragAndDrop } from 'components/atoms/DragAndDrop/DragAndDropContext';
+import { useDragAndDrop } from 'components/DragAndDrop/DragAndDropContext';
 
 import css from './Folders.module.css';
 
-import folderImg from '../../../../../assets/folder.png';
+import folderImg from 'assets/images/folder.png';
 
 export const Folders = ({ folders }) => {
   const { preventOnClick } = useDragAndDrop();

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setPath } from 'redux/features/app/appSlice';
 
-import { IconButton } from 'components/atoms/IconButton/IconButton';
+import { IconButton } from 'components/IconButton/IconButton';
 
 import css from './FolderNavigation.module.css';
 

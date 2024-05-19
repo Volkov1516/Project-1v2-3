@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setWindowWidth, setTheme, setSettingsModal, setAddFolderModal, setEditFolderModal, setEditNoteModal, setNoteModal, setPath } from 'redux/features/app/appSlice';
 import { fetchUser, setLoading } from 'redux/features/user/userSlice';
-import { auth } from 'firebase.js';
+import { auth } from 'services/firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 
-import { Auth } from 'components/pages/Auth/Auth';
-import { Home } from 'components/pages/Home/Home';
+import { Auth } from 'containers/Auth/Auth';
+import { Home } from 'containers/Home/Home';
 
 import css from './App.module.css';
 

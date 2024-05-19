@@ -2,9 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveTaskId, updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
 
-import { IconButton } from 'components/atoms/IconButton/IconButton';
+import { IconButton } from 'components/IconButton/IconButton';
 
-import { useDragAndDrop } from 'components/atoms/DragAndDrop/DragAndDropContext';
+import { useDragAndDrop } from 'components/DragAndDrop/DragAndDropContext';
 
 import css from './Task.module.css';
 

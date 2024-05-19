@@ -6,11 +6,11 @@ import { setActiveNote } from 'redux/features/note/noteSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Settings } from './Settings/Settings';
-import { Tooltip } from 'components/atoms/Tooltip/Tooltip';
-import { IconButton } from 'components/atoms/IconButton/IconButton';
-import { Modal } from 'components/atoms/Modal/Modal';
-import { Input } from 'components/atoms/Input/Input';
-import { Button } from 'components/atoms/Button/Button';
+import { Tooltip } from 'components/Tooltip/Tooltip';
+import { IconButton } from 'components/IconButton/IconButton';
+import { Modal } from 'components/Modal/Modal';
+import { Input } from 'components/Input/Input';
+import { Button } from 'components/Button/Button';
 
 import css from './Bar.module.css';
 

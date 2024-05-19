@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { IconButton } from 'components/atoms/IconButton/IconButton';
+import { IconButton } from 'components/IconButton/IconButton';
 
 import css from './Header.module.css';
 

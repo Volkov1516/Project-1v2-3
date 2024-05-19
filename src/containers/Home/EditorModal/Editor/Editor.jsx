@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
 import { createInDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, updateIsNewNote } from 'redux/features/note/noteSlice';
-import { db } from 'firebase.js';
+import { db } from 'services/firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 
 import { LexicalComposer } from '@lexical/react/LexicalComposer';

@@ -3,20 +3,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setTheme, setSnackbar, setSettingsModal } from 'redux/features/app/appSlice';
 import { setUser, updateUserName, updateUserPhoto } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote } from 'redux/features/note/noteSlice';
-import { db, auth } from 'firebase.js';
+import { db, auth } from 'services/firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 
-import { IconButton } from 'components/atoms/IconButton/IconButton';
-import { Input } from 'components/atoms/Input/Input';
-import { Switch } from 'components/atoms/Switch/Switch';
-import { Button } from 'components/atoms/Button/Button';
+import { IconButton } from 'components/IconButton/IconButton';
+import { Input } from 'components/Input/Input';
+import { Switch } from 'components/Switch/Switch';
+import { Button } from 'components/Button/Button';
 
 import css from './Settings.module.css';
 
-import logo from '../../../../../assets/logo.png';
-import googlePlay from '../../../../../assets/google-play.svg';
-import patreon from '../../../../../assets/patreon.svg';
+import logo from 'assets/images/logo.png';
+import googlePlay from 'assets/images/google-play.svg';
+import patreon from 'assets/images/patreon.svg';
 
 export const Settings = () => {
   const dispatch = useDispatch();

@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar, setEditNoteModal, setNoteModal } from 'redux/features/app/appSlice';
 import { updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
-import { db } from 'firebase.js';
+import { db } from 'services/firebase.js';
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 
-import { DragAdnDropElement } from 'components/atoms/DragAndDrop/DragAndDropElement';
-import { Input } from 'components/atoms/Input/Input';
-import { Button } from 'components/atoms/Button/Button';
-import { Modal } from 'components/atoms/Modal/Modal';
+import { DragAdnDropElement } from 'components/DragAndDrop/DragAndDropElement';
+import { Input } from 'components/Input/Input';
+import { Button } from 'components/Button/Button';
+import { Modal } from 'components/Modal/Modal';
 
-import { useDragAndDrop } from 'components/atoms/DragAndDrop/DragAndDropContext';
+import { useDragAndDrop } from 'components/DragAndDrop/DragAndDropContext';
 
 import css from './Notes.module.css';
 

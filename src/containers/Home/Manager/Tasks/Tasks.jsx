@@ -1,5 +1,5 @@
 import { Task } from './Task/Task';
-import { DragAdnDropElement } from 'components/atoms/DragAndDrop/DragAndDropElement';
+import { DragAdnDropElement } from 'components/DragAndDrop/DragAndDropElement';
 
 import css from './Tasks.module.css';
 

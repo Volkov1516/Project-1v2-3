@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
 import { createInDocuments, updateInDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, updateIsNewNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
-import { db } from 'firebase.js';
+import { db } from 'services/firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 
 import css from './Title.module.css';
