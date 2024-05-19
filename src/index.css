@@ -79,7 +79,7 @@ body.dark-theme {
 
 body {
   overscroll-behavior-y: contain;
-  /* background-color: var(--black); */
+  background-color: var(--backgroundPrimary);
 }
 
 hr {
