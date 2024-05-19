@@ -17,6 +17,10 @@ export const App = () => {
   const { userId, authLoading, error } = useSelector(state => state.user);
 
   useEffect(() => {
+    window.history.replaceState(null, '', '/');
+  }, []);
+
+  useEffect(() => {
     dispatch(setWindowWidth(window.innerWidth));
 
     const handleResize = () => dispatch(setWindowWidth(window.innerWidth));
