@@ -14,6 +14,7 @@ import { Button } from 'components/Button/Button';
 
 import css from './Settings.module.css';
 
+import { CLOSE } from 'utils/variables';
 import logo from 'assets/images/logo.png';
 import googlePlay from 'assets/images/google-play.svg';
 import patreon from 'assets/images/patreon.svg';
@@ -96,7 +97,7 @@ export const Settings = () => {
     <div className={css.container} onClick={handleClose}>
       <div className={css.content} onClick={e => e.stopPropagation()}>
         <nav className={css.navigation}>
-          <IconButton onClick={handleClose} path="M256-227.692 227.692-256l224-224-224-224L256-732.308l224 224 224-224L732.308-704l-224 224 224 224L704-227.692l-224-224-224 224Z" />
+          <IconButton onClick={handleClose} path={CLOSE} />
         </nav>
         <div className={css.sections}>
           <section className={css.section}>

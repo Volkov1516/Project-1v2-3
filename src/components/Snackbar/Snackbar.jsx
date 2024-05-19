@@ -7,6 +7,8 @@ import { IconButton } from '../IconButton/IconButton';
 
 import css from './Snackbar.module.css';
 
+import { CLOSE } from 'utils/variables';
+
 export const Snackbar = () => {
   const dispatch = useDispatch();
 
@@ -25,7 +27,7 @@ export const Snackbar = () => {
   return snackbar && createPortal(
     <div className={css.container}>
       {snackbar}
-      <IconButton snack onClick={handleClose} path="M256-227.692 227.692-256l224-224-224-224L256-732.308l224 224 224-224L732.308-704l-224 224 224 224L704-227.692l-224-224-224 224Z" />
+      <IconButton snack onClick={handleClose} path={CLOSE} />
     </div>,
     document.body
   );

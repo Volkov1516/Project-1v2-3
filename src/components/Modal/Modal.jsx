@@ -4,12 +4,14 @@ import { IconButton } from '../IconButton/IconButton';
 
 import css from './Modal.module.css';
 
+import { CLOSE } from 'utils/variables';
+
 export const Modal = ({ open, close, loading, children }) => {
   return open && createPortal(
     <div className={css.container} onClick={close}>
       <div className={css.content} onClick={(e) => e.stopPropagation()}>
         <div className={css.header}>
-          <IconButton onClick={close} path="M256-227.692 227.692-256l224-224-224-224L256-732.308l224 224 224-224L732.308-704l-224 224 224 224L704-227.692l-224-224-224 224Z" />
+          <IconButton onClick={close} path={CLOSE} />
         </div>
         {children}
         {loading && <div className={css.loadingContainer}><div className={css.loadingSpinner} /></div>}
