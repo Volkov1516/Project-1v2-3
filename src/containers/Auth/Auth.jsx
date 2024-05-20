@@ -120,7 +120,7 @@ export const Auth = () => {
         (
           <div className={css.content}>
             <div className={css.title}>{authType}</div>
-            <div className={css.errorContainer}>{errorMessage}</div>
+            {errorMessage && <div className={css.errorContainer}>{errorMessage}</div>}
             <form className={css.form} onSubmit={onSubmit}>
               <div className={css.fieldContainer}>
                 <label className={css.label} htmlFor="email">Email</label>

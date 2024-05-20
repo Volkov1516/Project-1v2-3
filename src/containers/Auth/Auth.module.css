@@ -10,7 +10,7 @@
 
 .logo {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-start;  
   align-items: center;
   column-gap: 4px;
   user-select: none;
@@ -47,58 +47,24 @@
 .form {
   display: flex;
   flex-direction: column;
-}
-
-.submitBtn {
-  padding: 8px;
-  color: #FFFFFF;
-  background-color: black;
-}
-
-.forgotPasswordButton {
-  width: fit-content;
-  margin-top: 16px !important;
-  margin: 0 auto;
-  color: gray;
-  font-weight: 400;
-}
-
-.forgotPasswordButton:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-}
-
-.googleBtn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 8px;
-  background-color: transparent;
-  outline: 1px solid black;
-  color: black;
-}
-
-.toggleBtn {
-  padding: 8px;
-  color: #1971c2;
+  row-gap: 8px;
 }
 
 .fieldContainer {
   display: flex;
   flex-direction: column;
   width: 320px;
-  margin-bottom: 8px;
 }
 
 .label {
   margin-bottom: 4px;
   color: var(--fontColorPrimary);
-  font-size: 12px;
+  font-size: var(--fontSizeSmall);
   user-select: none;
 }
 
 .input {
-  padding: 4px 8px;
+  padding: 8px;
   outline: none;
   border: 1px solid var(--borderColor);
   background-color: var(--backgroundSecondary);
@@ -124,7 +90,7 @@
 }
 
 .input:valid {
-  background-color: white;
+  background-color: var(--backgroundSecondary);
 }
 
 .error {
@@ -141,7 +107,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  text-align: center;
 }
 
 .resetForm {
@@ -149,37 +115,27 @@
   align-items: center;
   column-gap: 4px;
   flex-wrap: nowrap;
-}
-
-.resetInput {
-  padding: 8px 16px;
-}
-
-.resetButton {
-  min-width: fit-content;
-  padding: 8px 16px;
-  background-color: black;
-  color: white;
-}
-
-.resetButton:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
+  margin-bottom: 8px;
 }
 
 .resetMessage {
   margin-top: 16px;
-  color: gray;
+  color: var(--fontColorQuote);
 }
 
-.resetBackButton {
-  margin-top: 16px;
-  color: #1971c2;
+.divider {
+  margin: 8px 0;
 }
 
-.resetBackButton:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
+.buttonImg {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.alternativeText {
+  margin: 24px 0px 8px;
+  color: var(--fontColorQuote);
 }
 
 @media (max-width: 639px) {
@@ -190,31 +146,4 @@
   .input {
     padding: 12px 8px;
   }
-
-  .submitBtn {
-    padding: 12px 8px;
-  }
-
-  .googleBtn {
-    padding: 12px 8px;
-  }
-
-  .resetButton {
-    padding: 12px 16px;
-  }
-}
-
-.divider {
-  margin: 16px 0;
-}
-
-.buttonImg {
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
-}
-
-.alternativeText {
-  margin-top: 32px;
-  color: gray;
 }
