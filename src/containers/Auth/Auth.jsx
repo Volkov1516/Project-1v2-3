@@ -156,19 +156,25 @@ export const Auth = () => {
                 />
                 <span className={css.error}>Password must contain minimum 6 characters</span>
               </div>
-              <Button type="contained" submit>Continue with email</Button>
-              {authType === "Log in" && <Button type="outlined" onClick={handleOpenReset}>Forgot password</Button>}
+
+
+
+              <Button type="submit" variant="outlined">Continue with email</Button>
+              {authType === "Log in" && <Button variant="text" onClick={handleOpenReset}>Forgot password</Button>}
               <hr className={css.divider} />
-              <Button type="outlined" onClick={handleGoogle}><img className={css.buttonImg} src={google} alt="google" />Continue with Google</Button>
+              <Button variant="contained" icon={google} iconAlt="google" onClick={handleGoogle}>Continue with Google</Button>
+
+
+
             </form>
             {authType === "Log in"
               ? <>
                 <span className={css.alternativeText}>Don't have an account?</span>
-                <Button type="outlined" onClick={() => handleToggleAuth("Sing up")}>Create account</Button>
+                <Button variant="text" onClick={() => handleToggleAuth("Sing up")}>Create account</Button>
               </>
               : <>
                 <span className={css.alternativeText}>Already have an account?</span>
-                <Button type="outlined" onClick={() => handleToggleAuth("Log in")}>Log in</Button>
+                <Button variant="text" onClick={() => handleToggleAuth("Log in")}>Log in</Button>
               </>
             }
           </div>
@@ -180,10 +186,10 @@ export const Auth = () => {
             <div className={css.errorContainer}>{errorMessage}</div>
             <div className={css.resetForm}>
               <input className={css.input} type="email" placeholder="Enter your email" value={resetEmail} onChange={(e) => setResetEmail(e.target.value)} />
-              <Button type="contained" onClick={handleResetPassword}>Send email</Button>
+              <Button variant="outlined" onClick={handleResetPassword}>Send email</Button>
             </div>
             {resetMessage && <p className={css.resetMessage}>Check your email to proceed password reset.</p>}
-            <Button type="outlined" onClick={handleCloseReset}>Back to Login</Button>
+            <Button variant="text" onClick={handleCloseReset}>Back to Login</Button>
           </div>
         )
       }

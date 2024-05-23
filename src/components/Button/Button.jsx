@@ -1,32 +1,34 @@
 import css from './Button.module.css';
 
 export const Button = ({
+  id,
   type,
-  children,
+  variant,
+  icon,
+  iconAlt,
   disabled,
-  submit,
-  onClick
+  loading,
+  onClick,
+  children
 }) => {
-  const handleTouchStart = (e) => {
-    const element = e.currentTarget;
-    element.classList.add(css.touch);
-  };
+  const handleTouchStart = e => e.currentTarget.classList.add(css.touch);
 
-  const handleTouchEnd = (e) => {
-    const element = e.currentTarget;
-    element.classList.remove(css.touch);
-  }
+  const handleTouchEnd = e => e.currentTarget.classList.remove(css.touch);
 
   return (
     <button
-      className={`${css.button} ${css[type]}`}
+      id={id}
+      className={`${css.button} ${css[variant]}`}
+      type={type ?? 'button'}
       disabled={disabled}
-      type={submit && "submit"}
       onClick={onClick}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {children}
+      {loading ? <div className={css.spinner} /> : <>
+        {icon && <img className={css.img} src={icon} alt={iconAlt} />}
+        {children}
+      </>}
     </button>
   );
 };

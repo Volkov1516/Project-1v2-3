@@ -120,18 +120,9 @@ export const Settings = () => {
           </section>
           <section className={css.section}>
             <div className={css.sectionName}>Links</div>
-            <Button type="outlined">
-              <img src={logo} alt="website" width={24} height={24} />
-              <span>Website</span>
-            </Button>
-            <Button type="outlined">
-              <img src={googlePlay} alt="google play" width={24} height={24} />
-              <span>Google Play</span>
-            </Button>
-            <Button type="outlined">
-              <img src={patreon} alt="patreon" width={24} height={24} />
-              <span>Patreon</span>
-            </Button>
+            <Button variant="outlined" icon={logo} iconAlt="website">Website</Button>
+            <Button variant="outlined" icon={googlePlay} iconAlt="google play">Google Play</Button>
+            <Button variant="outlined" icon={patreon} iconAlt="patreon">Patreon</Button>
           </section>
           <section className={css.section}>
             <div className={css.sectionName}>Updates</div>
@@ -153,7 +144,7 @@ export const Settings = () => {
             <div>volkov.x@outlook.com</div>
           </section>
           <section className={css.section}>
-            <Button onClick={handleLogOut} type="contained">Log out</Button>
+            <Button variant="contained" onClick={handleLogOut}>Log out</Button>
           </section>
         </div>
       </div>

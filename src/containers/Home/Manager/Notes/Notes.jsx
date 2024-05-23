@@ -185,9 +185,9 @@ export const Notes = ({ notes }) => {
       <Modal open={editNoteModal} close={handleCloseEditNote}>
         <div className={css.eiditNoteModalContent}>
           <Input id="noteTitleId" label="Edit note title" placeholder="Enter note name" value={titleInputValue} onChange={e => setTitleInputValue(e.target.value)} />
-          <Button type="outlined" disabled={!titleInputValue} onClick={handleEditNoteTitle}>Rename note</Button>
+          <Button variant="outlined" disabled={!titleInputValue} onClick={handleEditNoteTitle}>Rename note</Button>
           <Input id="noteDeleteTitleId" label={`Enter ${titleDeleteValue} to delete the note`} placeholder="Enter note name" value={titleDeleteInputValue} onChange={e => setTitleDeleteInputValue(e.target.value)} />
-          <Button type="outlined" disabled={titleDeleteValue !== titleDeleteInputValue} onClick={handleDeleteNote}>Delete note</Button>
+          <Button variant="outlined" disabled={titleDeleteValue !== titleDeleteInputValue} onClick={handleDeleteNote}>Delete note</Button>
         </div>
       </Modal>
     </div>

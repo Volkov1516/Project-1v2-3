@@ -124,7 +124,9 @@
 }
 
 .divider {
-  margin: 8px 0;
+  border: none;
+  height: 1px;
+  background-color: var(--borderColor);
 }
 
 .buttonImg {

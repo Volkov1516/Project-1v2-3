@@ -22,6 +22,7 @@
   --gray100: #EEEEEE;
   --gray200: #DDDDDD;
   --gray300: #CCCCCC;
+  --gray350: #C9C9C9;
   --gray400: #BBBBBB;
   --gray500: #AAAAAA;
   --gray600: #999999;
@@ -52,6 +53,11 @@ body.light-theme {
   --backgroundPrimary: var(--white);
   --backgroundSecondary: var(--gray50);
   --borderColor: var(--gray200);
+  --fontColorPrimary: var(--black);
+  --fontColorQuote: var(--gray600);
+  --selectionFontColor: var(--white);
+  --selectionBackgroundColor: var(--black);
+
   --buttonColorPrimary: var(--white);
   --buttonBackgroundPrimary: var(--black);
   --buttonHoverPrimary: var(--gray1400);
@@ -60,38 +66,49 @@ body.light-theme {
   --buttonBackgroundSecondary: var(--transparent);
   --buttonHoverSecondary: var(--gray100);
   --buttonActiveSecondary: var(--gray200);
-  --fontColorPrimary: var(--black);
-  --fontColorQuote: var(--gray600);
-  --selectionFontColor: var(--white);
-  --selectionBackgroundColor: var(--black);
+
+  /* Button */
+  --buttonContainedColor: var(--white);
+  --buttonContainedBackground: var(--black);
+  --buttonContainedHover: var(--gray1400);
+  --buttonContainedActive: var(--gray1300);
+  --buttonOutlinedHover: var(--gray100);
+  --buttonOutlinedActive: var(--gray200);
+  --buttonDisabledColor: var(--gray600);
 }
 
 body.dark-theme {
   --backgroundPrimary: var(--gray1350);
   --backgroundSecondary: var(--gray1300);
   --borderColor: var(--gray1200);
+  --fontColorPrimary: var(--gray200);
+  --fontColorQuote: var(--gray600);
+  --selectionFontColor: var(--gray1350);
+  --selectionBackgroundColor: var(--gray200);
+
   --buttonColorPrimary: var(--black);
-  --buttonBackgroundPrimary: var(--white);
-  --buttonHoverPrimary: var(--gray100);
+  --buttonBackgroundPrimary: var(--gray200);
+  --buttonHoverPrimary: var(--gray300);
   --buttonActivePrimary: var(--gray200);
   --buttonColorSecondary: var(--white);
   --buttonBackgroundSecondary: var(--transparent);
   --buttonHoverSecondary: var(--gray1200);
   --buttonActiveSecondary: var(--gray1400);
-  --fontColorPrimary: var(--gray200);
-  --fontColorQuote: var(--gray600);
-  --selectionFontColor: var(--gray1350);
-  --selectionBackgroundColor: var(--gray200);
+
+  /* Button */
+  --buttonContainedColor: var(--black);
+  --buttonContainedBackground: var(--gray200);
+  --buttonContainedHover: var(--gray300);
+  --buttonContainedActive: var(--gray400);
+  --buttonOutlinedHover: var(--gray1200);
+  --buttonOutlinedActive: var(--gray1400);
+  --buttonDisabledColor: var(--gray600);
 }
 
 body {
   color: var(--fontColorPrimary);
   overscroll-behavior-y: contain;
   background-color: var(--backgroundPrimary);
-}
-
-hr {
-  margin: 8px 0px;
 }
 
 ::selection {

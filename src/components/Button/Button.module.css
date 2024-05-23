@@ -1,3 +1,12 @@
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .button {
   display: flex;
   justify-content: center;
@@ -11,9 +20,9 @@
 }
 
 .contained {
-  border: 1px solid var(--borderColor);
-  background-color: var(--buttonBackgroundPrimary);
-  color: var(--buttonColorPrimary);
+  border: 1px solid transparent;
+  background-color: var(--buttonContainedBackground);
+  color: var(--buttonContainedColor);
 }
 
 .outlined {
@@ -22,24 +31,47 @@
   color: var(--fontColorPrimary);
 }
 
+.text {
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: var(--fontColorPrimary);
+}
+
+.img {
+  width: 16px;
+  height: 16px;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  animation: spinner 1s linear infinite;
+}
+
+.contained > .spinner {
+  border-top: 1px solid var(--buttonContainedColor);
+  border-right: 1px solid var(--buttonContainedColor);
+}
+
+.outlined > .spinner, .text > .spinner {
+  border-top: 1px solid var(--fontColorPrimary);
+  border-right: 1px solid var(--fontColorPrimary);
+}
+
 @media (hover: hover) {
   .button:hover {
     cursor: pointer;
   }
 
   .contained:hover {
-    background-color: var(--buttonHoverPrimary);
+    background-color: var(--buttonContainedHover);
   }
 
-  .outlined:hover {
-    background-color: var(--buttonHoverSecondary);
+  .outlined:hover, .text:hover {
+    background-color: var(--buttonOutlinedHover);
   }
-}
-
-.button:disabled {
-  background-color: var(--buttonBackgroundSecondary);
-  color: var(--buttonColorSecondary);
-  cursor: not-allowed;
 }
 
 @media (min-width: 639px) {
@@ -48,11 +80,11 @@
   }
 
   .contained:active {
-    background-color: var(--buttonActivePrimary);
+    background-color: var(--buttonContainedActive);
   }
 
-  .outlined:active {
-    background-color: var(--buttonActiveSecondary);
+  .outlined:active, .text:active {
+    background-color: var(--buttonOutlinedActive);
   }
 }
 
@@ -61,11 +93,17 @@
     padding: 12px;
   }
 
-  .button.touch {
-    background-color: var(--buttonHoverSecondary);
+  .contained.touch {
+    background-color: var(--buttonContainedActive);
   }
 
-  .primary.touch {
-    background-color: var(--buttonActivePrimary);
+  .outlined.touch, .text.touch {
+    background-color: var(--buttonOutlinedActive);
   }
+}
+
+.button:disabled {
+  background-color: transparent;
+  color: var(--buttonDisabledColor);
+  cursor: not-allowed;
 }
