@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 
 import { Button } from 'components/Button/Button';
+import { Input } from 'components/Input/Input';
 
 import css from './Auth.module.css';
 
@@ -123,49 +124,40 @@ export const Auth = () => {
             {errorMessage && <div className={css.errorContainer}>{errorMessage}</div>}
             <form className={css.form} onSubmit={onSubmit}>
               <div className={css.fieldContainer}>
-                <label className={css.label} htmlFor="email">Email</label>
-                <input
-                  className={css.input}
+                <Input
                   id="email"
                   name="email"
                   type="email"
                   placeholder="Enter your email"
-                  required
+                  required={true}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onBlur={handleFocus}
-                  data-focussed={focussedEmail.toString()}
+                  dataFocussed={focussedEmail.toString()}
+                  label="Email"
                   error="Invalid email address"
                 />
-                <span className={css.error}>Invalid email address</span>
               </div>
               <div className={css.fieldContainer}>
-                <label className={css.label} htmlFor="password">Password</label>
-                <input
-                  className={css.input}
+                <Input
                   id="password"
                   name="password"
                   type="password"
                   placeholder="Enter your password"
+                  required={true}
                   pattern="[0-9a-zA-Z]{6,}"
-                  required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onBlur={handleFocus}
-                  data-focussed={focussedPassword.toString()}
+                  dataFocussed={focussedPassword.toString()}
+                  label="Password"
+                  error="Invalid password"
                 />
-                <span className={css.error}>Password must contain minimum 6 characters</span>
               </div>
-
-
-
               <Button type="submit" variant="outlined">Continue with email</Button>
               {authType === "Log in" && <Button variant="text" onClick={handleOpenReset}>Forgot password</Button>}
               <hr className={css.divider} />
               <Button variant="contained" icon={google} iconAlt="google" onClick={handleGoogle}>Continue with Google</Button>
-
-
-
             </form>
             {authType === "Log in"
               ? <>

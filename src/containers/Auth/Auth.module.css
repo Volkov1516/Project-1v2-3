@@ -56,51 +56,6 @@
   width: 320px;
 }
 
-.label {
-  margin-bottom: 4px;
-  color: var(--fontColorPrimary);
-  font-size: var(--fontSizeSmall);
-  user-select: none;
-}
-
-.input {
-  padding: 8px;
-  outline: none;
-  border: 1px solid var(--borderColor);
-  background-color: var(--backgroundSecondary);
-  color: var(--fontColorPrimary);
-  font-size: var(--fontSizeMedium);
-}
-
-.input::placeholder {
-  user-select: none;
-  font-size: var(--fontSizeMedium);
-}
-
-.input:focus {
-  outline: 2px solid #1971c2;
-}
-
-.input:invalid[data-focussed="true"] {
-  outline: 2px solid #e03131;
-}
-
-.input:invalid[data-focussed="true"]~span {
-  display: block;
-}
-
-.input:valid {
-  background-color: var(--backgroundSecondary);
-}
-
-.error {
-  display: none;
-  width: 320px;
-  margin-top: 4px;
-  font-size: 14px;
-  color: #e03131;
-}
-
 .forgotPasswordContainer {
   flex: 1;
   display: flex;
@@ -138,14 +93,4 @@
 .alternativeText {
   margin: 24px 0px 8px;
   color: var(--fontColorQuote);
-}
-
-@media (max-width: 639px) {
-  .label {
-    font-size: 16px;
-  }
-
-  .input {
-    padding: 12px 8px;
-  }
 }

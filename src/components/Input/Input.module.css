@@ -1,4 +1,4 @@
-.containe {
+.container {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -6,12 +6,18 @@
 
 .label {
   color: var(--fontColorPrimary);
-  font-size: 12px;
+  font-size: var(--fontSizeSmall);
   user-select: none;
 }
 
+.error {
+  display: none;
+  font-size: var(--fontSizeSmall);
+  color: var(--red);
+}
+
 .input {
-  padding: 4px 8px;
+  padding: 8px;
   outline: none;
   border: 1px solid var(--borderColor);
   background-color: var(--backgroundSecondary);
@@ -19,8 +25,29 @@
   font-size: var(--fontSizeMedium);
 }
 
+.input::placeholder {
+  user-select: none;
+  font-size: var(--fontSizeMedium);
+}
+
+.input:focus {
+  outline: 1px solid var(--inputFocusBorderColor);
+}
+
+.input:invalid[data-focussed="true"] {
+  outline: 1px solid var(--red);
+}
+
+.input:invalid[data-focussed="true"]~span {
+  display: block;
+}
+
+.input:valid {
+  background-color: var(--backgroundSecondary);
+}
+
 @media (max-width: 639px) {
   .input {
-    padding: 8px;
+    padding: 12px;
   }
 }

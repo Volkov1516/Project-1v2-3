@@ -36,6 +36,7 @@
   --gray1350: #191919;
   --gray1400: #111111;
   --black: #000000;
+  --red: #e03131;
 
   --fontSizeTitle: 48px;
   --fontSizeH1: 40px;
@@ -75,6 +76,9 @@ body.light-theme {
   --buttonOutlinedHover: var(--gray100);
   --buttonOutlinedActive: var(--gray200);
   --buttonDisabledColor: var(--gray600);
+
+  /* Input */
+  --inputFocusBorderColor: var(--black);
 }
 
 body.dark-theme {
@@ -103,6 +107,9 @@ body.dark-theme {
   --buttonOutlinedHover: var(--gray1200);
   --buttonOutlinedActive: var(--gray1400);
   --buttonDisabledColor: var(--gray600);
+
+  /* Input */
+  --inputFocusBorderColor: var(--gray200);
 }
 
 body {

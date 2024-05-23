@@ -1,20 +1,40 @@
 import css from './Input.module.css';
 
-export const Input = ({ id, label, placeholder, value, onChange, autofocus, onBlur }) => {
+export const Input = ({
+  id,
+  name,
+  type,
+  placeholder,
+  required,
+  autofocus,
+  autocomplete,
+  pattern,
+  value,
+  onChange,
+  onBlur,
+  label,
+  error,
+  dataFocussed
+}) => {
   return (
-    <div className={css.containe}>
-      <label htmlFor={id} className={css.label}>{label}</label>
+    <div className={css.container}>
+      {label && <label htmlFor={id} className={css.label}>{label}</label>}
       <input
         id={id}
         className={css.input}
-        type="text"
-        autoComplete="off"
-        autoFocus={autofocus}
+        name={name}
+        type={type}
         placeholder={placeholder}
+        required={required}
+        autoFocus={autofocus}
+        autoComplete={autocomplete ?? 'off'}
+        pattern={pattern}
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        data-focussed={dataFocussed}
       />
+      <span className={css.error}>{error}</span>
     </div>
   );
 };
