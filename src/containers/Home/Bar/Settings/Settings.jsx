@@ -70,14 +70,8 @@ export const Settings = () => {
     try {
       await signOut(auth);
 
-      const body = document.body;
-
-      body.classList.remove('dark-theme');
-      body.classList.remove('light-theme');
-
       localStorage.removeItem('theme');
 
-      dispatch(setTheme(null));
       dispatch(setUser(null, null, null, null, null));
       dispatch(updateNotesCache(null));
       dispatch(setActiveNote({
