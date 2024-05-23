@@ -14,10 +14,11 @@ export const Input = ({
   onBlur,
   label,
   error,
-  dataFocussed
+  dataFocussed,
+  fullWidth
 }) => {
   return (
-    <div className={css.container}>
+    <div className={`${css.container} ${fullWidth && css.fullWidth}`}>
       {label && <label htmlFor={id} className={css.label}>{label}</label>}
       <input
         id={id}

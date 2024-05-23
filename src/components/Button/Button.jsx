@@ -4,6 +4,7 @@ export const Button = ({
   id,
   type,
   variant,
+  fullWidth,
   icon,
   iconAlt,
   disabled,
@@ -18,7 +19,7 @@ export const Button = ({
   return (
     <button
       id={id}
-      className={`${css.button} ${css[variant]}`}
+      className={`${css.button} ${css[variant]} ${fullWidth && css.fullWidth}`}
       type={type ?? 'button'}
       disabled={disabled}
       onClick={onClick}

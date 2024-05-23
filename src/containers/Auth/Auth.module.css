@@ -48,12 +48,17 @@
   display: flex;
   flex-direction: column;
   row-gap: 8px;
+  width: 320px;
 }
 
 .fieldContainer {
   display: flex;
   flex-direction: column;
-  width: 320px;
+}
+
+.alternativeText {
+  margin: 24px 0px 8px;
+  color: var(--fontColorQuote);
 }
 
 .forgotPasswordContainer {
@@ -63,13 +68,12 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  padding: 0px 16px;
 }
 
 .resetForm {
   display: flex;
-  align-items: center;
   column-gap: 4px;
-  flex-wrap: nowrap;
   margin-bottom: 8px;
 }
 
@@ -84,13 +88,15 @@
   background-color: var(--borderColor);
 }
 
-.buttonImg {
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
-}
+@media (max-width: 639px) {
+  .form {
+    padding: 0px 16px;
+    width: 100%;
+  }
 
-.alternativeText {
-  margin: 24px 0px 8px;
-  color: var(--fontColorQuote);
+  .resetForm {
+    width: 100%;
+    flex-direction: column;
+    row-gap: 8px;
+  }
 }

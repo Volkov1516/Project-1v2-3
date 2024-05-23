@@ -177,8 +177,8 @@ export const Auth = () => {
             <div className={css.title}>Reset Password</div>
             <div className={css.errorContainer}>{errorMessage}</div>
             <div className={css.resetForm}>
-              <Input type="email" placeholder="Enter your email" value={resetEmail} onChange={(e) => setResetEmail(e.target.value)} />
-              <Button variant="outlined" onClick={handleResetPassword}>Send email</Button>
+              <Input type="email" placeholder="Enter your email" value={resetEmail} fullWidth onChange={(e) => setResetEmail(e.target.value)} />
+              <Button variant="outlined" fullWidth onClick={handleResetPassword}>Send email</Button>
             </div>
             {resetMessage && <p className={css.resetMessage}>Check your email to proceed password reset.</p>}
             <Button variant="text" onClick={handleCloseReset}>Back to Login</Button>

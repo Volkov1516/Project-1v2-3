@@ -19,6 +19,10 @@
   user-select: none;
 }
 
+.button.fullWidth {
+  width: 100%;
+}
+
 .contained {
   border: 1px solid transparent;
   background-color: var(--buttonContainedBackground);

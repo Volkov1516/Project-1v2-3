@@ -4,6 +4,10 @@
   gap: 8px;
 }
 
+.container.fullWidth {
+  width: 100%;
+}
+
 .label {
   color: var(--fontColorPrimary);
   font-size: var(--fontSizeSmall);
