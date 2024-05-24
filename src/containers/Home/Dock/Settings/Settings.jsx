@@ -82,6 +82,8 @@ export const Settings = () => {
         title: null,
         content: null,
       }));
+
+      handleClose();
     } catch (error) {
       dispatch(setSnackbar('Faild to log out'));
     }

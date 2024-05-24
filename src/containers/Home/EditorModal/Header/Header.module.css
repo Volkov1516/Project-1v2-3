@@ -8,7 +8,6 @@
   border-bottom: 1px solid var(--borderColor);
 }
 
-.start,
 .end {
   display: flex;
   gap: 8px;
