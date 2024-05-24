@@ -64,6 +64,11 @@
     background-color: var(--iconButtonPrimaryActive);
   }
 
+  .secondary>svg {
+    width: 32px;
+    height: 32px;
+  }
+
   .secondary.touch {
     background-color: var(--iconButtonSecondaryActive);
   }
