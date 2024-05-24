@@ -130,6 +130,7 @@ export const Auth = () => {
                   type="email"
                   placeholder="Enter your email"
                   required={true}
+                  autocomplete="on"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onBlur={handleFocus}
@@ -145,6 +146,7 @@ export const Auth = () => {
                   type="password"
                   placeholder="Enter your password"
                   required={true}
+                  autocomplete="on"
                   pattern="[0-9a-zA-Z]{6,}"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
