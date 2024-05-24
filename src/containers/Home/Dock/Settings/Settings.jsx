@@ -19,6 +19,7 @@ import { CLOSE } from 'utils/variables';
 import logo from 'assets/images/logo.png';
 import googlePlay from 'assets/images/google-play.svg';
 import patreon from 'assets/images/patreon.svg';
+import { Avatar } from 'components/Avatar/Avatar';
 
 export const Settings = () => {
   const dispatch = useDispatch();
@@ -100,7 +101,7 @@ export const Settings = () => {
           <section className={css.section}>
             <div className={css.sectionName}>Account</div>
             <div className={css.accountGroup}>
-              <img src={userPhoto} alt="avatar" className={css.photo} />
+              <Avatar src={userPhoto} alt="avatar" size="large" />
               <div className={css.accoutSettings}>
                 <div className={css.accoutSettingsField}><span className={css.emailLabel}>Email</span> {userEmail}</div>
                 <Input id="userNameInput" label="Name" value={userName} onChange={e => handleChangeUserName(e)} onBlur={handleBlurUserName} />

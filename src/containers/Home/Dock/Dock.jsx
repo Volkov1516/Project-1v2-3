@@ -11,6 +11,7 @@ import { IconButton } from 'components/IconButton/IconButton';
 import { Modal } from 'components/Modal/Modal';
 import { Input } from 'components/Input/Input';
 import { Button } from 'components/Button/Button';
+import { Avatar } from 'components/Avatar/Avatar';
 
 import css from './Dock.module.css';
 
@@ -131,9 +132,7 @@ export const Dock = () => {
         </span>
         {userPhoto ?
           <Tooltip position="right" text={userName || userEmail}>
-            <div onClick={handleOpenSettings} className={css.photoWrapper}>
-              <img className={css.photo} src={userPhoto} alt="avatar" />
-            </div>
+            <Avatar src={userPhoto} alt="avatar" size="small" onClick={handleOpenSettings} />
           </Tooltip> :
           <Tooltip position="right" text={userName || userEmail}>
             <IconButton variant="secondary" path={USER} onClick={handleOpenSettings} />

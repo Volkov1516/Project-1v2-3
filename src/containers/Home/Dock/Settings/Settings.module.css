@@ -66,13 +66,6 @@
   gap: 16px;
 }
 
-.photo {
-  height: 160px;
-  width: 160px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .accoutSettings {
   display: flex;
   flex-direction: column;
