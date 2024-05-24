@@ -56,7 +56,7 @@ export const Task = ({ id, content }) => {
 
   return (
     <div className={css.container}>
-      <IconButton onClick={handleDeleteTask} path={CIRCLE} />
+      <IconButton variant="secondary" path={CIRCLE} onClick={handleDeleteTask} />
       <div
         ref={contentEditableRef}
         className={css.content}

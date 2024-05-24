@@ -77,6 +77,16 @@ body.light-theme {
   --buttonOutlinedActive: var(--gray200);
   --buttonDisabledColor: var(--gray600);
 
+  /* Icon Button */
+  --iconButtonPrimaryColor: var(--white);
+  --iconButtonPrimaryBackground: var(--black);
+  --iconButtonPrimaryHover: var(--gray1400);
+  --iconButtonPrimaryActive: var(--gray1300);
+  --iconButtonSecondaryColor: var(--black);
+  --iconButtonSecondaryBackground: var(--transparent);
+  --iconButtonSecondaryHover: var(--gray1200);
+  --iconButtonSecondaryActive: var(--gray1400);
+  
   /* Input */
   --inputFocusBorderColor: var(--black);
 }
@@ -107,6 +117,16 @@ body.dark-theme {
   --buttonOutlinedHover: var(--gray1200);
   --buttonOutlinedActive: var(--gray1400);
   --buttonDisabledColor: var(--gray600);
+
+  /* Icon Button */
+  --iconButtonPrimaryColor: var(--gray1300);
+  --iconButtonPrimaryBackground: var(--gray200);
+  --iconButtonPrimaryHover: var(--gray300);
+  --iconButtonPrimaryActive: var(--gray400);
+  --iconButtonSecondaryColor: var(--gray200);
+  --iconButtonSecondaryBackground: var(--transparent);
+  --iconButtonSecondaryHover: var(--gray1200);
+  --iconButtonSecondaryActive: var(--gray1400);
 
   /* Input */
   --inputFocusBorderColor: var(--gray200);

@@ -29,7 +29,7 @@ export const FolderNavigation = ({ name }) => {
 
   return (
     <div data-draggable={true} data-type="navigation" className={css.container} onPointerDown={e => e.stopPropagation()}>
-      <IconButton onClick={handleBack} path={ARROW_BACK} />
+      <IconButton variant="secondary" path={ARROW_BACK} onClick={handleBack} />
       {name}
     </div>
   );

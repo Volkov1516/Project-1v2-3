@@ -11,7 +11,7 @@ export const Modal = ({ open, close, loading, children }) => {
     <div className={css.container} onClick={close}>
       <div className={css.content} onClick={(e) => e.stopPropagation()}>
         <div className={css.header}>
-          <IconButton onClick={close} path={CLOSE} />
+          <IconButton variant="secondary" path={CLOSE} onClick={close} />
         </div>
         {children}
         {loading && <div className={css.loadingContainer}><div className={css.loadingSpinner} /></div>}

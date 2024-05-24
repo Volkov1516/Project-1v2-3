@@ -91,7 +91,7 @@ export const Settings = () => {
     <div className={css.container} onClick={handleClose}>
       <div className={css.content} onClick={e => e.stopPropagation()}>
         <nav className={css.navigation}>
-          <IconButton onClick={handleClose} path={CLOSE} />
+          <IconButton variant="secondary" path={CLOSE} onClick={handleClose}  />
         </nav>
         <div className={css.sections}>
           <section className={css.section}>

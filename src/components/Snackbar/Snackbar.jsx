@@ -27,7 +27,7 @@ export const Snackbar = () => {
   return snackbar && createPortal(
     <div className={css.container}>
       {snackbar}
-      <IconButton snack onClick={handleClose} path={CLOSE} />
+      <IconButton variant="secondary" path={CLOSE} onClick={handleClose}  />
     </div>,
     document.body
   );

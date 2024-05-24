@@ -12,11 +12,11 @@ import { Modal } from 'components/Modal/Modal';
 import { Input } from 'components/Input/Input';
 import { Button } from 'components/Button/Button';
 
-import css from './Bar.module.css';
+import css from './Dock.module.css';
 
 import { PLUS, TASK, FOLDER, DARK, LIGHT, SETTINGS, USER } from 'utils/variables';
 
-export const Bar = () => {
+export const Dock = () => {
   const dispatch = useDispatch();
 
   const { windowWidth, theme, addFolderModal } = useSelector(state => state.app);
@@ -106,27 +106,27 @@ export const Bar = () => {
     <div className={css.container}>
       <div className={css.start}>
         <Tooltip position="right" text="Add Note">
-          <IconButton onClick={handleCreateNote} primary size="large" path={PLUS} />
+          <IconButton variant="primary" path={PLUS} onClick={handleCreateNote} />
         </Tooltip>
         <Tooltip position="right" text="Add Task">
-          <IconButton onClick={handleCreateTask} path={TASK} />
+          <IconButton variant="secondary" path={TASK} onClick={handleCreateTask} />
         </Tooltip>
         <Tooltip position="right" text="Add Folder">
-          <IconButton onClick={handleOpenAddFolder} path={FOLDER} />
+          <IconButton variant="secondary" path={FOLDER} onClick={handleOpenAddFolder} />
         </Tooltip>
       </div>
       <div className={css.end}>
         <span className={css.hideOnMobile}>
           <Tooltip position="right" text="Theme">
             {theme === 'light'
-              ? <IconButton onClick={handleTheme} path={LIGHT} />
-              : <IconButton onClick={handleTheme} path={DARK} />
+              ? <IconButton variant="secondary" path={LIGHT} onClick={handleTheme} />
+              : <IconButton variant="secondary" path={DARK} onClick={handleTheme} />
             }
           </Tooltip>
         </span>
         <span className={css.hideOnMobile}>
           <Tooltip position="right" text="Settings">
-            <IconButton onClick={handleOpenSettings} path={SETTINGS} />
+            <IconButton variant="secondary" path={SETTINGS} onClick={handleOpenSettings} />
           </Tooltip>
         </span>
         {userPhoto ?
@@ -136,7 +136,7 @@ export const Bar = () => {
             </div>
           </Tooltip> :
           <Tooltip position="right" text={userName || userEmail}>
-            <IconButton onClick={handleOpenSettings} path={USER} />
+            <IconButton variant="secondary" path={USER} onClick={handleOpenSettings} />
           </Tooltip>
         }
       </div>

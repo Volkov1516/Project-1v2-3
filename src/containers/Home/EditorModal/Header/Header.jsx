@@ -30,18 +30,18 @@ export const Header = ({ handleClose }) => {
     <div className={css.container}>
       <div className={css.start}>
         <div className={`${css.expand} ${!expanded && css.rotateArrow}`}>
-          <IconButton onClick={handleExpand} path={EXPAND} />
+          <IconButton variant="secondary" path={EXPAND} onClick={handleExpand} />
         </div>
         <div className={css.arrowBack}>
-          <IconButton onClick={handleClose} path={ARROW_BACK} />
+          <IconButton variant="secondary" path={ARROW_BACK} onClick={handleClose} />
         </div>
       </div>
       <div className={css.end}>
-        {!isNewNote && <IconButton path={CLOUD} />}
-        {!isNewNote && <IconButton path={LOCK} />}
-        {!isNewNote && <IconButton path={BIN} />}
+        {!isNewNote && <IconButton variant="secondary" path={CLOUD} />}
+        {!isNewNote && <IconButton variant="secondary" path={LOCK} />}
+        {!isNewNote && <IconButton variant="secondary" path={BIN} />}
         <div className={css.close}>
-          <IconButton onClick={handleClose} path={CLOSE} />
+          <IconButton variant="secondary" path={CLOSE} onClick={handleClose} />
         </div>
       </div>
     </div>

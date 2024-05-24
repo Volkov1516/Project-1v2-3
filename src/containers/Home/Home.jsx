@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { Bar } from './Bar/Bar';
+import { Dock } from './Dock/Dock';
 import { Manager } from './Manager/Manager';
 import { Widgets } from './Widgets/Widgets';
 import { EditorModal } from './EditorModal/EditorModal';
@@ -13,7 +13,7 @@ export const Home = () => {
 
   return (
     <div className={css.container}>
-      <Bar />
+      <Dock />
       <Manager />
       {windowWidth > 639 && <Widgets />}
       <EditorModal />

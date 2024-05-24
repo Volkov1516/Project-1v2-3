@@ -10,80 +10,61 @@
   transition: background-color 0.1s ease-in;
 }
 
-.button>svg {
-  width: 24px;
-  height: 24px;
-  margin: 8px;
-  fill: var(--buttonColorSecondary);
-}
-
-.small>svg {
-  width: 24px;
-  height: 24px;
-  margin: 0px;
-  fill: var(--buttonColorSecondary);
-}
-
 .primary {
-  background-color: var(--buttonBackgroundPrimary);
+  background-color: var(--iconButtonPrimaryBackground);
 }
 
 .primary>svg {
   width: 40px;
   height: 40px;
   margin: 0px;
-  fill: var(--buttonColorPrimary);
+  fill: var(--iconButtonPrimaryColor);
 }
 
-.snack {
-  background-color: var(--buttonBackgroundPrimary);
+.secondary {
+  background-color: var(--iconButtonSecondaryBackground);
 }
 
-.snack>svg {
+.secondary>svg {
   width: 24px;
-  height: 25px;
-  margin: 0px;
-  fill: var(--buttonColorPrimary);
+  height: 24px;
+  margin: 8px;
+  fill: var(--iconButtonSecondaryColor);
 }
 
 @media (hover: hover) {
-  .button:hover {
-    background-color: var(--buttonHoverSecondary);
+  .primary:hover {
+    background-color: var(--iconButtonPrimaryHover);
     cursor: pointer;
   }
 
-  .primary:hover, .snack:hover {
-    background-color: var(--buttonHoverPrimary);
+  .secondary:hover {
+    background-color: var(--iconButtonSecondaryHover);
     cursor: pointer;
   }
 }
 
 @media (min-width: 639px) {
-  .button:active {
-    background-color: var(--buttonActiveSecondary);
+  .primary:active {
+    background-color: var(--iconButtonPrimaryActive);
   }
 
-  .primary:active, .snack:hover {
-    background-color: var(--buttonActivePrimary);
+  .secondary:active {
+    background-color: var(--iconButtonSecondaryActive);
   }
 }
 
 @media (max-width: 639px) {
-  .button>svg {
-    width: 32px;
-    height: 32px;
-  }
-
   .primary>svg {
     width: 48px;
     height: 48px;
   }
 
-  .button.touch {
-    background-color: var(--buttonHoverSecondary);
+  .primary.touch {
+    background-color: var(--iconButtonPrimaryActive);
   }
 
-  .primary.touch {
-    background-color: var(--buttonActivePrimary);
+  .secondary.touch {
+    background-color: var(--iconButtonSecondaryActive);
   }
 }
