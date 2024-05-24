@@ -8,6 +8,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 
 import { IconButton } from 'components/IconButton/IconButton';
+import { Tooltip } from 'components/Tooltip/Tooltip';
 import { Input } from 'components/Input/Input';
 import { Switch } from 'components/Switch/Switch';
 import { Button } from 'components/Button/Button';
@@ -91,7 +92,9 @@ export const Settings = () => {
     <div className={css.container} onClick={handleClose}>
       <div className={css.content} onClick={e => e.stopPropagation()}>
         <nav className={css.navigation}>
-          <IconButton variant="secondary" path={CLOSE} onClick={handleClose}  />
+          <Tooltip position="bottom" text="Close">
+            <IconButton variant="secondary" path={CLOSE} onClick={handleClose} />
+          </Tooltip>
         </nav>
         <div className={css.sections}>
           <section className={css.section}>

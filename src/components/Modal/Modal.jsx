@@ -5,13 +5,16 @@ import { IconButton } from '../IconButton/IconButton';
 import css from './Modal.module.css';
 
 import { CLOSE } from 'utils/variables';
+import { Tooltip } from 'components/Tooltip/Tooltip';
 
 export const Modal = ({ open, close, loading, children }) => {
   return open && createPortal(
     <div className={css.container} onClick={close}>
       <div className={css.content} onClick={(e) => e.stopPropagation()}>
         <div className={css.header}>
-          <IconButton variant="secondary" path={CLOSE} onClick={close} />
+          <Tooltip position="bottom" text="Close">
+            <IconButton variant="secondary" path={CLOSE} onClick={close} />
+          </Tooltip>
         </div>
         {children}
         {loading && <div className={css.loadingContainer}><div className={css.loadingSpinner} /></div>}

@@ -19,14 +19,14 @@
   height: fit-content;
   padding: 2px 8px;
   border-radius: 2px;
-  background-color: black;
-  color: white;
-  font-size: 12px;
+  background-color: var(--tooltipBackground);
+  color: var(--tooltipColor);
+  font-size: var(--fontSizeSmall);
   font-weight: 300;
   text-wrap: nowrap;
   user-select: none;
   z-index: 99;
-  animation: containerOpen 0.1s ease-in;
+  animation: containerOpen .1s ease-in;
 }
 
 @media (hover: hover) {

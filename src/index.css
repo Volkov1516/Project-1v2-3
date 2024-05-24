@@ -77,11 +77,19 @@ body.light-theme {
   --iconButtonPrimaryActive: var(--gray1300);
   --iconButtonSecondaryColor: var(--black);
   --iconButtonSecondaryBackground: var(--transparent);
-  --iconButtonSecondaryHover: var(--gray1200);
-  --iconButtonSecondaryActive: var(--gray1400);
+  --iconButtonSecondaryHover: var(--gray100);
+  --iconButtonSecondaryActive: var(--gray200);
 
   /* Input */
   --inputFocusBorderColor: var(--black);
+
+  /* Tooltip */
+  --tooltipColor: var(--white);
+  --tooltipBackground: var(--black);
+
+  /* Scroll */
+  --scrollBackground: var(--backgroundSecondary);
+  --scrollBackgroundHover: var(--black);
 }
 
 body.dark-theme {
@@ -123,6 +131,14 @@ body.dark-theme {
 
   /* Input */
   --inputFocusBorderColor: var(--gray200);
+
+  /* Tooltip */
+  --tooltipColor: var(--black);
+  --tooltipBackground: var(--gray200);
+
+  /* Scroll */
+  --scrollBackground: var(--backgroundSecondary);
+  --scrollBackgroundHover: var(--gray200);
 }
 
 body {
@@ -150,7 +166,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: black;
+  background: var(--scrollBackgroundHover);
 }
 
 @media (max-width: 639px) {

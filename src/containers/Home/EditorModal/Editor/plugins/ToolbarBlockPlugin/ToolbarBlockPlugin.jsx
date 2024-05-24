@@ -40,7 +40,7 @@ export const ToolbarBlockPlugin = ({ modalEditorContentRef, titleRef }) => {
         const node = selection.getNodes();
 
         if (node[0].__type === ('paragraph' || 'root')) {
-          const top = nativeSelection.anchorNode.offsetTop + titleRef.current.scrollHeight;
+          const top = nativeSelection.anchorNode.offsetTop + titleRef.current.scrollHeight + 10;
           const viewport = window.visualViewport.width;
 
           if (viewport > 699) {
