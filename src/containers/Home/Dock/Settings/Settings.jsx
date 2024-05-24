@@ -119,25 +119,6 @@ export const Settings = () => {
             <Button variant="outlined" icon={patreon} iconAlt="patreon">Patreon</Button>
           </section>
           <section className={css.section}>
-            <div className={css.sectionName}>Updates</div>
-            <span>Version: 0.1</span>
-            <b>What's new:</b>
-            <ul className={css.list}>
-              <li>Beta release!</li>
-            </ul>
-            <b>Future updates:</b>
-            <ul className={css.list}>
-              <li>Link</li>
-              <li>Image</li>
-              <li>Video</li>
-              <li>Code Block</li>
-            </ul>
-          </section>
-          <section className={css.section}>
-            <div className={css.sectionName}>Contacts</div>
-            <div>volkov.x@outlook.com</div>
-          </section>
-          <section className={css.section}>
             <Button variant="contained" onClick={handleLogOut}>Log out</Button>
           </section>
         </div>
