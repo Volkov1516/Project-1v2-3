@@ -48,6 +48,7 @@ export const Manager = memo(function MemoizedComponent() {
             <Notes notes={folder?.notes} />
             <Tasks tasks={folder?.tasks} />
           </div>
+          {(documents.folders.length === 0 && documents.notes.length === 0 && documents.tasks.length === 0) && <div className={css.emptyAlert}>No Data</div>}
         </div>
       </div>
     </DragAndDropProvider>

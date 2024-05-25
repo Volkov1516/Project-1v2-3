@@ -12,14 +12,14 @@ import { Tooltip } from 'components/Tooltip/Tooltip';
 import { Input } from 'components/Input/Input';
 import { Switch } from 'components/Switch/Switch';
 import { Button } from 'components/Button/Button';
+import { Avatar } from 'components/Avatar/Avatar';
 
 import css from './Settings.module.css';
 
-import { CLOSE } from 'utils/variables';
+import { CLOSE, USER } from 'utils/variables';
 import logo from 'assets/images/logo.png';
 import googlePlay from 'assets/images/google-play.svg';
 import patreon from 'assets/images/patreon.svg';
-import { Avatar } from 'components/Avatar/Avatar';
 
 export const Settings = () => {
   const dispatch = useDispatch();
@@ -103,7 +103,11 @@ export const Settings = () => {
         <div className={css.sections}>
           <section className={css.section}>
             <div className={css.accountGroup}>
-              <Avatar src={userPhoto} alt="avatar" size="large" />
+              {userPhoto ?
+                <Avatar src={userPhoto} alt="avatar" size="large" />
+                :
+                <IconButton variant="secondary" path={USER} />
+              }
               <div className={css.accoutSettings}>
                 <div className={css.accoutSettingsField}><span className={css.emailLabel}>Email</span> {userEmail}</div>
                 <Input id="userNameInput" label="Name" value={userName} onChange={e => handleChangeUserName(e)} onBlur={handleBlurUserName} />

@@ -23,6 +23,14 @@
   width: 240px;
 }
 
+.emptyAlert {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+  user-select: none;
+}
+
 @media (max-width: 639px) {
   .container {
     width: 100%;
@@ -42,6 +50,10 @@
 
   .wrapper {
     width: 100%;
+  }
+
+  .emptyAlert {
+    font-size: var(--fontSizeH3);
   }
 
   .touch {
