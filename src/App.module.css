@@ -19,8 +19,8 @@
   width: 32px;
   height: 32px;
   border: 2px solid transparent;
-  border-top: 2px solid var(--buttonColorSecondary);
-  border-right: 2px solid var(--buttonColorSecondary);
+  border-top: 2px solid var(--spinerColor);
+  border-right: 2px solid var(--spinerColor);
   border-radius: 50%;
   animation: spinner 1s linear infinite;
 }

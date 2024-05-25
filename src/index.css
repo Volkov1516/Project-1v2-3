@@ -90,6 +90,9 @@ body.light-theme {
   /* Scroll */
   --scrollBackground: var(--backgroundSecondary);
   --scrollBackgroundHover: var(--black);
+
+  /* Spiner */
+  --spinerColor: var(--black);
 }
 
 body.dark-theme {
@@ -139,6 +142,9 @@ body.dark-theme {
   /* Scroll */
   --scrollBackground: var(--backgroundSecondary);
   --scrollBackgroundHover: var(--gray200);
+
+  /* Spiner */
+  --spinerColor: var(--gray200);
 }
 
 body {
