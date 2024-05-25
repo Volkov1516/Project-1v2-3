@@ -35,7 +35,7 @@ export const Dock = () => {
     };
 
     dispatch(createInDocuments({ type: 'folders', obj: newFolder }));
-
+    
     handleCloseAddFolder();
   };
 
@@ -96,7 +96,10 @@ export const Dock = () => {
     dispatch(setAddFolderModal(true));
   };
 
-  const handleCloseAddFolder = () => windowWidth < 639 ? window.history.back() : dispatch(setAddFolderModal(false));
+  const handleCloseAddFolder = () => {
+    windowWidth < 639 ? window.history.back() : dispatch(setAddFolderModal(false));
+    setFolderNameInput('');
+  };
 
   const handleOpenSettings = () => {
     windowWidth < 639 && (window.location.hash = 'settings');

@@ -31,9 +31,11 @@
 
 .navigation {
   display: flex;
-  justify-content: flex-end;
-  padding: 8px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 8px 8px 16px;
   border-bottom: 1px solid var(--borderColor);
+  user-select: none;
 }
 
 .sections {

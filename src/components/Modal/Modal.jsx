@@ -1,11 +1,11 @@
 import { createPortal } from 'react-dom';
 
+import { Tooltip } from 'components/Tooltip/Tooltip';
 import { IconButton } from '../IconButton/IconButton';
 
 import css from './Modal.module.css';
 
 import { CLOSE } from 'utils/variables';
-import { Tooltip } from 'components/Tooltip/Tooltip';
 
 export const Modal = ({ open, close, loading, children }) => {
   return open && createPortal(

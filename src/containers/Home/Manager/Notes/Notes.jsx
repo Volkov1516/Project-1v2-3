@@ -93,7 +93,12 @@ export const Notes = ({ notes }) => {
     dispatch(setEditNoteModal(true));
   };
 
-  const handleCloseEditNote = () => windowWidth < 639 ? window.history.back() : dispatch(setEditNoteModal(false));
+  const handleCloseEditNote = () => {
+    windowWidth < 639 ? window.history.back() : dispatch(setEditNoteModal(false));
+    setTitleInputValue('');
+    setTitleDeleteValue(null);
+    setTitleDeleteInputValue('');
+  };
 
   const handleEditNoteTitle = async () => {
     // STEP 1: Return if no changes

@@ -48,7 +48,12 @@ export const Folders = ({ folders }) => {
     dispatch(setEditFolderModal(true));
   };
 
-  const handleCloseEditFolder = () => windowWidth < 639 ? window.history.back() : dispatch(setEditFolderModal(false));
+  const handleCloseEditFolder = () => {
+    windowWidth < 639 ? window.history.back() : dispatch(setEditFolderModal(false));
+    setFolderInputValue('');
+    setFolderDeleteValue(null);
+    setFolderDeleteInputValue('');
+  };
 
   const handleEditFolderName = async () => {
     if (folderInputValue === folderDeleteValue) return;

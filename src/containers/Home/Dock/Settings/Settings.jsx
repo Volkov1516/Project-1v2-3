@@ -95,6 +95,7 @@ export const Settings = () => {
     <div className={css.container} onClick={handleClose}>
       <div className={css.content} onClick={e => e.stopPropagation()}>
         <nav className={css.navigation}>
+          <span className={css.navigationTitle}>Settings</span>
           <Tooltip position="bottom" text="Close">
             <IconButton variant="secondary" path={CLOSE} onClick={handleClose} />
           </Tooltip>
