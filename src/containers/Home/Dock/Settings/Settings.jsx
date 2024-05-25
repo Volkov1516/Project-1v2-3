@@ -101,7 +101,6 @@ export const Settings = () => {
         </nav>
         <div className={css.sections}>
           <section className={css.section}>
-            <div className={css.sectionName}>Account</div>
             <div className={css.accountGroup}>
               <Avatar src={userPhoto} alt="avatar" size="large" />
               <div className={css.accoutSettings}>
@@ -112,14 +111,12 @@ export const Settings = () => {
             </div>
           </section>
           <section className={css.section}>
-            <div className={css.sectionName}>Appearance</div>
             <div className={css.themeField}>
               <span>Dark theme</span>
               <Switch checked={theme === "dark" ? true : false} onChange={handleSwitchTheme} />
             </div>
           </section>
           <section className={css.section}>
-            <div className={css.sectionName}>Links</div>
             <Button variant="outlined" icon={logo} iconAlt="website">Website</Button>
             <Button variant="outlined" icon={googlePlay} iconAlt="google play">Google Play</Button>
             <Button variant="outlined" icon={patreon} iconAlt="patreon">Patreon</Button>

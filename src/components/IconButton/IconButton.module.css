@@ -70,6 +70,6 @@
   }
 
   .secondary.touch {
-    background-color: var(--iconButtonSecondaryActive);
+    background-color: var(--iconButtonSecondaryHover);
   }
 }

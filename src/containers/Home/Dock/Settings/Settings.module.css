@@ -53,12 +53,6 @@
   border-bottom: 1px solid var(--borderColor);
 }
 
-.sectionName {
-  font-size: var(--fontSizeLarge);
-  font-weight: var(--fontWeightTitle);
-  user-select: none;
-}
-
 .accountGroup {
   display: flex;
   justify-content: space-between;
