@@ -11,46 +11,46 @@
 }
 
 .primary {
-  background-color: var(--iconButtonPrimaryBackground);
+  background-color: var(--primaryElementBackground);
 }
 
 .primary>svg {
   width: 40px;
   height: 40px;
   margin: 0px;
-  fill: var(--iconButtonPrimaryColor);
+  fill: var(--primaryElementColor);
 }
 
 .secondary {
-  background-color: var(--iconButtonSecondaryBackground);
+  background-color: var(--secondaryElementBackground);
 }
 
 .secondary>svg {
   width: 24px;
   height: 24px;
   margin: 8px;
-  fill: var(--iconButtonSecondaryColor);
+  fill: var(--secondaryElementColor);
 }
 
 @media (hover: hover) {
   .primary:hover {
-    background-color: var(--iconButtonPrimaryHover);
+    background-color: var(--primaryElementHover);
     cursor: pointer;
   }
 
   .secondary:hover {
-    background-color: var(--iconButtonSecondaryHover);
+    background-color: var(--secondaryElementHover);
     cursor: pointer;
   }
 }
 
 @media (min-width: 639px) {
   .primary:active {
-    background-color: var(--iconButtonPrimaryActive);
+    background-color: var(--primaryElementActive);
   }
 
   .secondary:active {
-    background-color: var(--iconButtonSecondaryActive);
+    background-color: var(--secondaryElementActive);
   }
 }
 
@@ -61,7 +61,7 @@
   }
 
   .primary.touch {
-    background-color: var(--iconButtonPrimaryActive);
+    background-color: var(--primaryElementHover);
   }
 
   .secondary>svg {
@@ -70,6 +70,6 @@
   }
 
   .secondary.touch {
-    background-color: var(--iconButtonSecondaryHover);
+    background-color: var(--secondaryElementHover);
   }
 }

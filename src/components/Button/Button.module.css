@@ -25,8 +25,8 @@
 
 .contained {
   border: 1px solid transparent;
-  background-color: var(--buttonContainedBackground);
-  color: var(--buttonContainedColor);
+  background-color: var(--primaryElementBackground);
+  color: var(--primaryElementColor);
 }
 
 .outlined {
@@ -55,8 +55,8 @@
 }
 
 .contained > .spinner {
-  border-top: 1px solid var(--buttonContainedColor);
-  border-right: 1px solid var(--buttonContainedColor);
+  border-top: 1px solid var(--primaryElementColor);
+  border-right: 1px solid var(--primaryElementColor);
 }
 
 .outlined > .spinner, .text > .spinner {
@@ -70,11 +70,11 @@
   }
 
   .contained:hover {
-    background-color: var(--buttonContainedHover);
+    background-color: var(--primaryElementHover);
   }
 
   .outlined:hover, .text:hover {
-    background-color: var(--buttonOutlinedHover);
+    background-color: var(--secondaryElementHover);
   }
 }
 
@@ -84,11 +84,11 @@
   }
 
   .contained:active {
-    background-color: var(--buttonContainedActive);
+    background-color: var(--primaryElementActive);
   }
 
   .outlined:active, .text:active {
-    background-color: var(--buttonOutlinedActive);
+    background-color: var(--secondaryElementActive);
   }
 }
 
@@ -98,16 +98,16 @@
   }
 
   .contained.touch {
-    background-color: var(--buttonContainedActive);
+    background-color: var(--primaryElementHover);
   }
 
   .outlined.touch, .text.touch {
-    background-color: var(--buttonOutlinedActive);
+    background-color: var(--secondaryElementHover);
   }
 }
 
 .button:disabled {
   background-color: transparent;
-  color: var(--buttonDisabledColor);
+  color: var(--disabledElementColor);
   cursor: not-allowed;
 }

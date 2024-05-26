@@ -5,7 +5,7 @@
   padding: 0;
   margin: 0;
   font-family: 'Inter', sans-serif;
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: transparent;
 }
 
 :root {
@@ -46,139 +46,64 @@
 body.light-theme {
   --backgroundPrimary: var(--white);
   --backgroundSecondary: var(--gray50);
-
-
-
-
-
-
-
   --borderColor: var(--gray200);
+
   --fontColorPrimary: var(--black);
   --fontColorQuote: var(--gray600);
-  --selectionFontColor: var(--white);
-  --selectionBackgroundColor: var(--black);
+  --fontSelectionBackground: var(--black);
+  --fontSelectionColor: var(--white);
 
-  --buttonColorPrimary: var(--white);
-  --buttonBackgroundPrimary: var(--black);
-  --buttonHoverPrimary: var(--gray1400);
-  --buttonActivePrimary: var(--gray1300);
-  --buttonColorSecondary: var(--black);
-  --buttonBackgroundSecondary: var(--transparent);
-  --buttonHoverSecondary: var(--gray100);
-  --buttonActiveSecondary: var(--gray200);
+  --primaryElementBackground: var(--black);
+  --primaryElementColor: var(--white);
+  --primaryElementHover: var(--gray1400);
+  --primaryElementActive: var(--gray1300);
+  --secondaryElementBackground: var(--transparent);
+  --secondaryElementColor: var(--black);
+  --secondaryElementHover: var(--gray100);
+  --secondaryElementActive: var(--gray200);
+  --disabledElementColor: var(--gray600);
 
-  /* Button */
-  --buttonContainedColor: var(--white);
-  --buttonContainedBackground: var(--black);
-  --buttonContainedHover: var(--gray1400);
-  --buttonContainedActive: var(--gray1300);
-  --buttonOutlinedHover: var(--gray100);
-  --buttonOutlinedActive: var(--gray200);
-  --buttonDisabledColor: var(--gray600);
-
-  /* Icon Button */
-  --iconButtonPrimaryColor: var(--white);
-  --iconButtonPrimaryBackground: var(--black);
-  --iconButtonPrimaryHover: var(--gray1400);
-  --iconButtonPrimaryActive: var(--gray1300);
-  --iconButtonSecondaryColor: var(--black);
-  --iconButtonSecondaryBackground: var(--transparent);
-  --iconButtonSecondaryHover: var(--gray100);
-  --iconButtonSecondaryActive: var(--gray200);
-
-  /* Input */
-  --inputFocusBorderColor: var(--black);
-
-  /* Tooltip */
-  --tooltipColor: var(--white);
-  --tooltipBackground: var(--black);
-
-  /* Scroll */
-  --scrollBackground: var(--backgroundSecondary);
+  --scrollBackground: var(--gray50);
   --scrollBackgroundHover: var(--black);
-
-  /* Spiner */
+  --inputFocusBorderColor: var(--black);
   --spinerColor: var(--black);
 }
 
 body.dark-theme {
-  --backgroundPrimary: var(--gray1400);
-  --backgroundSecondary: var(--gray1350);
-
-
-
-
-
-
-
+  --backgroundPrimary: var(--gray1350);
+  --backgroundSecondary: var(--gray1300);
   --borderColor: var(--gray1200);
+
   --fontColorPrimary: var(--gray200);
   --fontColorQuote: var(--gray600);
-  --selectionFontColor: var(--gray1350);
-  --selectionBackgroundColor: var(--gray200);
-
-
+  --fontSelectionBackground: var(--gray200);
+  --fontSelectionColor: var(--gray1350);
 
   --primaryElementBackground: var(--gray200);
   --primaryElementColor: var(--gray1350);
   --primaryElementHover: var(--gray300);
   --primaryElementActive: var(--gray400);
+  --secondaryElementBackground: var(--transparent);
+  --secondaryElementColor: var(--gray200);
+  --secondaryElementHover: var(--gray1200);
+  --secondaryElementActive: var(--gray1400);
+  --disabledElementColor: var(--gray600);
 
-
-
-  --buttonColorPrimary: var(--black);
-  --buttonBackgroundPrimary: var(--gray200);
-  --buttonHoverPrimary: var(--gray300);
-  --buttonActivePrimary: var(--gray200);
-  --buttonColorSecondary: var(--white);
-  --buttonBackgroundSecondary: var(--transparent);
-  --buttonHoverSecondary: var(--gray1200);
-  --buttonActiveSecondary: var(--gray1400);
-
-  /* Button */
-  --buttonContainedColor: var(--black);
-  --buttonContainedBackground: var(--gray200);
-  --buttonContainedHover: var(--gray300);
-  --buttonContainedActive: var(--gray400);
-  --buttonOutlinedHover: var(--gray1200);
-  --buttonOutlinedActive: var(--gray1400);
-  --buttonDisabledColor: var(--gray600);
-
-  /* Icon Button */
-  --iconButtonPrimaryColor: var(--gray1300);
-  --iconButtonPrimaryBackground: var(--gray200);
-  --iconButtonPrimaryHover: var(--gray300);
-  --iconButtonPrimaryActive: var(--gray400);
-  --iconButtonSecondaryColor: var(--gray200);
-  --iconButtonSecondaryBackground: var(--transparent);
-  --iconButtonSecondaryHover: var(--gray1200);
-  --iconButtonSecondaryActive: var(--gray1400);
-
-  /* Input */
-  --inputFocusBorderColor: var(--gray200);
-
-  /* Tooltip */
-  --tooltipColor: var(--black);
-  --tooltipBackground: var(--gray200);
-
-  /* Scroll */
-  --scrollBackground: var(--backgroundSecondary);
+  --scrollBackground: var(--gray1300);
   --scrollBackgroundHover: var(--gray200);
-
-  /* Spiner */
+  --inputFocusBorderColor: var(--gray200);
   --spinerColor: var(--gray200);
 }
 
 body {
+  background-color: var(--backgroundPrimary);
   color: var(--fontColorPrimary);
   overscroll-behavior-y: contain;
-  background-color: var(--backgroundPrimary);
 }
 
 ::selection {
-  color: var(--selectionFontColor);
-  background-color: var(--selectionBackgroundColor);
+  background-color: var(--fontSelectionBackground);
+  color: var(--fontSelectionColor);
 }
 
 ::-webkit-scrollbar {

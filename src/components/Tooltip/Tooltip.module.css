@@ -19,8 +19,8 @@
   height: fit-content;
   padding: 2px 8px;
   border-radius: 2px;
-  background-color: var(--tooltipBackground);
-  color: var(--tooltipColor);
+  background-color: var(--primaryElementBackground);
+  color: var(--primaryElementColor);
   font-size: var(--fontSizeSmall);
   font-weight: 300;
   text-wrap: nowrap;

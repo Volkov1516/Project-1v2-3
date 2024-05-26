@@ -19,8 +19,8 @@
   height: fit-content;
   margin-top: 8px;
   padding: 8px 8px 8px 12px;
-  background-color: var(--buttonBackgroundPrimary);
-  color: var(--buttonColorPrimary);
+  background-color: var(--primaryElementBackground);
+  color: var(--primaryElementColor);
   font-size: 15px;
   user-select: none;
   animation: modalFadeIn 0.1s ease-in;

@@ -29,14 +29,14 @@
 
 @media (hover: hover) {
   .folder:hover {
-    background-color: var(--buttonHoverSecondary);
+    background-color: var(--secondaryElementHover);
     border: 1px solid var(--borderColor);
   }
 }
 
 @media (min-width: 639px) {
   .folder:active {
-    background-color: var(--buttonActiveSecondary);
+    background-color: var(--secondaryElementActive);
   }
 }
 
@@ -51,6 +51,6 @@
   }
 
   .folder.touch {
-    background-color: var(--buttonHoverSecondary);
+    background-color: var(--secondaryElementHover);
   }
 }

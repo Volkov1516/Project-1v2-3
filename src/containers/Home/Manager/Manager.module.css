@@ -57,6 +57,6 @@
   }
 
   .touch {
-    background-color: var(--buttonHoverSecondary);
+    background-color: var(--secondaryElementHover);
   }
 }

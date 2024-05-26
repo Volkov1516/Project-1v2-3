@@ -32,11 +32,11 @@
 }
 
 .container>button:focus {
-  background-color: var(--buttonActiveSecondary);
+  background-color: var(--secondaryElementActive);
 }
 
 .container>button:active {
-  background-color: var(--buttonActiveSecondary);
+  background-color: var(--secondaryElementActive);
 }
 
 .dropdown {
@@ -63,11 +63,11 @@
 }
 
 .dropdown>button:focus {
-  background-color: var(--buttonActiveSecondary);
+  background-color: var(--secondaryElementActive);
 }
 
 .dropdown>button:active {
-  background-color: var(--buttonActiveSecondary);
+  background-color: var(--secondaryElementActive);
 }
 
 .bold {
@@ -111,16 +111,16 @@
 }
 
 .active {
-  background-color: var(--buttonActiveSecondary) !important;
+  background-color: var(--secondaryElementActive) !important;
 }
 
 @media (hover: hover) {
   .container>button:hover {
-    background-color: var(--buttonHoverSecondary);
+    background-color: var(--secondaryElementHover);
   }
 
   .dropdown>button:hover {
-    background-color: var(--buttonHoverSecondary);
+    background-color: var(--secondaryElementHover);
   }
 }
 
