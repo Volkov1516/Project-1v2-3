@@ -38,9 +38,6 @@
   --fontSizeLarge: 20px;
   --fontSizeMedium: 16px;
   --fontSizeSmall: 12px;
-  --fontWeightTitle: 700;
-
-  --editorInputWidth: 700px;
 }
 
 body.light-theme {

@@ -39,5 +39,5 @@
 
 .errorTitle {
   font-size: var(--fontSizeTitle);
-  font-weight: var(--fontWeightTitle);
+  font-weight: 700;
 }

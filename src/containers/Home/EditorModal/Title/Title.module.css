@@ -7,13 +7,13 @@
 .textarea {
   display: block;
   width: 100%;
-  max-width: var(--editorInputWidth);
+  max-width: 700px;
   outline: none;
   border: none;
   background-color: var(--transparent);
   color: var(--fontColorPrimary);
   font-size: var(--fontSizeTitle);
-  font-weight: var(--fontWeightTitle);
+  font-weight: 700;
   line-height: 1em;
   overflow: auto;
   resize: none;
