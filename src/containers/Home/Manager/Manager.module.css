@@ -61,7 +61,7 @@
   }
 
   .emptyAlert {
-    font-size: var(--fontSizeH3);
+    font-size: 24px;
   }
 
   .touch {

@@ -12,7 +12,7 @@
   border: none;
   background-color: var(--transparent);
   color: var(--fontColorPrimary);
-  font-size: var(--fontSizeTitle);
+  font-size: var(--fontSizeTitleLarge);
   font-weight: 700;
   line-height: 1em;
   overflow: auto;
@@ -21,6 +21,6 @@
 
 @media (max-width: 639px) {
   .textarea {
-    font-size: 32px;
+    font-size: var(--fontSizeTitleSmall);
   }
 }

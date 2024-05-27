@@ -31,9 +31,10 @@
   --black: #000000;
   --red: #e03131;
 
-  --fontSizeTitle: 48px;
-  --fontSizeH1: 40px;
-  --fontSizeH2: 32px;
+  --fontSizeTitleLarge: 40px;
+  --fontSizeTitleSmall: 32px;
+  --fontSizeH1: 32px;
+  --fontSizeH2: 28px;
   --fontSizeH3: 24px;
   --fontSizeLarge: 20px;
   --fontSizeMedium: 16px;

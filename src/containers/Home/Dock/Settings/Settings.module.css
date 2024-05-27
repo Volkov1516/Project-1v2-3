@@ -114,24 +114,4 @@
     width: 100%;
     gap: 16px;
   }
-
-  .emailText {
-    font-size: 16px;
-  }
-
-  .themeGroup {
-    font-size: 16px;
-  }
-
-  .linksGroup {
-    font-size: 16px;
-  }
-
-  .updatedGroup {
-    font-size: 16px;
-  }
-
-  .contactsGroup {
-    font-size: 16px;
-  }
 }
