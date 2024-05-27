@@ -18,9 +18,3 @@
   overflow: auto;
   resize: none;
 }
-
-@media (max-width: 639px) {
-  .textarea {
-    font-size: var(--fontSizeTitleSmall);
-  }
-}
