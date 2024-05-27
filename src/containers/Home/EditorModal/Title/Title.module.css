@@ -18,3 +18,9 @@
   overflow: auto;
   resize: none;
 }
+
+@media (max-width: 639px) {
+  .textarea {
+    font-size: 32px;
+  }
+}
