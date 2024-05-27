@@ -14,6 +14,9 @@ import { Modal } from 'components/Modal/Modal';
 import { useDragAndDrop } from 'components/DragAndDrop/DragAndDropContext';
 
 import css from './Notes.module.css';
+import { IconButton } from 'components/IconButton/IconButton';
+
+import { DOC } from 'utils/variables';
 
 export const Notes = ({ notes }) => {
   const { preventOnClick } = useDragAndDrop();
@@ -179,10 +182,13 @@ export const Notes = ({ notes }) => {
   };
 
   return (
-    <div id="note" className={css.container}>
+    <div id="note" className={`${css.container} ${notes?.length > 0 && css.divider}`}>
       {notes?.map((i, index) => (
         <DragAdnDropElement key={index} index={index} id={i.id} type="note" name={i.title} openSettingsModal={handleOpenEditNoteModal}>
           <div className={css.note} onClick={() => handleOpenNote(i.id)}>
+            <span className={css.icon}>
+              <IconButton path={DOC} variant="secondary" />
+            </span>
             {i.title}
           </div>
         </DragAdnDropElement>
