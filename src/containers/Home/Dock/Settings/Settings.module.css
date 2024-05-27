@@ -31,9 +31,9 @@
 
 .navigation {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  padding: 8px 8px 8px 16px;
+  padding: 8px;
   border-bottom: 1px solid var(--borderColor);
   user-select: none;
 }

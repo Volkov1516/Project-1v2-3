@@ -15,7 +15,7 @@
   height: 100vh;
   width: calc(100vw - 298px);
   z-index: 2;
-  animation: containerOpen 0.1s ease-in;
+  animation: containerOpen 0.1s forwards;
   transition: width 0.1s ease-in;
 }
 

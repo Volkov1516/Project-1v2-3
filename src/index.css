@@ -31,14 +31,20 @@
   --black: #000000;
   --red: #e03131;
 
-  --fontSizeTitleLarge: 40px;
-  --fontSizeTitleSmall: 36px;
-  --fontSizeH1: 32px;
-  --fontSizeH2: 28px;
-  --fontSizeH3: 24px;
-  --fontSizeLarge: 20px;
-  --fontSizeMedium: 16px;
   --fontSizeSmall: 12px;
+  --fontSizeMedium: 16px;
+  --fontSizeLarge: 20px;
+  --fontSizeH3: 24px;
+  --fontSizeH2: 28px;
+  --fontSizeH1: 32px;
+  --fontSizeTitleSmall: 36px;
+  --fontSizeTitleLarge: 40px;
+
+  --offset100: 2px;
+  --offset200: 4px;
+  --offset300: 8px;
+  --offset400: 12px;
+  --offset500: 16px;
 }
 
 body.light-theme {

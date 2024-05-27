@@ -111,7 +111,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           const viewport = window.visualViewport.width;
 
           if (viewport > 639) {
-            const top = rect?.top - textRect?.top + modalEditorContentRef?.current?.scrollTop - 48;
+            const top = rect?.top - textRect?.top + modalEditorContentRef?.current?.scrollTop - 46;
 
             setTop(top);
             setLeft(rect?.left - textRect?.left);
@@ -449,7 +449,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             id="tool"
             onClick={() => formatTextBg("white")}
           >
-            <mark style={{ backgroundColor: "white", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "white", padding: "0px 8px" }}>
               a
             </mark>
           </button>
@@ -458,7 +458,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             id="tool"
             onClick={() => formatTextBg("black")}
           >
-            <mark style={{ color: "white", backgroundColor: "black", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ color: "white", backgroundColor: "black", padding: "0px 8px" }}>
               a
             </mark>
           </button>
@@ -467,7 +467,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             id="tool"
             onClick={() => formatTextBg("rgba(224, 49, 49, 0.5)")}
           >
-            <mark style={{ backgroundColor: "rgba(224, 49, 49, 0.5)", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "rgba(224, 49, 49, 0.5)", padding: "0px 8px" }}>
               a
             </mark>
           </button>
@@ -476,7 +476,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             id="tool"
             onClick={() => formatTextBg("rgb(253, 126, 20, 0.5)")}
           >
-            <mark style={{ backgroundColor: "rgb(253, 126, 20, 0.5)", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "rgb(253, 126, 20, 0.5)", padding: "0px 8px" }}>
               a
             </mark>
           </button>
@@ -485,7 +485,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             id="tool"
             onClick={() => formatTextBg("rgb(255, 212, 59, 0.5)")}
           >
-            <mark style={{ backgroundColor: "rgb(255, 212, 59, 0.5)", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "rgb(255, 212, 59, 0.5)", padding: "0px 8px" }}>
               a
             </mark>
           </button>
@@ -494,7 +494,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             id="tool"
             onClick={() => formatTextBg("rgba(47, 158, 67, 0.5)")}
           >
-            <mark style={{ backgroundColor: "rgba(47, 158, 67, 0.5)", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "rgba(47, 158, 67, 0.5)", padding: "0px 8px" }}>
               a
             </mark>
           </button>
@@ -503,7 +503,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             id="tool"
             onClick={() => formatTextBg("rgb(25, 113, 194, 0.5)")}
           >
-            <mark style={{ backgroundColor: "rgb(25, 113, 194, 0.5)", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "rgb(25, 113, 194, 0.5)", padding: "0px 8px" }}>
               a
             </mark>
           </button>
@@ -512,7 +512,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             id="tool"
             onClick={() => formatTextBg("rgb(156, 54, 181, 0.5)")}
           >
-            <mark style={{ backgroundColor: "rgb(156, 54, 181, 0.5)", padding: "0px 8px", borderRadius: "2px" }}>
+            <mark style={{ backgroundColor: "rgb(156, 54, 181, 0.5)", padding: "0px 8px" }}>
               a
             </mark>
           </button>

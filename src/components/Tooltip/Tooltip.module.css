@@ -18,7 +18,6 @@
   width: fit-content;
   height: fit-content;
   padding: 2px 8px;
-  border-radius: 2px;
   background-color: var(--primaryElementBackground);
   color: var(--primaryElementColor);
   font-size: var(--fontSizeSmall);

@@ -17,7 +17,6 @@ export const DragAdnDropElement = ({ children, index, id, type, name, openSettin
       onTouchStart={(e) => dragStart(e, index, id, type, name, openSettingsModal)}
       onTouchMove={dragMove}
       onTouchEnd={dragEnd}
-      style={{ transition: 'transform 0.2s ease-in' }}
     >
       {children}
     </div>

@@ -32,7 +32,6 @@
   white-space: nowrap;
   outline: none;
   border: 1px solid var(--gray400);
-  border-radius: 2px;
   background-color: transparent;
   color: var(--gray400);
   font-weight: 500;
