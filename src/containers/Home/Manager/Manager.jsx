@@ -45,7 +45,9 @@ export const Manager = memo(function MemoizedComponent() {
         <div id="managerContent" className={css.content}>
           <div className={css.wrapper}>
             <Folders folders={folder?.folders} />
+            {(folder?.folders.length > 0 && folder?.notes.length > 0 || folder?.tasks.length > 0) && <div className={css.dividerFolders} />}
             <Notes notes={folder?.notes} />
+            {(folder?.notes.length > 0 && folder?.tasks.length > 0) && <div className={css.dividerNotes} />}
             <Tasks tasks={folder?.tasks} />
           </div>
           {(documents.folders.length === 0 && documents.notes.length === 0 && documents.tasks.length === 0) && <div className={css.emptyAlert}>No Data</div>}
