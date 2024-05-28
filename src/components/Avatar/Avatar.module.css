@@ -1,10 +1,7 @@
 .img {
   display: block;
   border-radius: 50%;
-  object-fit: cover;
   user-select: none;
-  margin: 0px;
-  padding: 0px;
 }
 
 .small {
@@ -15,7 +12,23 @@
 .large {
   width: 180px;
   height: 180px;
+  border: 1px solid var(--borderColor);
 }
+
+@media (hover: hover) {
+  .small:hover {
+    background-color: var(--secondaryElementHover);
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 639px) {
+  .small:active {
+    background-color: var(--secondaryElementActive);
+    cursor: pointer;
+  }
+}
+
 
 @media (max-width: 639px) {
   .small {
