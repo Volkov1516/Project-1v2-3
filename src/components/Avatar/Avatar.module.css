@@ -1,6 +1,7 @@
 .img {
   display: block;
   border-radius: 50%;
+  object-fit: cover;
   user-select: none;
 }
 
