@@ -13,6 +13,10 @@ export const Avatar = ({ src, alt, size, onClick }) => {
 
   const handleError = () => setImgSrc(avatar);
 
+  const handleTouchStart = e => e.currentTarget.classList.add(css.touch);
+
+  const handleTouchEnd = e => e.currentTarget.classList.remove(css.touch);
+
   return (
     <img
       className={`${css.img} ${css[size]}`}
@@ -22,6 +26,8 @@ export const Avatar = ({ src, alt, size, onClick }) => {
       onClick={onClick}
       onError={handleError}
       onContextMenu={(e) => e.preventDefault()}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     />
   );
 };

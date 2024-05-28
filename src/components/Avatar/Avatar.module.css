@@ -37,6 +37,10 @@
     height: 48px;
   }
 
+  .small.touch {
+    background-color: var(--secondaryElementHover);
+  }
+
   .large {
     width: 100%;
     height: calc(100vw - 32px);
