@@ -21,6 +21,7 @@ export const Avatar = ({ src, alt, size, onClick }) => {
       draggable={false}
       onClick={onClick}
       onError={handleError}
+      onContextMenu={(e) => e.preventDefault()}
     />
   );
 };
