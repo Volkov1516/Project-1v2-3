@@ -1,9 +1,37 @@
+import { useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+
 import css from './Tooltip.module.css';
 
 export const Tooltip = ({ children, text, position }) => {
+  const { windowWidth } = useSelector(state => state.app);
+
+  const bubbleRef = useRef(null);
+
+  const [timer, setTimer] = useState(null);
+
+  const handleMouseEnter = () => {
+    if (windowWidth > 639) {
+      const enter = setTimeout(() => {
+        bubbleRef.current.style.display = 'block';
+      }, 1000);
+      setTimer(enter);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    clearTimeout(timer);
+    bubbleRef.current.style.display = 'none';
+  };
+
   return (
-    <div className={css.container}>
-      <span className={`${css.bubble} ${css[position]}`}>
+    <div
+      className={css.container}
+      onClick={handleMouseLeave}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <span ref={bubbleRef} className={`${css.bubble} ${css[position]}`}>
         {text}
       </span>
       {children}

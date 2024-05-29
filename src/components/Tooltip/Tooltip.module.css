@@ -28,34 +28,24 @@
   animation: containerOpen .1s ease-in;
 }
 
-@media (hover: hover) {
-  .container:hover>.top {
-    display: block;
-    top: -20px;
-  }
+.top {
+  top: -20px;
+}
 
-  .container:hover>.bottom {
-    text-align: center;
-    display: block;
-    top: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
-  }
+.bottom {
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
 
-  .container:hover>.left {
-    display: block;
-    left: -20px;
-  }
+.left {
+  left: -20px;
+}
 
-  .container:hover>.right {
-    display: block;
-    left: calc(100% + 8px);
-    top: 0;
-    bottom: 0;
-    margin: auto 0;
-  }
-
-  .bubble:hover {
-    display: none;
-  }
+.right {
+  left: calc(100% + 8px);
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
 }
