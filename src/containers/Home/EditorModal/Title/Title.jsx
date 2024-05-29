@@ -66,6 +66,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
   return (
     <div className={css.container}>
       <textarea
+        id="editorTitle"
         ref={ref}
         className={css.textarea}
         placeholder="Untitled"

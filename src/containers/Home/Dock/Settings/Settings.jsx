@@ -117,7 +117,7 @@ export const Settings = () => {
           <section className={css.section}>
             <div className={css.themeField}>
               <span>Dark theme</span>
-              <Switch checked={theme === "dark" ? true : false} onChange={handleSwitchTheme} />
+              <Switch id="switchTheme" checked={theme === "dark" ? true : false} onChange={handleSwitchTheme} />
             </div>
           </section>
           <section className={css.section}>
