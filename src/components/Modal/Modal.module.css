@@ -32,7 +32,6 @@
 
 .content {
   position: relative;
-  padding: 8px;
   background-color: var(--backgroundPrimary);
   border: 1px solid var(--borderColor);
 }
@@ -40,6 +39,8 @@
 .header {
   display: flex;
   justify-content: flex-end;
+  padding: 8px;
+  border-bottom: 1px solid var(--borderColor);
 }
 
 .loadingContainer {
@@ -68,5 +69,10 @@
   .content {
     width: 100%;
     margin: 16px;
+  }
+
+  .fullWidth {
+    width: 100vw;
+    margin: 0;
   }
 }

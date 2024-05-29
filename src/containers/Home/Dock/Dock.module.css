@@ -19,15 +19,11 @@
   gap: 8px;
 }
 
-.createFolderModalContent,
-.settingsModalContent {
+.createFolderModalContent {
   display: flex;
   flex-direction: column;
   gap: 16px;
-}
-
-.settingsModalContent {
-  width: 30vw;
+  padding: 8px;
 }
 
 .sectionName {
@@ -69,10 +65,5 @@
 
   .hideOnMobile {
     display: none;
-  }
-
-  .settingsModalContent {
-    width: calc(100vw - 18px);
-    height: calc(100vh - 66px);
   }
 }
