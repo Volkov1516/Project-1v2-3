@@ -89,7 +89,7 @@ export const Folders = ({ folders }) => {
       ))}
       <Modal open={editFolderModal} close={handleCloseEditFolder}>
         <div className={css.eiditFolderModalContent}>
-          <Input id="folderNameId" label="Edit folder name" placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderInputValue(e.target.value)} />
+          <Input id="folderNameId" label="Edit folder name" placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderInputValue(e.target.value)} onEnter={handleEditFolderName} />
           <Button variant="outlined" disabled={!folderInputValue} onClick={handleEditFolderName}>Rename folder</Button>
           <Input id="folderDleteId" label={`Enter ${folderDeleteValue} to delete the folder`} placeholder="Enter folder name" value={folderDeleteInputValue} onChange={e => setFolderDeleteInputValue(e.target.value)} />
           <Button variant="outlined" disabled={folderDeleteValue !== folderDeleteInputValue} onClick={handleDeleteFolder}>Delete folder</Button>

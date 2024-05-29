@@ -12,11 +12,20 @@ export const Input = ({
   value,
   onChange,
   onBlur,
+  onEnter,
   label,
   error,
   dataFocussed,
   fullWidth
 }) => {
+  const handleKeyDown = e => {
+    if (value && e.key === 'Enter') {
+      e.preventDefault();
+
+      onEnter();
+    }
+  };
+
   return (
     <div className={`${css.container} ${fullWidth && css.fullWidth}`}>
       {label && <label htmlFor={id} className={css.label}>{label}</label>}
@@ -33,6 +42,7 @@ export const Input = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
+        onKeyDown={handleKeyDown}
         data-focussed={dataFocussed}
       />
       <span className={css.error}>{error}</span>
