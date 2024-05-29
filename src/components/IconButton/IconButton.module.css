@@ -32,6 +32,17 @@
   fill: var(--secondaryElementColor);
 }
 
+.snackbar {
+  background-color: var(--primaryElementBackground);
+}
+
+.snackbar>svg {
+  width: 24px;
+  height: 24px;
+  margin: 8px;
+  fill: var(--primaryElementColor);
+}
+
 @media (hover: hover) {
   .primary:hover {
     background-color: var(--primaryElementHover);
@@ -40,6 +51,11 @@
 
   .secondary:hover {
     background-color: var(--secondaryElementHover);
+    cursor: pointer;
+  }
+
+  .snackbar:hover {
+    background-color: var(--primaryElementHover);
     cursor: pointer;
   }
 }
@@ -51,6 +67,10 @@
 
   .secondary:active {
     background-color: var(--secondaryElementActive);
+  }
+
+  .snackbar:active {
+    background-color: var(--primaryElementActive);
   }
 }
 
@@ -71,5 +91,14 @@
 
   .secondary.touch {
     background-color: var(--secondaryElementHover);
+  }
+
+  .snackbar>svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .snackbar.touch {
+    background-color: var(--primaryElementHover);
   }
 }

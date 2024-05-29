@@ -30,7 +30,7 @@
 @media (max-width: 639px) {
   .container {
     width: calc(100% - 16px);
-    padding: 8px 12px 8px 16px;
+    padding: 8px 8px 8px 16px;
     font-size: var(--fontSizeMedium);
     word-wrap: nowrap;
     justify-content: space-between;
