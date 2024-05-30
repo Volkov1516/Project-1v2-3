@@ -2,20 +2,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setPath } from 'redux/features/app/appSlice';
 
 import { IconButton } from 'components/IconButton/IconButton';
+import { Tooltip } from 'components/Tooltip/Tooltip';
 
 import css from './FolderNavigation.module.css';
 
 import { ARROW_BACK } from 'utils/variables';
-import { Tooltip } from 'components/Tooltip/Tooltip';
 
 export const FolderNavigation = ({ name }) => {
   const dispatch = useDispatch();
 
   const { windowWidth, path } = useSelector(state => state.app);
 
-  const handleBack = (e) => {
-    e.stopPropagation();
-
+  const handleBack = () => {
     if (windowWidth < 639) {
       window.history.back();
     }
@@ -29,7 +27,7 @@ export const FolderNavigation = ({ name }) => {
   if (!name) return null;
 
   return (
-    <div data-draggable={true} data-type="navigation" className={css.container} onPointerDown={e => e.stopPropagation()}>
+    <div data-draggable={true} data-type="navigation" className={css.container}>
       <Tooltip position="bottom" text="Back">
         <IconButton variant="secondary" path={ARROW_BACK} onClick={handleBack} />
       </Tooltip>
