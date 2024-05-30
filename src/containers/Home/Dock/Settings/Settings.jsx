@@ -83,6 +83,7 @@ export const Settings = () => {
       }));
 
       handleClose();
+      window.history.replaceState(null, '', '/');
     } catch (error) {
       dispatch(setSnackbar('Faild to log out'));
     }

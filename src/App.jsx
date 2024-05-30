@@ -1,14 +1,16 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setWindowWidth, setTheme, setSettingsModal, setAddFolderModal, setEditFolderModal, setEditNoteModal, setNoteModal, setPath } from 'redux/features/app/appSlice';
 import { fetchUser, setLoading } from 'redux/features/user/userSlice';
 import { auth } from 'services/firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 
-import { Auth } from 'containers/Auth/Auth';
 import { Home } from 'containers/Home/Home';
+import { Loading } from 'components/Loading/Loading';
 
 import css from './App.module.css';
+
+const LazyAuth = lazy(() => import('containers/Auth/Auth'));
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -128,11 +130,7 @@ export const App = () => {
   }, [dispatch, path]);
 
   if (authLoading) {
-    return (
-      <div className={css.spinnerContainer}>
-        <div className={css.spinnerIcon} />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (error) {
@@ -144,5 +142,5 @@ export const App = () => {
     );
   }
 
-  return userId ? <Home /> : <Auth />;
+  return userId ? <Home /> : <Suspense fallback={<Loading />}><LazyAuth /></Suspense>;
 };

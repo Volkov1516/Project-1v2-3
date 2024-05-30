@@ -16,18 +16,19 @@ import css from './Auth.module.css';
 import logo from 'assets/images/logo.png';
 import google from 'assets/images/google.svg';
 
-export const Auth = () => {
-  const [authType, setAuthType] = useState('Log in');
+import { normalizeAuthErrorMessage } from 'utils/normalizeAuthErrorMessage';
+
+export default function Auth() {
+  const [formType, setFormType] = useState('Log in');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [focussedEmail, setFocussedEmail] = useState(false);
   const [focussedPassword, setFocussedPassword] = useState(false);
-  const [reset, setReset] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
   const [resetMessage, setResetMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleFocus = (e) => {
+  const handleFocus = e => {
     switch (e.target.name) {
       case 'email':
         setFocussedEmail(true);
@@ -40,73 +41,38 @@ export const Auth = () => {
     }
   };
 
-  const handleToggleAuth = (type) => {
+  const handleToggleForm = type => {
     setEmail('');
     setPassword('');
     setFocussedEmail(false);
     setFocussedPassword(false);
-    setAuthType(type);
+    setResetEmail('');
+    setResetMessage(false);
     setErrorMessage(null);
+    setFormType(type);
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     e.preventDefault();
 
-    if (authType === 'Sing up') {
-      await createUserWithEmailAndPassword(auth, email, password)
-        .catch((error) => {
-          const errorCode = error.code;
-          const normalizedMessage = errorCode?.slice(5).split('-').join(' ');
-          const firstLetterToUpperCase = normalizedMessage.charAt(0).toUpperCase() + normalizedMessage.slice(1);
-          setErrorMessage(firstLetterToUpperCase);
-        });
+    if (formType === 'Sing up') {
+      await createUserWithEmailAndPassword(auth, email, password).catch(error => normalizeAuthErrorMessage(error, setErrorMessage));
     }
-    else if (authType === 'Log in') {
-      signInWithEmailAndPassword(auth, email, password)
-        .catch((error) => {
-          const errorCode = error.code;
-          const normalizedMessage = errorCode?.slice(5).split('-').join(' ');
-          const firstLetterToUpperCase = normalizedMessage.charAt(0).toUpperCase() + normalizedMessage.slice(1);
-          setErrorMessage(firstLetterToUpperCase);
-        });
+    else if (formType === 'Log in') {
+      await signInWithEmailAndPassword(auth, email, password).catch(error => normalizeAuthErrorMessage(error, setErrorMessage));
     }
   };
 
   const handleGoogle = async () => {
     const provider = new GoogleAuthProvider();
 
-    await signInWithPopup(auth, provider)
-      .catch((error) => {
-        const errorCode = error.code;
-        const normalizedMessage = errorCode?.slice(5).split('-').join(' ');
-        const firstLetterToUpperCase = normalizedMessage.charAt(0).toUpperCase() + normalizedMessage.slice(1);
-        setErrorMessage(firstLetterToUpperCase);
-      });
+    await signInWithPopup(auth, provider).catch(error => normalizeAuthErrorMessage(error, setErrorMessage));
   };
 
   const handleResetPassword = async () => {
     if (!resetEmail) return;
 
-    await sendPasswordResetEmail(auth, resetEmail)
-      .then(() => setResetMessage(true))
-      .catch(error => {
-        const errorCode = error.code;
-        const normalizedMessage = errorCode?.slice(5).split('-').join(' ');
-        const firstLetterToUpperCase = normalizedMessage.charAt(0).toUpperCase() + normalizedMessage.slice(1);
-        setErrorMessage(firstLetterToUpperCase);
-      });
-  };
-
-  const handleOpenReset = () => {
-    setErrorMessage(null);
-    setReset(true);
-  };
-
-  const handleCloseReset = () => {
-    setResetEmail('');
-    setResetMessage(false);
-    setReset(false);
-    setErrorMessage(null);
+    await sendPasswordResetEmail(auth, resetEmail).then(() => setResetMessage(true)).catch(error => normalizeAuthErrorMessage(error, setErrorMessage));
   };
 
   return (
@@ -117,76 +83,73 @@ export const Auth = () => {
           <span className={css.logoText}>Journal X</span>
         </div>
       </div>
-      {!reset ?
-        (
-          <div className={css.content}>
-            <div className={css.title}>{authType}</div>
-            {errorMessage && <div className={css.errorContainer}>{errorMessage}</div>}
-            <form className={css.form} onSubmit={onSubmit}>
-              <div className={css.fieldContainer}>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  required={true}
-                  autocomplete="on"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onBlur={handleFocus}
-                  dataFocussed={focussedEmail.toString()}
-                  label="Email"
-                  error="Invalid email address"
-                />
-              </div>
-              <div className={css.fieldContainer}>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Enter your password"
-                  required={true}
-                  autocomplete="on"
-                  pattern="[0-9a-zA-Z]{6,}"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onBlur={handleFocus}
-                  dataFocussed={focussedPassword.toString()}
-                  label="Password"
-                  error="Invalid password"
-                />
-              </div>
-              <Button type="submit" variant="outlined">Continue with email</Button>
-              {authType === "Log in" && <Button variant="text" onClick={handleOpenReset}>Forgot password</Button>}
-              <hr className={css.divider} />
-              <Button variant="contained" icon={google} iconAlt="google" onClick={handleGoogle}>Continue with Google</Button>
-            </form>
-            {authType === "Log in"
-              ? <>
-                <span className={css.alternativeText}>Don't have an account?</span>
-                <Button variant="text" onClick={() => handleToggleAuth("Sing up")}>Create account</Button>
-              </>
-              : <>
-                <span className={css.alternativeText}>Already have an account?</span>
-                <Button variant="text" onClick={() => handleToggleAuth("Log in")}>Log in</Button>
-              </>
-            }
+      {formType === "Reset" ? (
+        <div className={css.resetContainer}>
+          <div className={css.title}>Reset Password</div>
+          <div className={css.errorContainer}>{errorMessage}</div>
+          <div className={css.resetForm}>
+            <Input id="resetInput" type="email" placeholder="Enter your email" value={resetEmail} fullWidth onChange={(e) => setResetEmail(e.target.value)} />
+            <Button variant="outlined" fullWidth disabled={!resetEmail} onClick={handleResetPassword}>Send email</Button>
           </div>
-        )
-        :
-        (
-          <div className={css.forgotPasswordContainer}>
-            <div className={css.title}>Reset Password</div>
-            <div className={css.errorContainer}>{errorMessage}</div>
-            <div className={css.resetForm}>
-              <Input type="email" placeholder="Enter your email" value={resetEmail} fullWidth onChange={(e) => setResetEmail(e.target.value)} />
-              <Button variant="outlined" fullWidth onClick={handleResetPassword}>Send email</Button>
+          {resetMessage && <p className={css.resetMessage}>Check your email to proceed password reset.</p>}
+          <Button variant="text" onClick={() => handleToggleForm("Log in")}>Back to Login</Button>
+        </div>
+      ) : (
+        <div className={css.authContainer}>
+          <div className={css.title}>{formType}</div>
+          {errorMessage && <div className={css.errorContainer}>{errorMessage}</div>}
+          <form className={css.form} onSubmit={onSubmit}>
+            <div className={css.fieldContainer}>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Enter your email"
+                required={true}
+                autocomplete="on"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onBlur={handleFocus}
+                dataFocussed={focussedEmail.toString()}
+                label="Email"
+                error="Invalid email address"
+              />
             </div>
-            {resetMessage && <p className={css.resetMessage}>Check your email to proceed password reset.</p>}
-            <Button variant="text" onClick={handleCloseReset}>Back to Login</Button>
-          </div>
-        )
-      }
+            <div className={css.fieldContainer}>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+                required={true}
+                autocomplete="on"
+                pattern="[0-9a-zA-Z]{6,}"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onBlur={handleFocus}
+                dataFocussed={focussedPassword.toString()}
+                label="Password"
+                error="Invalid password"
+              />
+            </div>
+            <Button type="submit" variant="outlined" disabled={!email || !password}>Continue with email</Button>
+            {formType === "Log in" && <Button variant="text" onClick={() => handleToggleForm("Reset")}>Forgot password</Button>}
+            <hr className={css.divider} />
+            <Button variant="contained" icon={google} iconAlt="google" onClick={handleGoogle}>Continue with Google</Button>
+          </form>
+          {formType === "Log in" ? (
+            <>
+              <span className={css.alternativeText}>Don't have an account?</span>
+              <Button variant="text" onClick={() => handleToggleForm("Sing up")}>Create account</Button>
+            </>
+          ) : (
+            <>
+              <span className={css.alternativeText}>Already have an account?</span>
+              <Button variant="text" onClick={() => handleToggleForm("Log in")}>Log in</Button>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 };
