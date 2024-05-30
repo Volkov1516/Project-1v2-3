@@ -78,7 +78,7 @@
   }
 }
 
-@media (min-width: 639px) {
+@media (min-width: 481px) {
   .button:active {
     cursor: pointer;
   }
@@ -92,7 +92,7 @@
   }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .button {
     padding: 12px;
   }

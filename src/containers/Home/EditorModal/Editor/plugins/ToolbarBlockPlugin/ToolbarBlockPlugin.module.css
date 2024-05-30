@@ -55,7 +55,7 @@
   }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .container {
     width: calc(100vw - 32px);
     overflow-x: hidden;

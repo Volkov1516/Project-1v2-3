@@ -41,7 +41,7 @@
   user-select: none;
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .container {
     position: fixed;
     bottom: 0;

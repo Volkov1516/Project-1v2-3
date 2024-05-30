@@ -23,15 +23,14 @@
   }
 }
 
-@media (min-width: 639px) {
+@media (min-width: 481px) {
   .small:active {
     background-color: var(--secondaryElementActive);
     cursor: pointer;
   }
 }
 
-
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .small {
     width: 48px;
     height: 48px;

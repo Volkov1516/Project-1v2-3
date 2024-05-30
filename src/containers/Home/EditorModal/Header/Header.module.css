@@ -17,13 +17,13 @@
   transform: rotate(-180deg);
 }
 
-@media (min-width: 639px) {
+@media (min-width: 481px) {
   .arrowBack {
     display: none;
   }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .expand,
   .close {
     display: none;

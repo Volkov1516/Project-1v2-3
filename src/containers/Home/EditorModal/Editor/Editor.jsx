@@ -53,7 +53,7 @@ export const Editor = ({ editorRef, titleRef, saving, setSaving }) => {
   const handleContentMenu = e => {
     const viewportWidth = window.visualViewport.width;
 
-    if (viewportWidth < 640) e.preventDefault();
+    if (viewportWidth <= 480) e.preventDefault();
   };
 
   const handleEditorChange = (editorState) => {

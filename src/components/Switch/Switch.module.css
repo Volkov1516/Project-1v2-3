@@ -43,7 +43,7 @@ input:checked+.slider:before {
   transform: translateX(18px);
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .switch {
     width: 48px;
     height: 30px;

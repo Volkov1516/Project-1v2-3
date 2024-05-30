@@ -29,7 +29,7 @@ export const Folders = ({ folders }) => {
   const handleOpenFolder = (id) => {
     if (preventOnClick) return;
 
-    if (windowWidth < 639) {
+    if (windowWidth <= 480) {
       window.location.hash = `folder/${id}`;
     }
     else {
@@ -44,12 +44,12 @@ export const Folders = ({ folders }) => {
     setFolderInputValue(name);
     setFolderDeleteValue(name);
 
-    windowWidth < 639 && (window.location.hash = 'editFolder');
+    windowWidth <= 480 && (window.location.hash = 'editFolder');
     dispatch(setEditFolderModal(true));
   };
 
   const handleCloseEditFolder = () => {
-    windowWidth < 639 ? window.history.back() : dispatch(setEditFolderModal(false));
+    windowWidth <= 480 ? window.history.back() : dispatch(setEditFolderModal(false));
     setFolderInputValue('');
     setFolderDeleteValue(null);
     setFolderDeleteInputValue('');

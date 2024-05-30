@@ -127,7 +127,7 @@ body {
   background: var(--scrollBackgroundHover);
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   ::-webkit-scrollbar {
     width: 0px;
   }

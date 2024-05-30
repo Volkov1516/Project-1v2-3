@@ -81,7 +81,7 @@ export const Notes = ({ notes }) => {
     }));
 
     // STEP 5: Update URL
-    windowWidth < 639 && (window.location.hash = 'note');
+    windowWidth <= 480 && (window.location.hash = 'note');
     dispatch(setNoteModal(true));
   };
 
@@ -92,12 +92,12 @@ export const Notes = ({ notes }) => {
     setTitleInputValue(title);
     setTitleDeleteValue(title);
 
-    windowWidth < 639 && (window.location.hash = 'editNote');
+    windowWidth <= 480 && (window.location.hash = 'editNote');
     dispatch(setEditNoteModal(true));
   };
 
   const handleCloseEditNote = () => {
-    windowWidth < 639 ? window.history.back() : dispatch(setEditNoteModal(false));
+    windowWidth <= 480 ? window.history.back() : dispatch(setEditNoteModal(false));
     setTitleInputValue('');
     setTitleDeleteValue(null);
     setTitleDeleteInputValue('');

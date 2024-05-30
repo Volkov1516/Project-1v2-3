@@ -27,7 +27,7 @@
   z-index: 99;
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .container {
     width: calc(100% - 16px);
     padding: 8px 8px 8px 16px;

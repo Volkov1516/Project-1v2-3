@@ -26,4 +26,5 @@ src:
 
 ## Styles
 
+- Breackpoint Mobile: 480.
 - Font: Inter.

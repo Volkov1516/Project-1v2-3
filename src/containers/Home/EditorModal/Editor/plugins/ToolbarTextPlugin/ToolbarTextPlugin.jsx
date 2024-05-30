@@ -72,10 +72,10 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
   useEffect(() => {
     const viewport = window.visualViewport.width;
 
-    if (viewport > 639) {
+    if (viewport > 480) {
       setIsSmallScreen(false);
     }
-    else if (viewport < 639) {
+    else if (viewport <= 480) {
       setIsSmallScreen(true);
     }
   }, []);
@@ -110,7 +110,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
           const textRect = modalEditorContentRef?.current?.getBoundingClientRect();
           const viewport = window.visualViewport.width;
 
-          if (viewport > 639) {
+          if (viewport > 480) {
             const top = rect?.top - textRect?.top + modalEditorContentRef?.current?.scrollTop - 46;
 
             setTop(top);

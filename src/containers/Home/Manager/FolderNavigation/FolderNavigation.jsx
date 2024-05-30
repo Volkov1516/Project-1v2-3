@@ -14,7 +14,7 @@ export const FolderNavigation = ({ name }) => {
   const { windowWidth, path } = useSelector(state => state.app);
 
   const handleBack = () => {
-    if (windowWidth < 639) {
+    if (windowWidth <= 480) {
       window.history.back();
     }
     else {

@@ -43,13 +43,13 @@
   }
 }
 
-@media (min-width: 639px) {
+@media (min-width: 481px) {
   .note:active {
     background-color: var(--secondaryElementActive);
   }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .note {
     height: auto;
     padding: 8px 16px;

@@ -49,7 +49,7 @@ export const Dock = () => {
       content: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',
     }));
 
-    windowWidth < 639 && (window.location.hash = 'note');
+    windowWidth <= 480 && (window.location.hash = 'note');
     dispatch(setNoteModal(true));
   };
 
@@ -92,17 +92,17 @@ export const Dock = () => {
   };
 
   const handleOpenAddFolder = () => {
-    windowWidth < 639 && (window.location.hash = 'addFolder');
+    windowWidth <= 480 && (window.location.hash = 'addFolder');
     dispatch(setAddFolderModal(true));
   };
 
   const handleCloseAddFolder = () => {
-    windowWidth < 639 ? window.history.back() : dispatch(setAddFolderModal(false));
+    windowWidth <= 480 ? window.history.back() : dispatch(setAddFolderModal(false));
     setFolderNameInput('');
   };
 
   const handleOpenSettings = () => {
-    windowWidth < 639 && (window.location.hash = 'settings');
+    windowWidth <= 480 && (window.location.hash = 'settings');
     dispatch(setSettingsModal(true));
   };
 

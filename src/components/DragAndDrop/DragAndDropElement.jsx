@@ -8,7 +8,7 @@ export const DragAdnDropElement = ({ children, index, id, type, name, openSettin
 
   const { dragStart, dragMove, dragEnd } = useDragAndDrop();
 
-  return windowWidth < 639 ? (
+  return windowWidth <= 480 ? (
     <div
       id={id}
       data-index={index}

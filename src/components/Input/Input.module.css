@@ -50,7 +50,7 @@
   background-color: var(--backgroundSecondary);
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .input {
     padding: 12px;
   }

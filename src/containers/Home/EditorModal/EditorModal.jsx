@@ -19,7 +19,7 @@ export const EditorModal = memo(function MemoizedEditorModal() {
 
   const [saving, setSaving] = useState(false);
 
-  const handleClose = () => windowWidth < 639 ? window.history.back() : dispatch(setNoteModal(false));
+  const handleClose = () => windowWidth <= 480 ? window.history.back() : dispatch(setNoteModal(false));
 
   return noteModal && (
     <div id="editorModalContainer" key={activeNoteId} className={css.container} onClick={handleClose}>

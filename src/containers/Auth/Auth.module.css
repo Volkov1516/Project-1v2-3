@@ -88,7 +88,7 @@
   background-color: var(--borderColor);
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .form {
     padding: 0px 16px;
     width: 100%;

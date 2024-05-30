@@ -16,7 +16,7 @@
   font-size: var(--fontSizeSmall);
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .container {
     padding: 0px 16px 0px 8px;
   }

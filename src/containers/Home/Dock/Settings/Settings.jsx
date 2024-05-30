@@ -91,7 +91,7 @@ export const Settings = () => {
     }
   };
 
-  const handleClose = () => windowWidth < 639 ? window.history.back() : dispatch(setSettingsModal(false));
+  const handleClose = () => windowWidth <= 480 ? window.history.back() : dispatch(setSettingsModal(false));
 
   return (
     <Modal open={settingsModal} close={handleClose} fullWidth={true}>

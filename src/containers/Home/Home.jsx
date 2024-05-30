@@ -15,7 +15,7 @@ export const Home = () => {
     <div className={css.container}>
       <Dock />
       <Manager />
-      {windowWidth > 639 && <Widgets />}
+      {windowWidth > 480 && <Widgets />}
       <EditorModal />
       <Snackbar />
     </div>

@@ -221,7 +221,7 @@ export const DragAndDropProvider = ({ children, folder, windowWidth }) => {
         dragStartUniversal(currentElement, offsetLeft, offsetTop, index, type, folder[`${type}s`]);
       }
 
-      if (type !== 'task' && windowWidth < 639) dragStartOpenModal(e, index, id, name, type, openSettingsModal, currentElement, folder[`${type}s`]);
+      if (type !== 'task' && windowWidth <= 480) dragStartOpenModal(e, index, id, name, type, openSettingsModal, currentElement, folder[`${type}s`]);
     }, 200);
     setTimerIdDrag(timerDragStart);
   };

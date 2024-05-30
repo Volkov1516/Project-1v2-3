@@ -64,13 +64,13 @@
   font-size: var(--fontSizeSmall);
 }
 
-@media (min-width: 639px) {
+@media (min-width: 481px) {
   .sections {
     max-height: 75vh;
   }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 480px) {
   .sections {
     height: calc(100vh - 65px);
   }
