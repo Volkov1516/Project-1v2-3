@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setTheme, setSnackbar, setSettingsModal } from 'redux/features/app/appSlice';
+import { setTheme, setSnackbar, setSettingsModal, setPath } from 'redux/features/app/appSlice';
 import { setUser, updateUserName, updateUserPhoto } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote } from 'redux/features/note/noteSlice';
 import { db, auth } from 'services/firebase.js';
@@ -81,6 +81,7 @@ export const Settings = () => {
         title: null,
         content: null,
       }));
+      dispatch(setPath(['root']));
       dispatch(setSettingsModal(false));
 
       window.history.replaceState(null, '', '/');
