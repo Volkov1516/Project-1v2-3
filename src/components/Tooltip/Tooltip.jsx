@@ -13,7 +13,11 @@ export const Tooltip = ({ children, text, position }) => {
   const handleMouseEnter = () => {
     if (windowWidth > 480) {
       const enter = setTimeout(() => {
-        bubbleRef.current.style.display = 'block';
+        try {
+          bubbleRef.current.style.display = 'block';
+        } catch (error) {
+          console.error(error);
+        }
       }, 1000);
       setTimer(enter);
     }
