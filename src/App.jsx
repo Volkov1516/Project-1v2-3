@@ -7,8 +7,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 import { Home } from 'containers/Home/Home';
 import { Loading } from 'components/Loading/Loading';
-
-import css from './App.module.css';
+import { Error } from 'components/Error/Error';
 
 const LazyAuth = lazy(() => import('containers/Auth/Auth'));
 
@@ -33,9 +32,7 @@ export const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async user => {
-      user ? dispatch(fetchUser(user)) : dispatch(setLoading(false));
-    });
+    const unsubscribe = onAuthStateChanged(auth, async user => user ? dispatch(fetchUser(user)) : dispatch(setLoading(false)));
 
     return () => unsubscribe();
   }, [dispatch]);
@@ -129,18 +126,9 @@ export const App = () => {
     return () => window.removeEventListener('hashchange', handleHashchange);
   }, [dispatch, path]);
 
-  if (authLoading) {
-    return <Loading />;
-  }
+  if (authLoading) return <Loading />;
 
-  if (error) {
-    return (
-      <div className={css.errorContainer}>
-        <div className={css.errorTitle}>Oops!</div>
-        <p>{error?.message}</p>
-      </div>
-    );
-  }
+  if (error) return <Error error={error} />;
 
   return userId ? <Home /> : <Suspense fallback={<Loading />}><LazyAuth /></Suspense>;
 };
