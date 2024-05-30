@@ -47,12 +47,11 @@
     bottom: 0;
     flex-direction: row-reverse;
     width: 100%;
+    margin-bottom: env(keyboard-inset-height);
     padding: 8px 16px;
     height: fit-content;
     border-right: none;
     border-top: 1px solid var(--borderColor);
-    /* background-color: rgba(255, 255, 255, 0.1); */
-    /* backdrop-filter: blur(8px); */
   }
 
   .start,
