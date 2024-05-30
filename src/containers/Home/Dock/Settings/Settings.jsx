@@ -81,8 +81,8 @@ export const Settings = () => {
         title: null,
         content: null,
       }));
+      dispatch(setSettingsModal(false));
 
-      handleClose();
       window.history.replaceState(null, '', '/');
     } catch (error) {
       dispatch(setSnackbar('Faild to log out'));
