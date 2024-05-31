@@ -36,25 +36,13 @@ export const Dock = () => {
       }
     };
 
-    let animationFrameId;
-
-    const handleResizeAndScroll = () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-      animationFrameId = requestAnimationFrame(updateBottomOffset);
-    };
-
     updateBottomOffset();
-    window.visualViewport.addEventListener('resize', handleResizeAndScroll);
-    window.visualViewport.addEventListener('scroll', handleResizeAndScroll);
+    window.visualViewport.addEventListener('resize', updateBottomOffset);
+    window.visualViewport.addEventListener('scroll', updateBottomOffset);
 
     return () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-      window.visualViewport.removeEventListener('resize', handleResizeAndScroll);
-      window.visualViewport.removeEventListener('scroll', handleResizeAndScroll);
+      window.visualViewport.removeEventListener('resize', updateBottomOffset);
+      window.visualViewport.removeEventListener('scroll', updateBottomOffset);
     };
   }, []);
 
@@ -140,7 +128,7 @@ export const Dock = () => {
   };
 
   return (
-    <div className={css.container} style={{transform: `translateY(-${bottomOffset}px)`, transition: 'transform 0.1s ease-out',}}>
+    <div className={css.container} style={{bottom: `${bottomOffset}px`}}>
       <div className={css.start}>
         <Tooltip position="right" text="Add Note">
           <IconButton variant="primary" path={PLUS} onClick={handleCreateNote} />
