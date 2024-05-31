@@ -140,7 +140,7 @@ export const Dock = () => {
   };
 
   return (
-    <div className={css.container} style={{bottom: `${bottomOffset}px`, transition: 'transform 0.1s ease-out',}}>
+    <div className={css.container} style={{transform: `translateY(-${bottomOffset}px)`, transition: 'transform 0.1s ease-out',}}>
       <div className={css.start}>
         <Tooltip position="right" text="Add Note">
           <IconButton variant="primary" path={PLUS} onClick={handleCreateNote} />
