@@ -12,6 +12,7 @@
   flex: 1;
   overflow: auto;
   padding-bottom: 50vh;
+  scroll-behavior: smooth;
 }
 
 .content::-webkit-scrollbar {
@@ -21,6 +22,7 @@
 
 .wrapper {
   width: 240px;
+  scroll-behavior: smooth;
 }
 
 .dividerFolders, .dividerNotes {

@@ -30,8 +30,10 @@ export const Dock = () => {
     const updateBottomOffset = () => {
       if (window.visualViewport) {
         const viewport = window.visualViewport;
-        const offset = viewport.height - window.innerHeight;
-        setBottomOffset(offset);
+        // const offset = viewport.height - window.innerHeight;
+        // setBottomOffset(offset);
+        const offset = viewport.height - viewport.offsetTop - window.innerHeight;
+        setBottomOffset(offset > 0 ? offset : 0);
       }
     };
 
