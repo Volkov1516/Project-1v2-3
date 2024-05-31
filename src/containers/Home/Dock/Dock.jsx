@@ -20,7 +20,7 @@ import { PLUS, TASK, FOLDER, DARK, LIGHT, SETTINGS } from 'utils/variables';
 export const Dock = () => {
   const dispatch = useDispatch();
 
-  const { windowWidth, theme, addFolderModal, editFolderModal, editNoteModal } = useSelector(state => state.app);
+  const { windowWidth, theme, addFolderModal } = useSelector(state => state.app);
   const { userEmail, userPhoto, userName } = useSelector(state => state.user);
 
   const dockRef = useRef(null);
@@ -29,7 +29,7 @@ export const Dock = () => {
 
   useEffect(() => {
     const updateBottomOffset = () => {
-      if (window.visualViewport && !editFolderModal && !editNoteModal) {
+      if (window.visualViewport) {
         dockRef.current.style.bottom = `${window.visualViewport.height - window.innerHeight}px`;
         // dockRef.current.style.bottom = (window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop) + 'px';
       }
@@ -43,7 +43,7 @@ export const Dock = () => {
       window.visualViewport.removeEventListener('resize', updateBottomOffset);
       window.visualViewport.removeEventListener('scroll', updateBottomOffset);
     };
-  }, [editFolderModal, editNoteModal]);
+  }, []);
 
   const handleCreateFolder = () => {
     const newFolder = {
