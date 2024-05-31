@@ -12,6 +12,7 @@ export const Input = ({
   value,
   onChange,
   onBlur,
+  onFocus,
   onEnter,
   label,
   error,
@@ -41,6 +42,7 @@ export const Input = ({
         pattern={pattern}
         value={value}
         onChange={onChange}
+        onFocus={onFocus}
         onBlur={onBlur}
         onKeyDown={handleKeyDown}
         data-focussed={dataFocussed}

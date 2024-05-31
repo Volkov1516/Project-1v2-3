@@ -55,15 +55,6 @@
   user-select: none;
 }
 
-.list {
-  margin-left: 16px;
-}
-
-.list>li {
-  padding: 2px;
-  font-size: var(--fontSizeSmall);
-}
-
 @media (min-width: 481px) {
   .sections {
     max-height: 75vh;

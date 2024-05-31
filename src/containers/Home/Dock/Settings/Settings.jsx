@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTheme, setSnackbar, setSettingsModal, setPath, setNoteModal } from 'redux/features/app/appSlice';
 import { setUser, updateUserName, updateUserPhoto } from 'redux/features/user/userSlice';
@@ -6,11 +7,11 @@ import { db, auth } from 'services/firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 
-import { Modal } from 'components/Modal/Modal';
 import { Avatar } from 'components/Avatar/Avatar';
 import { Button } from 'components/Button/Button';
 import { Input } from 'components/Input/Input';
 import { Switch } from 'components/Switch/Switch';
+import { Modal } from 'components/Modal/Modal';
 
 import css from './Settings.module.css';
 
@@ -24,9 +25,16 @@ export const Settings = () => {
   const { windowWidth, theme, settingsModal } = useSelector(state => state.app);
   const { userId, userEmail, userName, userPhoto } = useSelector(state => state.user);
 
+  const [initialUserName, setInitialUserName] = useState('');
+  const [initialUserPhoto, setInitialUserPhoto] = useState('');
+
   const handleChangeUserName = (e) => dispatch(updateUserName(e.target.value));
 
+  const handleFocusUserName = (e) => setInitialUserName(e.target.value);
+
   const handleBlurUserName = async () => {
+    if (initialUserName === userName) return;
+
     await setDoc(doc(db, 'users', userId), { name: userName }, { merge: true });
 
     dispatch(setSnackbar('Name was updated'));
@@ -34,7 +42,11 @@ export const Settings = () => {
 
   const handleChangeUserPhoto = (e) => dispatch(updateUserPhoto(e.target.value));
 
+  const handleFocusUserPhoto = (e) => setInitialUserPhoto(e.target.value);
+
   const handleBlurUserPhoto = async () => {
+    if (initialUserPhoto === userPhoto) return;
+
     await setDoc(doc(db, 'users', userId), { photo: userPhoto }, { merge: true });
 
     dispatch(setSnackbar('Photo was updated'));
@@ -99,8 +111,8 @@ export const Settings = () => {
             <Avatar src={userPhoto} alt="avatar" size="large" />
             <div className={css.accoutSettings}>
               <div className={css.accoutSettingsField}><span className={css.emailLabel}>Email</span> {userEmail}</div>
-              <Input id="userNameInput" label="Name" value={userName || ""} onChange={e => handleChangeUserName(e)} onBlur={handleBlurUserName} />
-              <Input id="userPhotoInput" label="Photo URL" value={userPhoto || ""} onChange={e => handleChangeUserPhoto(e)} onBlur={handleBlurUserPhoto} />
+              <Input id="userNameInput" label="Name" value={userName || ""} onChange={e => handleChangeUserName(e)} onFocus={handleFocusUserName} onBlur={handleBlurUserName} />
+              <Input id="userPhotoInput" label="Photo URL" value={userPhoto || ""} onChange={e => handleChangeUserPhoto(e)} onFocus={handleFocusUserPhoto} onBlur={handleBlurUserPhoto} />
             </div>
           </div>
         </section>
