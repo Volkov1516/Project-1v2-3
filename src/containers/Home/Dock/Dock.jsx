@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme, setSettingsModal, setAddFolderModal, setNoteModal } from 'redux/features/app/appSlice';
 import { createInDocuments, setActiveTaskId } from 'redux/features/user/userSlice';
@@ -23,7 +23,9 @@ export const Dock = () => {
   const { windowWidth, theme, addFolderModal } = useSelector(state => state.app);
   const { userEmail, userPhoto, userName } = useSelector(state => state.user);
 
-  const [bottomOffset, setBottomOffset] = useState(0);
+  const dockRef = useRef(null);
+
+  // const [bottomOffset, setBottomOffset] = useState(0);
   const [folderInputValue, setFolderNameInput] = useState('');
 
   useEffect(() => {
@@ -37,7 +39,9 @@ export const Dock = () => {
       if (window.visualViewport) {
         const viewport = window.visualViewport;
         const offset = viewport.height - window.innerHeight;
-        setBottomOffset(offset);
+        // setBottomOffset(offset);
+
+        dockRef.current.style.bottom = `${offset}px`;
       }
     };
 
@@ -133,7 +137,7 @@ export const Dock = () => {
   };
 
   return (
-    <div className={css.container} style={{bottom: `${bottomOffset}px`}}>
+    <div ref={dockRef} className={css.container}>
       <div className={css.start}>
         <Tooltip position="right" text="Add Note">
           <IconButton variant="primary" path={PLUS} onClick={handleCreateNote} />

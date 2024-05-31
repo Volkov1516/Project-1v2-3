@@ -44,7 +44,7 @@
 @media (max-width: 480px) {
   .container {
     position: fixed;
-    /* bottom: 0; */
+    bottom: 0;
     flex-direction: row-reverse;
     width: 100%;
     padding: 8px 16px;
