@@ -21,7 +21,7 @@ export const Dock = () => {
   const dispatch = useDispatch();
 
   const { windowWidth, theme, addFolderModal } = useSelector(state => state.app);
-  const { userEmail, userPhoto, userName, activeTaskId } = useSelector(state => state.user);
+  const { userEmail, userPhoto, userName } = useSelector(state => state.user);
 
   const [folderInputValue, setFolderNameInput] = useState('');
   const [bottomOffset, setBottomOffset] = useState(0);
@@ -29,11 +29,10 @@ export const Dock = () => {
   useEffect(() => {
     const updateBottomOffset = () => {
       if (window.visualViewport) {
-        const viewport = window.visualViewport;
+        // const viewport = window.visualViewport;
         // const offset = viewport.height - window.innerHeight;
-        // setBottomOffset(offset);
-        const offset = viewport.height - viewport.offsetTop - window.innerHeight;
-        setBottomOffset(offset > 0 ? offset : 0);
+        const offset = window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop;
+        setBottomOffset(offset);
       }
     };
 
@@ -45,7 +44,7 @@ export const Dock = () => {
       window.visualViewport.removeEventListener('resize', updateBottomOffset);
       window.visualViewport.removeEventListener('scroll', updateBottomOffset);
     };
-  }, [activeTaskId]);
+  }, []);
 
   const handleCreateFolder = () => {
     const newFolder = {
