@@ -26,17 +26,12 @@ export const Dock = () => {
   const dockRef = useRef(null);
 
   const [folderInputValue, setFolderNameInput] = useState('');
-  // const [bottomOffset, setBottomOffset] = useState(0);
 
   useEffect(() => {
     const updateBottomOffset = () => {
       if (window.visualViewport) {
-        // const viewport = window.visualViewport;
-        // const offset = viewport.height - window.innerHeight;
-        // const offset = window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop;
-        // setBottomOffset(offset);
-
-        dockRef.current.style.bottom = (window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop) + 'px';
+        dockRef.current.style.bottom = (window.visualViewport.height - window.visualViewport.innerHeight) + 'px';
+        // dockRef.current.style.bottom = (window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop) + 'px';
       }
     };
 
