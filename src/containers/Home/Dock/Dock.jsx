@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme, setSettingsModal, setAddFolderModal, setNoteModal } from 'redux/features/app/appSlice';
 import { createInDocuments, setActiveTaskId } from 'redux/features/user/userSlice';
@@ -23,16 +23,20 @@ export const Dock = () => {
   const { windowWidth, theme, addFolderModal } = useSelector(state => state.app);
   const { userEmail, userPhoto, userName } = useSelector(state => state.user);
 
+  const dockRef = useRef(null);
+
   const [folderInputValue, setFolderNameInput] = useState('');
-  const [bottomOffset, setBottomOffset] = useState(0);
+  // const [bottomOffset, setBottomOffset] = useState(0);
 
   useEffect(() => {
     const updateBottomOffset = () => {
       if (window.visualViewport) {
         // const viewport = window.visualViewport;
         // const offset = viewport.height - window.innerHeight;
-        const offset = window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop;
-        setBottomOffset(offset);
+        // const offset = window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop;
+        // setBottomOffset(offset);
+
+        dockRef.current.style.bottom = window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop;
       }
     };
 
@@ -128,7 +132,7 @@ export const Dock = () => {
   };
 
   return (
-    <div className={css.container} style={{bottom: `${bottomOffset}px`}}>
+    <div ref={dockRef} className={css.container}>
       <div className={css.start}>
         <Tooltip position="right" text="Add Note">
           <IconButton variant="primary" path={PLUS} onClick={handleCreateNote} />
