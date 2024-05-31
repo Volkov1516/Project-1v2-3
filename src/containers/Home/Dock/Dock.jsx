@@ -36,13 +36,25 @@ export const Dock = () => {
       }
     };
 
+    let animationFrameId;
+
+    const handleResizeAndScroll = () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      animationFrameId = requestAnimationFrame(updateBottomOffset);
+    };
+
     updateBottomOffset();
-    window.visualViewport.addEventListener('resize', updateBottomOffset);
-    window.visualViewport.addEventListener('scroll', updateBottomOffset);
+    window.visualViewport.addEventListener('resize', handleResizeAndScroll);
+    window.visualViewport.addEventListener('scroll', handleResizeAndScroll);
 
     return () => {
-      window.visualViewport.removeEventListener('resize', updateBottomOffset);
-      window.visualViewport.removeEventListener('scroll', updateBottomOffset);
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      window.visualViewport.removeEventListener('resize', handleResizeAndScroll);
+      window.visualViewport.removeEventListener('scroll', handleResizeAndScroll);
     };
   }, []);
 
