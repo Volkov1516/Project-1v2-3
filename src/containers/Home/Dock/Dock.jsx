@@ -5,31 +5,31 @@ import { createInDocuments, setActiveTaskId } from 'redux/features/user/userSlic
 import { setActiveNote } from 'redux/features/note/noteSlice';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Settings } from './Settings/Settings';
-import { Tooltip } from 'components/Tooltip/Tooltip';
-import { IconButton } from 'components/IconButton/IconButton';
-import { Modal } from 'components/Modal/Modal';
-import { Input } from 'components/Input/Input';
-import { Button } from 'components/Button/Button';
 import { Avatar } from 'components/Avatar/Avatar';
+import { Button } from 'components/Button/Button';
+import { IconButton } from 'components/IconButton/IconButton';
+import { Tooltip } from 'components/Tooltip/Tooltip';
+import { Input } from 'components/Input/Input';
+import { Modal } from 'components/Modal/Modal';
+import { Settings } from './Settings/Settings';
 
 import css from './Dock.module.css';
 
-import { PLUS, TASK, FOLDER, DARK, LIGHT, SETTINGS, USER } from 'utils/variables';
+import { PLUS, TASK, FOLDER, DARK, LIGHT, SETTINGS } from 'utils/variables';
 
 export const Dock = () => {
   const dispatch = useDispatch();
 
-  const { windowWidth, theme, addFolderModal } = useSelector(state => state.app);
+  const { windowWidth, theme, addFolderModal, editFolderModal, editNoteModal } = useSelector(state => state.app);
   const { userEmail, userPhoto, userName } = useSelector(state => state.user);
 
   const dockRef = useRef(null);
 
-  const [folderInputValue, setFolderNameInput] = useState('');
+  const [folderNameInputValue, setFolderNameInput] = useState('');
 
   useEffect(() => {
     const updateBottomOffset = () => {
-      if (window.visualViewport) {
+      if (window.visualViewport && !editFolderModal && !editNoteModal) {
         dockRef.current.style.bottom = `${window.visualViewport.height - window.innerHeight}px`;
         // dockRef.current.style.bottom = (window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop) + 'px';
       }
@@ -43,12 +43,12 @@ export const Dock = () => {
       window.visualViewport.removeEventListener('resize', updateBottomOffset);
       window.visualViewport.removeEventListener('scroll', updateBottomOffset);
     };
-  }, []);
+  }, [editFolderModal, editNoteModal]);
 
   const handleCreateFolder = () => {
     const newFolder = {
       id: uuidv4(),
-      name: folderInputValue,
+      name: folderNameInputValue,
       folders: [],
       notes: [],
       tasks: []
@@ -142,7 +142,7 @@ export const Dock = () => {
       <div className={css.end}>
         <span className={css.hideOnMobile}>
           <Tooltip position="right" text="Theme">
-            {theme === 'light'
+            {theme === "light"
               ? <IconButton variant="secondary" path={LIGHT} onClick={handleTheme} />
               : <IconButton variant="secondary" path={DARK} onClick={handleTheme} />
             }
@@ -153,19 +153,14 @@ export const Dock = () => {
             <IconButton variant="secondary" path={SETTINGS} onClick={handleOpenSettings} />
           </Tooltip>
         </span>
-        {userPhoto ?
-          <Tooltip position="right" text={userName || userEmail}>
-            <Avatar src={userPhoto} alt="avatar" size="small" onClick={handleOpenSettings} />
-          </Tooltip> :
-          <Tooltip position="right" text={userName || userEmail}>
-            <IconButton variant="secondary" path={USER} onClick={handleOpenSettings} />
-          </Tooltip>
-        }
+        <Tooltip position="right" text={userName || userEmail}>
+          <Avatar src={userPhoto} alt="avatar" size="small" onClick={handleOpenSettings} />
+        </Tooltip>
       </div>
       <Modal open={addFolderModal} close={handleCloseAddFolder}>
         <div className={css.createFolderModalContent}>
-          <Input id="folderNameId" label="Folder name" autofocus placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderNameInput(e.target.value)} onEnter={handleCreateFolder} />
-          <Button variant="outlined" disabled={!folderInputValue} onClick={handleCreateFolder}>Create folder</Button>
+          <Input id="folderNameId" label="Folder name" autofocus placeholder="Enter folder name" value={folderNameInputValue} onChange={e => setFolderNameInput(e.target.value)} onEnter={handleCreateFolder} />
+          <Button variant="outlined" disabled={!folderNameInputValue} onClick={handleCreateFolder}>Create folder</Button>
         </div>
       </Modal>
       <Settings />

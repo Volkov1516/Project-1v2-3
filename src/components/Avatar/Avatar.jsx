@@ -12,7 +12,12 @@ export const Avatar = ({ src, alt, size, onClick }) => {
   const [imgSrc, setImgSrc] = useState(src);
 
   useEffect(() => {
-    setImgSrc(src);
+    if(src) {
+      setImgSrc(src);
+    }
+    else {
+      theme === 'light' ? setImgSrc(avatarLight) : setImgSrc(avatarDark);
+    }
   }, [src, theme]);
 
   const handleError = () => theme === 'light' ? setImgSrc(avatarLight) : setImgSrc(avatarDark);

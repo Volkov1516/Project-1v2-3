@@ -9,13 +9,11 @@ import { signOut } from 'firebase/auth';
 import { Modal } from 'components/Modal/Modal';
 import { Avatar } from 'components/Avatar/Avatar';
 import { Button } from 'components/Button/Button';
-import { IconButton } from 'components/IconButton/IconButton';
 import { Input } from 'components/Input/Input';
 import { Switch } from 'components/Switch/Switch';
 
 import css from './Settings.module.css';
 
-import { USER } from 'utils/variables';
 import logo from 'assets/images/logo.png';
 import googlePlay from 'assets/images/google-play.svg';
 import patreon from 'assets/images/patreon.svg';
@@ -98,15 +96,11 @@ export const Settings = () => {
       <div className={css.sections}>
         <section className={css.section}>
           <div className={css.accountGroup}>
-            {userPhoto ?
-              <Avatar src={userPhoto} alt="avatar" size="large" />
-              :
-              <IconButton variant="secondary" path={USER} />
-            }
+            <Avatar src={userPhoto} alt="avatar" size="large" />
             <div className={css.accoutSettings}>
               <div className={css.accoutSettingsField}><span className={css.emailLabel}>Email</span> {userEmail}</div>
-              <Input id="userNameInput" label="Name" value={userName} onChange={e => handleChangeUserName(e)} onBlur={handleBlurUserName} />
-              <Input id="userPhotoInput" label="Photo URL" value={userPhoto} onChange={e => handleChangeUserPhoto(e)} onBlur={handleBlurUserPhoto} />
+              <Input id="userNameInput" label="Name" value={userName || ""} onChange={e => handleChangeUserName(e)} onBlur={handleBlurUserName} />
+              <Input id="userPhotoInput" label="Photo URL" value={userPhoto || ""} onChange={e => handleChangeUserPhoto(e)} onBlur={handleBlurUserPhoto} />
             </div>
           </div>
         </section>
