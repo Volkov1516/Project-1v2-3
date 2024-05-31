@@ -116,7 +116,7 @@ export const Settings = () => {
               <div className={css.accoutSettingsField}><span className={css.emailLabel}>Email</span> {userEmail}</div>
               <Input id="userNameInput" label="Name" value={userName || ""} onChange={e => handleChangeUserName(e)} onFocus={handleFocusUserName} onBlur={handleBlurUserName} />
               <Button variant="outlined" onClick={() => fileInputRef.current.click()}>Upload New Photo</Button>
-              <input ref={fileInputRef} className={css.fileInputRef} type="file" name="avatar" onChange={handleImageChange} />
+              <input ref={fileInputRef} className={css.fileInputRef} type="file" name="avatar" accept="image/*" onChange={handleImageChange} />
             </div>
           </div>
         </section>
