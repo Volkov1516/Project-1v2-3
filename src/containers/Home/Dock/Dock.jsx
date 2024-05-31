@@ -25,23 +25,13 @@ export const Dock = () => {
 
   const dockRef = useRef(null);
 
-  // const [bottomOffset, setBottomOffset] = useState(0);
   const [folderInputValue, setFolderNameInput] = useState('');
 
   useEffect(() => {
-    // const updateBottomOffset = () => {
-    //   if (window.visualViewport) {
-    //     // dockRef.current.style.bottom = (window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop) + 'px';
-    //   }
-    // };
-
     const updateBottomOffset = () => {
       if (window.visualViewport) {
-        const viewport = window.visualViewport;
-        const offset = viewport.height - window.innerHeight;
-        // setBottomOffset(offset);
-
-        dockRef.current.style.bottom = `${offset}px`;
+        dockRef.current.style.bottom = `${window.visualViewport.height - window.innerHeight}px`;
+        // dockRef.current.style.bottom = (window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop) + 'px';
       }
     };
 
@@ -65,7 +55,7 @@ export const Dock = () => {
     };
 
     dispatch(createInDocuments({ type: 'folders', obj: newFolder }));
-    
+
     handleCloseAddFolder();
   };
 
