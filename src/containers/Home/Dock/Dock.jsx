@@ -36,7 +36,7 @@ export const Dock = () => {
         // const offset = window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop;
         // setBottomOffset(offset);
 
-        dockRef.current.style.bottom = window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop;
+        dockRef.current.style.bottom = (window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop) + 'px';
       }
     };
 
