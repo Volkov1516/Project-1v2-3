@@ -11,8 +11,8 @@
 }
 
 .large {
-  width: 180px;
-  height: 180px;
+  width: 160px;
+  height: 160px;
   border: 1px solid var(--borderColor);
 }
 

@@ -16,7 +16,7 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   padding: 16px;
 }
 
@@ -53,6 +53,10 @@
   justify-content: space-between;
   align-items: center;
   user-select: none;
+}
+
+.fileInputRef {
+  display: none;
 }
 
 @media (min-width: 481px) {

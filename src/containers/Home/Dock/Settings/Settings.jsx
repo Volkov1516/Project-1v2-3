@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTheme, setSnackbar, setSettingsModal, setPath, setNoteModal } from 'redux/features/app/appSlice';
 import { setUser, updateUserName, updateUserPhoto } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote } from 'redux/features/note/noteSlice';
-import { db, auth } from 'services/firebase.js';
+import { db, auth, storage } from 'services/firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import { Avatar } from 'components/Avatar/Avatar';
 import { Button } from 'components/Button/Button';
@@ -25,8 +26,22 @@ export const Settings = () => {
   const { windowWidth, theme, settingsModal } = useSelector(state => state.app);
   const { userId, userEmail, userName, userPhoto } = useSelector(state => state.user);
 
+  const fileInputRef = useRef(null);
+
   const [initialUserName, setInitialUserName] = useState('');
-  const [initialUserPhoto, setInitialUserPhoto] = useState('');
+
+  const handleImageChange = async (e) => {
+    if (e.target.files[0]) {
+      const storageRef = ref(storage, `images/avatars/${userId}`);
+
+      await uploadBytes(storageRef, e.target.files[0]).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          dispatch(updateUserPhoto(url));
+          dispatch(setSnackbar('Photo was updated'));
+        });
+      });
+    }
+  };
 
   const handleChangeUserName = (e) => dispatch(updateUserName(e.target.value));
 
@@ -38,18 +53,6 @@ export const Settings = () => {
     await setDoc(doc(db, 'users', userId), { name: userName }, { merge: true });
 
     dispatch(setSnackbar('Name was updated'));
-  };
-
-  const handleChangeUserPhoto = (e) => dispatch(updateUserPhoto(e.target.value));
-
-  const handleFocusUserPhoto = (e) => setInitialUserPhoto(e.target.value);
-
-  const handleBlurUserPhoto = async () => {
-    if (initialUserPhoto === userPhoto) return;
-
-    await setDoc(doc(db, 'users', userId), { photo: userPhoto }, { merge: true });
-
-    dispatch(setSnackbar('Photo was updated'));
   };
 
   const handleSwitchTheme = () => {
@@ -112,7 +115,8 @@ export const Settings = () => {
             <div className={css.accoutSettings}>
               <div className={css.accoutSettingsField}><span className={css.emailLabel}>Email</span> {userEmail}</div>
               <Input id="userNameInput" label="Name" value={userName || ""} onChange={e => handleChangeUserName(e)} onFocus={handleFocusUserName} onBlur={handleBlurUserName} />
-              <Input id="userPhotoInput" label="Photo URL" value={userPhoto || ""} onChange={e => handleChangeUserPhoto(e)} onFocus={handleFocusUserPhoto} onBlur={handleBlurUserPhoto} />
+              <Button variant="outlined" onClick={() => fileInputRef.current.click()}>Upload New Photo</Button>
+              <input ref={fileInputRef} className={css.fileInputRef} type="file" name="avatar" onChange={handleImageChange} />
             </div>
           </div>
         </section>

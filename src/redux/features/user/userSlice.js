@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit';
 
-import { db } from 'services/firebase.js';
+import { db, storage } from 'services/firebase.js';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { ref, getDownloadURL } from 'firebase/storage';
 
 import { findFolder } from 'utils/searchInManager.js';
 
@@ -105,11 +106,15 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async (user) => {
   const docRef = doc(db, 'users', user?.uid);
   const docSnap = await getDoc(docRef);
 
+  let avatar;
+  const storageRef = ref(storage, `images/avatars/${user?.uid}`);
+  await getDownloadURL(storageRef).then(res => avatar = res).catch(err => console.error(err));
+
   return {
     id: user?.uid,
     email: user?.email,
     name: docSnap?.data()?.name || user?.displayName || null,
-    photo: docSnap?.data()?.photo || user?.photoURL || null,
+    photo: avatar || null,
     documents: docSnap?.data()?.documents || {
       id: 'root',
       folders: [],
