@@ -80,7 +80,7 @@ export default function Auth() {
       <div className={css.header}>
         <div className={css.logo}>
           <img className={css.logoImg} src={logo} alt="logo" />
-          <span className={css.logoText}>Journal X</span>
+          <span className={css.logoText}>Omniumicon</span>
         </div>
       </div>
       {formType === "Reset" ? (
