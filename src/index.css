@@ -103,6 +103,7 @@ body {
   background-color: var(--backgroundPrimary);
   color: var(--fontColorPrimary);
   overscroll-behavior-y: contain;
+  overflow: hidden;
 }
 
 ::selection {
