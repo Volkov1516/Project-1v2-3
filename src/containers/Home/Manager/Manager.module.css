@@ -22,7 +22,6 @@
 
 .wrapper {
   width: 240px;
-  scroll-behavior: smooth;
 }
 
 .dividerFolders, .dividerNotes {

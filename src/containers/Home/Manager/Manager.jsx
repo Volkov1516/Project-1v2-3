@@ -16,6 +16,8 @@ export const Manager = memo(function MemoizedComponent() {
   const [folder, setFolder] = useState(null);
 
   useEffect(() => {
+    document.getElementById('managerContent').scrollTo(0, 0);
+
     function findFolder(object, id) {
       if (object?.id === id) {
         return object;
