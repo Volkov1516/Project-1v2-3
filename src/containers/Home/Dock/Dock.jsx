@@ -21,7 +21,8 @@ export const Dock = () => {
   const dispatch = useDispatch();
 
   const { windowWidth, theme, addFolderModal } = useSelector(state => state.app);
-  const { userEmail, userPhoto, userName } = useSelector(state => state.user);
+  const { userEmail, userPhoto, userName, documents } = useSelector(state => state.user);
+  const { activeNoteId } = useSelector(state => state.note);
 
   const dockRef = useRef(null);
 
@@ -126,22 +127,44 @@ export const Dock = () => {
     dispatch(setSettingsModal(true));
   };
 
+  const RichTooltipContent = () => {
+    return (
+      <div className={css.richTooltipContent}>
+        <span>You have several options to get started:</span>
+        <ul className={css.richTooltipList}>
+          <li className={css.richTooltipListItem}>Create a <b>Folder</b> to organize your data</li>
+          <li className={css.richTooltipListItem}>Add a <b>Note</b> to jot down anything you want</li>
+          <li className={css.richTooltipListItem}>Start by adding some <b>Tasks</b></li>
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <div ref={dockRef} className={css.container}>
-      <div className={css.start}>
-        <Tooltip position="right" text="Add Note">
-          <IconButton variant="primary" path={PLUS} onClick={handleCreateNote} />
-        </Tooltip>
-        <Tooltip position="right" text="Add Task">
-          <IconButton variant="secondary" path={TASK} onClick={handleCreateTask} />
-        </Tooltip>
-        <Tooltip position="right" text="Add Folder">
-          <IconButton variant="secondary" path={FOLDER} onClick={handleOpenAddFolder} />
-        </Tooltip>
-      </div>
+      <Tooltip
+        isRich
+        isRichVisible={(documents.folders.length === 0 && documents.notes.length === 0 && documents.tasks.length === 0 && !activeNoteId) ? true : false}
+        preferablePosition={windowWidth > 480 ? "rightTop" : "topRight"}
+        offset={16}
+        title="Welcome to Omniumicon!"
+        content={<RichTooltipContent />}
+      >
+        <div className={css.start}>
+          <Tooltip preferablePosition="right" content="Add Note">
+            <IconButton variant="primary" path={PLUS} onClick={handleCreateNote} />
+          </Tooltip>
+          <Tooltip preferablePosition="right" content="Add Task">
+            <IconButton variant="secondary" path={TASK} onClick={handleCreateTask} />
+          </Tooltip>
+          <Tooltip preferablePosition="right" content="Add Folder">
+            <IconButton variant="secondary" path={FOLDER} onClick={handleOpenAddFolder} />
+          </Tooltip>
+        </div>
+      </Tooltip>
       <div className={css.end}>
         <span className={css.hideOnMobile}>
-          <Tooltip position="right" text="Theme">
+          <Tooltip preferablePosition="right" content="Theme">
             {theme === "light"
               ? <IconButton variant="secondary" path={LIGHT} onClick={handleTheme} />
               : <IconButton variant="secondary" path={DARK} onClick={handleTheme} />
@@ -149,11 +172,11 @@ export const Dock = () => {
           </Tooltip>
         </span>
         <span className={css.hideOnMobile}>
-          <Tooltip position="right" text="Settings">
+          <Tooltip preferablePosition="right" content="Settings">
             <IconButton variant="secondary" path={SETTINGS} onClick={handleOpenSettings} />
           </Tooltip>
         </span>
-        <Tooltip position="right" text={userName || userEmail}>
+        <Tooltip preferablePosition="right" content={userName || userEmail}>
           <Avatar src={userPhoto} alt="avatar" size="small" onClick={handleOpenSettings} />
         </Tooltip>
       </div>

@@ -12,7 +12,7 @@ export const Modal = ({ open, close, loading, fullWidth, children }) => {
     <div className={css.container} onClick={close}>
       <div className={`${css.content} ${fullWidth && css.fullWidth}`} onClick={(e) => e.stopPropagation()}>
         <div className={css.header}>
-          <Tooltip position="bottom" text="Close">
+          <Tooltip preferablePosition="bottom" content="Close">
             <IconButton variant="secondary" path={CLOSE} onClick={close} />
           </Tooltip>
         </div>

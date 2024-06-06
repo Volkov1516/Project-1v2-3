@@ -32,6 +32,17 @@
   fill: var(--secondaryElementColor);
 }
 
+.tooltip {
+  background-color: var(--secondaryElementBackground);
+}
+
+.tooltip>svg {
+  width: 24px;
+  height: 24px;
+  margin: 8px;
+  fill: var(--primaryElementColor);
+}
+
 .snackbar {
   background-color: var(--primaryElementBackground);
 }
@@ -44,7 +55,7 @@
 }
 
 @media (hover: hover) {
-  .primary:hover {
+  .primary:hover, .tooltip:hover {
     background-color: var(--primaryElementHover);
     cursor: pointer;
   }
@@ -61,7 +72,7 @@
 }
 
 @media (min-width: 481px) {
-  .primary:active {
+  .primary:active, .tooltip:active {
     background-color: var(--primaryElementActive);
   }
 
@@ -91,6 +102,15 @@
 
   .secondary.touch {
     background-color: var(--secondaryElementHover);
+  }
+
+  .tooltip>svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .tooltip.touch {
+    background-color: var(--primaryElementHover);
   }
 
   .snackbar>svg {

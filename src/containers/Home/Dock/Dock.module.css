@@ -26,6 +26,22 @@
   padding: 8px;
 }
 
+.richTooltipContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+}
+
+.richTooltipList {
+  list-style: disc !important;
+  padding: 0px 8px 0px 16px;
+}
+
+.richTooltipListItem:not(:last-child) {
+  margin-bottom: 4px;
+}
+
 @media (max-width: 480px) {
   .container {
     position: fixed;

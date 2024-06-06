@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setActiveTaskId, updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
 
 import { IconButton } from 'components/IconButton/IconButton';
-
+import { Tooltip } from 'components/Tooltip/Tooltip';
 import { useDragAndDrop } from 'components/DragAndDrop/DragAndDropContext';
 
 import css from './Task.module.css';
@@ -26,7 +26,6 @@ export const Task = ({ id, content }) => {
       contentEditableRef.current.focus();
     }
   }, [id, activeTaskId]);
-
 
   const handleOnClick = e => setInitialContent(e.target.innerText);
 
@@ -56,7 +55,9 @@ export const Task = ({ id, content }) => {
 
   return (
     <div className={css.container}>
-      <IconButton variant="secondary" path={CIRCLE} onClick={handleDeleteTask} />
+      <Tooltip content="Complete">
+        <IconButton variant="secondary" path={CIRCLE} onClick={handleDeleteTask} />
+      </Tooltip>
       <div
         ref={contentEditableRef}
         className={css.content}

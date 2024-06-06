@@ -29,7 +29,7 @@ export const Header = ({ handleClose }) => {
   return (
     <div className={css.container}>
       <div className={css.start}>
-        <Tooltip position="bottom" text={expanded ? "Collapse" : "Expand"}>
+        <Tooltip preferablePosition="bottom" content={expanded ? "Collapse" : "Expand"}>
           <div className={`${css.expand} ${!expanded && css.rotateArrow}`}>
             <IconButton variant="secondary" path={EXPAND} onClick={handleExpand} />
           </div>
@@ -39,10 +39,10 @@ export const Header = ({ handleClose }) => {
         </div>
       </div>
       <div className={css.end}>
-        {!isNewNote && <Tooltip position="bottom" text="Sycn"><IconButton variant="secondary" path={CLOUD} /></Tooltip>}
-        {!isNewNote && <Tooltip position="bottom" text="Lock"><IconButton variant="secondary" path={LOCK} /></Tooltip>}
+        {!isNewNote && <Tooltip preferablePosition="bottom" content="Sycn"><IconButton variant="secondary" path={CLOUD} /></Tooltip>}
+        {!isNewNote && <Tooltip preferablePosition="bottom" content="Lock"><IconButton variant="secondary" path={LOCK} /></Tooltip>}
         <div className={css.close}>
-          <Tooltip position="bottom" text="Close">
+          <Tooltip preferablePosition="bottom" content="Close">
             <IconButton variant="secondary" path={CLOSE} onClick={handleClose} />
           </Tooltip>
         </div>

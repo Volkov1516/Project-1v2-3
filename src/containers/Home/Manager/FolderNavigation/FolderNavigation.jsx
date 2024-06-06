@@ -28,7 +28,7 @@ export const FolderNavigation = ({ name }) => {
 
   return (
     <div data-draggable={true} data-type="navigation" className={css.container}>
-      <Tooltip position="bottom" text="Back">
+      <Tooltip preferablePosition="bottom" content="Back">
         <IconButton variant="secondary" path={ARROW_BACK} onClick={handleBack} />
       </Tooltip>
       {name}
