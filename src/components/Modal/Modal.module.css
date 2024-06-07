@@ -71,8 +71,9 @@
     margin: 16px;
   }
 
-  .fullWidth {
+  .content.fullWidth {
     width: 100vw;
     margin: 0;
+    border: none;
   }
 }
