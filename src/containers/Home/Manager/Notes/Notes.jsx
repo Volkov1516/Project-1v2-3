@@ -27,6 +27,7 @@ export const Notes = ({ notes }) => {
   const { notesCache, activeNoteId } = useSelector(state => state.note);
 
   const [noteIdEditNoteModal, setNoteIdEditNoteModal] = useState(null);
+  const [initialTitleInputValue, setInitialTitleInputValue] = useState('');
   const [titleInputValue, setTitleInputValue] = useState('');
   const [titleDeleteValue, setTitleDeleteValue] = useState('');
   const [titleDeleteInputValue, setTitleDeleteInputValue] = useState('');
@@ -89,6 +90,7 @@ export const Notes = ({ notes }) => {
     e.stopPropagation();
 
     setNoteIdEditNoteModal(id);
+    setInitialTitleInputValue(title);
     setTitleInputValue(title);
     setTitleDeleteValue(title);
 
@@ -134,6 +136,7 @@ export const Notes = ({ notes }) => {
 
       // STEP 4: Update title in activeNoteTitle (Redux) and titleDeleteValue
       dispatch(updateActiveNoteTitle(titleInputValue));
+      setInitialTitleInputValue(titleInputValue);
       setTitleDeleteValue(titleInputValue);
     }
   };
@@ -185,7 +188,7 @@ export const Notes = ({ notes }) => {
     <div id="note" className={`${css.container} ${notes?.length > 0 && css.divider}`}>
       {notes?.map((i, index) => (
         <DragAdnDropElement key={index} index={index} id={i.id} type="note" name={i.title} openSettingsModal={handleOpenEditNoteModal}>
-          <div className={css.note} onClick={() => handleOpenNote(i.id)}>
+          <div className={`${css.note} ${activeNoteId === i.id && css.active}`} onClick={() => handleOpenNote(i.id)}>
             <span className={css.icon}>
               <IconButton path={DOC} variant="secondary" />
             </span>
@@ -196,7 +199,7 @@ export const Notes = ({ notes }) => {
       <Modal open={editNoteModal} close={handleCloseEditNote}>
         <div className={css.eiditNoteModalContent}>
           <Input id="noteTitleId" label="Edit note title" placeholder="Enter note name" value={titleInputValue} onChange={e => setTitleInputValue(e.target.value)} onEnter={handleEditNoteTitle} />
-          <Button variant="outlined" disabled={!titleInputValue} onClick={handleEditNoteTitle}>Rename note</Button>
+          <Button variant="outlined" disabled={!titleInputValue || titleInputValue === initialTitleInputValue} onClick={handleEditNoteTitle}>Rename note</Button>
           <Input id="noteDeleteTitleId" label={`Enter ${titleDeleteValue} to delete the note`} placeholder="Enter note name" value={titleDeleteInputValue} onChange={e => setTitleDeleteInputValue(e.target.value)} />
           <Button variant="outlined" disabled={titleDeleteValue !== titleDeleteInputValue} onClick={handleDeleteNote}>Delete note</Button>
         </div>

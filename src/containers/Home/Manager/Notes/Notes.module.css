@@ -22,6 +22,10 @@
   text-overflow: ellipsis;
 }
 
+.active {
+  background-color: var(--secondaryElementHover);
+}
+
 .settings {
   display: none;
 }

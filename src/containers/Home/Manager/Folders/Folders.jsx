@@ -22,6 +22,7 @@ export const Folders = ({ folders }) => {
   const { windowWidth, path, editFolderModal } = useSelector(state => state.app);
 
   const [folderIdEditFolderModal, setFoldeIdEditFolderModal] = useState(null);
+  const [initialFolderInputValue, setInitialFolderInputValue] = useState('');
   const [folderInputValue, setFolderInputValue] = useState('');
   const [folderDeleteValue, setFolderDeleteValue] = useState('');
   const [folderDeleteInputValue, setFolderDeleteInputValue] = useState('');
@@ -29,7 +30,6 @@ export const Folders = ({ folders }) => {
   const handleTouchStart = e => e.currentTarget.classList.add(css.touch);
 
   const handleTouchEnd = e => e.currentTarget.classList.remove(css.touch);
-
 
   const handleOpenFolder = (id) => {
     if (preventOnClick) return;
@@ -47,6 +47,7 @@ export const Folders = ({ folders }) => {
 
     setFoldeIdEditFolderModal(id);
     setFolderInputValue(name);
+    setInitialFolderInputValue(name);
     setFolderDeleteValue(name);
 
     windowWidth <= 480 && (window.location.hash = 'editFolder');
@@ -61,14 +62,15 @@ export const Folders = ({ folders }) => {
   };
 
   const handleEditFolderName = async () => {
-    if (folderInputValue === folderDeleteValue) return;
+    if (folderInputValue === initialFolderInputValue) return;
 
     if (folderInputValue && folderInputValue.length > 0) {
       dispatch(updateInDocuments({ type: 'folders', id: folderIdEditFolderModal, name: 'name', value: folderInputValue }));
 
+      setInitialFolderInputValue(folderInputValue);
       setFolderDeleteValue(folderInputValue);
     }
-  }
+  };
 
   const handleDeleteFolder = async () => {
     if (folderDeleteValue !== folderDeleteInputValue) return;
@@ -95,7 +97,7 @@ export const Folders = ({ folders }) => {
       <Modal open={editFolderModal} close={handleCloseEditFolder}>
         <div className={css.eiditFolderModalContent}>
           <Input id="folderNameId" label="Edit folder name" placeholder="Enter folder name" value={folderInputValue} onChange={e => setFolderInputValue(e.target.value)} onEnter={handleEditFolderName} />
-          <Button variant="outlined" disabled={!folderInputValue} onClick={handleEditFolderName}>Rename folder</Button>
+          <Button variant="outlined" disabled={!folderInputValue || folderInputValue === initialFolderInputValue} onClick={handleEditFolderName}>Rename folder</Button>
           <Input id="folderDleteId" label={`Enter ${folderDeleteValue} to delete the folder`} placeholder="Enter folder name" value={folderDeleteInputValue} onChange={e => setFolderDeleteInputValue(e.target.value)} />
           <Button variant="outlined" disabled={folderDeleteValue !== folderDeleteInputValue} onClick={handleDeleteFolder}>Delete folder</Button>
         </div>
