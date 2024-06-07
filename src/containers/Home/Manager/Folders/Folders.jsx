@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setEditFolderModal, setPath } from 'redux/features/app/appSlice';
 import { deleteFromDocuments, updateInDocuments } from 'redux/features/user/userSlice';
 
-import { DragAdnDropElement } from 'components/DragAndDrop/DragAndDropElement';
-import { Input } from 'components/Input/Input';
 import { Button } from 'components/Button/Button';
+import { Input } from 'components/Input/Input';
 import { Modal } from 'components/Modal/Modal';
+import { DragAdnDropElement } from 'components/DragAndDrop/DragAndDropElement';
 
 import { useDragAndDrop } from 'components/DragAndDrop/DragAndDropContext';
 
@@ -25,6 +25,11 @@ export const Folders = ({ folders }) => {
   const [folderInputValue, setFolderInputValue] = useState('');
   const [folderDeleteValue, setFolderDeleteValue] = useState('');
   const [folderDeleteInputValue, setFolderDeleteInputValue] = useState('');
+
+  const handleTouchStart = e => e.currentTarget.classList.add(css.touch);
+
+  const handleTouchEnd = e => e.currentTarget.classList.remove(css.touch);
+
 
   const handleOpenFolder = (id) => {
     if (preventOnClick) return;
@@ -81,9 +86,9 @@ export const Folders = ({ folders }) => {
     <div id="folder" className={css.container}>
       {folders?.map((i, index) => (
         <DragAdnDropElement key={index} index={index} id={i.id} type="folder" name={i.name} openSettingsModal={handleOpenEditFodlerModal}>
-          <div className={css.folder} onClick={() => handleOpenFolder(i.id)}>
-            <img onContextMenu={(e) => e.preventDefault()} draggable={false} src={folderImg} alt="folder" className={css.folderImg} />
-            <span className={css.fodlerName}>{i.name}</span>
+          <div className={css.folder} onClick={() => handleOpenFolder(i.id)} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+            <img className={css.folderImg} src={folderImg} alt="folder" draggable={false} onContextMenu={e => e.preventDefault()} />
+            <span className={css.folderName}>{i.name}</span>
           </div>
         </DragAdnDropElement>
       ))}

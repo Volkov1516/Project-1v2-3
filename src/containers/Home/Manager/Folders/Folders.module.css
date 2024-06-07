@@ -3,30 +3,28 @@
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
-  font-size: 14px;
   user-select: none;
 }
 
 .folder {
   width: 120px;
-  padding-bottom: 8px;
+  padding: 0px 8px 8px;
   transition: background-color 0.1s ease-in;
 }
 
 .folderImg {
   width: 100%;
   height: 100%;
-  padding: 0px 8px;
 }
 
-.fodlerName {
+.folderName {
   display: inline-block;
-  width: 120px;
-  padding: 0px 8px;
+  width: 104px;
+  font-size: 14px;
   text-align: center;
-  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .eiditFolderModalContent {
@@ -50,22 +48,22 @@
 
 @media (max-width: 480px) {
   .container {
-    border: none;
-    font-size: 16px;
+    padding: 8px;
   }
 
   .folder {
-    width: 50vw;
+    width: calc(50vw - 8px);
+    padding: 0px 8px 0px;
   }
 
   .folderImg {
     width: 100%;
     height: 100%;
-    padding: 0px 8px;
   }
 
-  .fodlerName {
-    width: 50vw;
+  .folderName {
+    width: calc(50vw - 24px);
+    font-size: 16px;
   }
 
   .folder.touch {
