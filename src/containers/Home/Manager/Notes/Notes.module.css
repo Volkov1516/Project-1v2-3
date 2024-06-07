@@ -54,6 +54,10 @@
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 0px 16px;
+  }
+
   .note {
     height: auto;
     padding: 8px 16px;

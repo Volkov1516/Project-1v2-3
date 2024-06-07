@@ -50,12 +50,13 @@
 
 @media (max-width: 480px) {
   .container {
+    padding: 0px 16px;
     border: none;
     font-size: 16px;
   }
 
   .folder {
-    width: 50vw;
+    width: calc(50vw - 16px);
   }
 
   .folderImg {
@@ -65,7 +66,7 @@
   }
 
   .fodlerName {
-    width: 50vw;
+    width: calc(50vw - 16px);
   }
 
   .folder.touch {
