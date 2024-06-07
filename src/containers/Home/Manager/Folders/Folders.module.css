@@ -47,7 +47,7 @@
 }
 
 @media (max-width: 480px) {
-  .container {
+  .container.containerOffset {
     padding: 8px;
   }
 

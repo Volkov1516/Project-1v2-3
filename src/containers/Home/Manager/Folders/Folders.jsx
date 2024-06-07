@@ -83,7 +83,7 @@ export const Folders = ({ folders }) => {
   };
 
   return (
-    <div id="folder" className={css.container}>
+    <div id="folder" className={`${css.container} ${folders?.length > 0 && css.containerOffset}`}>
       {folders?.map((i, index) => (
         <DragAdnDropElement key={index} index={index} id={i.id} type="folder" name={i.name} openSettingsModal={handleOpenEditFodlerModal}>
           <div className={css.folder} onClick={() => handleOpenFolder(i.id)} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
