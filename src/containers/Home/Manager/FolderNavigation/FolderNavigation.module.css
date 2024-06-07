@@ -7,3 +7,17 @@
   border-bottom: 1px solid var(--borderColor);
   user-select: none;
 }
+
+.fodlerName {
+  display: inline-block;
+  width: 180px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 480px) {
+  .fodlerName {
+    width: calc(100vw - 64px);
+  }
+}

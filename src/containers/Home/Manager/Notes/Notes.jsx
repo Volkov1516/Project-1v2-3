@@ -189,7 +189,7 @@ export const Notes = ({ notes }) => {
             <span className={css.icon}>
               <IconButton path={DOC} variant="secondary" />
             </span>
-            {i.title}
+            <span className={css.noteTitle}>{i.title}</span>
           </div>
         </DragAdnDropElement>
       ))}

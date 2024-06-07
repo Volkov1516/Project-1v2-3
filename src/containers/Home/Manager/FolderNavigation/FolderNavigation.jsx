@@ -31,7 +31,7 @@ export const FolderNavigation = ({ name }) => {
       <Tooltip preferablePosition="bottom" content="Back">
         <IconButton variant="secondary" path={ARROW_BACK} onClick={handleBack} />
       </Tooltip>
-      {name}
+      <span className={css.fodlerName}>{name}</span>
     </div>
   );
 };

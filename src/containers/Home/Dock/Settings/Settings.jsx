@@ -113,7 +113,10 @@ export const Settings = () => {
           <div className={css.accountGroup}>
             <Avatar src={userPhoto} alt="avatar" size="large" />
             <div className={css.accoutSettings}>
-              <div className={css.accoutSettingsField}><span className={css.emailLabel}>Email</span> {userEmail}</div>
+              <div className={css.accoutSettingsField}>
+                <span className={css.emailLabel}>Email</span>
+                <span className={css.emailText}>{userEmail}</span>
+              </div>
               <Input id="userNameInput" label="Name" value={userName || ""} onChange={e => handleChangeUserName(e)} onFocus={handleFocusUserName} onBlur={handleBlurUserName} onEnter={handleBlurUserName} />
               <Button variant="outlined" onClick={() => fileInputRef.current.click()}>Upload New Photo</Button>
               <input ref={fileInputRef} className={css.fileInputRef} type="file" name="avatar" accept="image/*" onChange={handleImageChange} />

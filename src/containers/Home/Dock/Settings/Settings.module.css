@@ -48,6 +48,13 @@
   font-size: var(--fontSizeSmall);
 }
 
+.emailText {
+  max-width: 400px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .themeField {
   display: flex;
   justify-content: space-between;
@@ -77,5 +84,12 @@
   .accoutSettings {
     width: 100%;
     gap: 8px;
+  }
+
+  .emailText {
+    max-width: calc(100vw - 32px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
