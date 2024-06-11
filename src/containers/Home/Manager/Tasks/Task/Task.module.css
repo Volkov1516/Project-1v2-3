@@ -12,13 +12,13 @@
   outline: none;
   border: none;
   background-color: transparent;
-  color: var(--fontColorPrimary);
+  color: var(--fontColorTask);
   font-size: var(--fontSizeSmall);
 }
 
 @media (max-width: 480px) {
   .container {
-    padding: 0px 16px 0px 8px;
+    padding: 0px 16px 0px 4px;
   }
   
   .content {
