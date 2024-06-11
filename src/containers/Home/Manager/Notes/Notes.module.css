@@ -5,7 +5,6 @@
 }
 
 .note {
-  position: relative;
   display: flex;
   align-items: center;
   width: 100%;
@@ -22,15 +21,16 @@
   text-overflow: ellipsis;
 }
 
-.settings {
-  display: none;
-}
-
 .eiditNoteModalContent {
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 8px;
+}
+
+.iconMore {
+  opacity: 0;
+  transition: opacity 0.1s ease-in;
 }
 
 @media (hover: hover) {
@@ -39,11 +39,8 @@
     cursor: pointer;
   }
 
-  .note:hover>.settings {
-    display: block;
-    position: absolute;
-    right: 8px;
-    top: 4px;
+  .note:hover>.iconMore {
+    opacity: 1;
   }
 }
 
@@ -66,6 +63,10 @@
   }
 
   .icon {
+    display: none;
+  }
+
+  .iconMore {
     display: none;
   }
 

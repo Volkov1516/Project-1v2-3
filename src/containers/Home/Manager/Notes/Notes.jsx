@@ -6,17 +6,17 @@ import { updateNotesCache, setActiveNote, updateActiveNoteTitle } from 'redux/fe
 import { db } from 'services/firebase.js';
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 
-import { DragAdnDropElement } from 'components/DragAndDrop/DragAndDropElement';
-import { Input } from 'components/Input/Input';
 import { Button } from 'components/Button/Button';
+import { IconButton } from 'components/IconButton/IconButton';
+import { Input } from 'components/Input/Input';
 import { Modal } from 'components/Modal/Modal';
+import { DragAdnDropElement } from 'components/DragAndDrop/DragAndDropElement';
 
 import { useDragAndDrop } from 'components/DragAndDrop/DragAndDropContext';
 
 import css from './Notes.module.css';
-import { IconButton } from 'components/IconButton/IconButton';
 
-import { DOC } from 'utils/variables';
+import { DOC, MORE_VERTICAL } from 'utils/variables';
 
 export const Notes = ({ notes }) => {
   const { preventOnClick } = useDragAndDrop();
@@ -80,10 +80,10 @@ export const Notes = ({ notes }) => {
       title: targetNote?.title,
       content: targetNote?.content,
     }));
+    dispatch(setNoteModal(true));
 
     // STEP 5: Update URL
-    windowWidth <= 480 && (window.location.hash = 'note');
-    dispatch(setNoteModal(true));
+    windowWidth <= 480 && (window.location.hash = 'editor');
   };
 
   const handleOpenEditNoteModal = (e, id, title) => {
@@ -185,7 +185,7 @@ export const Notes = ({ notes }) => {
   };
 
   return (
-    <div id="note" className={`${css.container} ${notes?.length > 0 && css.divider}`}>
+    <div id="note" className={css.container}>
       {notes?.map((i, index) => (
         <DragAdnDropElement key={index} index={index} id={i.id} type="note" name={i.title} openSettingsModal={handleOpenEditNoteModal}>
           <div className={`${css.note} ${activeNoteId === i.id && css.active}`} onClick={() => handleOpenNote(i.id)}>
@@ -193,6 +193,9 @@ export const Notes = ({ notes }) => {
               <IconButton path={DOC} variant="secondary" />
             </span>
             <span className={css.noteTitle}>{i.title}</span>
+            <span className={css.iconMore}>
+              <IconButton path={MORE_VERTICAL} variant="secondary" onClick={handleOpenEditNoteModal} />
+            </span>
           </div>
         </DragAdnDropElement>
       ))}

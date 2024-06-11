@@ -97,7 +97,7 @@ export const App = () => {
       else if (e.oldURL.includes('#editNote')) {
         dispatch(setEditNoteModal(false));
       }
-      else if (e.oldURL.includes('#note')) {
+      else if (e.oldURL.includes('#editor')) {
         dispatch(setNoteModal(false));
       }
       else if (e.newURL.includes('#folder')) {

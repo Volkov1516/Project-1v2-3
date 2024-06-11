@@ -70,7 +70,7 @@ export const Dock = () => {
       content: '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1}],"direction":null,"format":"","indent":0,"type":"root","version":1}}',
     }));
 
-    windowWidth <= 480 && (window.location.hash = 'note');
+    windowWidth <= 480 && (window.location.hash = 'editor');
     dispatch(setNoteModal(true));
   };
 
