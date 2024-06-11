@@ -33,6 +33,10 @@ export const Notes = ({ notes }) => {
   const [titleDeleteValue, setTitleDeleteValue] = useState('');
   const [titleDeleteInputValue, setTitleDeleteInputValue] = useState('');
 
+  const handleTouchStart = e => e.currentTarget.classList.add(css.touch);
+
+  const handleTouchEnd = e => e.currentTarget.classList.remove(css.touch);
+
   const handleOpenNote = async (id) => {
     // Prevent onClick after mouseUp
     if (preventOnClick) return;
@@ -189,7 +193,7 @@ export const Notes = ({ notes }) => {
     <div id="note" className={css.container}>
       {notes?.map((i, index) => (
         <DragAdnDropElement key={index} index={index} id={i.id} type="note" name={i.title} openSettingsModal={handleOpenEditNoteModal}>
-          <div className={`${css.note} ${activeNoteId === i.id && css.active}`} onClick={() => handleOpenNote(i.id)}>
+          <div className={`${css.note} ${activeNoteId === i.id && css.active}`} onClick={() => handleOpenNote(i.id)} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
             <span className={css.icon}>
               <IconButton path={DOC} variant="secondary" />
             </span>

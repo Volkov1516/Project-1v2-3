@@ -9,8 +9,6 @@
   align-items: center;
   width: 100%;
   font-size: 16px;
-  overflow-wrap: break-word;
-  user-select: none;
   transition: background-color 0.1s ease-in;
 }
 
@@ -21,16 +19,16 @@
   text-overflow: ellipsis;
 }
 
+.iconMore {
+  opacity: 0;
+  transition: opacity 0.1s ease-in;
+}
+
 .eiditNoteModalContent {
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 8px;
-}
-
-.iconMore {
-  opacity: 0;
-  transition: opacity 0.1s ease-in;
 }
 
 @media (hover: hover) {
@@ -55,24 +53,23 @@
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 8px;
+  }
+
   .note {
-    height: auto;
-    padding: 8px 16px;
+    padding: 4px 8px;
     font-weight: 700;
     font-size: var(--fontSizeTitleLarge);
-  }
-
-  .icon {
-    display: none;
-  }
-
-  .iconMore {
-    display: none;
   }
 
   .noteTitle {
     width: fit-content;
     white-space: wrap;
+  }
+
+  .icon, .iconMore {
+    display: none;
   }
 
   .note.touch {
