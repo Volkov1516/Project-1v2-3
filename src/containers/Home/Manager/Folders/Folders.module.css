@@ -7,6 +7,7 @@
 }
 
 .folder {
+  position: relative;
   width: 120px;
   padding: 0px 8px 8px;
   transition: background-color 0.1s ease-in;
@@ -34,9 +35,22 @@
   padding: 8px;
 }
 
+.iconMore {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.1s ease-in;
+}
+
 @media (hover: hover) {
   .folder:hover {
     background-color: var(--secondaryElementHover);
+  }
+
+  .folder:hover>.iconMore {
+    opacity: 1;
   }
 }
 
@@ -64,6 +78,10 @@
   .folderName {
     width: calc(50vw - 24px);
     font-size: 16px;
+  }
+
+  .iconMore {
+    display: none;
   }
 
   .folder.touch {

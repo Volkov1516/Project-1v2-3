@@ -5,6 +5,8 @@ import { deleteFromDocuments, updateInDocuments } from 'redux/features/user/user
 
 import { Button } from 'components/Button/Button';
 import { Input } from 'components/Input/Input';
+import { IconButton } from 'components/IconButton/IconButton';
+import { Tooltip } from 'components/Tooltip/Tooltip';
 import { Modal } from 'components/Modal/Modal';
 import { DragAdnDropElement } from 'components/DragAndDrop/DragAndDropElement';
 
@@ -13,6 +15,7 @@ import { useDragAndDrop } from 'components/DragAndDrop/DragAndDropContext';
 import css from './Folders.module.css';
 
 import folderImg from 'assets/images/folder.png';
+import { MORE_VERTICAL } from 'utils/variables';
 
 export const Folders = ({ folders }) => {
   const { preventOnClick } = useDragAndDrop();
@@ -91,6 +94,11 @@ export const Folders = ({ folders }) => {
           <div className={css.folder} onClick={() => handleOpenFolder(i.id)} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
             <img className={css.folderImg} src={folderImg} alt="folder" draggable={false} onContextMenu={e => e.preventDefault()} />
             <span className={css.folderName}>{i.name}</span>
+            <span className={css.iconMore}>
+              <Tooltip content="Settings" preferablePosition="bottom">
+              <IconButton path={MORE_VERTICAL} variant="secondary" onClick={(e) => handleOpenEditFodlerModal(e, i.id, i.name)} />
+              </Tooltip>
+            </span>
           </div>
         </DragAdnDropElement>
       ))}

@@ -8,6 +8,7 @@ import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 
 import { Button } from 'components/Button/Button';
 import { IconButton } from 'components/IconButton/IconButton';
+import { Tooltip } from 'components/Tooltip/Tooltip';
 import { Input } from 'components/Input/Input';
 import { Modal } from 'components/Modal/Modal';
 import { DragAdnDropElement } from 'components/DragAndDrop/DragAndDropElement';
@@ -194,7 +195,9 @@ export const Notes = ({ notes }) => {
             </span>
             <span className={css.noteTitle}>{i.title}</span>
             <span className={css.iconMore}>
-              <IconButton path={MORE_VERTICAL} variant="secondary" onClick={handleOpenEditNoteModal} />
+              <Tooltip content="Settings" preferablePosition="bottom">
+                <IconButton path={MORE_VERTICAL} variant="secondary" onClick={handleOpenEditNoteModal} />
+              </Tooltip>
             </span>
           </div>
         </DragAdnDropElement>
