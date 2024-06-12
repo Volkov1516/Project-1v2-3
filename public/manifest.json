@@ -2,8 +2,8 @@
   "id": "/",
   "scope": "/",
   "start_url": "/",
-  "name": "Journal X",
-  "short_name": "Journal X",
+  "name": "Omniumicon",
+  "short_name": "Omniumicon",
   "description": "Note taking application.",
   "categories": [
     "education",
