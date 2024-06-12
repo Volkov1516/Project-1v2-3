@@ -35,12 +35,20 @@
   padding: 8px;
 }
 
-.iconMore {
+.contextMenu {
   position: absolute;
-  top: 8px;
-  left: 8px;
-  opacity: 0;
+  max-width: 444px;
+  background-color: var(--primaryElementBackground);
+  color: var(--primaryElementColor);
+  font-size: var(--fontSizeSmall);
+  font-weight: 300;
+  user-select: none;
+  z-index: 1000;
   transition: opacity 0.1s ease-in;
+}
+
+.contextMenuItem {
+  padding: 8px 16px;
 }
 
 @media (hover: hover) {
@@ -48,14 +56,19 @@
     background-color: var(--secondaryElementHover);
   }
 
-  .folder:hover>.iconMore {
-    opacity: 1;
+  .contextMenuItem:hover {
+    background-color: var(--primaryElementHover);
+    cursor: pointer;
   }
 }
 
 @media (min-width: 481px) {
   .folder:active {
     background-color: var(--secondaryElementActive);
+  }
+
+  .contextMenuItem:active {
+    background-color: var(--primaryElementActive);
   }
 }
 
@@ -77,10 +90,6 @@
   .folderName {
     width: calc(50vw - 24px);
     font-size: 16px;
-  }
-
-  .iconMore {
-    display: none;
   }
 
   .folder.touch {

@@ -1,12 +1,11 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEditFolderModal, setPath } from 'redux/features/app/appSlice';
 import { deleteFromDocuments, updateInDocuments } from 'redux/features/user/userSlice';
 
 import { Button } from 'components/Button/Button';
 import { Input } from 'components/Input/Input';
-import { IconButton } from 'components/IconButton/IconButton';
-import { Tooltip } from 'components/Tooltip/Tooltip';
 import { Modal } from 'components/Modal/Modal';
 import { DragAdnDropElement } from 'components/DragAndDrop/DragAndDropElement';
 
@@ -15,7 +14,6 @@ import { useDragAndDrop } from 'components/DragAndDrop/DragAndDropContext';
 import css from './Folders.module.css';
 
 import folderImg from 'assets/images/folder.png';
-import { MORE_VERTICAL } from 'utils/variables';
 
 export const Folders = ({ folders }) => {
   const { preventOnClick } = useDragAndDrop();
@@ -24,15 +22,29 @@ export const Folders = ({ folders }) => {
 
   const { windowWidth, path, editFolderModal } = useSelector(state => state.app);
 
+  const contextMenuRef = useRef(null);
+
   const [folderIdEditFolderModal, setFoldeIdEditFolderModal] = useState(null);
   const [initialFolderInputValue, setInitialFolderInputValue] = useState('');
   const [folderInputValue, setFolderInputValue] = useState('');
   const [folderDeleteValue, setFolderDeleteValue] = useState('');
   const [folderDeleteInputValue, setFolderDeleteInputValue] = useState('');
+  const [position, setPosition] = useState({ top: 0, left: 0, visibility: 'hidden' });
+
+  useEffect(() => {
+    const handleClick = () => {
+      setPosition({ top: 0, left: 0, visibility: 'hidden' })
+    };
+
+    document.addEventListener('click', handleClick);
+
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
 
   const handleTouchStart = e => e.currentTarget.classList.add(css.touch);
 
   const handleTouchEnd = e => e.currentTarget.classList.remove(css.touch);
+
 
   const handleOpenFolder = (id) => {
     if (preventOnClick) return;
@@ -87,18 +99,38 @@ export const Folders = ({ folders }) => {
     handleCloseEditFolder();
   };
 
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+
+    setPosition({ top: e.pageY, left: e.pageX, visibility: 'visible' });
+  };
+
+  const handleContextMenuSettings = (e, id, name) => {
+    e.stopPropagation();
+
+    setPosition({ top: e.pageY, left: e.pageX, visibility: 'hidden' });
+
+    handleOpenEditFodlerModal(e, id, name);
+  };
+
   return (
     <div id="folder" className={`${css.container} ${folders?.length > 0 && css.containerOffset}`}>
       {folders?.map((i, index) => (
         <DragAdnDropElement key={index} index={index} id={i.id} type="folder" name={i.name} openSettingsModal={handleOpenEditFodlerModal}>
-          <div className={css.folder} onClick={() => handleOpenFolder(i.id)} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+          <div className={css.folder} onClick={() => handleOpenFolder(i.id)} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onContextMenu={e => handleContextMenu(e, i.id, i.name)}>
             <img className={css.folderImg} src={folderImg} alt="folder" draggable={false} onContextMenu={e => e.preventDefault()} />
             <span className={css.folderName}>{i.name}</span>
-            <span className={css.iconMore}>
-              <Tooltip content="Settings" preferablePosition="bottom">
-              <IconButton path={MORE_VERTICAL} variant="secondary" onClick={(e) => handleOpenEditFodlerModal(e, i.id, i.name)} />
-              </Tooltip>
-            </span>
+            {ReactDOM.createPortal(
+              <div
+                ref={contextMenuRef}
+                className={css.contextMenu}
+                style={position}
+                onClick={(e) => handleContextMenuSettings(e, i.id, i.name)}
+              >
+                <div className={css.contextMenuItem}>Folder Settings</div>
+              </div>,
+              document.body
+            )}
           </div>
         </DragAdnDropElement>
       ))}
