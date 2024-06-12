@@ -102,7 +102,9 @@ export const Folders = ({ folders }) => {
   const handleContextMenu = (e) => {
     e.preventDefault();
 
-    setPosition({ top: e.pageY, left: e.pageX, visibility: 'visible' });
+    if (windowWidth > 480) {
+      setPosition({ top: e.pageY, left: e.pageX, visibility: 'visible' });
+    }
   };
 
   const handleContextMenuSettings = (e, id, name) => {
