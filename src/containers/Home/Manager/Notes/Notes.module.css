@@ -54,7 +54,7 @@
 
 @media (max-width: 480px) {
   .container {
-    padding: 8px;
+    padding: 0px 8px;
   }
 
   .note {

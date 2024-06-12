@@ -2,6 +2,7 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -54,12 +55,13 @@
   animation: spinner 1s linear infinite;
 }
 
-.contained > .spinner {
+.contained>.spinner {
   border-top: 1px solid var(--primaryElementColor);
   border-right: 1px solid var(--primaryElementColor);
 }
 
-.outlined > .spinner, .text > .spinner {
+.outlined>.spinner,
+.text>.spinner {
   border-top: 1px solid var(--fontColorPrimary);
   border-right: 1px solid var(--fontColorPrimary);
 }
@@ -73,7 +75,8 @@
     background-color: var(--primaryElementHover);
   }
 
-  .outlined:hover, .text:hover {
+  .outlined:hover,
+  .text:hover {
     background-color: var(--secondaryElementHover);
   }
 }
@@ -87,7 +90,8 @@
     background-color: var(--primaryElementActive);
   }
 
-  .outlined:active, .text:active {
+  .outlined:active,
+  .text:active {
     background-color: var(--secondaryElementActive);
   }
 }
@@ -101,7 +105,8 @@
     background-color: var(--primaryElementHover);
   }
 
-  .outlined.touch, .text.touch {
+  .outlined.touch,
+  .text.touch {
     background-color: var(--secondaryElementHover);
   }
 }

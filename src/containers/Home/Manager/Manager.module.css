@@ -11,8 +11,11 @@
 .content {
   flex: 1;
   overflow: auto;
-  padding-bottom: 50vh;
   scroll-behavior: smooth;
+}
+
+.footer {
+  height: calc(50vh + 33px);
 }
 
 .content::-webkit-scrollbar {

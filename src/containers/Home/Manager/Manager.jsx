@@ -53,6 +53,7 @@ export const Manager = memo(function MemoizedComponent() {
             <Notes notes={folder?.notes} />
             {(folder?.notes.length > 0 && folder?.tasks.length > 0) && <div className={css.dividerNotes} />}
             <Tasks tasks={folder?.tasks} />
+            <div className={css.footer} />
           </div>
         </div>
       </div>

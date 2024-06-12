@@ -1,7 +1,6 @@
 .container {
   display: flex;
   align-items: flex-start;
-  user-select: none;
   padding: 0px 8px 0px 0px;
 }
 
