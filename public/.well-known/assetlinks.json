@@ -5,7 +5,7 @@
     ],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.firebaseapp.project_1_e93b8.twa",
+      "package_name": "app.web.project_1_e93b8.twa",
       "sha256_cert_fingerprints": [
         "3B:B6:E4:9A:CB:D1:EB:68:50:C5:06:85:9B:EC:53:DE:B1:8F:96:86:88:E6:4E:5F:70:4F:1D:14:46:52:59:01"
       ]
