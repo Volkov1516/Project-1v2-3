@@ -26,13 +26,23 @@
 }
 
 .checkbox.halfchecked::before {
+  /* content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 17px;
+  width: 8px;
+  border-radius: 8px 0 0 8px;
+  background-color: var(--fontColorPrimary); */
+
   content: '';
   position: absolute;
   top: 0;
   left: 0;
-  height: 16px;
-  width: 8px;
-  border-radius: 8px 0 0 8px;
+  width: 50%;
+  height: 100%;
+  border-top-left-radius: 9px;
+  border-bottom-left-radius: 9px;
   background-color: var(--fontColorPrimary);
 }
 
@@ -122,9 +132,10 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 16px;
-  width: 8px;
-  border-radius: 8px 0 0 8px;
+  width: 50%;
+  height: 100%;
+  border-top-left-radius: 9px;
+  border-bottom-left-radius: 9px;
   background-color: var(--primaryElementColor);
 }
 
@@ -171,9 +182,8 @@
   }
 
   .checkbox.halfchecked::before {
-    height: 22px;
-    width: 11px;
-    border-radius: 11px 0 0 11px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
     background-color: var(--fontColorPrimary);
   }
 
@@ -200,9 +210,8 @@
   }
 
   .statusMenuItemHalfchecked::before {
-    height: 22px;
-    width: 11px;
-    border-radius: 11px 0 0 11px;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
     background-color: var(--primaryElementColor);
   }
 
