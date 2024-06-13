@@ -30,10 +30,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 50%;
-  height: 100%;
-  border-top-left-radius: 50%;
-  border-bottom-left-radius: 50%;
+  height: 16px;
+  width: 9px;
+  border-radius: 9px 0 0 9px;
   background-color: var(--fontColorPrimary);
 }
 
@@ -123,10 +122,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 50%;
-  height: 100%;
-  border-top-left-radius: 50%;
-  border-bottom-left-radius: 50%;
+  height: 16px;
+  width: 9px;
+  border-radius: 9px 0 0 9px;
   background-color: var(--primaryElementColor);
 }
 
@@ -172,6 +170,13 @@
     margin-left: 5px;
   }
 
+  .checkbox.halfchecked::before {
+    height: 22px;
+    width: 10px;
+    border-radius: 9px 0 0 9px;
+    background-color: var(--fontColorPrimary);
+  }
+
   .text {
     flex: 1;
     margin-top: 12px;
@@ -192,6 +197,13 @@
     height: 24px;
     width: 24px;
     min-width: 24px;
+  }
+
+  .statusMenuItemHalfchecked::before {
+    height: 22px;
+    width: 10px;
+    border-radius: 9px 0 0 9px;
+    background-color: var(--primaryElementColor);
   }
 
   .checkboxContainer.touch {
