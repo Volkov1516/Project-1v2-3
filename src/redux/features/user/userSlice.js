@@ -66,6 +66,7 @@ export const userSlice = createSlice({
         createInDocuments.pending,
         updateInDocuments.pending,
         deleteFromDocuments.pending,
+        updateTaskStatus.pending,
         moveFromFolder.pending,
         moveInFolder.pending,
         moveFolder.pending,
@@ -77,6 +78,7 @@ export const userSlice = createSlice({
         createInDocuments.fulfilled,
         updateInDocuments.fulfilled,
         deleteFromDocuments.fulfilled,
+        updateTaskStatus.fulfilled,
         moveFromFolder.fulfilled,
         moveInFolder.fulfilled,
         moveFolder.fulfilled,
@@ -90,6 +92,7 @@ export const userSlice = createSlice({
         createInDocuments.rejected,
         updateInDocuments.rejected,
         deleteFromDocuments.rejected,
+        updateTaskStatus.rejected,
         moveFromFolder.rejected,
         moveInFolder.rejected,
         moveFolder.rejected,
@@ -165,6 +168,34 @@ export const updateInDocuments = createAsyncThunk('user/updateInDocuments', asyn
       for (let i = 0; i < targetFolder[type].length; i++) {
         if (targetFolder[type][i].id === id) {
           targetFolder[type][i][name] = value;
+        }
+      }
+    }
+  };
+
+  findFolder(newDocuments, state.app.path[state.app.path.length - 1], editObj);
+
+  try {
+    await setDoc(doc(db, 'users', state.user.userId), { documents: newDocuments }, { merge: true });
+
+    return newDocuments;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const updateTaskStatus = createAsyncThunk('user/updateTaskStatus', async (props, thunkAPI) => {
+  const state = thunkAPI.getState();
+
+  const { id, status } = props;
+
+  const newDocuments = JSON.parse(JSON.stringify(state.user.documents));
+
+  const editObj = (targetFolder) => {
+    if (targetFolder.tasks && targetFolder.tasks.length > 0) {
+      for (let i = 0; i < targetFolder.tasks.length; i++) {
+        if (targetFolder.tasks[i].id === id) {
+          targetFolder.tasks[i].status = status;
         }
       }
     }

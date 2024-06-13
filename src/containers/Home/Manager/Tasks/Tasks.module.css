@@ -1,4 +1,204 @@
-.container {
+.task {
   display: flex;
-  flex-direction: column;
+  user-select: none;
+}
+
+/* CHECKBOX AND TEXT */
+.checkboxContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  transition: background-color 0.1s ease-in;
+}
+
+.checkbox {
+  position: relative;
+  height: 18px;
+  width: 18px;
+  min-width: 18px;
+  margin: 11px;
+  border-radius: 50%;
+  border: 1px solid var(--fontColorPrimary);
+}
+
+.checkbox.halfchecked::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+  background-color: var(--fontColorPrimary);
+}
+
+.checkbox.checked::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--fontColorPrimary);
+}
+
+.text {
+  flex: 1;
+  margin-top: 11px;
+  padding-right: 8px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: var(--fontColorPrimary);
+  font-size: var(--fontSizeSmall);
+}
+
+.text.checked {
+  text-decoration: line-through;
+}
+
+.text.halfchecked {
+  text-decoration: none;
+}
+
+.text.unchecked {
+  text-decoration: none;
+}
+
+/* STATUS MENU */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.statusMenu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  background-color: var(--primaryElementBackground);
+  animation: fadeIn 0.1s ease-in;
+}
+
+.statusMenuItemCloseWrapper {
+  width: 100%;
+  height: 100%;
+  background-color: var(--backgroundSecondary);
+}
+
+.statusMenuItemWrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: background-color 0.1s ease-in;
+}
+
+.statusMenuItemUnchecked,
+.statusMenuItemHalfchecked,
+.statusMenuItemChecked {
+  position: relative;
+  height: 18px;
+  width: 18px;
+  min-width: 18px;
+  margin: 11px;
+  border-radius: 50%;
+  border: 1px solid var(--primaryElementColor);
+}
+
+.statusMenuItemHalfchecked::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+  background-color: var(--primaryElementColor);
+}
+
+.statusMenuItemChecked::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--primaryElementColor);
+}
+
+@media (hover: hover) {
+  .checkboxContainer:hover {
+    background-color: var(--secondaryElementHover);
+    cursor: pointer;
+  }
+
+  .statusMenuItemWrapper:hover {
+    background-color: var(--primaryElementHover);
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 481px) {
+  .checkboxContainer:active {
+    background-color: var(--secondaryElementActive);
+    cursor: pointer;
+  }
+
+  .statusMenuItemWrapper:active {
+    background-color: var(--primaryElementActive);
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkboxContainer {
+    height: 48px;
+    width: 48px;
+    margin-left: 5px;
+  }
+
+  .text {
+    flex: 1;
+    margin-top: 12px;
+    padding-right: 16px;
+    font-size: var(--fontSizeMedium);
+  }
+
+  .statusMenuItemCloseWrapper {
+    width: 100%;
+    height: 100%;
+    background-color: var(--backgroundPrimary);
+  }
+
+  .checkbox,
+  .statusMenuItemUnchecked,
+  .statusMenuItemHalfchecked,
+  .statusMenuItemChecked {
+    height: 24px;
+    width: 24px;
+    min-width: 24px;
+  }
+
+  .checkboxContainer.touch {
+    background-color: var(--secondaryElementHover);
+  }
+
+  .statusMenuItemWrapper.touch {
+    background-color: var(--primaryElementHover);
+  }
 }
