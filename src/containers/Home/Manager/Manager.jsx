@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux';
 
 import { FolderNavigation } from './FolderNavigation/FolderNavigation';
 import { DragAndDropProvider } from 'components/DragAndDrop/DragAndDropContext';
-import { Folders } from './Folders/Folders';
-import { Notes } from './Notes/Notes';
-import { Tasks } from './Tasks/Tasks';
+// import { Folders } from './Folders/Folders';
+// import { Notes } from './Notes/Notes';
+// import { Tasks } from './Tasks/Tasks';
 
 import css from './Manager.module.css';
+import SortableComponent from './SortableGrid/SortableGrid';
 
 export const Manager = memo(function MemoizedComponent() {
   const { windowWidth, path } = useSelector(state => state.app);
@@ -48,11 +49,16 @@ export const Manager = memo(function MemoizedComponent() {
         </div>
         <div id="managerContent" className={css.content}>
           <div className={css.wrapper}>
-            <Folders folders={folder?.folders} />
+
+
+            <SortableComponent />
+
+
+            {/* <Folders folders={folder?.folders} />
             {(folder?.folders.length > 0 && (folder?.notes.length > 0 || folder?.tasks.length > 0)) && <div className={css.dividerFolders} />}
             <Notes notes={folder?.notes} />
             {(folder?.notes.length > 0 && folder?.tasks.length > 0) && <div className={css.dividerNotes} />}
-            <Tasks tasks={folder?.tasks} />
+            <Tasks tasks={folder?.tasks} /> */}
             <div className={css.footer} />
           </div>
         </div>

@@ -1,0 +1,16 @@
+.conatainer {
+  display: flex;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+
+.item {
+  width: 50vw;
+  height: 50vw;
+  /* width: 100%; */
+  /* height: fit-content; */
+  padding: 8px;
+  border: 1px solid var(--borderColor);
+  word-wrap: break-word;
+}
