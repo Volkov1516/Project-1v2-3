@@ -22,6 +22,7 @@ const SortableComponent = () => {
 
   const containerRef = useRef(null);
   const holdTimeout = useRef(null);
+  const swapTimeout = useRef(null);
 
   const [items, setItems] = useState([
     { id: 1, name: "fiona1" },
@@ -47,7 +48,6 @@ const SortableComponent = () => {
   };
 
   useEffect(() => {
-    let swapFolderTimeout;
     let overFolder;
     let canSwapWithFolder = false;
     const FOLDER_SWAP_TIMEOUT = 1000;
@@ -68,10 +68,10 @@ const SortableComponent = () => {
         onMove: (evt) => {
           if (evt.related !== overFolder) {
             console.log('starting timeout')
-            clearTimeout(swapFolderTimeout);
+            clearTimeout(swapTimeout.current);
             canSwapWithFolder = false;
             overFolder = evt.related;
-            swapFolderTimeout = setTimeout(() => {
+            swapTimeout.current = setTimeout(() => {
               canSwapWithFolder = true;
             }, FOLDER_SWAP_TIMEOUT);
           } else if (canSwapWithFolder) {
@@ -94,7 +94,7 @@ const SortableComponent = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [handleSortEnd]);
 
   return (
     <>
