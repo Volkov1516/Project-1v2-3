@@ -70,7 +70,10 @@ export const userSlice = createSlice({
         moveFromFolder.pending,
         moveInFolder.pending,
         moveFolder.pending,
-        moveUniversal.pending
+        moveUniversal.pending,
+        dndSwap.pending,
+        dndInside.pending,
+        dndOutside.pending,
       ), (state) => {
         state.documentsLoading = true;
       })
@@ -82,7 +85,10 @@ export const userSlice = createSlice({
         moveFromFolder.fulfilled,
         moveInFolder.fulfilled,
         moveFolder.fulfilled,
-        moveUniversal.fulfilled
+        moveUniversal.fulfilled,
+        dndSwap.fulfilled,
+        dndInside.fulfilled,
+        dndOutside.fulfilled,
       ), (state, action) => {
         state.documents = action.payload;
         state.documentsLoading = false;
@@ -96,7 +102,10 @@ export const userSlice = createSlice({
         moveFromFolder.rejected,
         moveInFolder.rejected,
         moveFolder.rejected,
-        moveUniversal.rejected
+        moveUniversal.rejected,
+        dndSwap.rejected,
+        dndInside.rejected,
+        dndOutside.rejected,
       ), (state, action) => {
         state.error = action.error;
         state.documentsLoading = false;
@@ -326,6 +335,87 @@ export const moveUniversal = createAsyncThunk('user/moveUniversal', async (props
     return thunkAPI.rejectWithValue(error);
   }
 });
+
+
+
+
+
+export const dndSwap = createAsyncThunk('user/dndSwap', async (props, thunkAPI) => {
+  const state = thunkAPI.getState();
+
+  const { type, items, oldIndex, newIndex } = props;
+
+  const updatedItems = [...items];
+  const [movedItem] = updatedItems.splice(oldIndex, 1);
+  updatedItems.splice(newIndex, 0, movedItem);
+
+  const documentsCopy = JSON.parse(JSON.stringify(state.user.documents));
+
+  const updateCurrentFolder = targetFolder => targetFolder[type] = updatedItems;
+  findFolder(documentsCopy, state.app.path[state.app.path.length - 1], updateCurrentFolder);
+
+  try {
+    await setDoc(doc(db, 'users', state.user.userId), { documents: documentsCopy }, { merge: true });
+
+    return documentsCopy;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const dndInside = createAsyncThunk('user/dndInside', async (props, thunkAPI) => {
+  const state = thunkAPI.getState();
+
+  const { type, items, oldIndex, newFolderId } = props;
+
+  const updatedItems = [...items];
+  const [movedItem] = updatedItems.splice(oldIndex, 1);
+
+  const documentsCopy = JSON.parse(JSON.stringify(state.user.documents));
+
+  const updateNewFolder = targetFolder => targetFolder[type] = [...targetFolder[type], movedItem];
+  findFolder(documentsCopy, newFolderId, updateNewFolder);
+
+  const updateCurrentFolder = targetFolder => targetFolder[type].splice(oldIndex, 1);
+  findFolder(documentsCopy, state.app.path[state.app.path.length - 1], updateCurrentFolder);
+
+  try {
+    await setDoc(doc(db, 'users', state.user.userId), { documents: documentsCopy }, { merge: true });
+
+    return documentsCopy;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const dndOutside = createAsyncThunk('user/dndOutside', async (props, thunkAPI) => {
+  const state = thunkAPI.getState();
+
+  const { type, items, oldIndex } = props;
+
+  const updatedItems = [...items];
+  const [movedItem] = updatedItems.splice(oldIndex, 1);
+
+  const documentsCopy = JSON.parse(JSON.stringify(state.user.documents));
+
+  const updateParentFolder = targetFolder => targetFolder[type] = [...targetFolder[type], movedItem];
+  findFolder(documentsCopy, state.app.path[state.app.path.length - 2], updateParentFolder);
+
+  const updateCurrentFolder = targetFolder => targetFolder[type].splice(oldIndex, 1);
+  findFolder(documentsCopy, state.app.path[state.app.path.length - 1], updateCurrentFolder);
+
+  try {
+    await setDoc(doc(db, 'users', state.user.userId), { documents: documentsCopy }, { merge: true });
+
+    return documentsCopy;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+
+
+
 
 export const {
   setUser,

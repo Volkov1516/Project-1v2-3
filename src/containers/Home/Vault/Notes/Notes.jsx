@@ -1,31 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar, setEditNoteModal, setNoteModal } from 'redux/features/app/appSlice';
-import { updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
+import { dndSwap, dndInside, dndOutside, updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
 import { db } from 'services/firebase.js';
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
+import Sortable from 'sortablejs';
 
 import { Button } from 'components/Button/Button';
 import { IconButton } from 'components/IconButton/IconButton';
 import { Tooltip } from 'components/Tooltip/Tooltip';
 import { Input } from 'components/Input/Input';
 import { Modal } from 'components/Modal/Modal';
-import { DragAdnDropElement } from 'components/DragAndDrop/DragAndDropElement';
-
-import { useDragAndDrop } from 'components/DragAndDrop/DragAndDropContext';
 
 import css from './Notes.module.css';
 
 import { DOC, MORE_VERTICAL } from 'utils/variables';
 
 export const Notes = ({ notes }) => {
-  const { preventOnClick } = useDragAndDrop();
-
   const dispatch = useDispatch();
 
   const { windowWidth, editNoteModal } = useSelector(state => state.app);
   const { notesCache, activeNoteId } = useSelector(state => state.note);
+
+  const containerRef = useRef(null);
+  const holdTimeout = useRef(null);
 
   const [noteIdEditNoteModal, setNoteIdEditNoteModal] = useState(null);
   const [initialTitleInputValue, setInitialTitleInputValue] = useState('');
@@ -33,14 +32,74 @@ export const Notes = ({ notes }) => {
   const [titleDeleteValue, setTitleDeleteValue] = useState('');
   const [titleDeleteInputValue, setTitleDeleteInputValue] = useState('');
 
-  const handleTouchStart = e => e.currentTarget.classList.add(css.touch);
+  useEffect(() => {
+    if (containerRef.current) {
+      const sortable = new Sortable(containerRef.current, {
+        animation: 200,
+        delay: 300,
+        delayOnTouchOnly: true,
+        disabled: editNoteModal,
+        scroll: true,
+        scrollSensitivity: 100,
+        onChoose: (e) => {
+          if (e.originalEvent instanceof TouchEvent && e.originalEvent.changedTouches.length > 0) {
+            holdTimeout.current = setTimeout(() => {
+              const id = e.item.getAttribute('data-id');
+              const title = e.item.getAttribute('data-title');
 
-  const handleTouchEnd = e => e.currentTarget.classList.remove(css.touch);
+              setNoteIdEditNoteModal(id);
+              setInitialTitleInputValue(title);
+              setTitleInputValue(title);
+              setTitleDeleteValue(title);
+
+              window.location.hash = 'editNote';
+              dispatch(setEditNoteModal(true));
+            }, 300);
+          }
+        },
+        onStart: () => {
+          clearTimeout(holdTimeout.current);
+        },
+        onEnd: (e) => {
+          clearTimeout(holdTimeout.current);
+
+          let x, y;
+
+          if (e.originalEvent instanceof MouseEvent) {
+            x = e.originalEvent.clientX;
+            y = e.originalEvent.clientY;
+          }
+          else if (e.originalEvent instanceof TouchEvent && e.originalEvent.changedTouches.length > 0) {
+            x = e.originalEvent.changedTouches[0].clientX;
+            y = e.originalEvent.changedTouches[0].clientY;
+          }
+
+          const elementFromPoint = document.elementFromPoint(x, y);
+          const containerRect = containerRef.current.getBoundingClientRect();
+          const isOutside = x < containerRect.left || x > containerRect.right || y < containerRect.top || y > containerRect.bottom;
+          const targetElementId = elementFromPoint.getAttribute('data-id');
+          const targetElementType = elementFromPoint.getAttribute('data-type');
+
+          if (isOutside && targetElementId !== 'folder-navigation' && targetElementType !== 'folder') {
+            return;
+          }
+          else if (isOutside && targetElementId === 'folder-navigation') {
+            dispatch(dndOutside({ type: 'notes', items: notes, oldIndex: e.oldIndex }));
+          }
+          else if (isOutside && targetElementType === 'folder') {
+            dispatch(dndInside({ type: 'notes', items: notes, oldIndex: e.oldIndex, newFolderId: targetElementId }));
+          }
+          else {
+            dispatch(dndSwap({ type: 'notes', items: notes, oldIndex: e.oldIndex, newIndex: e.newIndex }));
+          }
+        }
+      });
+
+      return () => sortable && sortable.destroy();
+    }
+  }, [dispatch, notes, editNoteModal]);
 
   const handleOpenNote = async (id) => {
-    // Prevent onClick after mouseUp
-    if (preventOnClick) return;
-
     // STEP 1: Return if this note is openned (need to clean up activeNoteId after close!)
     // if (activeNoteId === id) return;
 
@@ -190,21 +249,19 @@ export const Notes = ({ notes }) => {
   };
 
   return (
-    <div id="note" className={css.container}>
-      {notes?.map((i, index) => (
-        <DragAdnDropElement key={index} index={index} id={i.id} type="note" name={i.title} openSettingsModal={handleOpenEditNoteModal}>
-          <div className={`${css.note} ${activeNoteId === i.id && css.active}`} onClick={() => handleOpenNote(i.id)} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-            <span className={css.icon}>
-              <IconButton path={DOC} variant="secondary" />
-            </span>
-            <span className={css.noteTitle}>{i.title}</span>
-            <span className={css.iconMore}>
-              <Tooltip content="Settings" preferablePosition="bottom">
-                <IconButton path={MORE_VERTICAL} variant="secondary" onClick={handleOpenEditNoteModal} />
-              </Tooltip>
-            </span>
-          </div>
-        </DragAdnDropElement>
+    <div ref={containerRef} className={css.container}>
+      {notes?.map(i => (
+        <div key={i.id} data-id={i.id} data-title={i.title} className={`${css.note} ${activeNoteId === i.id && css.active}`} onClick={() => handleOpenNote(i.id)}>
+          <span className={css.icon}>
+            <IconButton path={DOC} variant="secondary" />
+          </span>
+          <span className={css.noteTitle}>{i.title}</span>
+          <span className={css.iconMore}>
+            <Tooltip content="Settings" preferablePosition="bottom">
+              <IconButton path={MORE_VERTICAL} variant="secondary" onClick={handleOpenEditNoteModal} />
+            </Tooltip>
+          </span>
+        </div>
       ))}
       <Modal open={editNoteModal} close={handleCloseEditNote}>
         <div className={css.eiditNoteModalContent}>
