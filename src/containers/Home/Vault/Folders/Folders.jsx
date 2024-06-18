@@ -39,18 +39,16 @@ export const Folders = ({ folders }) => {
         scroll: true,
         scrollSensitivity: 100,
         onChoose: (e) => {
-          if (e.originalEvent instanceof TouchEvent && e.originalEvent.changedTouches.length > 0) {
-            holdTimeout.current = setTimeout(() => {
-              const id = e.item.getAttribute('data-id');
-              const name = e.item.getAttribute('data-name');
+          holdTimeout.current = setTimeout(() => {
+            const id = e.item.getAttribute('data-id');
+            const name = e.item.getAttribute('data-name');
 
-              setFoldeId(id);
-              setInitialFolderNameInputValue(name);
-              setFolderNameInputValue(name);
-              window.location.hash = 'editFolder';
-              dispatch(setModalFolderSettings(true));
-            }, 300);
-          }
+            setFoldeId(id);
+            setInitialFolderNameInputValue(name);
+            setFolderNameInputValue(name);
+            window.location.hash = 'editFolder';
+            dispatch(setModalFolderSettings(true));
+          }, 300);
         },
         onStart: () => {
           clearTimeout(holdTimeout.current);
@@ -153,7 +151,7 @@ export const Folders = ({ folders }) => {
     <div ref={containerRef} className={css.container}>
       {folders?.map(i => (
         <div key={i.id} data-id={i.id} data-type="folder" data-name={i.name} className={css.folder} onClick={() => handleOpenFolder(i.id)}>
-          <img data-id={i.id} data-type="folder" className={css.img} src={folderImg} alt="folder" />
+          <img data-id={i.id} data-type="folder" className={css.img} src={folderImg} alt="folder" onContextMenu={e => e.preventDefault()} />
           <span data-id={i.id} data-type="folder" className={css.name}>{i.name}</span>
         </div>
       ))}
