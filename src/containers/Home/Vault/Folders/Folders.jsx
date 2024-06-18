@@ -39,16 +39,20 @@ export const Folders = ({ folders }) => {
         scroll: true,
         scrollSensitivity: 100,
         onChoose: (e) => {
-          holdTimeout.current = setTimeout(() => {
-            const id = e.item.getAttribute('data-id');
-            const name = e.item.getAttribute('data-name');
+          if (windowWidth <= 480) {
+            holdTimeout.current = setTimeout(() => {
 
-            setFoldeId(id);
-            setInitialFolderNameInputValue(name);
-            setFolderNameInputValue(name);
-            window.location.hash = 'editFolder';
-            dispatch(setModalFolderSettings(true));
-          }, 300);
+              const id = e.item.getAttribute('data-id');
+              const name = e.item.getAttribute('data-name');
+
+              setFoldeId(id);
+              setInitialFolderNameInputValue(name);
+              setFolderNameInputValue(name);
+              window.location.hash = 'editFolder';
+              dispatch(setModalFolderSettings(true));
+
+            }, 300);
+          }
         },
         onStart: () => {
           clearTimeout(holdTimeout.current);
@@ -88,6 +92,7 @@ export const Folders = ({ folders }) => {
           const containerRect = containerRef.current.getBoundingClientRect();
           const isOutside = x < containerRect.left || x > containerRect.right || y < containerRect.top || y > containerRect.bottom;
           const targetElementId = elementFromPoint.getAttribute('data-id');
+          const draggableElementId = e.item.getAttribute('data-id');
 
           if (isOutside && targetElementId !== 'folder-navigation') {
             return;
@@ -95,7 +100,7 @@ export const Folders = ({ folders }) => {
           else if (isOutside && targetElementId === 'folder-navigation') {
             dispatch(dndOutside({ type: 'folders', items: folders, oldIndex: e.oldIndex }));
           }
-          else if (overFolder) {
+          else if (overFolder && targetElementId && targetElementId !== draggableElementId) {
             dispatch(dndInside({ type: 'folders', items: folders, oldIndex: e.oldIndex, newFolderId: targetElementId }));
           }
           else {
@@ -109,7 +114,7 @@ export const Folders = ({ folders }) => {
 
       return () => sortable && sortable.destroy();
     }
-  }, [dispatch, folders, modalFolderSettings]);
+  }, [dispatch, folders, windowWidth, modalFolderSettings]);
 
   const handleOpenFolder = (id) => {
     if (windowWidth <= 480) {

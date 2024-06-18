@@ -42,7 +42,7 @@ export const Notes = ({ notes }) => {
         scroll: true,
         scrollSensitivity: 100,
         onChoose: (e) => {
-          if (e.originalEvent instanceof TouchEvent && e.originalEvent.changedTouches.length > 0) {
+          if (windowWidth <= 480) {
             holdTimeout.current = setTimeout(() => {
               const id = e.item.getAttribute('data-id');
               const title = e.item.getAttribute('data-title');
@@ -97,7 +97,7 @@ export const Notes = ({ notes }) => {
 
       return () => sortable && sortable.destroy();
     }
-  }, [dispatch, notes, editNoteModal]);
+  }, [dispatch, notes, windowWidth, editNoteModal]);
 
   const handleOpenNote = async (id) => {
     // STEP 1: Return if this note is openned (need to clean up activeNoteId after close!)
