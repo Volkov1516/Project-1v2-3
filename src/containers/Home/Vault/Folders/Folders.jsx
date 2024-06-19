@@ -46,7 +46,7 @@ export const Folders = ({ folders }) => {
     if (containerRef.current) {
       const sortable = new Sortable(containerRef.current, {
         animation: 200,
-        delay: 200,
+        delay: 300,
         delayOnTouchOnly: true,
         disabled: modalFolderSettings,
         scroll: true,
