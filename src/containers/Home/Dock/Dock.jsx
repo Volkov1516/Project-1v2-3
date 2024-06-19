@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTheme, setSettingsModal, setAddFolderModal, setNoteModal } from 'redux/features/app/appSlice';
+import { setTheme, setModalGlobalSettings, setAddFolderModal, setNoteModal } from 'redux/features/app/appSlice';
 import { createInDocuments, setActiveTaskId } from 'redux/features/user/userSlice';
 import { setActiveNote } from 'redux/features/note/noteSlice';
 import { v4 as uuidv4 } from 'uuid';
@@ -124,7 +124,7 @@ export const Dock = () => {
 
   const handleOpenSettings = () => {
     windowWidth <= 480 && (window.location.hash = 'settings');
-    dispatch(setSettingsModal(true));
+    dispatch(setModalGlobalSettings(true));
   };
 
   const RichTooltipContent = () => {
@@ -144,7 +144,7 @@ export const Dock = () => {
     <div ref={dockRef} className={css.container}>
       <Tooltip
         isRich
-        isRichVisible={(documents.folders.length === 0 && documents.notes.length === 0 && documents.tasks.length === 0 && !activeNoteId) ? true : false}
+        isRichVisible={(documents?.folders.length === 0 && documents?.notes.length === 0 && documents?.tasks.length === 0 && !activeNoteId) ? true : false}
         preferablePosition={windowWidth > 480 ? "rightTop" : "topRight"}
         offset={16}
         title="Welcome to Omniumicon!"

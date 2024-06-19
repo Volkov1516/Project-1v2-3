@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setWindowWidth, setTheme, setSettingsModal, setAddFolderModal, setEditFolderModal, setEditNoteModal, setNoteModal, setPath } from 'redux/features/app/appSlice';
+import { setWindowWidth, setTheme, setModalGlobalSettings, setAddFolderModal, setModalFolderSettings, setEditNoteModal, setNoteModal, setPath } from 'redux/features/app/appSlice';
 import { fetchUser, setLoading } from 'redux/features/user/userSlice';
 import { auth } from 'services/firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -86,13 +86,13 @@ export const App = () => {
   useEffect(() => {
     const handleHashchange = (e) => {
       if (e.oldURL.includes('#settings')) {
-        dispatch(setSettingsModal(false));
+        dispatch(setModalGlobalSettings(false));
       }
       else if (e.oldURL.includes('#addFolder')) {
         dispatch(setAddFolderModal(false));
       }
       else if (e.oldURL.includes('#editFolder')) {
-        dispatch(setEditFolderModal(false));
+        dispatch(setModalFolderSettings(false));
       }
       else if (e.oldURL.includes('#editNote')) {
         dispatch(setEditNoteModal(false));

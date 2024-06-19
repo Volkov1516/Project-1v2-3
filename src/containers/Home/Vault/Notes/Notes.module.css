@@ -31,6 +31,10 @@
   padding: 8px;
 }
 
+.placeholder {
+  opacity: 0;
+}
+
 @media (hover: hover) {
   .note:hover {
     background-color: var(--secondaryElementHover);
@@ -73,6 +77,10 @@
   }
 
   .note.touch {
+    background-color: var(--secondaryElementHover);
+  }
+
+  .touch {
     background-color: var(--secondaryElementHover);
   }
 }

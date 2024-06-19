@@ -5,9 +5,9 @@ const initialState = {
   theme: null,
   path: ['root'],
   snackbar: null,
-  settingsModal: false,
+  modalGlobalSettings: false,
   addFolderModal: false,
-  editFolderModal: false,
+  modalFolderSettings: false,
   noteModal: false,
   editNoteModal: false,
 };
@@ -28,14 +28,14 @@ export const appSlice = createSlice({
     setSnackbar: (state, action) => {
       state.snackbar = action.payload;
     },
-    setSettingsModal: (state, action) => {
-      state.settingsModal = action.payload;
+    setModalGlobalSettings: (state, action) => {
+      state.modalGlobalSettings = action.payload;
     },
     setAddFolderModal: (state, action) => {
       state.addFolderModal = action.payload;
     },
-    setEditFolderModal: (state, action) => {
-      state.editFolderModal = action.payload;
+    setModalFolderSettings: (state, action) => {
+      state.modalFolderSettings = action.payload;
     },
     setNoteModal: (state, action) => {
       state.noteModal = action.payload;
@@ -51,10 +51,10 @@ export const {
   setTheme,
   setPath,
   setSnackbar,
-  setSettingsModal,
+  setModalGlobalSettings,
   setAddFolderModal,
   setNoteModal,
-  setEditFolderModal,
+  setModalFolderSettings,
   setEditNoteModal
 } = appSlice.actions;
 export default appSlice.reducer;

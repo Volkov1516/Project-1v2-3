@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setTheme, setSnackbar, setSettingsModal, setPath, setNoteModal } from 'redux/features/app/appSlice';
+import { setTheme, setSnackbar, setModalGlobalSettings, setPath, setNoteModal } from 'redux/features/app/appSlice';
 import { setUser, updateUserName, updateUserPhoto } from 'redux/features/user/userSlice';
 import { updateNotesCache, setActiveNote } from 'redux/features/note/noteSlice';
 import { db, auth, storage } from 'services/firebase.js';
@@ -23,7 +23,7 @@ import patreon from 'assets/images/patreon.svg';
 export const Settings = () => {
   const dispatch = useDispatch();
 
-  const { windowWidth, theme, settingsModal } = useSelector(state => state.app);
+  const { windowWidth, theme, modalGlobalSettings } = useSelector(state => state.app);
   const { userId, userEmail, userName, userPhoto } = useSelector(state => state.user);
 
   const fileInputRef = useRef(null);
@@ -96,7 +96,7 @@ export const Settings = () => {
       }));
       dispatch(setNoteModal(false));
       dispatch(setPath(['root']));
-      dispatch(setSettingsModal(false));
+      dispatch(setModalGlobalSettings(false));
 
       window.history.replaceState(null, '', '/');
     } catch (error) {
@@ -104,10 +104,10 @@ export const Settings = () => {
     }
   };
 
-  const handleClose = () => windowWidth <= 480 ? window.history.back() : dispatch(setSettingsModal(false));
+  const handleClose = () => windowWidth <= 480 ? window.history.back() : dispatch(setModalGlobalSettings(false));
 
   return (
-    <Modal open={settingsModal} close={handleClose} fullWidth={true}>
+    <Modal open={modalGlobalSettings} close={handleClose} fullWidth={true}>
       <div className={css.sections}>
         <section className={css.section}>
           <div className={css.accountGroup}>

@@ -1,26 +1,25 @@
 .container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   user-select: none;
 }
 
 .folder {
-  position: relative;
   width: 120px;
-  padding: 0px 8px 8px;
+  height: auto;
+  padding: 8px;
   transition: background-color 0.1s ease-in;
 }
 
-.folderImg {
+.img {
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 
-.folderName {
+.name {
   display: inline-block;
-  width: 104px;
+  width: 100%;
+  margin-top: 8px;
   font-size: 14px;
   text-align: center;
   white-space: nowrap;
@@ -28,11 +27,15 @@
   overflow: hidden;
 }
 
-.eiditFolderModalContent {
+.modal {
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 8px;
+}
+
+.placeholder {
+  opacity: 0;
 }
 
 .contextMenu {
@@ -73,26 +76,19 @@
 }
 
 @media (max-width: 480px) {
-  .container.containerOffset {
+  .container {
     padding: 8px;
   }
 
   .folder {
-    width: calc(50vw - 8px);
-    padding: 0px 8px 0px;
-  }
-
-  .folderImg {
     width: 100%;
-    height: 100%;
   }
 
-  .folderName {
-    width: calc(50vw - 24px);
+  .name {
     font-size: 16px;
   }
 
-  .folder.touch {
+  .touch {
     background-color: var(--secondaryElementHover);
   }
 }

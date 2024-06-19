@@ -1,5 +1,5 @@
 import { Dock } from './Dock/Dock';
-import { Manager } from './Manager/Manager';
+import { Vault } from './Vault/Vault';
 import { EditorModal } from './EditorModal/EditorModal';
 import { Snackbar } from 'components/Snackbar/Snackbar';
 
@@ -9,7 +9,7 @@ export const Home = () => {
   return (
     <div className={css.container}>
       <Dock />
-      <Manager />
+      <Vault />
       <EditorModal />
       <Snackbar />
     </div>
