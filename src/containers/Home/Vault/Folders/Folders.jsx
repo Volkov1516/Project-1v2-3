@@ -91,13 +91,14 @@ export const Folders = ({ folders }) => {
           const elementFromPoint = document.elementFromPoint(x, y);
           const containerRect = containerRef.current.getBoundingClientRect();
           const isOutside = x < containerRect.left || x > containerRect.right || y < containerRect.top || y > containerRect.bottom;
-          const targetElementId = elementFromPoint.getAttribute('data-id');
           const draggableElementId = e.item.getAttribute('data-id');
+          const targetElementId = elementFromPoint.getAttribute('data-id');
+          const targetElementType = elementFromPoint.getAttribute('data-type');
 
-          if (isOutside && targetElementId !== 'folder-navigation') {
+          if (isOutside && targetElementType !== 'navigation') {
             return;
           }
-          else if (isOutside && targetElementId === 'folder-navigation') {
+          else if (isOutside && targetElementType === 'navigation') {
             dispatch(dndOutside({ type: 'folders', items: folders, oldIndex: e.oldIndex }));
           }
           else if (overFolder && targetElementId && targetElementId !== draggableElementId) {

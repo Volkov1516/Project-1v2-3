@@ -80,10 +80,10 @@ export const Notes = ({ notes }) => {
           const targetElementId = elementFromPoint.getAttribute('data-id');
           const targetElementType = elementFromPoint.getAttribute('data-type');
 
-          if (isOutside && targetElementId !== 'folder-navigation' && targetElementType !== 'folder') {
+          if (isOutside && targetElementType !== 'navigation' && targetElementType !== 'folder') {
             return;
           }
-          else if (isOutside && targetElementId === 'folder-navigation') {
+          else if (isOutside && targetElementType === 'navigation') {
             dispatch(dndOutside({ type: 'notes', items: notes, oldIndex: e.oldIndex }));
           }
           else if (isOutside && targetElementType === 'folder') {

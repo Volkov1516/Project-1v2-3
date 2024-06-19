@@ -43,7 +43,7 @@
     border-right: 1px solid var(--borderColor);
   }
 
-  .dividerFolders, .dividerNotes {
+  .divider {
     border-bottom: 1px solid var(--borderColor);
   }
 }
