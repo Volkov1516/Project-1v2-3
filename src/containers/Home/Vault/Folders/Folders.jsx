@@ -131,9 +131,9 @@ export const Folders = ({ folders }) => {
     }
   }, [dispatch, folders, windowWidth, modalFolderSettings]);
 
-  const handleTouchStart = e => e.currentTarget.classList.add(css.touch);
+  // const handleTouchStart = e => e.currentTarget.classList.add(css.touch);
 
-  const handleTouchEnd = e => e.currentTarget.classList.remove(css.touch);
+  // const handleTouchEnd = e => e.currentTarget.classList.remove(css.touch);
 
   const handleOpenFolder = (id) => {
     if (windowWidth <= 480) {
@@ -195,7 +195,7 @@ export const Folders = ({ folders }) => {
   return (
     <div ref={containerRef} className={css.container}>
       {folders?.map(i => (
-        <div key={i.id} data-id={i.id} data-type="folder" data-name={i.name} className={css.folder} onClick={() => handleOpenFolder(i.id)} onContextMenu={e => handleContextMenu(e, i.id, i.name)} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+        <div key={i.id} data-id={i.id} data-type="folder" data-name={i.name} className={css.folder} onClick={() => handleOpenFolder(i.id)} onContextMenu={e => handleContextMenu(e, i.id, i.name)}>
           <img data-id={i.id} data-type="folder" className={css.img} src={folderImg} alt="folder" onContextMenu={e => e.preventDefault()} />
           <span data-id={i.id} data-type="folder" className={css.name}>{i.name}</span>
           {ReactDOM.createPortal(
