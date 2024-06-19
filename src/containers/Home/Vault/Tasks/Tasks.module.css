@@ -150,6 +150,10 @@
   background-color: var(--primaryElementColor);
 }
 
+.placeholder {
+  opacity: 0;
+}
+
 @media (hover: hover) {
   .checkboxContainer:hover {
     background-color: var(--secondaryElementHover);

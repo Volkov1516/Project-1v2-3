@@ -36,11 +36,12 @@ export const Notes = ({ notes }) => {
     if (containerRef.current) {
       const sortable = new Sortable(containerRef.current, {
         animation: 200,
-        delay: 300,
+        delay: 200,
         delayOnTouchOnly: true,
         disabled: editNoteModal,
         scroll: true,
         scrollSensitivity: 100,
+        ghostClass: `${css.placeholder}`,
         onChoose: (e) => {
           if (windowWidth <= 480) {
             holdTimeout.current = setTimeout(() => {
@@ -98,6 +99,10 @@ export const Notes = ({ notes }) => {
       return () => sortable && sortable.destroy();
     }
   }, [dispatch, notes, windowWidth, editNoteModal]);
+
+  const handleTouchStart = e => e.currentTarget.classList.add(css.touch);
+
+  const handleTouchEnd = e => e.currentTarget.classList.remove(css.touch);
 
   const handleOpenNote = async (id) => {
     // STEP 1: Return if this note is openned (need to clean up activeNoteId after close!)
@@ -251,7 +256,7 @@ export const Notes = ({ notes }) => {
   return (
     <div ref={containerRef} className={css.container}>
       {notes?.map(i => (
-        <div key={i.id} data-id={i.id} data-title={i.title} className={`${css.note} ${activeNoteId === i.id && css.active}`} onClick={() => handleOpenNote(i.id)}>
+        <div key={i.id} data-id={i.id} data-title={i.title} className={`${css.note} ${activeNoteId === i.id && css.active}`} onClick={() => handleOpenNote(i.id)} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
           <span className={css.icon}>
             <IconButton path={DOC} variant="secondary" />
           </span>

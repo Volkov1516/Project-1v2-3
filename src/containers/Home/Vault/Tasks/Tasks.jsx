@@ -36,10 +36,11 @@ export const Tasks = ({ tasks }) => {
     if (containerRef.current) {
       const sortable = new Sortable(containerRef.current, {
         animation: 200,
-        delay: 300,
+        delay: 200,
         delayOnTouchOnly: true,
         scroll: true,
         scrollSensitivity: 100,
+        ghostClass: `${css.placeholder}`,
         onStart: () => {
           clearTimeout(holdTimeout.current);
         },
