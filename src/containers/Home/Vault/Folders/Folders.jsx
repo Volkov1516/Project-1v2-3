@@ -52,7 +52,6 @@ export const Folders = ({ folders }) => {
         scroll: true,
         scrollSensitivity: 100,
         ghostClass: `${css.placeholder}`,
-        chosenClass: `${css.choosen}`,
         onChoose: (e) => {
           if (windowWidth <= 480) {
             holdTimeout.current = setTimeout(() => {
@@ -172,13 +171,13 @@ export const Folders = ({ folders }) => {
   };
 
   const handleContextMenu = (e, id, name) => {
-    e.preventDefault();
-
-    setFoldeId(id);
-    setInitialFolderNameInputValue(name);
-    setFolderNameInputValue(name);
-
     if (windowWidth > 480) {
+      e.preventDefault();
+
+      setFoldeId(id);
+      setInitialFolderNameInputValue(name);
+      setFolderNameInputValue(name);
+
       setPosition({ top: e.pageY, left: e.pageX, visibility: 'visible' });
     }
   };
