@@ -36,7 +36,7 @@ export const Notes = ({ notes }) => {
     if (containerRef.current) {
       const sortable = new Sortable(containerRef.current, {
         animation: 200,
-        delay: 200,
+        delay: 300,
         delayOnTouchOnly: true,
         disabled: editNoteModal,
         scroll: true,
