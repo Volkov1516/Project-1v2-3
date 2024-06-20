@@ -5,11 +5,11 @@ import { setActiveNote } from 'redux/features/note/noteSlice';
 
 import { Header } from './Header/Header';
 import { Title } from './Title/Title';
-import { Editor } from './Editor/Editor';
+import { Lexical } from './Lexical/Lexical';
 
-import css from './EditorModal.module.css';
+import css from './Editor.module.css';
 
-export const EditorModal = memo(function MemoizedEditorModal() {
+export const Editor = memo(function MemoizedEditorModal() {
   const dispatch = useDispatch();
 
   const { windowWidth, noteModal } = useSelector(state => state.app);
@@ -41,7 +41,7 @@ export const EditorModal = memo(function MemoizedEditorModal() {
         <Header handleClose={handleClose} />
         <div ref={editorRef} className={css.editor}>
           <Title ref={titleRef} />
-          <Editor editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
+          <Lexical editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
         </div>
       </div>
     </div>

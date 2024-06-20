@@ -25,9 +25,9 @@ import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 
 import { MainTheme } from './themes/MainTheme';
 
-import css from './Editor.module.css';
+import css from './Lexical.module.css';
 
-export const Editor = ({ editorRef, titleRef, saving, setSaving }) => {
+export const Lexical = ({ editorRef, titleRef, saving, setSaving }) => {
   let editorStateAutoSaveTimeout;
 
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export const Editor = ({ editorRef, titleRef, saving, setSaving }) => {
   const { notesCache, isNewNote, activeNoteId, activeNoteContent } = useSelector(state => state.note);
 
   const initialConfig = {
-    namespace: 'Editor',
+    namespace: 'Lexical',
     editorState: activeNoteContent,
     theme: MainTheme,
     nodes: [
