@@ -24,7 +24,7 @@ export const Tasks = ({ tasks }) => {
   useEffect(() => {
     if (activeTaskId) {
       const container = document.getElementById(activeTaskId);
-      const targetDiv = container?.children[0].children[1];
+      const targetDiv = container?.children[1];
 
       if (targetDiv && targetDiv.contentEditable) {
         targetDiv.focus();
@@ -133,7 +133,7 @@ export const Tasks = ({ tasks }) => {
   return (
     <div ref={containerRef} id="task" className={css.conatiner}>
       {tasks?.map(i => (
-        <div key={i.id} className={css.task}>
+        <div id={i.id} key={i.id} className={css.task}>
           <div
             className={css.checkboxContainer}
             onClick={(e) => handleStatusMenuOpen(i.id)}
