@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNoteModal } from 'redux/features/app/appSlice';
+import { setActiveNote } from 'redux/features/note/noteSlice';
 
 import { IconButton } from 'components/IconButton/IconButton';
 import { Tooltip } from 'components/Tooltip/Tooltip';
@@ -8,22 +10,40 @@ import css from './Header.module.css';
 
 import { EXPAND, ARROW_BACK, CLOUD, LOCK, CLOSE } from 'utils/variables';
 
-export const Header = ({ handleClose }) => {
+export const Header = ({ containerRef }) => {
+  const dispatch = useDispatch();
+
+  const { windowWidth } = useSelector(state => state.app);
   const { isNewNote } = useSelector(state => state.note);
 
   const [expanded, setExpanded] = useState(null);
 
-  const handleExpand = () => {
-    let element = document.getElementById('editorModalContainer');
-
-    if (expanded) {
-      element.style.width = 'calc(100vw - 298px)';
+  const handleClose = () => {
+    if (windowWidth <= 480) {
+      window.history.back();
     }
     else {
-      element.style.width = '100vw';
+      dispatch(setActiveNote({
+        isNew: null,
+        id: null,
+        title: null,
+        content: null
+      }));
+      dispatch(setNoteModal(false));
     }
+  };
 
-    setExpanded(!expanded);
+  const handleExpand = () => {
+    if (containerRef) {
+      if (expanded) {
+        containerRef.current.style.width = 'calc(100vw - 298px)';
+      }
+      else {
+        containerRef.current.style.width = '100vw';
+      }
+
+      setExpanded(!expanded);
+    }
   };
 
   return (
