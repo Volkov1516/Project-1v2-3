@@ -56,11 +56,11 @@ export const Vault = memo(function MemoizedComponent() {
         </div>
       )}
       <div ref={contentRef} className={css.content}>
-        <Folders folders={folder?.folders} />
+        {folder?.folders.length > 0 && <Folders folders={folder?.folders} />}
         {(folder?.folders.length > 0 && (folder?.notes.length > 0 || folder?.tasks.length > 0)) && <div className={css.divider} />}
-        <Notes notes={folder?.notes} />
+        {folder?.notes.length > 0 && <Notes notes={folder?.notes} />}
         {(folder?.notes.length > 0 && folder?.tasks.length > 0) && <div className={css.divider} />}
-        <Tasks tasks={folder?.tasks} />
+        {folder?.tasks.length > 0 && <Tasks tasks={folder?.tasks} />}
       </div>
     </div>
   );
