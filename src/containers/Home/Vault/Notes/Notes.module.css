@@ -1,3 +1,13 @@
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -5,6 +15,7 @@
 }
 
 .note {
+  position: relative;
   display: flex;
   align-items: center;
   width: 100%;
@@ -33,6 +44,28 @@
 
 .placeholder {
   opacity: 0;
+}
+
+.loadingContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--backgroundPrimary);
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 1px solid transparent;
+  border-top: 1px solid var(--spinerColor);
+  border-right: 1px solid var(--spinerColor);
+  border-radius: 50%;
+  animation: spinner 1s linear infinite;
 }
 
 @media (hover: hover) {
@@ -74,6 +107,18 @@
 
   .icon, .iconMore {
     display: none;
+  }
+
+  .loadingContainer {
+    background-color: var(--backgroundPrimary);
+  }
+
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--spinerColor);
+    border-right: 2px solid var(--spinerColor);
   }
 
   .note.touch {

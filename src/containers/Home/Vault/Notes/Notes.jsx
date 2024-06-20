@@ -31,6 +31,7 @@ export const Notes = ({ notes }) => {
   const [titleInputValue, setTitleInputValue] = useState('');
   const [titleDeleteValue, setTitleDeleteValue] = useState('');
   const [titleDeleteInputValue, setTitleDeleteInputValue] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -105,6 +106,8 @@ export const Notes = ({ notes }) => {
   const handleTouchEnd = e => e.currentTarget.classList.remove(css.touch);
 
   const handleOpenNote = async (id) => {
+    setLoading(id);
+
     // STEP 1: Return if this note is openned (need to clean up activeNoteId after close!)
     // if (activeNoteId === id) return;
 
@@ -138,6 +141,7 @@ export const Notes = ({ notes }) => {
         dispatch(updateNotesCache(newNotesCache));
       } catch (error) {
         dispatch(setSnackbar('Faild to open the note'));
+        setLoading(false);
         return;
       }
     }
@@ -153,6 +157,7 @@ export const Notes = ({ notes }) => {
 
     // STEP 5: Update URL
     windowWidth <= 480 && (window.location.hash = 'editor');
+    setLoading(false);
   };
 
   const handleOpenEditNoteModal = (e, id, title) => {
@@ -266,6 +271,11 @@ export const Notes = ({ notes }) => {
               <IconButton path={MORE_VERTICAL} variant="secondary" onClick={handleOpenEditNoteModal} />
             </Tooltip>
           </span>
+          {loading && loading === i.id && (
+            <div className={css.loadingContainer}>
+              <div className={css.spinner} />
+            </div>
+          )}
         </div>
       ))}
       <Modal open={editNoteModal} close={handleCloseEditNote}>
