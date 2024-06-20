@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setNoteModal } from 'redux/features/app/appSlice';
+import { setNoteModal, setLockEditor } from 'redux/features/app/appSlice';
 import { setActiveNote } from 'redux/features/note/noteSlice';
 
 import { IconButton } from 'components/IconButton/IconButton';
@@ -8,12 +8,12 @@ import { Tooltip } from 'components/Tooltip/Tooltip';
 
 import css from './Header.module.css';
 
-import { EXPAND, ARROW_BACK, CLOUD, LOCK, CLOSE } from 'utils/variables';
+import { EXPAND, ARROW_BACK, CLOUD, LOCK, UNLOCK, CLOSE } from 'utils/variables';
 
 export const Header = ({ containerRef }) => {
   const dispatch = useDispatch();
 
-  const { windowWidth } = useSelector(state => state.app);
+  const { windowWidth, lockEditor } = useSelector(state => state.app);
   const { isNewNote } = useSelector(state => state.note);
 
   const [expanded, setExpanded] = useState(null);
@@ -60,7 +60,10 @@ export const Header = ({ containerRef }) => {
       </div>
       <div className={css.end}>
         {!isNewNote && <Tooltip preferablePosition="bottom" content="Sycn"><IconButton variant="secondary" path={CLOUD} /></Tooltip>}
-        {!isNewNote && <Tooltip preferablePosition="bottom" content="Lock"><IconButton variant="secondary" path={LOCK} /></Tooltip>}
+        {!isNewNote && lockEditor
+          ? <Tooltip preferablePosition="bottom" content="Unlock"><IconButton variant="secondary" path={LOCK} onClick={() => dispatch(setLockEditor(false))} /></Tooltip>
+          : <Tooltip preferablePosition="bottom" content="Lock"><IconButton variant="secondary" path={UNLOCK} onClick={() => dispatch(setLockEditor(true))} /></Tooltip>
+        }
         <div className={css.close}>
           <Tooltip preferablePosition="bottom" content="Close">
             <IconButton variant="secondary" path={CLOSE} onClick={handleClose} />

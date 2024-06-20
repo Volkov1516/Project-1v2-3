@@ -26,6 +26,7 @@ import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { MainTheme } from './themes/MainTheme';
 
 import css from './Lexical.module.css';
+import { LockPlugin } from './plugins/LockPlugin/LockPlugin';
 
 export const Lexical = ({ editorRef, titleRef, saving, setSaving }) => {
   let editorStateAutoSaveTimeout;
@@ -124,6 +125,7 @@ export const Lexical = ({ editorRef, titleRef, saving, setSaving }) => {
         <ListPlugin />
         <CheckListPlugin />
         <HorizontalRulePlugin />
+        <LockPlugin />
       </div>
     </LexicalComposer>
   );
