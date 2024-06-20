@@ -34,7 +34,7 @@
   position: relative;
   overflow: auto;
   scroll-behavior: smooth;
-  padding: 16px 16px 50vh;
+  padding: 16px 16px 75vh;
 }
 
 @media (max-width: 480px) {
