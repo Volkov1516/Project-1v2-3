@@ -7,9 +7,9 @@ import css from './Modal.module.css';
 
 import { CLOSE } from 'utils/variables';
 
-export const Modal = ({ open, close, loading, fullWidth, children }) => {
+export const Modal = ({ open, close, loading, fullWidth, stickToTop, children }) => {
   return open && createPortal(
-    <div className={css.container} onClick={close}>
+    <div className={`${css.container} ${stickToTop && css.stickToTop}`} onClick={close}>
       <div className={`${css.content} ${fullWidth && css.fullWidth}`} onClick={(e) => e.stopPropagation()}>
         <div className={css.header}>
           <Tooltip preferablePosition="bottom" content="Close">

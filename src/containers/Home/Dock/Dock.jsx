@@ -180,7 +180,7 @@ export const Dock = () => {
           <Avatar src={userPhoto} alt="avatar" size="small" onClick={handleOpenSettings} />
         </Tooltip>
       </div>
-      <Modal open={addFolderModal} close={handleCloseAddFolder}>
+      <Modal open={addFolderModal} close={handleCloseAddFolder} stickToTop={true}>
         <div className={css.createFolderModalContent}>
           <Input id="folderNameId" label="Folder name" autofocus placeholder="Enter folder name" value={folderNameInputValue} onChange={e => setFolderNameInput(e.target.value)} onEnter={handleCreateFolder} />
           <Button variant="outlined" disabled={!folderNameInputValue} onClick={handleCreateFolder}>Create folder</Button>
