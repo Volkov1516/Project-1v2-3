@@ -32,6 +32,13 @@
   fill: var(--secondaryElementColor);
 }
 
+.secondary>svg.disabled {
+  width: 24px;
+  height: 24px;
+  margin: 8px;
+  fill: var(--fontColorQuote);
+}
+
 .tooltip {
   background-color: var(--secondaryElementBackground);
 }
@@ -100,6 +107,14 @@
     height: 32px;
   }
 
+  .secondary>svg.disabled {
+    width: 32px;
+    height: 32px;
+    margin: 8px;
+    fill: var(--fontColorQuote);
+  }
+  
+
   .secondary.touch {
     background-color: var(--secondaryElementHover);
   }
@@ -121,4 +136,10 @@
   .snackbar.touch {
     background-color: var(--primaryElementHover);
   }
+}
+
+.button:disabled {
+  background-color: transparent;
+  color: var(--disabledElementColor);
+  cursor: not-allowed;
 }

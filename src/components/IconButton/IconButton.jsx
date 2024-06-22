@@ -5,6 +5,7 @@ export const IconButton = ({
   size,
   path,
   viewBox,
+  isDisabled,
   onClick,
   dataType
 }) => {
@@ -17,10 +18,11 @@ export const IconButton = ({
       data-type={dataType}
       className={`${css.button} ${css[variant]} ${css[size]}`}
       onClick={onClick}
+      disabled={isDisabled}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      <svg data-type={dataType} className={css.svg} viewBox={viewBox ?? '0 -960 960 960'} xmlns="http://www.w3.org/2000/svg">
+      <svg data-type={dataType} className={`${css.svg} ${isDisabled && css.disabled}`} viewBox={viewBox ?? '0 -960 960 960'} xmlns="http://www.w3.org/2000/svg">
         <path d={path} />
       </svg>
     </button>

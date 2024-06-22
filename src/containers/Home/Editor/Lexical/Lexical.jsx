@@ -17,19 +17,18 @@ import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-
 import { ToolbarBlockPlugin } from './plugins/ToolbarBlockPlugin/ToolbarBlockPlugin';
 import { ToolbarTextPlugin } from './plugins/ToolbarTextPlugin/ToolbarTextPlugin';
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
-
+import { LockPlugin } from './plugins/LockPlugin/LockPlugin';
+import { ManualHistoryPlugin } from './plugins/ManualHistoryPlugin/ManualHistoryPlugin';
 import { MainTheme } from './themes/MainTheme';
 
 import css from './Lexical.module.css';
-import { LockPlugin } from './plugins/LockPlugin/LockPlugin';
 
-export const Lexical = ({ editorRef, titleRef, saving, setSaving }) => {
+export const Lexical = ({ editorRef, titleRef, saving, setSaving, onEditorChange }) => {
   let editorStateAutoSaveTimeout;
 
   const dispatch = useDispatch();
@@ -128,6 +127,7 @@ export const Lexical = ({ editorRef, titleRef, saving, setSaving }) => {
         <HorizontalRulePlugin />
         <LockPlugin />
         <HistoryPlugin />
+        <ManualHistoryPlugin onEditorChange={onEditorChange} />
       </div>
     </LexicalComposer>
   );

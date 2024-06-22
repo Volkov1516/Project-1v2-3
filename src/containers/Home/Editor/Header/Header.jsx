@@ -1,20 +1,21 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNoteModal, setLockEditor } from 'redux/features/app/appSlice';
-import { setActiveNote } from 'redux/features/note/noteSlice';
+import { setActiveNote, setCanUndo, setCanRedo } from 'redux/features/note/noteSlice';
+import { UNDO_COMMAND, REDO_COMMAND } from 'lexical';
 
 import { IconButton } from 'components/IconButton/IconButton';
 import { Tooltip } from 'components/Tooltip/Tooltip';
 
 import css from './Header.module.css';
 
-import { EXPAND, ARROW_BACK, CLOUD, LOCK, UNLOCK, CLOSE } from 'utils/variables';
+import { EXPAND, ARROW_BACK, UNDO, REDO, LOCK, UNLOCK, CLOSE } from 'utils/variables';
 
-export const Header = ({ containerRef }) => {
+export const Header = ({ containerRef, editor }) => {
   const dispatch = useDispatch();
 
   const { windowWidth, lockEditor } = useSelector(state => state.app);
-  const { isNewNote } = useSelector(state => state.note);
+  const { isNewNote, canUndo, canRedo } = useSelector(state => state.note);
 
   const [expanded, setExpanded] = useState(null);
 
@@ -31,6 +32,9 @@ export const Header = ({ containerRef }) => {
       }));
       dispatch(setNoteModal(false));
     }
+
+    dispatch(setCanUndo(false));
+    dispatch(setCanRedo(false));
   };
 
   const handleExpand = () => {
@@ -43,6 +47,18 @@ export const Header = ({ containerRef }) => {
       }
 
       setExpanded(!expanded);
+    }
+  };
+
+  const handleUndo = () => {
+    if (editor) {
+      editor.dispatchCommand(UNDO_COMMAND, undefined);
+    }
+  };
+
+  const handleRedo = () => {
+    if (editor) {
+      editor.dispatchCommand(REDO_COMMAND, undefined);
     }
   };
 
@@ -59,7 +75,12 @@ export const Header = ({ containerRef }) => {
         </div>
       </div>
       <div className={css.end}>
-        {!isNewNote && <Tooltip preferablePosition="bottom" content="Sycn"><IconButton variant="secondary" path={CLOUD} /></Tooltip>}
+        <Tooltip preferablePosition="bottom" content="Undo">
+          <IconButton variant="secondary" path={UNDO} isDisabled={!canUndo} onClick={handleUndo} />
+        </Tooltip>
+        <Tooltip preferablePosition="bottom" content="Redo">
+          <IconButton variant="secondary" path={REDO} isDisabled={!canRedo} onClick={handleRedo} />
+        </Tooltip>
         {!isNewNote && lockEditor
           ? <Tooltip preferablePosition="bottom" content="Unlock"><IconButton variant="secondary" path={LOCK} onClick={() => dispatch(setLockEditor(false))} /></Tooltip>
           : <Tooltip preferablePosition="bottom" content="Lock"><IconButton variant="secondary" path={UNLOCK} onClick={() => dispatch(setLockEditor(true))} /></Tooltip>

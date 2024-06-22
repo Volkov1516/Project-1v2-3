@@ -16,14 +16,15 @@ export const Editor = memo(function MemoizedEditorModal() {
   const titleRef = useRef(null);
 
   const [saving, setSaving] = useState(false);
+  const [editor, setEditor] = useState(null);
 
   return noteModal && (
     <div ref={containerRef} key={activeNoteId} className={css.container}>
       <div className={css.content}>
-        <Header containerRef={containerRef} />
+        <Header containerRef={containerRef} editor={editor} />
         <div ref={editorRef} className={css.editor}>
           <Title ref={titleRef} />
-          <Lexical editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} />
+          <Lexical editorRef={editorRef} titleRef={titleRef} saving={saving} setSaving={setSaving} onEditorChange={setEditor} />
         </div>
       </div>
     </div>

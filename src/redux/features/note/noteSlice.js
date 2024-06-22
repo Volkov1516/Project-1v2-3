@@ -6,6 +6,8 @@ const initialState = {
   activeNoteId: null,
   activeNoteTitle: null,
   activeNoteContent: null,
+  canUndo: false,
+  canRedo: false,
 };
 
 export const noteSlice = createSlice({
@@ -26,9 +28,15 @@ export const noteSlice = createSlice({
     },
     updateActiveNoteTitle: (state, action) => {
       state.activeNoteTitle = action.payload;
-    }
+    },
+    setCanUndo: (state, action) => {
+      state.canUndo = action.payload;
+    },
+    setCanRedo: (state, action) => {
+      state.canRedo = action.payload;
+    },
   }
 });
 
-export const { updateNotesCache, setActiveNote, updateActiveNoteTitle, updateIsNewNote } = noteSlice.actions;
+export const { updateNotesCache, setActiveNote, updateActiveNoteTitle, updateIsNewNote, setCanUndo, setCanRedo } = noteSlice.actions;
 export default noteSlice.reducer;
