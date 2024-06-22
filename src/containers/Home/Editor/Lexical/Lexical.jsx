@@ -15,6 +15,7 @@ import { ListItemNode, ListNode } from '@lexical/list';
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 
 import { ToolbarBlockPlugin } from './plugins/ToolbarBlockPlugin/ToolbarBlockPlugin';
@@ -76,7 +77,7 @@ export const Lexical = ({ editorRef, titleRef, saving, setSaving }) => {
               title: 'Untitled'
             };
 
-            dispatch(createInDocuments({type: 'notes', obj: newNote}));
+            dispatch(createInDocuments({ type: 'notes', obj: newNote }));
 
             await setDoc(doc(db, 'notes', activeNoteId), { content: state }, { merge: true });
 
@@ -126,6 +127,7 @@ export const Lexical = ({ editorRef, titleRef, saving, setSaving }) => {
         <CheckListPlugin />
         <HorizontalRulePlugin />
         <LockPlugin />
+        <HistoryPlugin />
       </div>
     </LexicalComposer>
   );
