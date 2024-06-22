@@ -1,4 +1,4 @@
-import { useEffect, forwardRef } from 'react';
+import { useEffect, useState, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
 import { createInDocuments, updateInDocuments } from 'redux/features/user/userSlice';
@@ -13,6 +13,8 @@ export const Title = forwardRef(function MyTitle(props, ref) {
 
   const { notesCache, isNewNote, activeNoteId, activeNoteTitle } = useSelector(state => state.note);
 
+  const [initialValue, setInitialValue] = useState(null);
+
   useEffect(() => {
     if (ref?.current) {
       ref.current.style.height = 'auto';
@@ -20,11 +22,15 @@ export const Title = forwardRef(function MyTitle(props, ref) {
     }
   }, [activeNoteTitle, ref]);
 
+  const handleClick = e => setInitialValue(e.target.value);
+
   const handleEnter = e => e.key === 'Enter' && e.preventDefault();
 
   const handleTitleChange = e => dispatch(updateActiveNoteTitle(e.target.value));
 
   const handleTitleBlur = async () => {
+    if (activeNoteTitle === initialValue) return;
+
     const newNote = {
       id: activeNoteId,
       title: activeNoteTitle || 'Untitled',
@@ -73,6 +79,7 @@ export const Title = forwardRef(function MyTitle(props, ref) {
         rows={1}
         spellCheck={false}
         value={activeNoteTitle}
+        onClick={handleClick}
         onKeyDown={handleEnter}
         onChange={handleTitleChange}
         onBlur={handleTitleBlur}
