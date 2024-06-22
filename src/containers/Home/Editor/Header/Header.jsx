@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNoteModal, setLockEditor } from 'redux/features/app/appSlice';
 import { setActiveNote, setCanUndo, setCanRedo } from 'redux/features/note/noteSlice';
@@ -17,7 +17,27 @@ export const Header = ({ containerRef, editor }) => {
   const { windowWidth, lockEditor } = useSelector(state => state.app);
   const { isNewNote, canUndo, canRedo } = useSelector(state => state.note);
 
+  const headerRef = useRef(null);
+
   const [expanded, setExpanded] = useState(null);
+
+  useEffect(() => {
+    const updateBottomOffset = () => {
+      if (window.visualViewport) {
+        // headerRef.current.style.bottom = `${window.visualViewport.height - window.innerHeight}px`;
+        headerRef.current.style.bottom = (window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop) + 'px';
+      }
+    };
+
+    updateBottomOffset();
+    window.visualViewport.addEventListener('resize', updateBottomOffset);
+    window.visualViewport.addEventListener('scroll', updateBottomOffset);
+
+    return () => {
+      window.visualViewport.removeEventListener('resize', updateBottomOffset);
+      window.visualViewport.removeEventListener('scroll', updateBottomOffset);
+    };
+  }, []);
 
   const handleClose = () => {
     if (windowWidth <= 480) {
@@ -63,7 +83,7 @@ export const Header = ({ containerRef, editor }) => {
   };
 
   return (
-    <div className={css.container}>
+    <div ref={headerRef} className={css.container}>
       <div className={css.start}>
         <Tooltip preferablePosition="bottom" content={expanded ? "Collapse" : "Expand"}>
           <div className={`${css.expand} ${!expanded && css.rotateArrow}`}>
