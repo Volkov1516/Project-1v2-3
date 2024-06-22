@@ -30,7 +30,7 @@
 .code {
   padding: 4px;
   border-radius: 4px;
-  background-color: var(--gray200);
+  background-color: var(--backgroundCode);
   color: var(--fontColorPrimary);
   font-size: 14px;
   font-family: monospace;

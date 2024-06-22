@@ -105,6 +105,16 @@
   background-color: rgb(255, 212, 59, 0.5);
 }
 
+.colorNone {
+  color: var(--fontColorPrimary);
+}
+
+.transparentHighlight {
+  padding: 0px 8px;
+  background-color: transparent;
+  color: var(--fontColorPrimary);
+}
+
 .code {
   font-family: monospace;
 }

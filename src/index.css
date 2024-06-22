@@ -50,6 +50,7 @@
 body.light-theme {
   --backgroundPrimary: var(--white);
   --backgroundSecondary: var(--gray50);
+  --backgroundCode: var(--gray200);
   --borderColor: var(--gray200);
 
   --fontColorPrimary: var(--black);
@@ -76,6 +77,7 @@ body.light-theme {
 body.dark-theme {
   --backgroundPrimary: var(--gray1350);
   --backgroundSecondary: var(--gray1300);
+  --backgroundCode: var(--gray1200);
   --borderColor: var(--gray1200);
 
   --fontColorPrimary: var(--gray200);
