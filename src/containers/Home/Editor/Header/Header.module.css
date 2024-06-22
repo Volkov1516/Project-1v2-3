@@ -1,3 +1,13 @@
+.container {
+  flex: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px;
+  border-bottom: 1px solid var(--borderColor);
+}
+
 .end {
   display: flex;
   gap: 8px;
@@ -8,36 +18,12 @@
 }
 
 @media (min-width: 481px) {
-  .container {
-    flex: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 8px;
-    border-bottom: 1px solid var(--borderColor);
-  }
-  
   .arrowBack {
     display: none;
   }
 }
 
 @media (max-width: 480px) {
-  .container {
-    position: fixed;
-    top: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: fit-content;
-    padding: 8px;
-    border-bottom: 1px solid var(--borderColor);
-    background-color: var(--backgroundPrimary);
-    z-index: 2;
-  }
-
   .expand,
   .close {
     display: none;
