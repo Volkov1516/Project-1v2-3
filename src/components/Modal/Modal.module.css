@@ -30,11 +30,6 @@
   animation: modalFadeIn 0.1s ease-in;
 }
 
-.stickToTop {
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
 .content {
   position: relative;
   min-width: 300px;
