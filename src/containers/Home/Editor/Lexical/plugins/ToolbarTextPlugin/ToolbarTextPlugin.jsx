@@ -504,7 +504,7 @@ export const ToolbarTextPlugin = ({ modalEditorContentRef }) => {
             ref={copyRef}
             onClick={() => editor.dispatchCommand(COPY_COMMAND, null)}
           >
-            <IconButton variant="secondary" path={COPY} onClick={() => editor.dispatchCommand(COPY_COMMAND, null)} />
+            <IconButton variant="secondary" path={COPY} />
           </button>
         )}
         <button
