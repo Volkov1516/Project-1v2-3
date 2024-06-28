@@ -4,12 +4,12 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDQuCXvFFXPl6lTFEGvv8yuULlXX-MiHK4",
-  authDomain: "project-1-e93b8.firebaseapp.com",
-  projectId: "project-1-e93b8",
-  storageBucket: "project-1-e93b8.appspot.com",
-  messagingSenderId: "278998425236",
-  appId: "1:278998425236:web:55ed2508b7669722871e81"
+  apiKey: "AIzaSyB_hei1oxilN5rhwgbYs11sy_4LNGB_NTk",
+  authDomain: "omniumicon.firebaseapp.com",
+  projectId: "omniumicon",
+  storageBucket: "omniumicon.appspot.com",
+  messagingSenderId: "725228151476",
+  appId: "1:725228151476:web:cddcc09d002fe46a4e2de1"
 };
 
 const app = initializeApp(firebaseConfig);
