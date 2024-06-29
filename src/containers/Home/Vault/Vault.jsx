@@ -29,6 +29,8 @@ export const Vault = memo(function MemoizedComponent() {
   }, [path]);
 
   useEffect(() => {
+    if (!documents) return;
+
     const definePath = targetFolder => setFolder(targetFolder);
     findFolder(documents, path[path.length - 1], definePath);
   }, [documents, path]);

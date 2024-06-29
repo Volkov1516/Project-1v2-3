@@ -1,9 +1,16 @@
 import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit';
-
-import { db, storage } from 'services/firebase.js';
+import { auth, db, storage } from 'services/firebase.js';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  sendPasswordResetEmail
+} from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 
+import { normalizeAuthErrorMessage } from 'utils/normalizeAuthErrorMessage';
 import { findFolder } from 'utils/searchInManager.js';
 
 const initialState = {
@@ -16,8 +23,10 @@ const initialState = {
   documentsLoading: false,
   error: null,
 
-  authLoading: true,
-  authError: false,
+  authFormLoading: false,
+  authFormError: false,
+  authObserverLoading: true,
+  authObserverError: false,
 };
 
 export const userSlice = createSlice({
@@ -44,25 +53,50 @@ export const userSlice = createSlice({
       state.activeTaskId = action.payload;
     },
     setAuthLoading: (state, action) => {
-      state.authLoading = action.payload;
+      state.authObserverLoading = action.payload;
     }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUser.pending, (state) => {
-        state.authLoading = true;
+      .addCase(fetchUserThunk.pending, (state) => {
+        state.authObserverLoading = true;
       })
-      .addCase(fetchUser.fulfilled, (state, action) => {
+      .addCase(fetchUserThunk.fulfilled, (state, action) => {
         state.userId = action.payload.id;
         state.userEmail = action.payload.email;
         state.userName = action.payload.name;
         state.userPhoto = action.payload.photo;
         state.documents = action.payload.documents;
-        state.authLoading = false;
+        state.authObserverLoading = false;
       })
-      .addCase(fetchUser.rejected, (state, action) => {
-        state.authError = action.error;
-        state.authLoading = false;
+      .addCase(fetchUserThunk.rejected, (state, action) => {
+        state.authObserverError = action.error;
+        state.authObserverLoading = false;
+      })
+      .addMatcher(isAnyOf(
+        createUserWithEmailAndPasswordThunk.pending,
+        signInWithEmailAndPasswordThunk.pending,
+        signInWithGoogleThunk.pending,
+        sendPasswordResetEmailThunk.pending
+      ), (state) => {
+        state.authFormLoading = true;
+      })
+      .addMatcher(isAnyOf(
+        createUserWithEmailAndPasswordThunk.fulfilled,
+        signInWithEmailAndPasswordThunk.fulfilled,
+        signInWithGoogleThunk.fulfilled,
+        sendPasswordResetEmailThunk.fulfilled
+      ), (state) => {
+        state.authFormLoading = false;
+      })
+      .addMatcher(isAnyOf(
+        createUserWithEmailAndPasswordThunk.rejected,
+        signInWithEmailAndPasswordThunk.rejected,
+        signInWithGoogleThunk.rejected,
+        sendPasswordResetEmailThunk.rejected
+      ), (state, action) => {
+        state.authFormError = action.payload;
+        state.authFormLoading = false;
       })
       .addMatcher(isAnyOf(
         createInDocuments.pending,
@@ -116,27 +150,75 @@ export const userSlice = createSlice({
   }
 });
 
-export const fetchUser = createAsyncThunk('user/fetchUser', async (user) => {
-  const docRef = doc(db, 'users', user?.uid);
-  const docSnap = await getDoc(docRef);
-
-  let avatar;
-  const storageRef = ref(storage, `images/avatars/${user?.uid}`);
-  await getDownloadURL(storageRef).then(res => avatar = res).catch(err => console.error(err));
-
-  return {
-    id: user?.uid,
-    email: user?.email,
-    name: docSnap?.data()?.name || user?.displayName || null,
-    photo: avatar || null,
-    documents: docSnap?.data()?.documents || {
-      id: 'root',
-      folders: [],
-      notes: [],
-      tasks: []
-    }
-  };
+export const createUserWithEmailAndPasswordThunk = createAsyncThunk('user/createUserWithEmailAndPasswordThunk', async ({ email, password }, thunkAPI) => {
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    const message = normalizeAuthErrorMessage(error);
+    return thunkAPI.rejectWithValue(message);
+  }
 });
+
+export const signInWithEmailAndPasswordThunk = createAsyncThunk('user/signInWithEmailAndPasswordThunk', async ({ email, password }, thunkAPI) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    const message = normalizeAuthErrorMessage(error);
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const signInWithGoogleThunk = createAsyncThunk('user/signInWithGoogleThunk', async (_, thunkAPI) => {
+  try {
+    const provider = new GoogleAuthProvider();
+
+    await signInWithPopup(auth, provider);
+  } catch (error) {
+    const message = normalizeAuthErrorMessage(error);
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const sendPasswordResetEmailThunk = createAsyncThunk('user/sendPasswordResetEmailThunk', async ({ resetEmail }, thunkAPI) => {
+  try {
+    await sendPasswordResetEmail(auth, resetEmail);
+  } catch (error) {
+    const message = normalizeAuthErrorMessage(error);
+    return thunkAPI.rejectWithValue(message);
+  }
+});
+
+export const fetchUserThunk = createAsyncThunk('user/fetchUserThunk', async (user, thunkAPI) => {
+  const { uid, email, displayName, photoURL } = user;
+
+  try {
+    const docRef = doc(db, 'users', uid);
+    const docSnap = await getDoc(docRef);
+    const userData = docSnap.exists() ? docSnap.data() : {};
+
+    let avatar = null;
+    const storageRef = ref(storage, `images/avatars/${uid}`);
+    try {
+      avatar = await getDownloadURL(storageRef);
+    } catch (error) {
+      console.warn(error);
+    }
+
+    return {
+      id: uid,
+      email,
+      name: userData.name || displayName || null,
+      photo: avatar || photoURL || null
+    };
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
+
+
+
+
 
 export const createInDocuments = createAsyncThunk('user/createInDocuments', async (props, thunkAPI) => {
   const state = thunkAPI.getState();
@@ -425,7 +507,7 @@ export const {
   updateUserPhoto,
   updateDocuments,
   setActiveTaskId,
-  
+
   setAuthLoading
 } = userSlice.actions;
 export default userSlice.reducer;

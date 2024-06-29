@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { auth } from 'services/firebase.js';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-  sendPasswordResetEmail
-} from 'firebase/auth';
+  createUserWithEmailAndPasswordThunk,
+  signInWithEmailAndPasswordThunk,
+  signInWithGoogleThunk,
+  sendPasswordResetEmailThunk
+} from 'redux/features/user/userSlice';
 
 import { Button, Input } from 'components';
 
@@ -15,9 +14,11 @@ import css from './Auth.module.css';
 import logo from 'assets/images/logo.png';
 import google from 'assets/images/google.svg';
 
-import { normalizeAuthErrorMessage } from 'utils/normalizeAuthErrorMessage';
-
 export default function Auth() {
+  const dispatch = useDispatch();
+
+  const { authFormLoading, authFormError } = useSelector(state => state.user);
+
   const [formType, setFormType] = useState('Log in');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -25,7 +26,6 @@ export default function Auth() {
   const [focussedPassword, setFocussedPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
   const [resetMessage, setResetMessage] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleFocus = e => {
     switch (e.target.name) {
@@ -47,31 +47,28 @@ export default function Auth() {
     setFocussedPassword(false);
     setResetEmail('');
     setResetMessage(false);
-    setErrorMessage(null);
     setFormType(type);
   };
 
-  const onSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
 
     if (formType === 'Sing up') {
-      await createUserWithEmailAndPassword(auth, email, password).catch(error => normalizeAuthErrorMessage(error, setErrorMessage));
+      dispatch(createUserWithEmailAndPasswordThunk({ email, password }));
     }
     else if (formType === 'Log in') {
-      await signInWithEmailAndPassword(auth, email, password).catch(error => normalizeAuthErrorMessage(error, setErrorMessage));
+      dispatch(signInWithEmailAndPasswordThunk({ email, password }));
     }
   };
 
-  const handleGoogle = async () => {
-    const provider = new GoogleAuthProvider();
+  const handleGoogle = () => dispatch(signInWithGoogleThunk());
 
-    await signInWithPopup(auth, provider).catch(error => normalizeAuthErrorMessage(error, setErrorMessage));
-  };
-
-  const handleResetPassword = async () => {
+  const handleResetPassword = () => {
     if (!resetEmail) return;
 
-    await sendPasswordResetEmail(auth, resetEmail).then(() => setResetMessage(true)).catch(error => normalizeAuthErrorMessage(error, setErrorMessage));
+    dispatch(sendPasswordResetEmailThunk({ resetEmail }));
+
+    setResetMessage(true);
   };
 
   return (
@@ -85,7 +82,7 @@ export default function Auth() {
       {formType === "Reset" ? (
         <div className={css.resetContainer}>
           <div className={css.title}>Reset Password</div>
-          <div className={css.errorContainer}>{errorMessage}</div>
+          <div className={css.errorContainer}>{authFormError}</div>
           <div className={css.resetForm}>
             <Input id="resetInput" type="email" placeholder="Enter your email" value={resetEmail} fullWidth onChange={(e) => setResetEmail(e.target.value)} />
             <Button variant="outlined" fullWidth disabled={!resetEmail} onClick={handleResetPassword}>Send email</Button>
@@ -96,8 +93,8 @@ export default function Auth() {
       ) : (
         <div className={css.authContainer}>
           <div className={css.title}>{formType}</div>
-          {errorMessage && <div className={css.errorContainer}>{errorMessage}</div>}
-          <form className={css.form} onSubmit={onSubmit}>
+          {authFormError && <div className={css.errorContainer}>{authFormError}</div>}
+          <form className={css.form} onSubmit={handleSubmit}>
             <div className={css.fieldContainer}>
               <Input
                 id="email"
@@ -107,7 +104,7 @@ export default function Auth() {
                 required={true}
                 autocomplete="on"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 onBlur={handleFocus}
                 dataFocussed={focussedEmail.toString()}
                 label="Email"
@@ -124,17 +121,17 @@ export default function Auth() {
                 autocomplete="on"
                 pattern="[0-9a-zA-Z]{6,}"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
                 onBlur={handleFocus}
                 dataFocussed={focussedPassword.toString()}
                 label="Password"
                 error="Invalid password"
               />
             </div>
-            <Button type="submit" variant="outlined" disabled={!email || !password}>Continue with email</Button>
+            <Button type="submit" variant="outlined" loading={authFormLoading} disabled={!email || !password}>Continue with email</Button>
             {formType === "Log in" && <Button variant="text" onClick={() => handleToggleForm("Reset")}>Forgot password</Button>}
             <hr className={css.divider} />
-            <Button variant="contained" icon={google} iconAlt="google" onClick={handleGoogle}>Continue with Google</Button>
+            <Button variant="contained" icon={google} iconAlt="google" loading={authFormLoading} onClick={handleGoogle}>Continue with Google</Button>
           </form>
           {formType === "Log in" ? (
             <>

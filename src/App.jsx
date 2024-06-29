@@ -7,15 +7,15 @@ import { Home } from 'containers/Home/Home';
 const LazyAuth = lazy(() => import('containers/Auth/Auth'));
 
 export const App = () => {
-  const { userId, authLoading, authError } = useAuth();
+  const { userId, authObserverLoading, authObserverError } = useAuth();
   useHistoryReset();
   useNavigation();
   useTheme();
   useWindowResize();
 
-  if (authLoading) return <Loading />;
+  if (authObserverLoading) return <Loading />;
 
-  if (authError) return <Error error={authError} />;
+  if (authObserverError) return <Error error={authObserverError} />;
 
   return userId ? <Home /> : <Suspense fallback={<Loading />}><LazyAuth /></Suspense>;
 };
