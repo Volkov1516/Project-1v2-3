@@ -13,9 +13,11 @@ const initialState = {
   userPhoto: null,
   documents: null,
   activeTaskId: null,
-  authLoading: true,
   documentsLoading: false,
-  error: null
+  error: null,
+
+  authLoading: true,
+  authError: false,
 };
 
 export const userSlice = createSlice({
@@ -41,7 +43,7 @@ export const userSlice = createSlice({
     setActiveTaskId: (state, action) => {
       state.activeTaskId = action.payload;
     },
-    setLoading: (state, action) => {
+    setAuthLoading: (state, action) => {
       state.authLoading = action.payload;
     }
   },
@@ -59,7 +61,7 @@ export const userSlice = createSlice({
         state.authLoading = false;
       })
       .addCase(fetchUser.rejected, (state, action) => {
-        state.error = action.error;
+        state.authError = action.error;
         state.authLoading = false;
       })
       .addMatcher(isAnyOf(
@@ -423,6 +425,7 @@ export const {
   updateUserPhoto,
   updateDocuments,
   setActiveTaskId,
-  setLoading
+  
+  setAuthLoading
 } = userSlice.actions;
 export default userSlice.reducer;

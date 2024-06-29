@@ -3,13 +3,13 @@ import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
 
-import { IconButton } from '../IconButton/IconButton';
+import { IconButton } from 'components';
 
 import css from './Snackbar.module.css';
 
 import { CLOSE } from 'utils/variables';
 
-export const Snackbar = () => {
+const Snackbar = () => {
   const dispatch = useDispatch();
 
   const { snackbar } = useSelector(state => state.app);
@@ -32,3 +32,5 @@ export const Snackbar = () => {
     document.body
   );
 };
+
+export default Snackbar;

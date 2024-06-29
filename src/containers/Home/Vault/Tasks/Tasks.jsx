@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { dndSwap, dndInside, dndOutside,  setActiveTaskId, updateInDocuments, deleteFromDocuments, updateTaskStatus } from 'redux/features/user/userSlice';
 import Sortable from 'sortablejs';
 
-import { IconButton } from 'components/IconButton/IconButton';
+import { IconButton } from 'components';
 
 import css from './Tasks.module.css';
 

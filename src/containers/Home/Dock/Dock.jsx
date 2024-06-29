@@ -5,12 +5,7 @@ import { createInDocuments, setActiveTaskId } from 'redux/features/user/userSlic
 import { setActiveNote } from 'redux/features/note/noteSlice';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Avatar } from 'components/Avatar/Avatar';
-import { Button } from 'components/Button/Button';
-import { IconButton } from 'components/IconButton/IconButton';
-import { Tooltip } from 'components/Tooltip/Tooltip';
-import { Input } from 'components/Input/Input';
-import { Modal } from 'components/Modal/Modal';
+import { Avatar, Button, IconButton, Input, Modal, Tooltip } from 'components';
 import { Settings } from './Settings/Settings';
 
 import css from './Dock.module.css';

@@ -6,7 +6,7 @@ import css from './Avatar.module.css';
 import avatarLight from 'assets/images/avatarLight.svg';
 import avatarDark from 'assets/images/avatarDark.svg';
 
-export const Avatar = ({ src, alt, size, onClick }) => {
+const Avatar = ({ src, alt, size, onClick }) => {
   const { theme } = useSelector(state => state.app);
 
   const [imgSrc, setImgSrc] = useState(src);
@@ -40,3 +40,5 @@ export const Avatar = ({ src, alt, size, onClick }) => {
       />
   );
 };
+
+export default Avatar;

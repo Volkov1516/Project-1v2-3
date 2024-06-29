@@ -1,6 +1,6 @@
 import css from './Switch.module.css';
 
-export const Switch = ({ id, checked, onChange }) => {
+const Switch = ({ id, checked, onChange }) => {
   return (
     <label className={css.switch}>
       <input
@@ -15,3 +15,5 @@ export const Switch = ({ id, checked, onChange }) => {
     </label>
   );
 };
+
+export default Switch;

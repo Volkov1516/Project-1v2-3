@@ -1,18 +1,13 @@
 import { lazy, Suspense } from 'react';
-import { useSelector } from 'react-redux';
-import { auth } from 'services/firebase.js';
 import { useAuth, useHistoryReset, useNavigation, useTheme, useWindowResize } from 'hooks';
 
-import { Home } from 'containers/Home/Home';
-import { Loading } from 'components/Loading/Loading';
-import { Error } from 'components/Error/Error';
+import { Error, Loading } from 'components';
 
+import { Home } from 'containers/Home/Home';
 const LazyAuth = lazy(() => import('containers/Auth/Auth'));
 
 export const App = () => {
-  const { userId, authLoading, error } = useSelector(state => state.user);
-
-  useAuth(auth);
+  const { userId, authLoading, authError } = useAuth();
   useHistoryReset();
   useNavigation();
   useTheme();
@@ -20,7 +15,7 @@ export const App = () => {
 
   if (authLoading) return <Loading />;
 
-  if (error) return <Error error={error} />;
+  if (authError) return <Error error={authError} />;
 
   return userId ? <Home /> : <Suspense fallback={<Loading />}><LazyAuth /></Suspense>;
 };

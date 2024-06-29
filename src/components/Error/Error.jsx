@@ -1,6 +1,6 @@
 import css from './Error.module.css';
 
-export const Error = (error) => {
+const Error = (error) => {
   return (
     <div className={css.errorContainer}>
       <div className={css.errorTitle}>Oops!</div>
@@ -8,3 +8,5 @@ export const Error = (error) => {
     </div>
   );
 };
+
+export default Error;

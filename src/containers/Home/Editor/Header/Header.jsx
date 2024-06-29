@@ -4,8 +4,7 @@ import { setNoteModal, setLockEditor } from 'redux/features/app/appSlice';
 import { setActiveNote, setCanUndo, setCanRedo } from 'redux/features/note/noteSlice';
 import { UNDO_COMMAND, REDO_COMMAND } from 'lexical';
 
-import { IconButton } from 'components/IconButton/IconButton';
-import { Tooltip } from 'components/Tooltip/Tooltip';
+import { IconButton, Tooltip } from 'components';
 
 import css from './Header.module.css';
 

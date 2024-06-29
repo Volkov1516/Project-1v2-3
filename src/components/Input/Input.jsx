@@ -1,6 +1,6 @@
 import css from './Input.module.css';
 
-export const Input = ({
+const Input = ({
   id,
   name,
   type,
@@ -51,3 +51,5 @@ export const Input = ({
     </div>
   );
 };
+
+export default Input;

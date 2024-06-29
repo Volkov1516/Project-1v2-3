@@ -1,6 +1,6 @@
 import css from './IconButton.module.css';
 
-export const IconButton = ({
+const IconButton = ({
   variant,
   size,
   path,
@@ -28,3 +28,5 @@ export const IconButton = ({
     </button>
   );
 };
+
+export default IconButton;

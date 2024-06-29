@@ -4,7 +4,7 @@ import { Dock } from './Dock/Dock';
 import { Vault } from './Vault/Vault';
 import { Widgets } from './Widgets/Widgets';
 import { Editor } from './Editor/Editor';
-import { Snackbar } from 'components/Snackbar/Snackbar';
+import { Snackbar } from 'components';
 
 import css from './Home.module.css';
 

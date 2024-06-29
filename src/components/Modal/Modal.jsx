@@ -1,13 +1,12 @@
 import { createPortal } from 'react-dom';
 
-import { IconButton } from '../IconButton/IconButton';
-import { Tooltip } from 'components/Tooltip/Tooltip';
+import { IconButton, Tooltip } from 'components';
 
 import css from './Modal.module.css';
 
 import { CLOSE } from 'utils/variables';
 
-export const Modal = ({ open, close, loading, fullWidth, children }) => {
+const Modal = ({ open, close, loading, fullWidth, children }) => {
   return open && createPortal(
     <div className={css.container} onClick={close}>
       <div className={`${css.content} ${fullWidth && css.fullWidth}`} onClick={(e) => e.stopPropagation()}>
@@ -23,3 +22,5 @@ export const Modal = ({ open, close, loading, fullWidth, children }) => {
     document.body
   )
 };
+
+export default Modal;

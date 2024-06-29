@@ -14,7 +14,7 @@ import {
 } from 'lexical';
 import { $patchStyleText } from '@lexical/selection';
 
-import { IconButton } from 'components/IconButton/IconButton';
+import { IconButton } from 'components';
 
 import css from './ToolbarTextPlugin.module.css';
 

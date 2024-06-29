@@ -7,11 +7,7 @@ import { db } from 'services/firebase.js';
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import Sortable from 'sortablejs';
 
-import { Button } from 'components/Button/Button';
-import { IconButton } from 'components/IconButton/IconButton';
-import { Tooltip } from 'components/Tooltip/Tooltip';
-import { Input } from 'components/Input/Input';
-import { Modal } from 'components/Modal/Modal';
+import { Button, IconButton, Input, Modal, Tooltip } from 'components';
 
 import css from './Notes.module.css';
 

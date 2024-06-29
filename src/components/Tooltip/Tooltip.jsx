@@ -2,13 +2,13 @@ import { useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useSelector } from 'react-redux';
 
-import { IconButton } from 'components/IconButton/IconButton';
+import { IconButton } from 'components';
 
 import css from './Tooltip.module.css';
 
 import { CLOSE } from 'utils/variables';
 
-export const Tooltip = ({
+const Tooltip = ({
   title,
   content,
   children,
@@ -174,3 +174,5 @@ export const Tooltip = ({
     </div>
   );
 };
+
+export default Tooltip;

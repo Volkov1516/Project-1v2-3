@@ -5,9 +5,7 @@ import { setPath, setModalFolderSettings } from 'redux/features/app/appSlice';
 import { dndSwap, dndInside, dndOutside, updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
 import Sortable from 'sortablejs';
 
-import { Button } from 'components/Button/Button';
-import { Input } from 'components/Input/Input';
-import { Modal } from 'components/Modal/Modal';
+import { Button, Input, Modal } from 'components';
 
 import css from './Folders.module.css';
 

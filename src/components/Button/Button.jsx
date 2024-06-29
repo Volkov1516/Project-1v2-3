@@ -1,6 +1,6 @@
 import css from './Button.module.css';
 
-export const Button = ({
+const Button = ({
   id,
   type,
   variant,
@@ -33,3 +33,5 @@ export const Button = ({
     </button>
   );
 };
+
+export default Button;

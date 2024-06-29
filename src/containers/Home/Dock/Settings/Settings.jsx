@@ -8,11 +8,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
-import { Avatar } from 'components/Avatar/Avatar';
-import { Button } from 'components/Button/Button';
-import { Input } from 'components/Input/Input';
-import { Switch } from 'components/Switch/Switch';
-import { Modal } from 'components/Modal/Modal';
+import { Avatar, Button, Input, Modal, Switch } from 'components';
 
 import css from './Settings.module.css';
 

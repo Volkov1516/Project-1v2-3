@@ -2,8 +2,7 @@ import { useRef, useState, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPath } from 'redux/features/app/appSlice';
 
-import { IconButton } from 'components/IconButton/IconButton';
-import { Tooltip } from 'components/Tooltip/Tooltip';
+import { IconButton, Tooltip } from 'components';
 
 import { Folders } from './Folders/Folders';
 import { Notes } from './Notes/Notes';
