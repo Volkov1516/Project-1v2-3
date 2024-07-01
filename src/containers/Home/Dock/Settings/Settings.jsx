@@ -1,9 +1,7 @@
 import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setTheme, setSnackbar, setModalGlobalSettings } from 'redux/features/app/appSlice';
-import { updateUserName, signOutThunk, updateUserPhotoThunk } from 'redux/features/user/userSlice';
-import { db } from 'services/firebase.js';
-import { doc, setDoc } from 'firebase/firestore';
+import { setTheme, setModalGlobalSettings } from 'redux/features/app/appSlice';
+import { updateUserName, signOutThunk, updateUserPhotoThunk, updateUserNameThunk } from 'redux/features/user/userSlice';
 
 import { Avatar, Button, Input, Modal, Switch } from 'components';
 
@@ -33,12 +31,10 @@ export const Settings = () => {
 
   const handleFocusUserName = (e) => setInitialUserName(e.target.value);
 
-  const handleBlurUserName = async () => {
+  const handleBlurUserName = () => {
     if (initialUserName === userName) return;
 
-    await setDoc(doc(db, 'users', userId), { name: userName }, { merge: true });
-
-    dispatch(setSnackbar('Name was updated'));
+    dispatch(updateUserNameThunk({ id: userId, name: userName }));
   };
 
   const handleSwitchTheme = () => {

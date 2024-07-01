@@ -90,6 +90,17 @@ export const userSlice = createSlice({
         state.userUpdateError = action.error;
         state.userUpdateLoading = false;
       })
+      .addCase(updateUserNameThunk.pending, (state) => {
+        state.userUpdateLoading = true;
+      })
+      .addCase(updateUserNameThunk.fulfilled, (state, action) => {
+        state.userName = action.payload;
+        state.userUpdateLoading = false;
+      })
+      .addCase(updateUserNameThunk.rejected, (state, action) => {
+        state.userUpdateError = action.error;
+        state.userUpdateLoading = false;
+      })
       .addMatcher(isAnyOf(
         createUserWithEmailAndPasswordThunk.pending,
         signInWithEmailAndPasswordThunk.pending,
@@ -264,6 +275,15 @@ export const updateUserPhotoThunk = createAsyncThunk('user/updateUserPhotoThunk'
   }
 });
 
+export const updateUserNameThunk = createAsyncThunk('user/updateUserNameThunk', async ({ id, name }, thunkAPI) => {
+  try {
+    await setDoc(doc(db, 'users', id), { name }, { merge: true });
+
+    return name;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
 
 
 
