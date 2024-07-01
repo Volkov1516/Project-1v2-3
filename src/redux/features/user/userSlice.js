@@ -3,10 +3,12 @@ import { resetAppState } from '../app/appSlice';
 import { resetNoteState } from '../note/noteSlice';
 import { auth, db, storage } from 'services/firebase.js';
 import {
+  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  sendEmailVerification,
   sendPasswordResetEmail,
   signOut
 } from 'firebase/auth';
@@ -26,6 +28,7 @@ const initialState = {
   documentsLoading: false,
   error: null,
 
+  isShowEmailVerificationMessage: false,
   authFormLoading: false,
   authFormError: false,
   authObserverLoading: true,
@@ -68,11 +71,12 @@ export const userSlice = createSlice({
         state.authObserverLoading = true;
       })
       .addCase(fetchUserThunk.fulfilled, (state, action) => {
-        state.userId = action.payload.id;
-        state.userEmail = action.payload.email;
-        state.userName = action.payload.name;
-        state.userPhoto = action.payload.photo;
-        state.documents = action.payload.documents;
+        state.userId = action.payload?.id;
+        state.userEmail = action.payload?.email;
+        state.userName = action.payload?.name;
+        state.userPhoto = action.payload?.photo;
+        state.documents = action.payload?.documents;
+        state.isShowEmailVerificationMessage = action.payload?.isShowEmailVerificationMessage;
         state.authObserverLoading = false;
       })
       .addCase(fetchUserThunk.rejected, (state, action) => {
@@ -184,6 +188,9 @@ export const userSlice = createSlice({
 export const createUserWithEmailAndPasswordThunk = createAsyncThunk('user/createUserWithEmailAndPasswordThunk', async ({ email, password }, thunkAPI) => {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
+
+    const authData = getAuth();
+    await sendEmailVerification(authData.currentUser);
   } catch (error) {
     const message = normalizeAuthErrorMessage(error);
     return thunkAPI.rejectWithValue(message);
@@ -222,27 +229,32 @@ export const sendPasswordResetEmailThunk = createAsyncThunk('user/sendPasswordRe
 export const fetchUserThunk = createAsyncThunk('user/fetchUserThunk', async (user, thunkAPI) => {
   const { uid, email, displayName, photoURL } = user;
 
-  try {
-    const docRef = doc(db, 'users', uid);
-    const docSnap = await getDoc(docRef);
-    const userData = docSnap.exists() ? docSnap.data() : {};
-
-    let avatar = null;
-    const storageRef = ref(storage, `images/avatars/${uid}`);
+  if (!user.emailVerified) {
+    return { isShowEmailVerificationMessage: true };
+  }
+  else {
     try {
-      avatar = await getDownloadURL(storageRef);
-    } catch (error) {
-      console.warn(error);
-    }
+      const docRef = doc(db, 'users', uid);
+      const docSnap = await getDoc(docRef);
+      const userData = docSnap.exists() ? docSnap.data() : {};
 
-    return {
-      id: uid,
-      email,
-      name: userData.name || displayName || null,
-      photo: avatar || photoURL || null
-    };
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+      let avatar = null;
+      const storageRef = ref(storage, `images/avatars/${uid}`);
+      try {
+        avatar = await getDownloadURL(storageRef);
+      } catch (error) {
+        console.warn(error);
+      }
+
+      return {
+        id: uid,
+        email,
+        name: userData.name || displayName || null,
+        photo: avatar || photoURL || null
+      };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
 });
 

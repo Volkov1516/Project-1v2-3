@@ -17,7 +17,7 @@ import google from 'assets/images/google.svg';
 export default function Auth() {
   const dispatch = useDispatch();
 
-  const { authFormLoading, authFormError } = useSelector(state => state.user);
+  const { authFormLoading, authFormError, isShowEmailVerificationMessage } = useSelector(state => state.user);
 
   const [formType, setFormType] = useState('Log in');
   const [email, setEmail] = useState('');
@@ -94,6 +94,7 @@ export default function Auth() {
         <div className={css.authContainer}>
           <div className={css.title}>{formType}</div>
           {authFormError && <div className={css.errorContainer}>{authFormError}</div>}
+          {isShowEmailVerificationMessage && <div className={css.errorContainer}>Not verified!</div>}
           <form className={css.form} onSubmit={handleSubmit}>
             <div className={css.fieldContainer}>
               <Input
