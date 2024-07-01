@@ -75,7 +75,7 @@ body.light-theme {
 }
 
 body.dark-theme {
-  --backgroundPrimary: var(--gray1350);
+  --backgroundPrimary: var(--gray1400);
   --backgroundSecondary: var(--gray1300);
   --backgroundCode: var(--gray1200);
   --borderColor: var(--gray1200);
@@ -83,16 +83,16 @@ body.dark-theme {
   --fontColorPrimary: var(--gray200);
   --fontColorQuote: var(--gray600);
   --fontSelectionBackground: var(--gray200);
-  --fontSelectionColor: var(--gray1350);
+  --fontSelectionColor: var(--gray1400);
 
   --primaryElementBackground: var(--gray200);
-  --primaryElementColor: var(--gray1350);
+  --primaryElementColor: var(--gray1400);
   --primaryElementHover: var(--gray300);
   --primaryElementActive: var(--gray400);
   --secondaryElementBackground: var(--transparent);
   --secondaryElementColor: var(--gray200);
-  --secondaryElementHover: var(--gray1200);
-  --secondaryElementActive: var(--gray1400);
+  --secondaryElementHover: var(--gray1300);
+  --secondaryElementActive: var(--gray1200);
   --disabledElementColor: var(--gray600);
 
   --scrollBackground: var(--gray1300);
