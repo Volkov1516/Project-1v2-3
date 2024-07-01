@@ -35,8 +35,9 @@ export const noteSlice = createSlice({
     setCanRedo: (state, action) => {
       state.canRedo = action.payload;
     },
+    resetNoteState: () => initialState,
   }
 });
 
-export const { updateNotesCache, setActiveNote, updateActiveNoteTitle, updateIsNewNote, setCanUndo, setCanRedo } = noteSlice.actions;
+export const { updateNotesCache, setActiveNote, updateActiveNoteTitle, updateIsNewNote, setCanUndo, setCanRedo, resetNoteState } = noteSlice.actions;
 export default noteSlice.reducer;

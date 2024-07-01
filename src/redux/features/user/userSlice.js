@@ -1,11 +1,14 @@
 import { createSlice, createAsyncThunk, isAnyOf } from '@reduxjs/toolkit';
+import { resetAppState } from '../app/appSlice';
+import { resetNoteState } from '../note/noteSlice';
 import { auth, db, storage } from 'services/firebase.js';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  signOut
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
@@ -54,7 +57,8 @@ export const userSlice = createSlice({
     },
     setAuthLoading: (state, action) => {
       state.authObserverLoading = action.payload;
-    }
+    },
+    resetUserState: () => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -77,7 +81,8 @@ export const userSlice = createSlice({
         createUserWithEmailAndPasswordThunk.pending,
         signInWithEmailAndPasswordThunk.pending,
         signInWithGoogleThunk.pending,
-        sendPasswordResetEmailThunk.pending
+        sendPasswordResetEmailThunk.pending,
+        signOutThunk.pending
       ), (state) => {
         state.authFormLoading = true;
       })
@@ -85,7 +90,8 @@ export const userSlice = createSlice({
         createUserWithEmailAndPasswordThunk.fulfilled,
         signInWithEmailAndPasswordThunk.fulfilled,
         signInWithGoogleThunk.fulfilled,
-        sendPasswordResetEmailThunk.fulfilled
+        sendPasswordResetEmailThunk.fulfilled,
+        signOutThunk.fulfilled
       ), (state) => {
         state.authFormLoading = false;
       })
@@ -93,7 +99,8 @@ export const userSlice = createSlice({
         createUserWithEmailAndPasswordThunk.rejected,
         signInWithEmailAndPasswordThunk.rejected,
         signInWithGoogleThunk.rejected,
-        sendPasswordResetEmailThunk.rejected
+        sendPasswordResetEmailThunk.rejected,
+        signOutThunk.rejected
       ), (state, action) => {
         state.authFormError = action.payload;
         state.authFormLoading = false;
@@ -212,6 +219,21 @@ export const fetchUserThunk = createAsyncThunk('user/fetchUserThunk', async (use
     };
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
+export const signOutThunk = createAsyncThunk('user/signOutThunk', async (_, thunkAPI) => {
+  try {
+    thunkAPI.dispatch(resetAppState());
+    thunkAPI.dispatch(resetUserState());
+    thunkAPI.dispatch(resetNoteState());
+
+    await signOut(auth);
+
+    localStorage.removeItem('theme');
+    window.history.replaceState(null, '', '/');
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
@@ -508,6 +530,7 @@ export const {
   updateDocuments,
   setActiveTaskId,
 
-  setAuthLoading
+  setAuthLoading,
+  resetUserState
 } = userSlice.actions;
 export default userSlice.reducer;

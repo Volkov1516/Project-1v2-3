@@ -1,11 +1,9 @@
 import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setTheme, setSnackbar, setModalGlobalSettings, setPath, setNoteModal } from 'redux/features/app/appSlice';
-import { setUser, updateUserName, updateUserPhoto } from 'redux/features/user/userSlice';
-import { updateNotesCache, setActiveNote } from 'redux/features/note/noteSlice';
-import { db, auth, storage } from 'services/firebase.js';
+import { setTheme, setSnackbar, setModalGlobalSettings } from 'redux/features/app/appSlice';
+import { updateUserName, updateUserPhoto, signOutThunk } from 'redux/features/user/userSlice';
+import { db, storage } from 'services/firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
-import { signOut } from 'firebase/auth';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import { Avatar, Button, Input, Modal, Switch } from 'components';
@@ -76,29 +74,7 @@ export const Settings = () => {
     }
   };
 
-  const handleLogOut = async () => {
-    try {
-      await signOut(auth);
-
-      localStorage.removeItem('theme');
-
-      dispatch(setUser(null, null, null, null, null));
-      dispatch(updateNotesCache(null));
-      dispatch(setActiveNote({
-        isNew: null,
-        id: null,
-        title: null,
-        content: null,
-      }));
-      dispatch(setNoteModal(false));
-      dispatch(setPath(['root']));
-      dispatch(setModalGlobalSettings(false));
-
-      window.history.replaceState(null, '', '/');
-    } catch (error) {
-      dispatch(setSnackbar('Faild to log out'));
-    }
-  };
+  const handleLogOut = () => dispatch(signOutThunk());
 
   const handleClose = () => windowWidth <= 480 ? window.history.back() : dispatch(setModalGlobalSettings(false));
 

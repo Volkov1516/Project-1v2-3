@@ -47,6 +47,7 @@ export const appSlice = createSlice({
     setLockEditor: (state, action) => {
       state.lockEditor = action.payload;
     },
+    resetAppState: () => initialState,
   }
 });
 
@@ -60,6 +61,7 @@ export const {
   setNoteModal,
   setModalFolderSettings,
   setEditNoteModal,
-  setLockEditor
+  setLockEditor,
+  resetAppState
 } = appSlice.actions;
 export default appSlice.reducer;
