@@ -11,7 +11,7 @@ import {
   signOut
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { ref, getDownloadURL } from 'firebase/storage';
+import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 
 import { normalizeAuthErrorMessage } from 'utils/normalizeAuthErrorMessage';
 import { findFolder } from 'utils/searchInManager.js';
@@ -30,6 +30,8 @@ const initialState = {
   authFormError: false,
   authObserverLoading: true,
   authObserverError: false,
+  userUpdateLoading: false,
+  userUpdateError: false
 };
 
 export const userSlice = createSlice({
@@ -76,6 +78,17 @@ export const userSlice = createSlice({
       .addCase(fetchUserThunk.rejected, (state, action) => {
         state.authObserverError = action.error;
         state.authObserverLoading = false;
+      })
+      .addCase(updateUserPhotoThunk.pending, (state) => {
+        state.userUpdateLoading = true;
+      })
+      .addCase(updateUserPhotoThunk.fulfilled, (state, action) => {
+        state.userPhoto = action.payload;
+        state.userUpdateLoading = false;
+      })
+      .addCase(updateUserPhotoThunk.rejected, (state, action) => {
+        state.userUpdateError = action.error;
+        state.userUpdateLoading = false;
       })
       .addMatcher(isAnyOf(
         createUserWithEmailAndPasswordThunk.pending,
@@ -232,6 +245,20 @@ export const signOutThunk = createAsyncThunk('user/signOutThunk', async (_, thun
 
     localStorage.removeItem('theme');
     window.history.replaceState(null, '', '/');
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const updateUserPhotoThunk = createAsyncThunk('user/updateUserPhotoThunk', async ({ id, file }, thunkAPI) => {
+  try {
+    const storageRef = ref(storage, `images/avatars/${id}`);
+
+    await uploadBytes(storageRef, file);
+
+    const photoURL = await getDownloadURL(storageRef);
+
+    return photoURL;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }

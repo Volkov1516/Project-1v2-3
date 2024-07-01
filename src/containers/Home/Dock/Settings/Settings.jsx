@@ -1,10 +1,9 @@
 import { useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTheme, setSnackbar, setModalGlobalSettings } from 'redux/features/app/appSlice';
-import { updateUserName, updateUserPhoto, signOutThunk } from 'redux/features/user/userSlice';
-import { db, storage } from 'services/firebase.js';
+import { updateUserName, signOutThunk, updateUserPhotoThunk } from 'redux/features/user/userSlice';
+import { db } from 'services/firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import { Avatar, Button, Input, Modal, Switch } from 'components';
 
@@ -24,16 +23,9 @@ export const Settings = () => {
 
   const [initialUserName, setInitialUserName] = useState('');
 
-  const handleImageChange = async (e) => {
+  const handleImageChange = e => {
     if (e.target.files[0]) {
-      const storageRef = ref(storage, `images/avatars/${userId}`);
-
-      await uploadBytes(storageRef, e.target.files[0]).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
-          dispatch(updateUserPhoto(url));
-          dispatch(setSnackbar('Photo was updated'));
-        });
-      });
+      dispatch(updateUserPhotoThunk({ id: userId, file: e.target.files[0] }));
     }
   };
 
