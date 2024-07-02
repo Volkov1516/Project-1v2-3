@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getAuth } from 'firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createUserWithEmailAndPasswordThunk,
@@ -15,6 +16,8 @@ import logo from 'assets/images/logo.png';
 import google from 'assets/images/google.svg';
 
 export default function Auth() {
+  const authDta = getAuth();
+
   const dispatch = useDispatch();
 
   const { authFormLoading, authFormError, isShowEmailVerificationMessage } = useSelector(state => state.user);
@@ -94,7 +97,12 @@ export default function Auth() {
         <div className={css.authContainer}>
           <div className={css.title}>{formType}</div>
           {authFormError && <div className={css.errorContainer}>{authFormError}</div>}
-          {isShowEmailVerificationMessage && <div className={css.errorContainer}>Not verified!</div>}
+          {isShowEmailVerificationMessage && (
+            <div className={css.verificarionContainer}>
+              <p className={css.verificarionContainerMessageSection}>Check <b>{authDta.currentUser.email}</b> for a confirmation email to activate your account.</p>
+              <p className={css.verificarionContainerAfterSection}>After, press <Button variant="text" onClick={() => window.location.reload()}>Refresh Page</Button> to continue.</p>
+            </div>
+          )}
           <form className={css.form} onSubmit={handleSubmit}>
             <div className={css.fieldContainer}>
               <Input
