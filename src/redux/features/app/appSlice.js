@@ -10,7 +10,9 @@ const initialState = {
   modalFolderSettings: false,
   noteModal: false,
   editNoteModal: false,
-  lockEditor: false
+  lockEditor: false,
+  isModalOpenResetPassword: false,
+  isModalOpenVerficationEmail: false
 };
 
 export const appSlice = createSlice({
@@ -47,6 +49,12 @@ export const appSlice = createSlice({
     setLockEditor: (state, action) => {
       state.lockEditor = action.payload;
     },
+    setIsModalOpenPasswordReset: (state, action) => {
+      state.isModalOpenResetPassword = action.payload;
+    },
+    setIsModalOpenVerificationEmail: (state, action) => {
+      state.isModalOpenVerficationEmail = action.payload;
+    },
     resetAppState: () => initialState,
   }
 });
@@ -62,6 +70,8 @@ export const {
   setModalFolderSettings,
   setEditNoteModal,
   setLockEditor,
-  resetAppState
+  setIsModalOpenPasswordReset,
+  setIsModalOpenVerificationEmail,
+  resetAppState,
 } = appSlice.actions;
 export default appSlice.reducer;

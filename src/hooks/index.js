@@ -1,4 +1,5 @@
 export { default as useAuth } from './useAuth';
+export { default as useBeforeUnload } from './useBeforeUnload';
 export { default as useHistoryReset } from './useHistoryReset';
 export { default as useNavigation } from './useNavigation';
 export { default as useTheme } from './useTheme';

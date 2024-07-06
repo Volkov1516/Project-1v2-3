@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 320px;
+  padding: 16px;
+}
+
+.messageText {
+  margin-top: 8px;
+  color: var(--fontColorPrimary);
+  text-align: center;
+}
+
+.errorText {
+  margin-top: 8px;
+  color: var(--red);
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+  }
+}
