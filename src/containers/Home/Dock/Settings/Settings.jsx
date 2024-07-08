@@ -27,14 +27,14 @@ export const Settings = () => {
     }
   };
 
-  const handleChangeUserName = (e) => dispatch(updateUserName(e.target.value));
+  const handleChangeUserName = e => dispatch(updateUserName(e.target.value));
 
-  const handleFocusUserName = (e) => setInitialUserName(e.target.value);
+  const handleFocusUserName = e => setInitialUserName(e.target.value);
 
   const handleBlurUserName = () => {
     if (initialUserName === userName) return;
 
-    dispatch(updateUserNameThunk({ id: userId, name: userName }));
+    dispatch(updateUserNameThunk({ displayName: userName }));
   };
 
   const handleSwitchTheme = () => {

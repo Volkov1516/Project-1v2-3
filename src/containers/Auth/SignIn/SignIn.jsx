@@ -12,7 +12,7 @@ import google from 'assets/images/google.svg';
 export const SignIn = ({ setIsSignUp }) => {
   const dispatch = useDispatch();
 
-  const { authFormLoading, authFormError } = useSelector(state => state.user);
+  const { loadingAuthForm, errorAuthForm } = useSelector(state => state.user);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,7 +49,7 @@ export const SignIn = ({ setIsSignUp }) => {
   return (
     <div className={css.container}>
       <p className={css.typeText}>Sign In</p>
-      {authFormError && <p className={css.errorText}>{authFormError}</p>}
+      {errorAuthForm && <p className={css.errorText}>{errorAuthForm}</p>}
       <form className={css.form} onSubmit={handleSubmit}>
         <div className={css.fieldContainer}>
           <Input
@@ -84,10 +84,10 @@ export const SignIn = ({ setIsSignUp }) => {
             dataFocussed={focussedPassword.toString()}
           />
         </div>
-        <Button type="submit" variant="outlined" loading={authFormLoading} disabled={!email || !password}>Continue with email</Button>
+        <Button type="submit" variant="outlined" loading={loadingAuthForm} disabled={!email || !password}>Continue with email</Button>
         <Button variant="text" onClick={handleReset}>Forgot password</Button>
         <hr className={css.divider} />
-        <Button variant="contained" icon={google} iconAlt="google" disabled={authFormLoading} onClick={handleGoogle}>Continue with Google</Button>
+        <Button variant="contained" icon={google} iconAlt="google" disabled={loadingAuthForm} onClick={handleGoogle}>Continue with Google</Button>
       </form>
       <span className={css.alternativeText}>Don't have an account?</span>
       <Button variant="text" onClick={handleToggleForm}>Create account</Button>

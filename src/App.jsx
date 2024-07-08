@@ -7,15 +7,15 @@ import { Home } from 'containers/Home/Home';
 const LazyAuth = lazy(() => import('containers/Auth/Auth'));
 
 export const App = () => {
-  const { userId, authObserverLoading, authObserverError } = useAuth();
+  const { userId, loadingFetchUser, errorFetchUser, loadingFetchTree, errorFetchTree } = useAuth();
   useHistoryReset();
   useNavigation();
   useTheme();
   useWindowResize();
 
-  if (authObserverLoading) return <Loading />;
+  if (loadingFetchUser || loadingFetchTree) return <Loading />;
 
-  if (authObserverError) return <Error error={authObserverError} />;
+  if (errorFetchUser || errorFetchTree) return <Error error={errorFetchUser || errorFetchTree} />;
 
   return userId ? <Home /> : <Suspense fallback={<Loading />}><LazyAuth /></Suspense>;
 };

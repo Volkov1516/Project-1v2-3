@@ -9,9 +9,10 @@ import {
   GoogleAuthProvider,
   sendEmailVerification,
   sendPasswordResetEmail,
-  signOut
+  signOut,
+  updateProfile
 } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 
 import { normalizeAuthErrorMessage } from 'utils/normalizeAuthErrorMessage';
@@ -22,87 +23,74 @@ const initialState = {
   userEmail: null,
   userName: null,
   userPhoto: null,
+  loadingFetchUser: true,
+  errorFetchUser: false,
+  loadingAuthForm: false,
+  errorAuthForm: false,
+  loadingUpdateUser: false,
+  errorUpdateUser: false,
+
+
   documents: null,
   activeTaskId: null,
   documentsLoading: false,
-  error: null,
-
-  isShowEmailVerificationMessage: false,
-  authFormLoading: false,
-  authFormError: false,
-  authObserverLoading: true,
-  authObserverError: false,
-  userUpdateLoading: false,
-  userUpdateError: false
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action) => {
-      state.userId = action.payload?.id;
-      state.userEmail = action.payload?.email;
-      state.userName = action.payload?.name;
-      state.userPhoto = action.payload?.photo;
-      state.documents = action.payload?.documents;
-    },
     updateUserName: (state, action) => {
       state.userName = action.payload;
     },
     updateUserPhoto: (state, action) => {
       state.userPhoto = action.payload;
     },
-    updateDocuments: (state, action) => {
-      state.documents = action.payload;
-    },
     setActiveTaskId: (state, action) => {
       state.activeTaskId = action.payload;
     },
-    setAuthLoading: (state, action) => {
-      state.authObserverLoading = action.payload;
+    setLoadingFetchUser: (state, action) => {
+      state.loadingFetchUser = action.payload;
     },
     resetUserState: () => initialState,
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserThunk.pending, (state) => {
-        state.authObserverLoading = true;
+        state.loadingFetchUser = true;
       })
       .addCase(fetchUserThunk.fulfilled, (state, action) => {
-        state.userId = action.payload?.id;
+        state.userId = action.payload?.uid;
         state.userEmail = action.payload?.email;
-        state.userName = action.payload?.name;
-        state.userPhoto = action.payload?.photo;
-        state.documents = action.payload?.documents;
-        state.isShowEmailVerificationMessage = action.payload?.isShowEmailVerificationMessage;
-        state.authObserverLoading = false;
+        state.userName = action.payload?.displayName;
+        state.userPhoto = action.payload?.photoURL;
+        state.loadingFetchUser = false;
       })
       .addCase(fetchUserThunk.rejected, (state, action) => {
-        state.authObserverError = action.error;
-        state.authObserverLoading = false;
+        state.errorFetchUser = action.error;
+        state.loadingFetchUser = false;
       })
       .addCase(updateUserPhotoThunk.pending, (state) => {
-        state.userUpdateLoading = true;
+        state.loadingUpdateUser = true;
       })
       .addCase(updateUserPhotoThunk.fulfilled, (state, action) => {
         state.userPhoto = action.payload;
-        state.userUpdateLoading = false;
+        state.loadingUpdateUser = false;
       })
       .addCase(updateUserPhotoThunk.rejected, (state, action) => {
-        state.userUpdateError = action.error;
-        state.userUpdateLoading = false;
+        state.errorUpdateUser = action.error;
+        state.loadingUpdateUser = false;
       })
       .addCase(updateUserNameThunk.pending, (state) => {
-        state.userUpdateLoading = true;
+        state.loadingUpdateUser = true;
       })
       .addCase(updateUserNameThunk.fulfilled, (state, action) => {
         state.userName = action.payload;
-        state.userUpdateLoading = false;
+        state.loadingUpdateUser = false;
       })
       .addCase(updateUserNameThunk.rejected, (state, action) => {
-        state.userUpdateError = action.error;
-        state.userUpdateLoading = false;
+        state.errorUpdateUser = action.error;
+        state.loadingUpdateUser = false;
       })
       .addMatcher(isAnyOf(
         createUserWithEmailAndPasswordThunk.pending,
@@ -111,7 +99,7 @@ export const userSlice = createSlice({
         sendPasswordResetEmailThunk.pending,
         signOutThunk.pending
       ), (state) => {
-        state.authFormLoading = true;
+        state.loadingAuthForm = true;
       })
       .addMatcher(isAnyOf(
         createUserWithEmailAndPasswordThunk.fulfilled,
@@ -120,7 +108,7 @@ export const userSlice = createSlice({
         sendPasswordResetEmailThunk.fulfilled,
         signOutThunk.fulfilled
       ), (state) => {
-        state.authFormLoading = false;
+        state.loadingAuthForm = false;
       })
       .addMatcher(isAnyOf(
         createUserWithEmailAndPasswordThunk.rejected,
@@ -129,8 +117,8 @@ export const userSlice = createSlice({
         sendPasswordResetEmailThunk.rejected,
         signOutThunk.rejected
       ), (state, action) => {
-        state.authFormError = action.payload;
-        state.authFormLoading = false;
+        state.errorAuthForm = action.payload;
+        state.loadingAuthForm = false;
       })
       .addMatcher(isAnyOf(
         createInDocuments.pending,
@@ -165,42 +153,25 @@ export const userSlice = createSlice({
         dndInside.rejected,
         dndOutside.rejected,
       ), (state, action) => {
-        state.error = action.error;
         state.documentsLoading = false;
       }
       )
   }
 });
 
-export const fetchUserThunk = createAsyncThunk('user/fetchUserThunk', async (user, thunkAPI) => {
-  const { uid, email, displayName, photoURL } = user;
+export const fetchUserThunk = createAsyncThunk('user/fetchUserThunk', async ({ uid, email, displayName, photoURL }, thunkAPI) => {
+  try {
+    // This Thunk exists for the purpose of scaling the application.
+    // It should fetch user when there will be some data.
 
-  if (!user.emailVerified) {
-    return { isShowEmailVerificationMessage: true };
-  }
-  else {
-    try {
-      const userRef = doc(db, 'users', uid);
-      const userSnap = await getDoc(userRef);
-      const userData = userSnap.exists() ? userSnap.data() : {};
-
-      let avatar = null;
-      const storageRef = ref(storage, `images/avatars/${uid}`);
-      try {
-        avatar = await getDownloadURL(storageRef);
-      } catch (error) {
-        console.warn(error);
-      }
-
-      return {
-        id: uid,
-        email,
-        name: userData.name || displayName || null,
-        photo: avatar || photoURL || null
-      };
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
+    return {
+      uid,
+      email,
+      displayName,
+      photoURL
+    };
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
   }
 });
 
@@ -261,22 +232,22 @@ export const signOutThunk = createAsyncThunk('user/signOutThunk', async (_, thun
 export const updateUserPhotoThunk = createAsyncThunk('user/updateUserPhotoThunk', async ({ id, file }, thunkAPI) => {
   try {
     const storageRef = ref(storage, `images/avatars/${id}`);
-
     await uploadBytes(storageRef, file);
 
-    const photoURL = await getDownloadURL(storageRef);
+    const downloadURL = await getDownloadURL(storageRef);
+    await updateProfile(auth.currentUser, { photoURL: downloadURL });
 
-    return photoURL;
+    return downloadURL;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
 });
 
-export const updateUserNameThunk = createAsyncThunk('user/updateUserNameThunk', async ({ id, name }, thunkAPI) => {
+export const updateUserNameThunk = createAsyncThunk('user/updateUserNameThunk', async ({ displayName }, thunkAPI) => {
   try {
-    await setDoc(doc(db, 'users', id), { name }, { merge: true });
+    await updateProfile(auth.currentUser, { displayName });
 
-    return name;
+    return displayName;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -482,13 +453,11 @@ export const dndOutside = createAsyncThunk('user/dndOutside', async (props, thun
 
 
 export const {
-  setUser,
   updateUserName,
   updateUserPhoto,
-  updateDocuments,
   setActiveTaskId,
 
-  setAuthLoading,
+  setLoadingFetchUser,
   resetUserState
 } = userSlice.actions;
 export default userSlice.reducer;

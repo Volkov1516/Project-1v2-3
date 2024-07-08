@@ -11,7 +11,7 @@ export const Reset = () => {
   const dispatch = useDispatch();
 
   const { isModalOpenResetPassword } = useSelector(state => state.app);
-  const { authFormLoading, authFormError } = useSelector(state => state.user);
+  const { loadingAuthForm, errorAuthForm } = useSelector(state => state.user);
 
   const [emailInputValue, setEmailInputValue] = useState('');
   const [isEmailSent, setIsEmailSent] = useState(false);
@@ -34,8 +34,8 @@ export const Reset = () => {
     <Modal open={isModalOpenResetPassword} close={handleClose}>
       <div className={css.container}>
         <Input label="Email to reset" id="resetInput" type="email" placeholder="Enter email to reset" fullWidth value={emailInputValue} onChange={e => setEmailInputValue(e.target.value)} />
-        <Button variant="outlined" fullWidth loading={authFormLoading} disabled={!emailInputValue} onClick={handleResetPassword}>Send email</Button>
-        {authFormError && <p className={css.errorText}>{authFormError}</p>}
+        <Button variant="outlined" fullWidth loading={loadingAuthForm} disabled={!emailInputValue} onClick={handleResetPassword}>Send email</Button>
+        {errorAuthForm && <p className={css.errorText}>{errorAuthForm}</p>}
         {isEmailSent && <p className={css.messageText}>Check your email to proceed password reset.</p>}
       </div>
     </Modal>
