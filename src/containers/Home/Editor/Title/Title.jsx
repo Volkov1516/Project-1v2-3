@@ -1,7 +1,7 @@
 import { useEffect, useState, forwardRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
-import { createInDocuments, updateInDocuments } from 'redux/features/user/userSlice';
+import { createInTreeThunk, updateInTreeThunk } from 'redux/features/tree/treeSlice';
 import { updateNotesCache, updateIsNewNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
 import { db } from 'services/firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
@@ -39,10 +39,10 @@ export const Title = forwardRef(function MyTitle(props, ref) {
     try {
       // STEP 1: Create/Update title in user.documents (Firestore, Redux)
       if (isNewNote) {
-        dispatch(createInDocuments({ type: 'notes', obj: newNote }));
+        dispatch(createInTreeThunk({ type: 'notes', obj: newNote }));
       }
       else {
-        dispatch(updateInDocuments({ type: 'notes', id: activeNoteId, name: 'title', value: activeNoteTitle }));
+        dispatch(updateInTreeThunk({ type: 'notes', id: activeNoteId, name: 'title', value: activeNoteTitle }));
       }
 
       // STEP 2: Update title in notes and notesCache

@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setModalGlobalSettings, setAddFolderModal, setModalFolderSettings, setEditNoteModal, setNoteModal, setPath } from 'redux/features/app/appSlice';
+import { setModalGlobalSettings, setAddFolderModal, setModalFolderSettings, setEditNoteModal, setNoteModal } from 'redux/features/app/appSlice';
+import { setPath } from 'redux/features/tree/treeSlice';
 
 const useNavigation = (auth) => {
   const dispatch = useDispatch();
 
-  const { path } = useSelector(state => state.app);
+  const { path } = useSelector(state => state.tree);
 
   useEffect(() => {
     const handleHashchange = (e) => {

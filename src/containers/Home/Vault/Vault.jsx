@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPath } from 'redux/features/app/appSlice';
+import { setPath } from 'redux/features/tree/treeSlice';
 
 import { IconButton, Tooltip } from 'components';
 
@@ -17,8 +17,9 @@ import { findFolder } from 'utils/searchInManager';
 export const Vault = memo(function MemoizedComponent() {
   const dispatch = useDispatch();
 
-  const { windowWidth, path } = useSelector(state => state.app);
+  const { windowWidth } = useSelector(state => state.app);
   const { documents } = useSelector(state => state.user);
+  const { path } = useSelector(state => state.tree);
 
   const contentRef = useRef(null);
 

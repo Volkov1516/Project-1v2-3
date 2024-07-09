@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { dndSwap, dndInside, dndOutside,  setActiveTaskId, updateInDocuments, deleteFromDocuments, updateTaskStatus } from 'redux/features/user/userSlice';
+import { setActiveTaskId, updateInTreeThunk, updateTaskStatusThunk, deleteInTreeThunk, dndSwapThunk, dndInsideThunk, dndOutsideThunk } from 'redux/features/tree/treeSlice';
 import Sortable from 'sortablejs';
 
 import { IconButton } from 'components';
@@ -12,7 +12,7 @@ import { BIN, CLOSE } from 'utils/variables';
 export const Tasks = ({ tasks }) => {
   const dispatch = useDispatch();
 
-  const { activeTaskId } = useSelector(state => state.user);
+  const { activeTaskId } = useSelector(state => state.tree);
 
   const textRef = useRef(null);
   const containerRef = useRef(null);
@@ -66,13 +66,13 @@ export const Tasks = ({ tasks }) => {
             return;
           }
           else if (isOutside && targetElementType === 'navigation') {
-            dispatch(dndOutside({ type: 'tasks', items: tasks, oldIndex: e.oldIndex }));
+            dispatch(dndOutsideThunk({ type: 'tasks', items: tasks, oldIndex: e.oldIndex }));
           }
           else if (isOutside && targetElementType === 'folder') {
-            dispatch(dndInside({ type: 'tasks', items: tasks, oldIndex: e.oldIndex, newFolderId: targetElementId }));
+            dispatch(dndInsideThunk({ type: 'tasks', items: tasks, oldIndex: e.oldIndex, newFolderId: targetElementId }));
           }
           else {
-            dispatch(dndSwap({ type: 'tasks', items: tasks, oldIndex: e.oldIndex, newIndex: e.newIndex }));
+            dispatch(dndSwapThunk({ type: 'tasks', items: tasks, oldIndex: e.oldIndex, newIndex: e.newIndex }));
           }
         }
       });
@@ -96,13 +96,13 @@ export const Tasks = ({ tasks }) => {
 
   const handleOnBlur = async (e, id) => {
     if (!e.target.innerText) {
-      dispatch(deleteFromDocuments({ type: 'tasks', id }));
+      dispatch(deleteInTreeThunk({ type: 'tasks', id }));
     }
     else if (initialContent === e.target.innerText) {
       return;
     }
     else {
-      dispatch(updateInDocuments({ type: 'tasks', id, name: 'content', value: e.target.innerText }));
+      dispatch(updateInTreeThunk({ type: 'tasks', id, name: 'content', value: e.target.innerText }));
     }
 
     setInitialContent(null);
@@ -120,7 +120,7 @@ export const Tasks = ({ tasks }) => {
 
   const handleStatusMenuCheck = (e, id, status) => {
     e.stopPropagation();
-    dispatch(updateTaskStatus({ id, status }));
+    dispatch(updateTaskStatusThunk({ id, status }));
 
     dispatch(setActiveTaskId(null));
     setStatusMenu(false);

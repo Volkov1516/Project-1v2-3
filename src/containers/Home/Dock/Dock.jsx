@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTheme, setModalGlobalSettings, setAddFolderModal, setNoteModal } from 'redux/features/app/appSlice';
-import { createInDocuments, setActiveTaskId } from 'redux/features/user/userSlice';
+import { createInTreeThunk, setActiveTaskId } from 'redux/features/tree/treeSlice';
 import { setActiveNote } from 'redux/features/note/noteSlice';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -50,7 +50,7 @@ export const Dock = () => {
       tasks: []
     };
 
-    dispatch(createInDocuments({ type: 'folders', obj: newFolder }));
+    dispatch(createInTreeThunk({ type: 'folders', obj: newFolder }));
 
     handleCloseAddFolder();
   };
@@ -78,7 +78,7 @@ export const Dock = () => {
     };
 
     // Creates only localy! Saving on task blur
-    dispatch(createInDocuments({ type: 'tasks', obj: newTask }));
+    dispatch(createInTreeThunk({ type: 'tasks', obj: newTask }));
     dispatch(setActiveTaskId(newTaskId));
   };
 

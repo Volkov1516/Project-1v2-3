@@ -1,8 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPath, setModalFolderSettings } from 'redux/features/app/appSlice';
-import { dndSwap, dndInside, dndOutside, updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
+import { setModalFolderSettings } from 'redux/features/app/appSlice';
+import { setPath, updateInTreeThunk, deleteInTreeThunk, dndSwapThunk, dndInsideThunk, dndOutsideThunk } from 'redux/features/tree/treeSlice';
 import Sortable from 'sortablejs';
 
 import { Button, Input, Modal } from 'components';
@@ -14,7 +14,8 @@ import folderImg from 'assets/images/folder.png';
 export const Folders = ({ folders }) => {
   const dispatch = useDispatch();
 
-  const { windowWidth, path, modalFolderSettings } = useSelector(state => state.app);
+  const { windowWidth, modalFolderSettings } = useSelector(state => state.app);
+  const { path } = useSelector(state => state.tree);
 
   const containerRef = useRef(null);
   const holdTimeout = useRef(null);
@@ -110,13 +111,13 @@ export const Folders = ({ folders }) => {
             return;
           }
           else if (isOutside && targetElementType === 'navigation') {
-            dispatch(dndOutside({ type: 'folders', items: folders, oldIndex: e.oldIndex }));
+            dispatch(dndOutsideThunk({ type: 'folders', items: folders, oldIndex: e.oldIndex }));
           }
           else if (overFolder && targetElementId && targetElementId !== draggableElementId) {
-            dispatch(dndInside({ type: 'folders', items: folders, oldIndex: e.oldIndex, newFolderId: targetElementId }));
+            dispatch(dndInsideThunk({ type: 'folders', items: folders, oldIndex: e.oldIndex, newFolderId: targetElementId }));
           }
           else {
-            dispatch(dndSwap({ type: 'folders', items: folders, oldIndex: e.oldIndex, newIndex: e.newIndex }));
+            dispatch(dndSwapThunk({ type: 'folders', items: folders, oldIndex: e.oldIndex, newIndex: e.newIndex }));
           }
 
           overFolder = null;
@@ -154,7 +155,7 @@ export const Folders = ({ folders }) => {
     if (folderNameInputValue === initialFolderNameInputValue) return;
 
     if (folderNameInputValue && folderNameInputValue.length > 0) {
-      dispatch(updateInDocuments({ type: 'folders', id: folderId, name: 'name', value: folderNameInputValue }));
+      dispatch(updateInTreeThunk({ type: 'folders', id: folderId, name: 'name', value: folderNameInputValue }));
 
       setInitialFolderNameInputValue(folderNameInputValue);
     }
@@ -163,7 +164,7 @@ export const Folders = ({ folders }) => {
   const handleDeleteFolder = () => {
     if (folderNameDeleteInputValue !== initialFolderNameInputValue) return;
 
-    dispatch(deleteFromDocuments({ type: 'folders', id: folderId }));
+    dispatch(deleteInTreeThunk({ type: 'folders', id: folderId }));
 
     handleCloseSettings();
   };

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { setSnackbar } from 'redux/features/app/appSlice';
-import { createInDocuments } from 'redux/features/user/userSlice';
+import { createInTreeThunk } from 'redux/features/tree/treeSlice';
 import { updateNotesCache, updateIsNewNote } from 'redux/features/note/noteSlice';
 import { db } from 'services/firebase.js';
 import { doc, setDoc } from 'firebase/firestore';
@@ -76,7 +76,7 @@ export const Lexical = ({ editorRef, titleRef, saving, setSaving, onEditorChange
               title: 'Untitled'
             };
 
-            dispatch(createInDocuments({ type: 'notes', obj: newNote }));
+            dispatch(createInTreeThunk({ type: 'notes', obj: newNote }));
 
             await setDoc(doc(db, 'notes', activeNoteId), { content: state }, { merge: true });
 

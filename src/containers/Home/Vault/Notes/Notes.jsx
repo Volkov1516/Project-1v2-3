@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar, setEditNoteModal, setNoteModal } from 'redux/features/app/appSlice';
-import { dndSwap, dndInside, dndOutside, updateInDocuments, deleteFromDocuments } from 'redux/features/user/userSlice';
+import { updateInTreeThunk, deleteInTreeThunk, dndSwapThunk, dndInsideThunk, dndOutsideThunk } from 'redux/features/tree/treeSlice';
 import { updateNotesCache, setActiveNote, updateActiveNoteTitle } from 'redux/features/note/noteSlice';
 import { db } from 'services/firebase.js';
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
@@ -82,13 +82,13 @@ export const Notes = ({ notes }) => {
             return;
           }
           else if (isOutside && targetElementType === 'navigation') {
-            dispatch(dndOutside({ type: 'notes', items: notes, oldIndex: e.oldIndex }));
+            dispatch(dndOutsideThunk({ type: 'notes', items: notes, oldIndex: e.oldIndex }));
           }
           else if (isOutside && targetElementType === 'folder') {
-            dispatch(dndInside({ type: 'notes', items: notes, oldIndex: e.oldIndex, newFolderId: targetElementId }));
+            dispatch(dndInsideThunk({ type: 'notes', items: notes, oldIndex: e.oldIndex, newFolderId: targetElementId }));
           }
           else {
-            dispatch(dndSwap({ type: 'notes', items: notes, oldIndex: e.oldIndex, newIndex: e.newIndex }));
+            dispatch(dndSwapThunk({ type: 'notes', items: notes, oldIndex: e.oldIndex, newIndex: e.newIndex }));
           }
         }
       });
@@ -182,7 +182,7 @@ export const Notes = ({ notes }) => {
     if (titleInputValue && titleInputValue.length > 0) {
       try {
         // STEP 2: Update title in user.documents (Redux, Firebase)
-        dispatch(updateInDocuments({ type: 'notes', id: noteIdEditNoteModal, name: 'title', value: titleInputValue }));
+        dispatch(updateInTreeThunk({ type: 'notes', id: noteIdEditNoteModal, name: 'title', value: titleInputValue }));
 
         // STEP 3: Update title in notes (Firebase) and notesCache (Redux)
         await setDoc(doc(db, 'notes', noteIdEditNoteModal), { title: titleInputValue }, { merge: true });
@@ -217,7 +217,7 @@ export const Notes = ({ notes }) => {
 
     try {
       // STEP 2: Delete Note from user.documents (Firebase and Redux)
-      dispatch(deleteFromDocuments({ type: 'notes', id: noteIdEditNoteModal }));
+      dispatch(deleteInTreeThunk({ type: 'notes', id: noteIdEditNoteModal }));
 
       // STEP 3: Delete Note from notes (Firebase) and notesCache (Redux)
       await deleteDoc(doc(db, 'notes', noteIdEditNoteModal));
