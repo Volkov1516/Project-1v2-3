@@ -16,7 +16,8 @@ export const Dock = () => {
   const dispatch = useDispatch();
 
   const { windowWidth, theme, addFolderModal } = useSelector(state => state.app);
-  const { userEmail, userPhoto, userName, documents } = useSelector(state => state.user);
+  const { userEmail, userPhoto, userName } = useSelector(state => state.user);
+  const { tree } = useSelector(state => state.tree);
   const { activeNoteId } = useSelector(state => state.note);
 
   const dockRef = useRef(null);
@@ -139,7 +140,7 @@ export const Dock = () => {
     <div ref={dockRef} className={css.container}>
       <Tooltip
         isRich
-        isRichVisible={(documents?.folders.length === 0 && documents?.notes.length === 0 && documents?.tasks.length === 0 && !activeNoteId) ? true : false}
+        isRichVisible={(tree?.folders.length === 0 && tree?.notes.length === 0 && tree?.tasks.length === 0 && !activeNoteId) ? true : false}
         preferablePosition={windowWidth > 480 ? "rightTop" : "topRight"}
         offset={16}
         title="Welcome to Omniumicon!"

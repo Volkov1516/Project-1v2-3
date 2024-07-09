@@ -18,8 +18,7 @@ export const Vault = memo(function MemoizedComponent() {
   const dispatch = useDispatch();
 
   const { windowWidth } = useSelector(state => state.app);
-  const { documents } = useSelector(state => state.user);
-  const { path } = useSelector(state => state.tree);
+  const { tree, path } = useSelector(state => state.tree);
 
   const contentRef = useRef(null);
 
@@ -30,11 +29,11 @@ export const Vault = memo(function MemoizedComponent() {
   }, [path]);
 
   useEffect(() => {
-    if (!documents) return;
+    if (!tree) return;
 
     const definePath = targetFolder => setFolder(targetFolder);
-    findFolder(documents, path[path.length - 1], definePath);
-  }, [documents, path]);
+    findFolder(tree, path[path.length - 1], definePath);
+  }, [tree, path]);
 
   const handleBack = () => {
     if (windowWidth <= 480) {
