@@ -51,6 +51,7 @@
 }
 
 .typeText {
+  color: var(--fontColorPrimary);
   font-size: 32px;
   font-weight: bold;
 }

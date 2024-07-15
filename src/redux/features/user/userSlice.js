@@ -42,6 +42,9 @@ export const userSlice = createSlice({
     setLoadingFetchUser: (state, action) => {
       state.loadingFetchUser = action.payload;
     },
+    setErrorAuthForm: (state, action) => {
+      state.errorAuthForm = action.payload;
+    },
     resetUserState: () => initialState,
   },
   extraReducers: (builder) => {
@@ -211,6 +214,7 @@ export const {
   updateUserName,
   updateUserPhoto,
   setLoadingFetchUser,
+  setErrorAuthForm,
   resetUserState
 } = userSlice.actions;
 export default userSlice.reducer;
