@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsModalOpenPasswordReset } from 'redux/features/app/appSlice';
-import { sendPasswordResetEmailThunk } from 'redux/features/user/userSlice';
+import { setErrorAuthForm, sendPasswordResetEmailThunk } from 'redux/features/user/userSlice';
 
 import css from './Reset.module.css';
 
@@ -26,18 +26,19 @@ export const Reset = () => {
 
   const handleClose = () => {
     dispatch(setIsModalOpenPasswordReset(false));
+    dispatch(setErrorAuthForm(''));
     setEmailInputValue('');
     setIsEmailSent(false);
   };
 
   return (
     <Modal open={isModalOpenResetPassword} close={handleClose}>
-      <div className={css.container}>
-        <Input label="Email to reset" id="resetInput" type="email" placeholder="Enter email to reset" fullWidth value={emailInputValue} onChange={e => setEmailInputValue(e.target.value)} />
-        <Button variant="outlined" fullWidth loading={loadingAuthForm} disabled={!emailInputValue} onClick={handleResetPassword}>Send email</Button>
+      <form className={css.container} onSubmit={handleResetPassword}>
+        <Input label="Email to reset" id="resetInput" type="email" required placeholder="Enter email to reset" fullWidth value={emailInputValue} onChange={e => setEmailInputValue(e.target.value)} />
+        <Button type="submit" variant="outlined" fullWidth loading={loadingAuthForm} disabled={!emailInputValue}>Send email</Button>
         {errorAuthForm && <p className={css.errorText}>{errorAuthForm}</p>}
         {isEmailSent && <p className={css.messageText}>Check your email to proceed password reset.</p>}
-      </div>
+      </form>
     </Modal>
   );
 };

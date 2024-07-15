@@ -59,7 +59,10 @@ export default function Auth() {
 
   const handleGoogle = () => dispatch(signInWithGoogleThunk());
 
-  const handleReset = () => dispatch(setIsModalOpenPasswordReset(true));
+  const handleReset = () => {
+    dispatch(setErrorAuthForm(''));
+    dispatch(setIsModalOpenPasswordReset(true));
+  }
 
   const handleToggle = type => {
     setFormType(type);
