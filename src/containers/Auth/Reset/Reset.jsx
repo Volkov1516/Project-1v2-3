@@ -7,6 +7,8 @@ import css from './Reset.module.css';
 
 import { Modal, Button, Input } from 'components';
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export const Reset = () => {
   const dispatch = useDispatch();
 
@@ -16,12 +18,17 @@ export const Reset = () => {
   const [emailInputValue, setEmailInputValue] = useState('');
   const [isEmailSent, setIsEmailSent] = useState(false);
 
-  const handleResetPassword = () => {
-    if (!emailInputValue) return;
-
-    dispatch(sendPasswordResetEmailThunk({ email: emailInputValue }));
-
-    setIsEmailSent(true);
+  const handleSubmit = () => {
+    if (!emailInputValue) {
+      return;
+    }
+    else if (!EMAIL_PATTERN.test(emailInputValue)) {
+      dispatch(setErrorAuthForm('Invalid email address.'));
+    }
+    else {
+      dispatch(sendPasswordResetEmailThunk({ email: emailInputValue }));
+      setIsEmailSent(true);
+    }
   };
 
   const handleClose = () => {
@@ -33,9 +40,18 @@ export const Reset = () => {
 
   return (
     <Modal open={isModalOpenResetPassword} close={handleClose}>
-      <form className={css.container} onSubmit={handleResetPassword}>
-        <Input label="Email to reset" id="resetInput" type="email" required placeholder="Enter email to reset" fullWidth value={emailInputValue} onChange={e => setEmailInputValue(e.target.value)} />
-        <Button type="submit" variant="outlined" fullWidth loading={loadingAuthForm} disabled={!emailInputValue}>Send email</Button>
+      <form className={css.container} onSubmit={handleSubmit}>
+        <Input
+          id="resetInput"
+          type="email"
+          label="Email to reset"
+          placeholder="Enter email to reset"
+          required
+          fullWidth
+          value={emailInputValue}
+          onChange={e => setEmailInputValue(e.target.value)}
+        />
+        <Button type="submit" variant="outlined" fullWidth loading={loadingAuthForm} disabled={!EMAIL_PATTERN.test(emailInputValue)}>Send email</Button>
         {errorAuthForm && <p className={css.errorText}>{errorAuthForm}</p>}
         {isEmailSent && <p className={css.messageText}>Check your email to proceed password reset.</p>}
       </form>

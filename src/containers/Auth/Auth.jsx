@@ -93,7 +93,7 @@ export default function Auth() {
             label="Email"
             error="Invalid email address"
             autocomplete="on"
-            required={true}
+            required
             value={email}
             onChange={e => setEmail(e.target.value)}
             onBlur={handleFocus}
@@ -108,7 +108,7 @@ export default function Auth() {
             error="Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, one number, and one special character."
             autocomplete="off"
             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,128}$"
-            required={true}
+            required
             value={password}
             onChange={e => setPassword(e.target.value)}
             onBlur={handleFocus}
